@@ -1,0 +1,34 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <component-overview></component-overview>
+    <div class="row">
+      <div class="col-sm-4">
+        <!-- <rg-gauge-chart [canvasWidth]="300" [needleValue]="20" [centralLabel]="" [options]="{
+                    hasNeedle: true,
+                    rangeLabel: ['0', '100']
+                }"
+          [name]="'Ethylene Level'" [bottomLabel]="20">
+        </rg-gauge-chart> -->
+        <!--Try to find angular component that shows same as grafana-->
+      </div>
+      <div class="col-sm-8" style="border: 1px black solid">
+        Extra context info regarding selected gas
+        <!---->
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+
+    </div>
+      <div class="row green" *ngFor="let row of row">
+        <div class="col-sm-3 sensor" *ngFor="let count of count">
+          <div class="popup" (click)="showPopup()">Click me to toggle the popup!
+            <span class="popuptext" id="myPopup{{row+count}}">A Simple Popup!</span>
+          </div>
+          test
+        </div>
+      </div>
+  </div>
+  </div>

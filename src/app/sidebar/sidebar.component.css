@@ -1,0 +1,42 @@
+#user-profile-collapse {
+  padding-bottom: 0;
+  height: 34px;
+  cursor: pointer;
+}
+
+#user-profile-collapse:hover {
+  color: white;
+}
+
+/* This will only be applied if "aria-expanded" is true */
+a[id="user-profile-collapse"][data-toggle="collapse"][aria-expanded="true"] .caret {
+  top: 14px !important;
+}
+
+.user-info-divider {
+  background: white;
+  height:1px;
+  width: 160px;
+}
+
+.username-container {
+  position: absolute;
+  width: 160px;
+  margin-top: -10px;
+  border-bottom: 1px solid white;
+}
+
+.username-container .caret {
+  top: 19px !important;
+  right: 0;
+}
+
+.user-role {
+  position: absolute;
+  margin-top: 9px;
+  font-size: 12px;
+}
+
+#user-menu ul {
+  margin-top: 0;
+}

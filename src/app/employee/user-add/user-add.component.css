@@ -1,0 +1,32 @@
+.control-label.required:after {
+    color: #d00;
+    content: "*";
+    top:7px;
+  }
+
+  .control-label-container {
+    text-align: right;
+  }
+
+  .register-page-container {
+    /* margin-top: 138px; */
+   margin:auto;
+
+
+
+  }
+
+  .selectpicker {
+    width: 100%;
+  }
+
+  .control-label {
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%)
+  }
+
+  .err-msg {
+    text-align: center;
+    color: red;
+  }

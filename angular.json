@@ -1,0 +1,121 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ripensense": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "index.html",
+            "main": "src/main.ts",
+            "tsConfig": "config/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              "static"
+            ],
+            "styles": [
+              "./src/styles.scss",
+              "./static/scss/paper-dashboard.scss",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/jquery/dist/jquery.js"
+            ]
+          },
+          "configurations": {}
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ripensense:build"
+          },
+          "configurations": {}
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ripensense:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "karmaConfig": "config/test/karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "config/test/tsconfig.test.json",
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "./node_modules/jquery/dist/jquery.js"
+            ],
+            "styles": [
+              "./src/styles.scss",
+              // "./static/scss/paper-dashboard.scss",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "assets": [
+              "static"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "config/tsconfig.app.json",
+              "config/test/tsconfig.test.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ripensense-e2e": {
+      "root": "",
+      "sourceRoot": "e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "config/test/protractor.conf.js",
+            "devServerTarget": "ripensense:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ripensense",
+  "schematics": {
+    "@schematics/angular:service": {
+      "flat": false
+    },
+    "@schematics/angular:component": {
+      "prefix": "component",
+      "styleext": "css"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "component"
+    }
+  }
+}

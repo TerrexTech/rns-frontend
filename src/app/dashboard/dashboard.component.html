@@ -1,0 +1,119 @@
+<div class="main-content">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-tag-content text-warning"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Product arrival (Kg)</p>
+                <p #arrival class="card-title">150
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-refresh"></i>Today
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-basket text-success"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Total Products (Kg)</p>
+                <p #total class="card-title">634
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-calendar-o"></i> Last day
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-5 col-md-4">
+              <div class="icon-big text-center icon-warning">
+                <i class="nc-icon nc-cart-simple text-danger"></i>
+              </div>
+            </div>
+            <div class="col-7 col-md-8">
+              <div class="numbers">
+                <p class="card-category">Products sold (Kg/hr)</p>
+                <p #average class="card-title">23
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="card-footer ">
+          <hr>
+          <div class="stats">
+            <i class="fa fa-clock-o"></i> Incoming
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="big-title">Total (Kg) | Sold (Kg) | Waste (Kg)</h6>
+          <canvas id="totalChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="big-title">Products sold (Kg/hr)</h6>
+          <canvas id="soldChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="big-title">Distribution by weight (Kg)</h6>
+          <canvas id="distChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="big-title">Donations (Kg/day)</h6>
+          <canvas id="donationChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

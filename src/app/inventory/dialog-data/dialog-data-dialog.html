@@ -1,0 +1,136 @@
+<h4 mat-dialog-title>
+    Update Item: #{{ this.curField.data.sku }}, {{ this.curField.data.name }}
+</h4>
+    <form [formGroup]="form" #updateInventory="ngForm">
+        <br>
+
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> UPC </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="number" class="form-control" formControlName="upc" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('upc') }"
+                        readonly>
+                    <span *ngIf="isFieldValid('upc')" class="invalid-feedback">
+                        UPC is required
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> SKU </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="number" class="form-control" formControlName="sku" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('sku') }"
+                        readonly>
+                        <span *ngIf="isFieldValid('sku')" class="invalid-feedback">
+                            SKU is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Item ID </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="string" class="form-control" formControlName="item_id" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('item_id') }"
+                        readonly>
+                        <span *ngIf="isFieldValid('item_id')" class="invalid-feedback">
+                            Item ID is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Item Name </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="text" class="form-control" formControlName="name" required
+                        [ngClass]=" {'is-invalid': isFieldValid('name') }">
+                        <span *ngIf="isFieldValid('name')" class="invalid-feedback">
+                            Name is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Origin of Product </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="text" class="form-control" formControlName="origin" placeholder="State, Country (E.g. ON, Canada)"
+                        [ngClass]="{ 'is-invalid': isFieldValid('origin') }">
+                        <span *ngIf="isFieldValid('origin')" class="invalid-feedback">
+                            Origin is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Date of Arrival </label>
+                <div class="col-sm-8 mx-auto">
+                    <input #date type="date" class="form-control" [ngClass]="{ 'is-invalid': isFieldValid('date_arrived') }"
+                        formControlName="date_arrived" required name="dp">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Weight </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="number" class="form-control" formControlName="total_weight" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('total_weight') }">
+                        <span *ngIf="isFieldValid('total_weight')" class="invalid-feedback">
+                            Weight is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Price </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="text" class="form-control" formControlName="price" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('price') }">
+                        <span *ngIf="isFieldValid('price')" class="invalid-feedback">
+                            Price is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Device ID </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="text" class="form-control" formControlName="device_id" required readonly
+                        [ngClass]="{ 'is-invalid': isFieldValid('device_id') }">
+                        <span *ngIf="isFieldValid('device_id')" class="invalid-feedback">
+                            Device ID is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Location </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="text" class="form-control" id="location" formControlName="location" placeholder="Aisle No."
+                        required [ngClass]="{ 'is-invalid': isFieldValid('location') }">
+                        <span *ngIf="isFieldValid('location')" class="invalid-feedback">
+                            Location is required
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer mx-auto">
+            <mat-dialog-actions>
+                <button [mat-dialog-close]="true" (click)="onSubmit()">Update</button>
+                <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+                <button [mat-dialog-close]="true">Close</button>
+            </mat-dialog-actions>
+            <!-- <button type="submit" id="addProduct" class="btn btn-info btn-fill col-sm-6 col-md-6">Update Product</button>
+            <button type="submit" id="cancelProduct" class="btn btn-danger btn-fill col-sm-6 col-md-6" (click)="reset()">Reset</button> -->
+        </div>
+    </form>

@@ -1,0 +1,26 @@
+.main-content{
+    position: relative;
+    float: right;
+    background-color: #f4f3ef;
+    padding: 0 30px 30px;
+    min-height: calc(100vh - 123px);
+    margin-top: 93px;
+}
+
+.card-body{
+    padding: 15px 15px 10px 15px;
+}
+
+.card-header{
+    padding: 15px 15px 0;
+    border: 0;
+}
+
+.card{
+  border-radius: 1px;
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  background-color: #FFFFFF;
+  margin-bottom: 20px;
+  position: relative;
+  border: 0 none;
+}

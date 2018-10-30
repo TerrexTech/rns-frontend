@@ -1,0 +1,32 @@
+<div class="main-content">
+    <div class="container-fluid">
+       <component-overview></component-overview>
+        <div class="row">
+        <div class="col-sm-4">
+            <rg-gauge-chart
+                [canvasWidth]="300"
+                [needleValue]="20"
+                [centralLabel]=""
+                [options]="{
+                    hasNeedle: true,
+                    rangeLabel: ['0', '100']
+                }"
+                [name]="'Carbon Level'"
+                [bottomLabel]="20">
+            </rg-gauge-chart>        <!--Try to find angular component that shows same as grafana-->
+        </div>
+        <div class="col-sm-8" style="border: 1px black solid">
+            Extra context info regarding selected gas
+        </div>
+        </div>
+        <br>
+        <div row="row">
+            <div class="col-sm-4">
+                 <canvas id="carbon"></canvas>
+            </div>
+            <div class="col-sm-8">
+                <component-reports-table [jsonFields]=8 [displayedColumns]="['SKU', 'Name', 'Carbon', 'Timestamp', 'Status', 'Projected Expiry', 'Trend (%)']"></component-reports-table>
+            </div>
+        </div>
+        <!--Make one column for table, one column for graph in this row -->
+        </div>

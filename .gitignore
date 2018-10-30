@@ -1,0 +1,61 @@
+# Logs
+logs
+*.log
+
+# OS generated files #
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Node Files #
+/node_modules/
+/bower_components/
+npm-debug.log
+/npm-debug.log.*
+
+# Coverage #
+/coverage/
+
+# Generic Unit Sonar Reports #
+/reports/
+
+# Typing #
+/src/typings/tsd/
+/typings/
+/tsd_typings/
+
+# Dist #
+/dist
+/public/__build__/
+/src/*/__build__/
+/__build__/**
+/public/dist/
+/src/*/dist/
+/dist/**
+/.awcache
+.webpack.json
+/compiled/
+dll/
+temp
+tmp
+build-cache
+
+# Doc #
+/doc/
+/documentation/
+
+# IDE #
+.idea/
+*.swp
+.vscode
+.history
+
+# Angular #
+*.ngfactory.ts
+*.css.shim.ts
+*.ngsummary.json
+*.shim.ngstyle.ts
+
+# Tools
+.vagrant

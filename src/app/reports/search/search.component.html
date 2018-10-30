@@ -1,0 +1,43 @@
+<div class="card mx-auto">
+  <div class="card-body">
+    <h6 class="text-center">Filter Report Results</h6>
+    <form>
+      <div class="row">
+        <div class="col-sm-4 offset-sm-2">
+          <mat-form-field class="example-full-width">
+            <input #sku matInput type="number" placeholder="SKU">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="example-full-width">
+            <input #name matInput type="text" placeholder="Product Name">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 offset-sm-2">
+          <mat-form-field class="example-full-width">
+            <input #start matInput [matDatepicker]="picker" placeholder="Choose a start date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field class="example-full-width">
+            <input #end matInput [matDatepicker]="picker2" placeholder="Choose an end date">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 offset-sm-4">
+          <a mat-raised-button color="warn" (click)="onSubmit()">Filter</a>
+        </div>
+        <div class="col-sm-2">
+          <a mat-raised-button color="warn">Reset</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

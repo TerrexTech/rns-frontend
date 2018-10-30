@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-absolute fixed-top">
+  <div class="container">
+    <a class="navbar-brand rs-logo" routerLinkActive="active" [routerLink]="['/dashboard']">Ripe&Sense</a>
+  </div>
+  <div class="collapse navbar-collapse justify-content-end" id="navigation">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a routerLinkActive="active" [routerLink]="" class="nav-link">
+          <i class="nc-icon nc-layout-11"></i> About Us </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="full-page">
+  <div class="content">
+    <div class="container">
+      <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+        <form [formGroup]="loginForm">
+          <div class="card card-login">
+            <div class="card-header ">
+              <div class="card-header ">
+                <h3 class="header text-center">Login</h3>
+              </div>
+            </div>
+            <div class="card-body ">
+              <div class="form-group">
+                <div class="input-group" [ngClass]="{'input-group-focus':focus===true}">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="nc-icon nc-single-02"></i>
+                    </span>
+                  </div>
+                  <input type="text" id="username" class="form-control" formControlName="username" placeholder="Username"
+                    (focus)="focus=true" (blur)="focus=false" [ngClass]="{ 'is-invalid': formSubmitAttempt && f().username.errors }">
+                  <div *ngIf="formSubmitAttempt && f().username.errors" class="invalid-feedback">
+                    <div *ngIf="f().username.errors.required">Username is required</div>
+                    <div *ngIf="f().username.errors.minlength">Username cannot be less than 4 characters</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="nc-icon nc-key-25"></i>
+                    </span>
+                  </div>
+                  <input type="password" placeholder="Password" class="form-control" formControlName="password" (focus)="focus1=true"
+                    (blur)="focus1=false" [ngClass]="{ 'is-invalid': formSubmitAttempt && f().password.errors }">
+                  <div *ngIf="formSubmitAttempt && f().password.errors" class="invalid-feedback">
+                    <div *ngIf="f().password.errors.required">Password is required</div>
+                    <div *ngIf="f().password.errors.minlength">Password cannot be less than 5 characters</div>
+                  </div>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div class="card-footer ">
+              <button type="submit" class="btn btn-warning btn-round btn-block mb-3" (click)="onSubmit()">Login</button>
+              <div id="response"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

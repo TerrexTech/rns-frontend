@@ -1,0 +1,108 @@
+
+<div class="logo">
+	<a href="https://www.creative-tim.com" class="simple-text logo-normal">
+		Ripe-N-Sense
+  </a>
+</div>
+
+
+<div class="sidebar-wrapper">
+
+  <div class="user">
+    <div class="photo">
+      <img src="./static/img/profile-placeholder.png" />
+    </div>
+
+    <div class="info">
+      <a
+       id="user-profile-collapse"
+       class="collapsed"
+       data-toggle="collapse"
+       href="#user-menu"
+      >
+        <span>
+          <span class="username-container">
+            {{ user.firstName }} {{ user.lastName }}
+            <b class="caret"></b>
+          </span>
+
+          <span class="user-role">
+            {{ user.role }}
+          </span>
+        </span>
+      </a>
+
+      <div class="clearfix"></div>
+      <div class="collapse" id="user-menu">
+        <ul class="nav">
+          <li>
+            <a href="#">
+              <span class="sidebar-mini-icon">MP</span>
+              <span class="sidebar-normal">My Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="sidebar-mini-icon">EP</span>
+              <span class="sidebar-normal">Edit Profile</span>
+            </a>
+          </li>
+          <li>
+            <a [routerLink]="['/' + routes.login.path]">
+              <span class="sidebar-mini-icon">L</span>
+              <span class="sidebar-normal">Logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <ul class="nav">
+    <li routerLinkActive="active" *ngFor="let routeDef of routeIconDef">
+      <!--If single link-->
+      <a
+        [routerLink]="[routeDef.route.path]"
+        *ngIf="!routeDef.route.children"
+      >
+        <i class="{{ routeDef.icon }}"></i>
+        <p>{{ routeDef.route.title }}</p>
+      </a>
+
+      <!--If submenu-->
+      <a
+        data-toggle="collapse"
+        href="#{{ routeDef.route.title }}"
+        *ngIf="routeDef.route.children"
+      >
+        <i class="{{ routeDef.icon }}"></i>
+        <p>{{ routeDef.route.title }}<b class="caret"></b></p>
+      </a>
+
+      <!--Display the submenu items-->
+      <div
+        id="{{ routeDef.route.title }}"
+        class="collapse"
+        *ngIf="routeDef.route.children"
+      >
+        <ul class="nav">
+          <li
+            routerLinkActive="active"
+            *ngFor="let childitem of routeDef.children"
+          >
+            <a [routerLink]="['/' + routeDef.route.path, childitem.route.path]">
+              <span class="sidebar-mini-icon">
+                {{ childitem.ab }}
+              </span>
+              <span class="sidebar-normal">
+                {{ childitem.route.title }}
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+</div>

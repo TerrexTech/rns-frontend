@@ -1,0 +1,23 @@
+.wrapper {
+  height: auto;
+  margin-top: 93px;
+}
+
+.generate-btn {
+  position: absolute;
+  right: 23px;
+}
+
+.generate-btn button {
+  margin-top :0 !important;
+}
+
+.form-label {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.submit-btn-container {
+  margin-top: 25px;
+}

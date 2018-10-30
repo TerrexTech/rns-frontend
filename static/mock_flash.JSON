@@ -1,0 +1,14 @@
+[
+    {
+        "upc": 600263794446913210129559,
+        "sku": 12345678,
+        "name": "Apple",
+        "origin": "Canada",
+        "device_id": "123456",
+        "price": 10,
+        "sale_price": 8,
+        "ethylene": 10,
+        "status": "bad",
+        "timestamp": "10/10/2010"
+    }
+]

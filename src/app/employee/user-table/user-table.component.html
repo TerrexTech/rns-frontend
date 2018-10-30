@@ -1,0 +1,65 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+    </div>
+
+    <div class="mat-elevation-z8 table-responsive">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            Select
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <section class="example-section"></section>
+            <mat-checkbox (change)="$event ? selection.toggle(row) : null">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+      <!-- Item No Column -->
+      <ng-container matColumnDef="first_name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">First Name</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color">{{ element.first_name }}</a></mat-cell>
+      </ng-container>
+
+      <!-- Item No Column -->
+      <ng-container matColumnDef="last_name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Last Name</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color">{{ element.last_name }}</a></mat-cell>
+      </ng-container>
+
+      <!-- Item No Column -->
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Username</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color" >{{ element.username }}</a></mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Email</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color" >{{ element.email }}</a></mat-cell>
+      </ng-container>
+
+      <!-- Location Column -->
+      <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Account Type</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color" >{{ element.role }}</a></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="modify">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Modify</th>
+        <td mat-cell *matCellDef="let element">
+          <a id="editBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields(element.email)">
+            <i class="fa fa-edit"></i>
+          </a>
+          </td>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </table>
+  </div>

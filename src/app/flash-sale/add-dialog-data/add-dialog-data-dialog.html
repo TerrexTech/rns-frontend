@@ -1,0 +1,71 @@
+<h4 mat-dialog-title>
+    Create New Flash Sale
+</h4>
+<form [formGroup]="form" #updateInventory="ngForm">
+    <br>
+
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-md-3 control-label mx-auto"> SKU </label>
+            <div class="col-sm-8 mx-auto">
+                <input type="number" class="form-control" formControlName="sku" required [ngClass]="{ 'is-invalid': isFieldValid('sku') }"
+                    readonly>
+                <span *ngIf="isFieldValid('sku')" class="invalid-feedback">
+                    SKU is required
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-md-3 control-label mx-auto"> Item Name </label>
+            <div class="col-sm-8 mx-auto">
+                <input type="text" class="form-control" formControlName="name" required [ngClass]=" {'is-invalid': isFieldValid('name') }">
+                <span *ngIf="isFieldValid('name')" class="invalid-feedback">
+                    Name is required
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-md-3 control-label mx-auto"> Leftover waste </label>
+            <div class="col-sm-8 mx-auto">
+                <input type="number" class="form-control" [ngClass]="{ 'is-invalid': isFieldValid('leftover_waste') }"
+                    formControlName="leftover_waste" required>
+                <span *ngIf="isFieldValid('leftover_waste')" class="invalid-feedback">
+                    Leftover waste is required
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-md-3 control-label mx-auto"> Status </label>
+            <div class="col-sm-8 mx-auto">
+                <input type="text" class="form-control" id="status" formControlName="status" required [ngClass]="{ 'is-invalid': isFieldValid('status') }">
+                <span *ngIf="isFieldValid('status')" class="invalid-feedback">
+                    Status is required
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <label class="col-sm-2 col-md-3 control-label mx-auto"> Projected Expiry </label>
+            <div class="col-sm-8 mx-auto">
+                <input #date type="date" class="form-control" [ngClass]="{ 'is-invalid': isFieldValid('projected_expiry') }"
+                    formControlName="projected_expiry" required name="dp">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer mx-auto">
+        <mat-dialog-actions>
+            <button [mat-dialog-close]="true" (click)="onSubmit()">Update</button>
+            <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+            <button [mat-dialog-close]="true">Close</button>
+        </mat-dialog-actions>
+        <!-- <button type="submit" id="addProduct" class="btn btn-info btn-fill col-sm-6 col-md-6">Update Product</button>
+            <button type="submit" id="cancelProduct" class="btn btn-danger btn-fill col-sm-6 col-md-6" (click)="reset()">Reset</button> -->
+    </div>
+</form>

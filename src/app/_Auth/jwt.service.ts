@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import * as jwt_decode from 'jwt-decode'
 
-import { AccessToken } from './access_token.model'
+import { AccessToken } from './access-token.model'
 
 @Injectable()
 export class JWTService {

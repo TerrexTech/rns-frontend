@@ -124,6 +124,18 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Lot </label>
+                <div class="col-sm-8 mx-auto">
+                    <input type="text" class="form-control" id="lot" formControlName="lot" placeholder="Lot No."
+                        required [ngClass]="{ 'is-invalid': isFieldValid('lot') }">
+                    <span *ngIf="isFieldValid('lot')" class="invalid-feedback">
+                        Lot No. is required
+                    </span>
+                </div>
+            </div>
+        </div>
         <div class="modal-footer mx-auto">
             <mat-dialog-actions>
                 <button [mat-dialog-close]="true" (click)="onSubmit()">Update</button>

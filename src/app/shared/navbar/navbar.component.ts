@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Renderer, ViewChild } from '@angular/cor
 import { NavigationEnd, NavigationStart, Router } from '@angular/router'
 import { Location } from '@angular/common'
 import { Subscription } from 'rxjs/Subscription'
+import { filter } from 'rxjs/operators'
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -37,7 +38,7 @@ export class NavbarComponent implements OnInit {
         if (body.classList.contains('sidebar-mini')) {
             misc.sidebar_mini_active = true
         }
-        this._router = this.router.events.filter(event => event instanceof NavigationEnd)
+        this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
                                          .subscribe((event: NavigationEnd) => {
           const $layer = document.getElementsByClassName('close-layer')[0]
           if ($layer) {

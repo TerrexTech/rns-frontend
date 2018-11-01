@@ -1,13 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 import { Http } from '@angular/http'
-import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
+// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 import { Inventory } from '../../models/inventory'
 import { SelectionModel } from '@angular/cdk/collections'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import swal from 'sweetalert'
 
-let Food: Inventory[] = []
+const Food: Inventory[] = []
 
 @Component({
   selector: 'component-show',
@@ -30,36 +30,36 @@ export class ShowComponent implements OnInit {
 
   selection = new SelectionModel<Inventory>(true, [])
 
-  constructor(private http: Http, private loadInventoryJsonService: LoadInventoryJsonService, public dialog: MatDialog) {
+  constructor(private http: Http, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.loadInventoryJsonService.getJSON()
-      .subscribe(data => {
-        console.log(data)
-        this.dataSource.data = data
-        Food = data
-      })
+    // this.loadInventoryJsonService.getJSON()
+    //   .subscribe(data => {
+    //     console.log(data)
+    //     this.dataSource.data = data
+    //     Food = data
+    //   })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
   }
 
   getSearchData(query, field): void {
-    this.loadInventoryJsonService.getSearchJSON(query, field)
-      .subscribe(data => {
-        console.log(data)
-        this.dataSource.data = data
-        Food = data
-      })
+    // this.loadInventoryJsonService.getSearchJSON(query, field)
+    //   .subscribe(data => {
+    //     console.log(data)
+    //     this.dataSource.data = data
+    //     Food = data
+    //   })
   }
 
   resetData(): void {
-    this.loadInventoryJsonService.getJSON()
-      .subscribe(data => {
-        console.log(data)
-        this.dataSource.data = data
-        Food = data
-      })
+    // this.loadInventoryJsonService.getJSON()
+    //   .subscribe(data => {
+    //     console.log(data)
+    //     this.dataSource.data = data
+    //     Food = data
+    //   })
   }
 
   // make method more efficient in future
@@ -78,7 +78,7 @@ export class ShowComponent implements OnInit {
             const index: number = Food.findIndex(d => d === item)
             console.log('++++++++++++++++++==')
             console.log(item.item_id)
-            this.loadInventoryJsonService.deleteRow(item.item_id)
+            // this.loadInventoryJsonService.deleteRow(item.item_id)
             this.resetData()
           })
           swal('Your fruit has been deleted!', {
@@ -132,12 +132,12 @@ export class ShowComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(result => {
-      this.loadInventoryJsonService.getJSON()
-          .subscribe(data => {
-            console.log(data)
-            this.dataSource.data = data
-            Food = data
-        })
+      // this.loadInventoryJsonService.getJSON()
+      //     .subscribe(data => {
+      //       console.log(data)
+      //       this.dataSource.data = data
+      //       Food = data
+      //   })
     })
     }
 

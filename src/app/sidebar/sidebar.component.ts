@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 
 import { AppRoutes } from '../../app/app.routes'
 import { JWTService } from '../../app/_Auth/jwt.service'
-import { User } from '../../app/_Auth/User.model'
+import { User } from '../../app/_Auth/user-model'
 
 @Component({
   selector: 'component-sidebar-cmp',
@@ -113,8 +113,12 @@ export class SidebarComponent implements OnInit {
           ab: 'FS'
         },
         {
-          route: AppRoutes.flashsale.children.addflashsales,
-          ab: 'AF'
+          route: AppRoutes.flashsale.children.donatefood,
+          ab: 'DF'
+        },
+        {
+          route: AppRoutes.flashsale.children.disposefood,
+          ab: 'DF'
         }
       ]
     },

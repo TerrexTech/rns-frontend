@@ -2,6 +2,15 @@
   padding-right: 10px
 }
 
+.generate-btn {
+  position: absolute;
+  right: 23px;
+}
+
+.generate-btn button {
+  margin-top :0 !important;
+}
+
 img{
     height: 400px;
     width: 400px
@@ -36,11 +45,17 @@ th.mat-sort-header-sorted {
 }
 
 .green{
- background-color: green
+ background-color: rgb(85, 97, 85)
 }
 
-.red{
- background-color: red
+.bad{
+ background-color: red;
+ border-right: 1px solid rgb(224, 224, 224);
+   padding: 0 24px 0 24px;
+      font-size: 14px;
+      /* text-align: center; */
+      border-right: 1px solid rgb(224, 224, 224);
+      border-bottom: 1px solid rgb(224, 224, 224);
 }
 
 .control-label.required:after {

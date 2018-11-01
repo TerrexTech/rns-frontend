@@ -21,14 +21,15 @@ import {
 import { ViewFlashsaleComponent } from './view-flashsale/view-flashsale.component'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { AddDialogDataComponent } from './add-dialog-data/add-dialog-data.component'
-import { AddFlashsaleComponent } from './add-flashsale/add-flashsale.component'
-
+import { DonateFoodComponent } from './donate-food/donate-food.component'
+import { DisposeFoodComponent } from './dispose-food/dispose-food.component'
 @NgModule({
     declarations: [
         ViewFlashsaleComponent,
-        AddFlashsaleComponent,
         DialogDataDialogComponent,
-        AddDialogDataComponent
+        AddDialogDataComponent,
+        DonateFoodComponent,
+        DisposeFoodComponent
     ],
     imports: [
         CommonModule,

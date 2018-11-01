@@ -2,28 +2,18 @@
   padding-right: 10px
 }
 
-img{
-    height: 400px;
-    width: 400px
-}
-
-.generate-btn-add {
+.generate-btn {
   position: absolute;
-  right: 395px;
-}
-
-.generate-btn-donate {
-  position: absolute;
-  right: 225px;
-}
-
-.generate-btn-dispose {
-  position: absolute;
-  right: 25px;
+  right: 23px;
 }
 
 .generate-btn button {
   margin-top :0 !important;
+}
+
+img{
+    height: 400px;
+    width: 400px
 }
 
 .example-form {
@@ -58,14 +48,8 @@ th.mat-sort-header-sorted {
  background-color: green
 }
 
-.bad{
- background-color: red;
- border-right: 1px solid rgb(224, 224, 224);
-   padding: 0 24px 0 24px;
-      font-size: 14px;
-      /* text-align: center; */
-      border-right: 1px solid rgb(224, 224, 224);
-      border-bottom: 1px solid rgb(224, 224, 224);
+.red{
+ background-color: red
 }
 
 .control-label.required:after {

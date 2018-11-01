@@ -23,7 +23,7 @@ export class ViewFlashsaleComponent implements OnInit {
   selection = new SelectionModel<Employee>(true, [])
 
   displayedColumns = ['select', 'upc', 'sku', 'name',
-                      'origin', 'device_id', 'price', 'sale_price', 'ethylene', 'status', 'timestamp', 'modify']
+                      'device_id', 'price', 'sale_price', 'ethylene', 'status', 'timestamp', 'modify']
   // displayedColumns = ['select', 'sku', 'name', 'leftover waste', 'status', 'projected expiry', 'modify']
   curField: any
 

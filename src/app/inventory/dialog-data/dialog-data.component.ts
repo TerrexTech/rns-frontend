@@ -2,7 +2,7 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
-import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
+// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 import swal from 'sweetalert'
 
 @Component({
@@ -19,7 +19,7 @@ export class DialogDataDialogComponent implements OnInit {
   constructor(
   private formBuilder: FormBuilder,
   @Inject(MAT_DIALOG_DATA) public data: any,
-  private loadInv: LoadInventoryJsonService,
+  // private loadInv: LoadInventoryJsonService,
   private route: ActivatedRoute,
   private router: Router
              ) { }
@@ -59,6 +59,9 @@ export class DialogDataDialogComponent implements OnInit {
              .setValue(this.curField.data.device_id)
     this.form.get('location')
              .setValue(this.curField.data.location)
+    this.form.get('lot')
+             .setValue(this.curField.data.lot)
+
   }
 
   isFieldValid(field: string): any {
@@ -87,7 +90,7 @@ export class DialogDataDialogComponent implements OnInit {
     const origDate = this.form.value.date_arrived
     this.form.value.date_arrived = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
     console.log('submitted')
-    this.loadInv.updateRow(this.form.value)
+    // this.loadInv.updateRow(this.form.value)
     swal('Record successfully inserted!')
       .then(log => {
         console.log(log)

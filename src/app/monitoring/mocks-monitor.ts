@@ -100,7 +100,7 @@ export class MockMonitor {
     genCarbonData(): any {
         const array1 = []
         console.log(localStorage.getItem('carbon') !== undefined)
-        if (localStorage.getItem('carbon') === undefined) {
+        if (!localStorage.getItem('carbon')) {
 
             return JSON.parse(localStorage.getItem('carbon'))
         } else {
@@ -169,9 +169,13 @@ export class MockMonitor {
             for (let index = 0; index < 100; index++) {
                 array3.push({
                     SKU: this.genSKU(),
-                    'Product Name': this.genName(),
-                    Sensor: this.genFloat(1, 40)
-                        .toFixed(2),
+                    Name: this.genName(),
+                    'Sensor #': this.genFloat(1, 40)
+                        .toFixed(0),
+                    status: 'good',
+                    'Last Maintenance': new Date(this.genArrivalDate())
+                        .toISOString()
+                        .split('T')[0],
                     Timestamp: new Date(this.genArrivalDate())
                         .toISOString()
                         .split('T')[0]

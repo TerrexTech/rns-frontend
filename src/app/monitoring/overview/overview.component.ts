@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Http } from '@angular/http'
-import { MockMonitor } from '../mocksMonitor'
+import { MockMonitor } from '../mocks-monitor'
 
 @Component({
   selector: 'component-overview',

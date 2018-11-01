@@ -32,6 +32,7 @@ import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
         ReactiveFormsModule,
         NgbModule.forRoot(),
         // Material Components
+        MatButtonModule,
         MatCheckboxModule,
         MatDialogModule,
         MatCardModule,
@@ -41,8 +42,7 @@ import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
         MatInputModule,
         MatSelectModule,
         MatTableModule,
-        MatTabsModule,
-        MatButtonModule
+        MatTabsModule
     ],
     providers: [],
     exports: [

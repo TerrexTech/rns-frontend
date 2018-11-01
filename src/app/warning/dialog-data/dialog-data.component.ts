@@ -1,89 +1,46 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA } from '@angular/material'
+import { MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort, MatSortable, MatTableDataSource } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
-import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
+import { SelectionModel } from '@angular/cdk/collections'
+import { Warning } from '../../models/warning'
+import { Http } from '@angular/http'
 import swal from 'sweetalert'
 
 @Component({
   selector: 'component-dialog-data-dialog',
-  templateUrl: 'dialog-data-dialog.html'
+  templateUrl: 'dialog-data-dialog.html',
+  styleUrls: ['./dialog-data.component.css']
+
 })
 export class DialogDataDialogComponent implements OnInit {
   @ViewChild('date') dateSel: ElementRef
+  @ViewChild(MatSort) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
   form: FormGroup
   formSubmitAttempt: boolean
   curField: any
   returnUrl: string
+  dataSource = new MatTableDataSource()
+  selection = new SelectionModel<Warning>(true, [])
+  displayedColumns = ['sku', 'name', 'qty. unsold', 'status', 'projected expiry']
 
   constructor(
   private formBuilder: FormBuilder,
   @Inject(MAT_DIALOG_DATA) public data: any,
-  private loadInv: LoadInventoryJsonService,
   private route: ActivatedRoute,
   private router: Router
              ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      sku: ['', [Validators.required, Validators.minLength(1)]],
-      name: ['', [Validators.required, Validators.minLength(1)]],
-      leftover_waste: ['', [Validators.required, Validators.minLength(1)]],
-      status: ['', [Validators.required, Validators.minLength(1)]],
-      projected_expiry: ['', [Validators.required, Validators.minLength(1)]]
-    })
-    this.returnUrl = this.route.snapshot.queryParams[''] || '/'
-    this.curField = this.data
-    this.form.get('sku')
-             .setValue(this.curField.data.sku)
-    this.form.get('name')
-             .setValue(this.curField.data.name)
-    this.form.get('leftover_waste')
-             .setValue(this.curField.data.leftover_waste)
-    this.form.get('status')
-             .setValue(this.curField.data.status)
-    this.form.get('projected_expiry')
-             .setValue(this.curField.data.projected_expiry)
-  }
+    console.log(this.data.data)
+    this.dataSource.data = this.data.data[0]
 
-  isFieldValid(field: string): any {
-    return this.formSubmitAttempt && this.form.controls[field].status === 'INVALID'
+    this.dataSource.paginator = this.paginator
+    this.dataSource.sort = this.sort
   }
-
-  f(): any { return this.form.controls }
 
   onSubmit(): void {
-    this.formSubmitAttempt = true
-    if (this.form.valid) {
-    const month = new Array()
-    month[0] = 'January'
-    month[1] = 'February'
-    month[2] = 'March'
-    month[3] = 'April'
-    month[4] = 'May'
-    month[5] = 'June'
-    month[6] = 'July'
-    month[7] = 'August'
-    month[8] = 'September'
-    month[9] = 'October'
-    month[10] = 'November'
-    month[11] = 'December'
-    this.formSubmitAttempt = true
-    const origDate = this.form.value.projected_expiry
-    this.form.value.projected_expiry = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
-    console.log('submitted')
-    this.loadInv.updateRow(this.form.value)
-    swal('Record successfully inserted!')
-      .then(log => {
-        console.log(log)
 
-        return true
-      })
-      .catch(err => {
-        console.log(err)
-
-        return false
-      })
   }
-}
 }

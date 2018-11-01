@@ -20,8 +20,9 @@ export class WarningComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
+  createType: string
 
-  displayedColumns = ['select', 'sku', 'name', 'leftover waste', 'status', 'projected expiry']
+  displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projected expiry']
   curField: any
 
   ngOnInit(): void {
@@ -46,17 +47,78 @@ export class WarningComponent implements OnInit {
     // console.log(e)
     // if (e !== undefined) {
     //   // this.curField = flash_data.filter(i => i.sku === e)[0]
-      this.selection.selected.forEach(item => {
+    const itemArray = []
+    if (this.selection.selected.length === 0) {
+      alert('Please select a row(s)')
+    }
+    else {
+    this.selection.selected.forEach(item => {
         console.log(item)
-        this.curField = item
+        itemArray.push(item)
+        this.createType = 'Flash Sale'
         // this.curField = flash_data.findIndex(d => d === item.sku)
-        console.log(this.curField)
       })
-      this.dialog.open(DialogDataDialogComponent, {
-        data: {
-          data: this.curField
-        }
-      })
+    console.log(itemArray)
+    this.dialog.open(DialogDataDialogComponent, {
+      minHeight: 600,
+      minWidth: 1000,
+      data: {
+        data: [itemArray, this.createType]
+      }
+    })
+  }
+  }
+
+  donateRows(): void {
+    // console.log(e)
+    // if (e !== undefined) {
+    //   // this.curField = flash_data.filter(i => i.sku === e)[0]
+    const itemArray = []
+    if (this.selection.selected.length === 0) {
+      alert('Please select a row(s)')
+    }
+    else {
+    this.selection.selected.forEach(item => {
+      console.log(item)
+      itemArray.push(item)
+      this.createType = 'Donation'
+      // this.curField = flash_data.findIndex(d => d === item.sku)
+    })
+    console.log(itemArray)
+    this.dialog.open(DialogDataDialogComponent, {
+      minHeight: 600,
+      minWidth: 1000,
+      data: {
+        data: [itemArray, this.createType]
+      }
+    })
+  }
+  }
+
+  disposeRows(): void {
+    // console.log(e)
+    // if (e !== undefined) {
+    //   // this.curField = flash_data.filter(i => i.sku === e)[0]
+    const itemArray = []
+    if (this.selection.selected.length === 0) {
+      alert('Please select a row(s)')
+    }
+    else {
+    this.selection.selected.forEach(item => {
+      console.log(item)
+      itemArray.push(item)
+      this.createType = 'Disposal'
+      // this.curField = flash_data.findIndex(d => d === item.sku)
+    })
+    console.log(itemArray)
+    this.dialog.open(DialogDataDialogComponent, {
+      minHeight: 600,
+      minWidth: 1000,
+      data: {
+        data: [itemArray, this.createType]
+      }
+    })
+  }
   }
 
   removeSelectedRows(): void {

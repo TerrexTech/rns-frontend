@@ -16,14 +16,14 @@ export const AppRoutes = {
   },
 
   dashboard: {
-    path: 'dashboard',
     title: 'Dashboard',
+    path: 'dashboard',
     component: DashboardComponent
   },
 
   employee: {
     title: 'Employees',
-    path: 'employee/show-employees',
+    path: 'employee',
     children: EmployeeRoutes
   },
 

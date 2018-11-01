@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import swal from 'sweetalert'
 import { MockUtils } from './mockutils'
-import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
+// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 
 @Component({
   selector: 'component-add',
@@ -17,8 +17,7 @@ export class AddComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private addService: AddInventoryService,
-    private addData: LoadInventoryJsonService
+    private addService: AddInventoryService
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +53,11 @@ export class AddComponent implements OnInit {
       .toLocaleDateString()
       .split('T')[0])
     this.form.get('total_weight')
-      .setValue(`m.genWeight()
-                 .toFixed(2) + ' Kilograms'`)
+      .setValue(`${m.genWeight()
+        .toFixed(2)} Kilograms`)
     this.form.get('price')
-      .setValue(`m.genPrice()
-                 .toFixed(2) + ' Dollars'`)
+      .setValue(`${m.genPrice()
+                 .toFixed(2)} Dollars`)
     this.form.get('device_id')
       .setValue(m.genUUID())
     this.form.get('lot')
@@ -87,7 +86,7 @@ export class AddComponent implements OnInit {
       // this.form.value.date_arrived = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
       this.form.value.date_arrived = Math.floor((new Date(origDate).getTime() / 1000))
       console.log(this.form.value.date_arrived)
-      this.addData.addProd(this.form.value)
+      // this.addData.addProd(this.form.value)
       this.reset()
     }
   }

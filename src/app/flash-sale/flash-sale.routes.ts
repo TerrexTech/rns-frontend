@@ -1,5 +1,6 @@
 import { ViewFlashsaleComponent } from './view-flashsale/view-flashsale.component'
-import { AddFlashsaleComponent } from './add-flashsale/add-flashsale.component'
+import { DonateFoodComponent } from './donate-food/donate-food.component'
+import { DisposeFoodComponent } from './dispose-food/dispose-food.component'
 
 export const FlashSaleRoutes = {
     viewsales: {
@@ -7,9 +8,14 @@ export const FlashSaleRoutes = {
         title: 'View Flash Sales',
         component: ViewFlashsaleComponent
     },
-    addflashsales: {
-        path: 'add-sales',
-        title: 'Add Flash Sales',
-        component: AddFlashsaleComponent
+    disposefood: {
+        path: 'dispose-food',
+        title: 'Dispose Food',
+        component: DisposeFoodComponent
+    },
+    donatefood: {
+        path: 'donate-food',
+        title: 'Donate Food',
+        component: DonateFoodComponent
     }
 }

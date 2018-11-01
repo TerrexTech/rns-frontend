@@ -1,12 +1,12 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 import { Http } from '@angular/http'
-import { LoadInventoryJsonService } from '../services/load-inventory-json/load-inventory-json.service'
+// import { LoadInventoryJsonService } from '../services/load-inventory-json/load-inventory-json.service'
 import { Inventory } from '../models/inventory'
 import { SelectionModel } from '@angular/cdk/collections'
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MockUtils } from '../reports/mocks'
-import { MockMonitor } from '../monitoring/mocksMonitor'
+import { MockMonitor } from '../monitoring/mocks-monitor'
 const Food: Inventory[] = []
 
 @Component({
@@ -51,7 +51,7 @@ export class ReportsTableComponent implements OnInit {
 
   constructor(
     private http: Http,
-    private loadInventoryJsonService: LoadInventoryJsonService,
+    // private loadInventoryJsonService: LoadInventoryJsonService,
     public dialog: MatDialog
              ) { }
 
@@ -132,6 +132,13 @@ export class ReportsTableComponent implements OnInit {
       console.log(mock.genTempData())
       this.tempMon = mock.genTempData()
       this.dataSource.data = this.tempMon
+    }
+
+    else if (this.jsonFields === 12) {
+      const mock = new MockMonitor()
+      console.log(mock.genSensorData())
+      this.sensorMon = mock.genSensorData()
+      this.dataSource.data = this.sensorMon
     }
 
     // this.loadInventoryJsonService.getJsonTest()

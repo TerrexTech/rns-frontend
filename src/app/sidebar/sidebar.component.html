@@ -63,7 +63,7 @@
     <li routerLinkActive="active" *ngFor="let routeDef of routeIconDef">
       <!--If single link-->
       <a
-        [routerLink]="[routeDef.route.path]"
+        [routerLink]="['/' + routeDef.  route.path]"
         *ngIf="!routeDef.route.children"
       >
         <i class="{{ routeDef.icon }}"></i>

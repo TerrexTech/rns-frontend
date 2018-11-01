@@ -3,7 +3,7 @@ import { Route, RouterModule } from '@angular/router'
 
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component'
 import { AuthGuard } from './_Auth/auth.guard'
-import { AppRoutes } from './../app/app.routes'
+import { AppRoutes } from './app.routes'
 
 function createModuleRoutes(routeDef: any): any {
   return Object.keys(routeDef)
@@ -19,9 +19,16 @@ function createModuleRoutes(routeDef: any): any {
           canActivate: route.isPublic ? [AuthGuard] : undefined,
           children: createModuleRoutes(route.children)
         }
+        console.log(newRoute)
 
         return routes.concat(newRoute)
       }
+
+      console.log({
+        path: route.path,
+        component: route.component,
+        canActivate: route.isPublic ? [AuthGuard] : undefined
+      })
 
       return routes.concat({
         path: route.path,

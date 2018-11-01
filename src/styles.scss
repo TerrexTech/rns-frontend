@@ -16,85 +16,85 @@
 
 */
 @import '~bootstrap/scss/bootstrap';
-@import 'paper-dashboard/variables';
-@import 'paper-dashboard/mixins';
+@import 'app-template/variables';
+@import 'app-template/mixins';
 
 // Plugins CSS
-@import 'paper-dashboard/plugins/plugin-bootstrap-switch';
-@import 'paper-dashboard/plugins/plugin-bootstrap-table';
-@import 'paper-dashboard/plugins/plugin-nouislider';
-@import 'paper-dashboard/plugins/plugin-animate-bootstrap-notify';
-@import 'paper-dashboard/plugins/plugin-perfect-scrollbar';
+@import 'app-template/plugins/plugin-bootstrap-switch';
+@import 'app-template/plugins/plugin-bootstrap-table';
+@import 'app-template/plugins/plugin-nouislider';
+@import 'app-template/plugins/plugin-animate-bootstrap-notify';
+@import 'app-template/plugins/plugin-perfect-scrollbar';
 
-@import 'paper-dashboard/plugins/plugin-card-wizard';
-@import 'paper-dashboard/plugins/plugin-datetimepicker';
-@import 'paper-dashboard/plugins/plugin-bootstrap-select';
-@import 'paper-dashboard/plugins/plugin-jasny-fileupload';
-@import 'paper-dashboard/plugins/plugin-tagsinput';
-@import 'paper-dashboard/plugins/plugin-datatables.net';
-@import 'paper-dashboard/plugins/plugin-jquery.jvectormap';
-@import 'paper-dashboard/plugins/plugin-fullcalendar';
+@import 'app-template/plugins/plugin-card-wizard';
+@import 'app-template/plugins/plugin-datetimepicker';
+@import 'app-template/plugins/plugin-bootstrap-select';
+@import 'app-template/plugins/plugin-jasny-fileupload';
+@import 'app-template/plugins/plugin-tagsinput';
+@import 'app-template/plugins/plugin-datatables.net';
+@import 'app-template/plugins/plugin-jquery.jvectormap';
+@import 'app-template/plugins/plugin-fullcalendar';
 
 // Core CSS
-@import 'paper-dashboard/nucleo-outline';
-@import 'paper-dashboard/buttons';
-@import 'paper-dashboard/social-buttons';
-@import 'paper-dashboard/animated-buttons';
-@import 'paper-dashboard/inputs';
-@import 'paper-dashboard/typography';
-@import 'paper-dashboard/misc';
-@import 'paper-dashboard/misc-extend';
-@import 'paper-dashboard/navbar';
-@import 'paper-dashboard/dropdown';
-@import 'paper-dashboard/alerts';
-@import 'paper-dashboard/images';
-@import 'paper-dashboard/tables';
-@import 'paper-dashboard/footers';
-@import 'paper-dashboard/fixed-plugin';
+@import 'app-template/nucleo-outline';
+@import 'app-template/buttons';
+@import 'app-template/social-buttons';
+@import 'app-template/animated-buttons';
+@import 'app-template/inputs';
+@import 'app-template/typography';
+@import 'app-template/misc';
+@import 'app-template/misc-extend';
+@import 'app-template/navbar';
+@import 'app-template/dropdown';
+@import 'app-template/alerts';
+@import 'app-template/images';
+@import 'app-template/tables';
+@import 'app-template/footers';
+@import 'app-template/fixed-plugin';
 
 // components
-@import 'paper-dashboard/checkboxes-radio';
-@import 'paper-dashboard/progress';
-@import 'paper-dashboard/badges';
-@import 'paper-dashboard/pagination';
-@import 'paper-dashboard/info-areas';
-@import 'paper-dashboard/pills';
-@import 'paper-dashboard/tabs';
-@import 'paper-dashboard/popups';
-@import 'paper-dashboard/modals';
-@import 'paper-dashboard/carousel';
-@import 'paper-dashboard/sidebar-and-main-panel';
-@import 'paper-dashboard/timeline';
+@import 'app-template/checkboxes-radio';
+@import 'app-template/progress';
+@import 'app-template/badges';
+@import 'app-template/pagination';
+@import 'app-template/info-areas';
+@import 'app-template/pills';
+@import 'app-template/tabs';
+@import 'app-template/popups';
+@import 'app-template/modals';
+@import 'app-template/carousel';
+@import 'app-template/sidebar-and-main-panel';
+@import 'app-template/timeline';
 
 
 
 // cards
-@import 'paper-dashboard/cards';
-@import "paper-dashboard/cards/card-chart";
-@import "paper-dashboard/cards/card-map";
-@import "paper-dashboard/cards/card-user";
+@import 'app-template/cards';
+@import "app-template/cards/card-chart";
+@import "app-template/cards/card-map";
+@import "app-template/cards/card-user";
 
-@import "paper-dashboard/cards/card-background";
-@import "paper-dashboard/cards/card-collapse";
-@import "paper-dashboard/cards/card-contributions";
-@import "paper-dashboard/cards/card-info-area";
-@import "paper-dashboard/cards/card-lock";
-@import "paper-dashboard/cards/card-pricing";
-@import "paper-dashboard/cards/card-profile";
-@import "paper-dashboard/cards/card-signup";
-@import "paper-dashboard/cards/card-stats-mini";
-@import "paper-dashboard/cards/card-stats";
-@import "paper-dashboard/cards/card-subcategories";
-@import "paper-dashboard/cards/card-testimonials";
-@import "paper-dashboard/cards/card-tasks";
+@import "app-template/cards/card-background";
+@import "app-template/cards/card-collapse";
+@import "app-template/cards/card-contributions";
+@import "app-template/cards/card-info-area";
+@import "app-template/cards/card-lock";
+@import "app-template/cards/card-pricing";
+@import "app-template/cards/card-profile";
+@import "app-template/cards/card-signup";
+@import "app-template/cards/card-stats-mini";
+@import "app-template/cards/card-stats";
+@import "app-template/cards/card-subcategories";
+@import "app-template/cards/card-testimonials";
+@import "app-template/cards/card-tasks";
 
 // example pages and sections
-@import 'paper-dashboard/example-pages';
-@import 'paper-dashboard/sections';
+@import 'app-template/example-pages';
+@import 'app-template/sections';
 
 
-@import 'paper-dashboard/responsive';
-@import 'paper-dashboard/media-queries';
+@import 'app-template/responsive';
+@import 'app-template/media-queries';
 
 
 @font-face {

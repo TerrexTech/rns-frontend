@@ -16,28 +16,21 @@ function createModuleRoutes(routeDef: any): any {
         const newRoute = {
           path: route.path,
           component: route.component,
-          canActivate: route.isPublic ? [AuthGuard] : undefined,
+          canActivate: route.isPublic ? undefined : [AuthGuard],
           children: createModuleRoutes(route.children)
         }
-        console.log(newRoute)
 
         return routes.concat(newRoute)
       }
 
-      console.log({
-        path: route.path,
-        component: route.component,
-        canActivate: route.isPublic ? [AuthGuard] : undefined
-      })
-
       return routes.concat({
         path: route.path,
         component: route.component,
-        canActivate: route.isPublic ? [AuthGuard] : undefined
+        canActivate: route.isPublic ? undefined : [AuthGuard]
       })
     },
     []
-    )
+  )
 }
 
 @NgModule({

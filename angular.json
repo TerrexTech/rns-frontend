@@ -19,11 +19,6 @@
             "assets": [
               "static"
             ],
-            "styles": [
-              "./src/styles.scss",
-              "./static/scss/paper-dashboard.scss",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/jquery/dist/jquery.js"
@@ -57,7 +52,6 @@
             ],
             "styles": [
               "./src/styles.scss",
-              // "./static/scss/paper-dashboard.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "assets": [

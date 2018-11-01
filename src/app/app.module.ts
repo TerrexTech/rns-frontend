@@ -111,8 +111,7 @@ import { AlertPopupComponent } from './alert-popup/alert-popup.component'
     WarningModule
   ],
   providers: [
-    AuthGuard,
-    JWTService
+    AuthGuard
   ],
   bootstrap: [AppContainer]
 })

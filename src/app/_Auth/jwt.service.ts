@@ -4,16 +4,21 @@ import * as jwt_decode from 'jwt-decode'
 import { AccessToken } from './access-token.model'
 
 @Injectable()
-export class JWTService {
+export class TokenService {
   decodedAccessToken: AccessToken
 
   getAccessToken(): AccessToken {
     if (!this.decodedAccessToken) {
       const accessToken = this.getAccessTokenRaw()
+      if (!accessToken) {
+        return undefined
+      }
       this.decodedAccessToken = jwt_decode(accessToken)
     }
 
-    return this.decodedAccessToken
+    if (!this.isTokenExpired(this.decodedAccessToken)) {
+      return this.decodedAccessToken
+    }
   }
 
   getAccessTokenRaw(): string {
@@ -24,9 +29,7 @@ export class JWTService {
     return localStorage.getItem('refresh_token')
   }
 
-  isTokenExpired(): any {
-    const deToken = this.getAccessToken()
-
+  isTokenExpired(deToken: AccessToken): any {
     if (!deToken.exp) {
       return true
     }

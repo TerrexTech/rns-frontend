@@ -1,11 +1,60 @@
 import { Injectable } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 @Injectable()
 export class AuthenticationService {
 
+  returnUrl: string
+  showError = false
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient
+  ) {
+    this.http = http
+  }
+
   login(resource: string): void {
     console.log('-----------------')
     console.log(resource)
+
+    console.log(this.http)
+    this.http.post('http://162.212.158.16:30653/api', resource)
+      .toPromise()
+      .then((data: any) => {
+        console.log(data.data.login)
+        if (data.data.login !== null) {
+          localStorage.setItem('access_token', data.data.login.access_token)
+          localStorage.setItem('refresh_token', data.data.login.refresh_token)
+          this.router.navigate([`/${this.returnUrl || 'dashboard'}`])
+            .then(log => {
+              console.log(log)
+
+              return true
+            })
+            .catch(err => {
+              console.log(err)
+
+              return false
+            })
+          this.showError = false
+
+          return this.showError
+        }
+        else {
+          this.showError = true
+
+          return this.showError
+        }
+      })
+      .catch(err => {
+        console.log(err)
+
+        return this.showError
+      })
 
     // this.http.post('localhost:8080/users/authenticate', resource)
     //   .toPromise()

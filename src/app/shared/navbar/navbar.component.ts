@@ -104,7 +104,7 @@ export class NavbarComponent implements OnInit {
 
         if (window.innerWidth < 991) {
           setTimeout(() => {
-            mainPanel.style.position = ''
+            // mainPanel.style.position = ''
           }, 500)
         }
     }

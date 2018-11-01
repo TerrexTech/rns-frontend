@@ -21,7 +21,7 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material'
-import { JWTService } from '../_Auth/jwt.service'
+import { TokenService } from '../_Auth/jwt.service'
 
 import { Inventory } from '../models/inventory'
 import { AddComponent } from './add/add.component'
@@ -64,7 +64,7 @@ import { ShowComponent } from './show/show.component'
         AddInventoryService,
         // AlertService
         Inventory,
-        JWTService
+        TokenService
     ],
     entryComponents: [
         DialogDataDialogComponent

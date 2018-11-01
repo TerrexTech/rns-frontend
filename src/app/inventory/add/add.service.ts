@@ -1,4 +1,4 @@
-import { JWTService } from '../../_Auth/jwt.service'
+import { TokenService } from '../../_Auth/jwt.service'
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { ItemModel } from './item.model'
@@ -22,7 +22,7 @@ interface ItemData {
 export class AddInventoryService {
   private mock: MockUtils
 
-  constructor(private http: HttpClient, private jwt: JWTService) {
+  constructor(private http: HttpClient, private jwt: TokenService) {
     this.mock = new MockUtils()
   }
 

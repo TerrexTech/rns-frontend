@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { LoginPageComponent } from './login-page.component'
+import { AuthenticationService } from '../_Auth/auth.service'
 
 @NgModule({
     imports: [
@@ -16,6 +17,9 @@ import { LoginPageComponent } from './login-page.component'
     ],
     declarations: [
         LoginPageComponent
+    ],
+    providers: [
+        AuthenticationService
     ]
 })
 

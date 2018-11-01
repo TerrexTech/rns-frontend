@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { AuthenticationService } from '../_Auth/auth.service'
 
 @Component({
   selector: 'component-login-page',
@@ -22,9 +23,11 @@ export class LoginPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private authenticationService: AuthenticationService
   ) {
     this.http = http
+    this.authenticationService = authenticationService
   }
 
   ngOnInit(): void {
@@ -56,44 +59,10 @@ export class LoginPageComponent implements OnInit {
         }
       }`
 
-      this.loading = true
-      console.log(this.http)
-      this.http.post('http://162.212.158.16:30653/api', resource)
-        .toPromise()
-        // .then(d => this.data)
-        .then((data: any) => {
-          console.log(data.data.login)
-          if (data.data.login !== null) {
-            localStorage.setItem('access_token', data.data.login.access_token)
-            localStorage.setItem('refresh_token', data.data.login.refresh_token)
-            this.router.navigate([this.returnUrl])
-              .then(log => {
-                console.log(log)
-
-                return true
-              })
-              .catch(err => {
-                console.log(err)
-
-                return false
-              })
-            this.showError = false
-            this.reset()
-
-            return this.showError
-          }
-          else {
-            this.showError = true
-
-            return this.showError
-          }
-        })
-        .catch(err => {
-          console.log(err)
-
-          return this.showError
-        })
+      this.authenticationService.login(resource)
+      this.reset()
     }
+
   }
 
   reset(): void {

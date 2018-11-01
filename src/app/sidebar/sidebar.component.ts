@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 
 import { AppRoutes } from '../../app/app.routes'
-import { JWTService } from '../../app/_Auth/jwt.service'
+import { TokenService } from '../../app/_Auth/jwt.service'
 import { User } from '../../app/_Auth/user-model'
 
 @Component({
@@ -10,7 +10,7 @@ import { User } from '../../app/_Auth/user-model'
   styleUrls: ['sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  private jwt: JWTService
+  private jwt: TokenService
   public user: User
 
   public routes: any
@@ -134,7 +134,7 @@ export class SidebarComponent implements OnInit {
     }
   ]
 
-  constructor(jwt: JWTService) {
+  constructor(jwt: TokenService) {
     this.jwt = jwt
   }
 

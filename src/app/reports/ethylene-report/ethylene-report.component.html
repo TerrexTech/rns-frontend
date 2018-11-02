@@ -17,17 +17,14 @@
         </div>
         <div class="col-lg-4 col-sm-4">
           <div class="card report-info">
-            <div class="card-body card-body2">
+            <div id="info" class="card-body card-body2">
               <h6 class="big-title">Average Ethylene (PPM)</h6>
               <br>
               <div>
                 <p>Report Type: Ethylene</p>
                 <br>
-                <!-- <p>Product Name: </p>
-              <br> -->
                 <p>Date Generated: {{ date | date:'yyyy/MM/dd' }} </p>
-                <br><br>
-                <div class="row">
+                  <div class="row mx-auto">
                   <button mat-raised-button class="mx-auto" color="warn" (click)="captureScreen()">Convert Report to
                     PDF</button>
                 </div>

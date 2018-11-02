@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
-import { MockMonitor } from '../mocksMonitor'
+import { MockMonitor } from '../mocks-monitor'
 
 @Component({
   selector: 'component-temperature',
@@ -22,6 +22,8 @@ export class TemperatureComponent implements OnInit {
   }
 
   loadTempGraph(): void {
+    const m = new MockMonitor()
+    m.genTempData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('temp'))
     console.log(arr1.map(e => {
@@ -91,6 +93,34 @@ export class TemperatureComponent implements OnInit {
           }),
           backgroundColor: 'rgba(153,25,51,0.4)'
         }]
+      },
+      options: {
+        responsive: true,
+        hover: {
+          mode: 'dataset'
+        },
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Period'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'PPM'
+            },
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
       }
     })
 

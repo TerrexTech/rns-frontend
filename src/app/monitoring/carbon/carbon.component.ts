@@ -21,6 +21,8 @@ export class CarbonComponent implements OnInit {
   }
 
   loadCarbonGraph(): void {
+    const m = new MockMonitor()
+    m.genCarbonData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('carbon'))
     console.log(arr1.map(e => {

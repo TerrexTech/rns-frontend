@@ -18,7 +18,7 @@ export class AuthenticationService {
   }
 
   login(resource: string): void {
-    console.log('-----------------')
+    const returnURL = this.route.snapshot.queryParamMap.get('returnURL')
     console.log(resource)
 
     console.log(this.http)
@@ -26,10 +26,12 @@ export class AuthenticationService {
       .toPromise()
       .then((data: any) => {
         console.log(data.data.login)
+        console.log('-----------------')
+        console.log(this)
         if (data.data.login !== null) {
           localStorage.setItem('access_token', data.data.login.access_token)
           localStorage.setItem('refresh_token', data.data.login.refresh_token)
-          this.router.navigate([`/${this.returnUrl || 'dashboard'}`])
+          this.router.navigate([`/${returnURL || 'dashboard'}`])
             .then(log => {
               console.log(log)
 

@@ -8,17 +8,21 @@ export class TokenService {
   decodedAccessToken: AccessToken
 
   getAccessToken(): AccessToken {
-    if (!this.decodedAccessToken) {
-      const accessToken = this.getAccessTokenRaw()
-      if (!accessToken) {
-        return undefined
-      }
-      this.decodedAccessToken = jwt_decode(accessToken)
+    const rawAccessToken = this.getAccessTokenRaw()
+    if (!rawAccessToken) {
+      return undefined
     }
 
-    if (!this.isTokenExpired(this.decodedAccessToken)) {
+    if (!this.decodedAccessToken) {
+      this.decodedAccessToken = jwt_decode(rawAccessToken)
+    }
+
+    const isExpired = this.isTokenExpired(this.decodedAccessToken)
+    if (!isExpired) {
       return this.decodedAccessToken
     }
+
+    return undefined
   }
 
   getAccessTokenRaw(): string {
@@ -29,18 +33,20 @@ export class TokenService {
     return localStorage.getItem('refresh_token')
   }
 
-  isTokenExpired(deToken: AccessToken): any {
-    if (!deToken.exp) {
+  isTokenExpired(accessToken: AccessToken): any {
+    if (!accessToken.exp) {
       return true
     }
 
-    const date = new Date(0)
+    const tokenDate = new Date(0)
 
     const tokenDateStr = this.decodedAccessToken.exp
-    date.setUTCSeconds(Date.parse(tokenDateStr))
+    tokenDate.setUTCSeconds(Date.parse(tokenDateStr))
     console.log('********************')
-    console.log(date.valueOf)
+    console.log(tokenDate.valueOf)
 
-    return !(date.valueOf() > new Date().valueOf())
+    const isExpired = tokenDate.valueOf() < new Date().valueOf()
+
+    return isExpired
   }
 }

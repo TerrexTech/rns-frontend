@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { MatDialog, MatSort, MatSortable, MatTableDataSource } from '@angular/material'
+import { MatDialog, MatPaginator, MatSort, MatSortable, MatTableDataSource } from '@angular/material'
 import { Employee } from '../../models/employee'
 import { SelectionModel } from '@angular/cdk/collections'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
@@ -16,6 +16,7 @@ export class UserTableComponent implements OnInit {
 
   constructor(public dialog: MatDialog) { }
   @ViewChild(MatSort) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
   selection = new SelectionModel<Employee>(true, [])
 
   displayedColumns = ['select', 'first_name', 'last_name', 'username', 'email', 'role', 'modify']
@@ -41,6 +42,13 @@ export class UserTableComponent implements OnInit {
   ]
   dataSource = new MatTableDataSource(this.ELEMENT_DATA)
   curField: any
+
+  ngOnInit(): void {
+    this.dataSource.sort = this.sort
+    this.dataSource.paginator = this.paginator
+    this.dataSource.sort = this.sort
+  }
+
   populateFields(e): Employee {
     console.log(e)
     if (e !== undefined) {
@@ -122,9 +130,5 @@ export class UserTableComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach((row: any) => this.selection.select(row))
-  }
-
-  ngOnInit(): void {
-    this.dataSource.sort = this.sort
   }
 }

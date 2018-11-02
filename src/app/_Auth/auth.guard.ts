@@ -7,36 +7,37 @@ import {
 } from '@angular/router'
 
 import { AppRoutes } from '../app.routes'
-import { TokenService } from './jwt.service'
+import { TokenService } from './token.service'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private tokenService: TokenService
+  ) { }
 
   canActivate(
     _: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    const ts = new TokenService()
-    const accessToken = ts.getAccessToken()
-
+    const accessToken = this.tokenService.getAccessToken()
     if (!accessToken) {
-      console.log('+++++++++++++++++++++')
       this.router.navigate(
         [AppRoutes.login.path],
         {
           queryParams: {
-            returnUrl: state.url
+            returnURL: state.url
           }
         }
       )
-      .catch(console.log)
-      //   })
-      console.log('000000000000000000')
-    }
+      .catch(err => {
+        console.log('Error while redirecting to Login:')
+        console.log(err)
+      })
 
-    console.log('2222222222222222')
+      return false
+    }
 
     return true
   }

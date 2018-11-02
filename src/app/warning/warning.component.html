@@ -5,15 +5,6 @@
         <mat-card-title>
           <h3>Warnings</h3>
         </mat-card-title>
-          <div class="generate-btn-add">
-            <button class="btn btn-fill" (click)="populateFields()">Create Flash Sale</button>
-          </div>
-          <div class="generate-btn-donate">
-            <button class="btn btn-fill" (click)="donateRows()">Create Donation</button>
-          </div>
-          <div class="generate-btn-dispose">
-            <button class="btn btn-fill" (click)="disposeRows()">Create Disposal Item</button>
-          </div>
       </mat-card-header>
       <mat-card-content class="row table-wrapper-scroll-y">
         <!--
@@ -54,7 +45,17 @@
 
                     </div>
                 </form> -->
-
+        <div class="row justify-content-md-center">
+          <div class="col col-md-auto">
+            <button class="btn btn-fill" (click)="populateFields()">Create Flash Sale</button>
+          </div>
+          <div class="col col-md-auto">
+            <button class="btn btn-fill" (click)="donateRows()">Create Donation</button>
+          </div>
+          <div class="col col-md-auto">
+            <button class="btn btn-fill" (click)="disposeRows()">Create Disposal Item</button>
+          </div>
+        </div>
         <div class="mat-elevation-z8 table-responsive">
           <table mat-table [dataSource]="dataSource" matSort>
 

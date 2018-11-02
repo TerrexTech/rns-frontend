@@ -1,8 +1,14 @@
 <div class="main-content">
     <div class="container-fluid">
-      <div class="row">
-    </div>
 
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h3>View Employees</h3>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="row table-wrapper-scroll-y">
     <div class="mat-elevation-z8 table-responsive">
       <table mat-table [dataSource]="dataSource" matSort>
 
@@ -20,31 +26,31 @@
       <!-- Item No Column -->
       <ng-container matColumnDef="first_name">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">First Name</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color">{{ element.first_name }}</a></mat-cell>
+        <mat-cell *matCellDef="let element">{{ element.first_name }}</mat-cell>
       </ng-container>
 
       <!-- Item No Column -->
       <ng-container matColumnDef="last_name">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Last Name</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color">{{ element.last_name }}</a></mat-cell>
+        <mat-cell *matCellDef="let element">{{ element.last_name }}</mat-cell>
       </ng-container>
 
       <!-- Item No Column -->
       <ng-container matColumnDef="username">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Username</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color" >{{ element.username }}</a></mat-cell>
+        <mat-cell *matCellDef="let element">{{ element.username }}</mat-cell>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Email</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color" >{{ element.email }}</a></mat-cell>
+        <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
       </ng-container>
 
       <!-- Location Column -->
       <ng-container matColumnDef="role">
         <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Account Type</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="text-center"><a class="green-color" >{{ element.role }}</a></mat-cell>
+        <mat-cell *matCellDef="let element">{{ element.role }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="modify">
@@ -62,4 +68,8 @@
      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
     </table>
+  </div>
+  </mat-card-content>
+  </mat-card>
+  </div>
   </div>

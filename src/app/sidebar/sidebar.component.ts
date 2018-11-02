@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 
 import { AppRoutes } from '../../app/app.routes'
-import { TokenService } from '../../app/_Auth/jwt.service'
+import { TokenService } from '../../app/_Auth/token.service'
 import { User } from '../../app/_Auth/user-model'
 
 @Component({

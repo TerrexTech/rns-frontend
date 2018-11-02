@@ -30,8 +30,8 @@
                       <i class="nc-icon nc-single-02"></i>
                     </span>
                   </div>
-                  <input type="text" id="username" class="form-control" formControlName="username" placeholder="Username"
-                    (focus)="focus=true" (blur)="focus=false" [ngClass]="{ 'is-invalid': formSubmitAttempt && f().username.errors }">
+                  <input type="text" class="form-control" formControlName="username" placeholder="Username"
+                    [ngClass]="{ 'is-invalid': formSubmitAttempt && f().username.errors }" autofocus>
                   <div *ngIf="formSubmitAttempt && f().username.errors" class="invalid-feedback">
                     <div *ngIf="f().username.errors.required">Username is required</div>
                     <div *ngIf="f().username.errors.minlength">Username cannot be less than 4 characters</div>

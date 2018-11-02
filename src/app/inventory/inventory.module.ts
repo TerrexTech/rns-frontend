@@ -21,7 +21,7 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material'
-import { TokenService } from '../_Auth/jwt.service'
+import { TokenService } from '../_Auth/token.service'
 
 import { Inventory } from '../models/inventory'
 import { AddComponent } from './add/add.component'

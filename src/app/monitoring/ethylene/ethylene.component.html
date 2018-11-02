@@ -3,16 +3,24 @@
     <component-overview></component-overview>
     <div class="row">
       <div class="col-sm-3">
-        <rg-gauge-chart [canvasWidth]="300" [needleValue]="20" [centralLabel]="" [options]="{
+        <div class="card report-info">
+          <div id="info" class="card-body card-body2">
+        <rg-gauge-chart [canvasWidth]="200" [needleValue]="20" [centralLabel]="" [options]="{
                     hasNeedle: true,
                     rangeLabel: ['0', '100']
                 }"
           [name]="'Ethylene Level'" [bottomLabel]="20">
         </rg-gauge-chart>
+        </div>
+        </div>
         <!--Try to find angular component that shows same as grafana-->
       </div>
       <div class="col-9">
+        <div class="card report-info">
+          <div id="info" class="card-body card-body2">
         <canvas id="ethylene"></canvas>
+        </div>
+        </div>
       </div>
     </div>
     <br>

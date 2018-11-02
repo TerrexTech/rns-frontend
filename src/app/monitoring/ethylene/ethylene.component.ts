@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
-import { MockMonitor } from '../mocksMonitor'
+import { MockMonitor } from '../mocks-monitor'
 
 @Component({
   selector: 'component-ethylene',
@@ -22,6 +22,8 @@ export class EthyleneComponent implements OnInit {
   }
 
   loadEthyGraph(): void {
+    const m = new MockMonitor()
+    m.genEthyleneData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('ethylene'))
     console.log(arr1.map(e => {

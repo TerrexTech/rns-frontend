@@ -13,6 +13,8 @@ export class SidebarComponent implements OnInit {
   private jwt: TokenService
   public user: User
 
+  public showSidebar = true
+
   public routes: any
   public menuItems: any
   public routeIconDef = [
@@ -144,18 +146,26 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log()
     this.routes = AppRoutes
 
-    // const token = this.jwt.getAccessToken()
-    // console.log('AccessToken:', token)
+    if (this.jwt.getAccessToken.length === 0) {
+      this.showSidebar = false
+    }
+    console.log(this.routes)
 
-    // const fName = this.upperFirstLetter(token.first_name)
-    // const lName = this.upperFirstLetter(token.last_name)
-    // const role = this.upperFirstLetter(token.role)
-    // this.user = {
-    //   firstName: fName,
-    //   lastName: lName,
-    //   role
-    // }
+    const jwtToken = this.jwt.getAccessToken()
+
+    if (jwtToken !== undefined) {
+      const fName = this.upperFirstLetter(jwtToken.first_name)
+      const lName = this.upperFirstLetter(jwtToken.last_name)
+      const role = this.upperFirstLetter(jwtToken.role)
+      this.user = {
+        firstName: fName,
+        lastName: lName,
+        role
+      }
+    }
+
   }
 }

@@ -13,7 +13,7 @@ import { filter } from 'rxjs/operators'
 
 export class AdminLayoutComponent implements OnInit {
     private _router: Subscription
-    // url: string
+    showSidebar = true
     url: string
     location: Location
     private lastPoppedUrl: string
@@ -27,6 +27,12 @@ export class AdminLayoutComponent implements OnInit {
     ngOnInit(): void {
       const elemMainPanel: HTMLElement =  document.querySelector('.main-panel')
       const elemSidebar: HTMLElement = document.querySelector('.sidebar .sidebar-wrapper')
+      console.log(this.router.url)
+
+    //   if (this.router.url.includes('/login')) {
+    //     this.showSidebar = false
+    //   }
+
       this.location.subscribe((ev: PopStateEvent) => {
           this.lastPoppedUrl = ev.url
       })
@@ -47,6 +53,7 @@ export class AdminLayoutComponent implements OnInit {
       })
       this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
                                        .subscribe((event: NavigationEnd) => {
+           console.log(this._router)
            elemMainPanel.scrollTop = 0
            elemSidebar.scrollTop = 0
       })

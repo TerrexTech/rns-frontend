@@ -40,13 +40,13 @@ export class UserTableComponent implements OnInit {
       first_name: 'Nando', last_name: 'Santhos', username: 'nsanthos', password: 'test', email: 'nsanthos@gmail.com', role: 'Corporate'
     }
   ]
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA)
+  dataSource = new MatTableDataSource()
   curField: any
 
   ngOnInit(): void {
+    this.dataSource.data = this.ELEMENT_DATA
     this.dataSource.sort = this.sort
     this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
   }
 
   populateFields(e): Employee {

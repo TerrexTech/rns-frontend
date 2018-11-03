@@ -32,8 +32,8 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(4)]],
-      password: ['', [Validators.required, Validators.minLength(5)]]
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     })
 
     // get return url from route parameters or default to '/'

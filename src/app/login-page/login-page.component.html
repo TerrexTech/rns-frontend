@@ -34,7 +34,6 @@
                     [ngClass]="{ 'is-invalid': formSubmitAttempt && f().username.errors }" autofocus>
                   <div *ngIf="formSubmitAttempt && f().username.errors" class="invalid-feedback">
                     <div *ngIf="f().username.errors.required">Username is required</div>
-                    <div *ngIf="f().username.errors.minlength">Username cannot be less than 4 characters</div>
                   </div>
                 </div>
               </div>
@@ -49,7 +48,6 @@
                     (blur)="focus1=false" [ngClass]="{ 'is-invalid': formSubmitAttempt && f().password.errors }">
                   <div *ngIf="formSubmitAttempt && f().password.errors" class="invalid-feedback">
                     <div *ngIf="f().password.errors.required">Password is required</div>
-                    <div *ngIf="f().password.errors.minlength">Password cannot be less than 5 characters</div>
                   </div>
                 </div>
               </div>

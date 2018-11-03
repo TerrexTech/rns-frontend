@@ -146,16 +146,16 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.routes = AppRoutes
 
-    // const token = this.jwt.getAccessToken()
-    // console.log('AccessToken:', token)
+    const token = this.jwt.getAccessToken()
+    console.log('AccessToken:', token)
 
-    // const fName = this.upperFirstLetter(token.first_name)
-    // const lName = this.upperFirstLetter(token.last_name)
-    // const role = this.upperFirstLetter(token.role)
-    // this.user = {
-    //   firstName: fName,
-    //   lastName: lName,
-    //   role
-    // }
+    const fName = this.upperFirstLetter(token.first_name)
+    const lName = this.upperFirstLetter(token.last_name)
+    const role = this.upperFirstLetter(token.role)
+    this.user = {
+      firstName: fName,
+      lastName: lName,
+      role
+    }
   }
 }

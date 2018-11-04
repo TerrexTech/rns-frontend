@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { AuthenticationService } from '../_Auth/auth.service'
 
@@ -14,7 +14,7 @@ export class LoginPageComponent implements OnInit {
   loginForm: FormGroup
   loading = false
   returnUrl: string
-  error = ''
+  // error = ''
   formSubmitAttempt: boolean
   @ViewChild('response') response: Element
   showError = false
@@ -33,7 +33,8 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required]],
+      rememberCheck: ['']
     })
 
     // get return url from route parameters or default to '/'
@@ -48,7 +49,6 @@ export class LoginPageComponent implements OnInit {
     this.formSubmitAttempt = true
     // this.submitted = true
     if (this.loginForm.valid) {
-      console.log('form submitted')
       let resource = JSON.stringify(this.loginForm.value)
       console.log(resource)
       resource = `{
@@ -59,10 +59,10 @@ export class LoginPageComponent implements OnInit {
         }
       }`
 
-      this.authenticationService.login(resource)
+      this.showError = this.authenticationService.login(resource)
+      console.log(`${this.showError} %%%%%%%%%%%%%`)
       this.reset()
     }
-
   }
 
   reset(): void {

@@ -60,6 +60,7 @@ import {
   MatToolbarModule
 } from '@angular/material'
 import { AlertPopupComponent } from './alert-popup/alert-popup.component'
+import { AlertService } from './alert-popup/alert.service'
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { AlertPopupComponent } from './alert-popup/alert-popup.component'
     WarningModule
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    AlertService
   ],
   bootstrap: [AppContainer]
 })

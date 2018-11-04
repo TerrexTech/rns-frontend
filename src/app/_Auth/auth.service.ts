@@ -17,47 +17,47 @@ export class AuthenticationService {
     this.http = http
   }
 
-  login(resource: string): void {
+  login(resource: string): boolean {
     const returnURL = this.route.snapshot.queryParamMap.get('returnURL')
     console.log(resource)
 
-    console.log(this.http)
     this.http.post('http://162.212.158.16:30653/api', resource)
       .toPromise()
       .then((data: any) => {
         console.log(data.data.login)
-        console.log('-----------------')
-        console.log(this)
         if (data.data.login !== null) {
           localStorage.setItem('access_token', data.data.login.access_token)
           localStorage.setItem('refresh_token', data.data.login.refresh_token)
           this.router.navigate([`/${returnURL || 'dashboard'}`])
             .then(log => {
               console.log(log)
-
-              return true
+              // return true
+              this.showError = true
             })
             .catch(err => {
               console.log(err)
-
-              return false
+              // return false
+              this.showError = false
             })
-          this.showError = false
+          // this.showError = false
 
           return this.showError
         }
         else {
           this.showError = true
+          console.log('Match not found.....')
 
           return this.showError
         }
       })
       .catch(err => {
         console.log(err)
-
-        return this.showError
+        // return this.showError
+        this.showError = true
       })
+    console.log(`${this.showError} ERRRRRRRRRRRR`)
 
+    return this.showError
     // this.http.post('localhost:8080/users/authenticate', resource)
     //   .toPromise()
     //   .then(d => this.data)

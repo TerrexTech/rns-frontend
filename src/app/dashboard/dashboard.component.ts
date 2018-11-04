@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../config'
 import { SendDate } from '../models'
 import Chart from 'chart.js'
+import { AlertService } from '../alert-popup/alert.service'
 
 @Component({
   selector: 'component-dashboard',
@@ -22,7 +23,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('total') total: ElementRef
   @ViewChild('average') average: ElementRef
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.loadTotalGraph()
@@ -473,5 +474,25 @@ export class DashboardComponent implements OnInit {
         //   this.donationChart.update()
         // }, 10000)
       })
+  }
+
+  success(message: string): void {
+    this.alertService.success(message)
+  }
+
+  error(message: string): void {
+      this.alertService.error(message)
+  }
+
+  info(message: string): void {
+      this.alertService.info(message)
+  }
+
+  warn(message: string): void {
+      this.alertService.warn(message)
+  }
+
+  clear(): void {
+      this.alertService.clear()
   }
 }

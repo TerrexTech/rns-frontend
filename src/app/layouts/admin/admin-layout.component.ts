@@ -5,6 +5,7 @@ import { Location, PopStateEvent } from '@angular/common'
 import { NavigationEnd, NavigationStart, Router } from '@angular/router'
 import PerfectScrollbar from 'perfect-scrollbar'
 import { filter } from 'rxjs/operators'
+import { AlertService } from '../../alert-popup/alert.service'
 
 @Component({
     selector: 'component-layout',
@@ -20,7 +21,7 @@ export class AdminLayoutComponent implements OnInit {
     private yScrollStack: number[] = []
     @ViewChild('sidebar') sidebar
     @ViewChild(NavbarComponent) navbar: NavbarComponent
-    constructor(private router: Router, location: Location) {
+    constructor(private router: Router, location: Location, private alertService: AlertService) {
       this.location = location
     }
 
@@ -90,4 +91,24 @@ export class AdminLayoutComponent implements OnInit {
 
         return bool
     }
+
+    success(message: string): void {
+        this.alertService.success(message)
+      }
+
+      error(message: string): void {
+          this.alertService.error(message)
+      }
+
+      info(message: string): void {
+          this.alertService.info(message)
+      }
+
+      warn(message: string): void {
+          this.alertService.warn(message)
+      }
+
+      clear(): void {
+          this.alertService.clear()
+      }
 }

@@ -149,7 +149,7 @@ export class SidebarComponent implements OnInit {
 
     const token = this.jwt.getAccessToken()
 
-    if (token !== undefined){
+    if (token !== undefined) {
       const fName = this.upperFirstLetter(token.first_name)
       const lName = this.upperFirstLetter(token.last_name)
       const role = this.upperFirstLetter(token.role)

@@ -63,6 +63,9 @@ import {
         WasteReportComponent,
         TemphumidReportComponent,
         SearchComponent
+    ],
+    entryComponents: [
+        SearchComponent
     ]
 })
 

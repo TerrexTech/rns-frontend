@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
+import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
+import { SearchComponent } from '../search/search.component'
 
 @Component({
   selector: 'component-ethylene-report',
@@ -25,11 +27,22 @@ export class EthyleneReportComponent implements OnInit {
   @ViewChild('total') total: ElementRef
   @ViewChild('average') average: ElementRef
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.loadEthyleneGraph()
+  }
+
+  openSearch(): void {
+    this.dialog.open(SearchComponent, {
+      width: '500px'
+    })
+    .afterClosed()
+    .subscribe(
+      data => console.log(data)
+      // refreshDataMethod()
+    )
   }
 
   loadEthyleneGraph(): void {

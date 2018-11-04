@@ -1,4 +1,9 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
+import { ActivatedRoute, Router } from '@angular/router'
+// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
+import swal from 'sweetalert'
 import { HttpClient } from '@angular/common/http'
 
 @Component({
@@ -7,118 +12,74 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  @Input() endPoint: number
-  @ViewChild('sku') sku: ElementRef
-  @ViewChild('name') name: ElementRef
-  @ViewChild('start') start: ElementRef
-  @ViewChild('end') end: ElementRef
 
-  constructor(private http: HttpClient) { }
+  form: FormGroup
+  formSubmitAttempt: boolean
+
+  constructor(
+    private dialogRef: MatDialogRef<SearchComponent>,
+    private formBuilder: FormBuilder,
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      upc: [''],
+      sku: [''],
+      item_id: [''],
+      name: [''],
+      origin: [''],
+      date_arrived: [''],
+      total_weight: [''],
+      price: [''],
+      device_id: [''],
+      lot: [''],
+      start_date: [''],
+      end_date: ['']
+    })
   }
 
   onSubmit(): void {
-
-    const sku = this.sku.nativeElement.value
-    const name = this.name.nativeElement.value
-    const start = this.start.nativeElement.value
-    const end = this.end.nativeElement.value
-    const unixStart = new Date(start).getTime() / 1000
-    const unixEnd = new Date(end).getTime() / 1000
-    let resource
-
-    const searchArray = [{}, {}, {}]
-
-    if (sku !== '') {
-      searchArray[0]['field'] = 'sku'
-      searchArray[0]['type'] = 'int'
-      searchArray[0]['equal'] = sku
-    }
-    if (name !== '') {
-      searchArray[1]['field'] = 'name'
-      searchArray[1]['type'] = 'string'
-      searchArray[1]['equal'] = name
-    }
-    if (!isNaN(unixStart) && !isNaN(unixEnd)) {
-      searchArray[2]['field'] = 'timestamp'
-      searchArray[2]['type'] = 'int'
-      searchArray[2]['upper_limit'] = unixStart
-      searchArray[2]['lower_limit'] = unixEnd
-    }
-    console.log(Object.keys(searchArray[0]).length)
-    if (Object.keys(searchArray[0]).length === 0) {
-      searchArray.splice(0, 1)
-    }
-    if (Object.keys(searchArray[1]).length === 0) {
-      searchArray.splice(1, 2)
-    }
-    if (Object.keys(searchArray[0]).length === 0) {
-      searchArray.splice(2, 3)
+    this.formSubmitAttempt = true
+    const searchData = []
+    const object = this.form.value
+    for (const property in object) {
+      if (object.hasOwnProperty(property)) {
+          searchData[property] = object[property]
+      }
     }
 
-    resource = {
-      inventory: searchArray
-    }
+    console.log(searchData)
 
-    if (this.endPoint === 1) {
+    const month = new Array()
+    month[0] = 'January'
+    month[1] = 'February'
+    month[2] = 'March'
+    month[3] = 'April'
+    month[4] = 'May'
+    month[5] = 'June'
+    month[6] = 'July'
+    month[7] = 'August'
+    month[8] = 'September'
+    month[9] = 'October'
+    month[10] = 'November'
+    month[11] = 'December'
+    const origDate = this.form.value.date_arrived
+    console.log(origDate)
+    // this.form.value.date_arrived = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
+    this.form.value.date_arrived = Math.floor((new Date(origDate).getTime() / 1000))
+    console.log(this.form.value.date_arrived)
+    // this.addData.addProd(this.form.value)
+    this.reset()
+    this.close(searchData)
+  }
 
-      console.log(this.http)
-      this.http.post('http://10.80.3.58:8080/met-report', resource, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .toPromise()
-        // .then(d => this.data)
-        .then((data: any) => {
-          console.log(data)
-          if (data !== null) {
+  reset(): void {
+    this.form.reset()
+    this.formSubmitAttempt = false
+  }
 
-            return true
-          }
-        })
-        .catch(err => {
-            console.log(err)
-
-            return false
-          })
-
-      // console.log(this.http)
-      // this.http.post('http://10.80.3.58:8080/inv-report', resource, {
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   }
-      // })
-      //   .toPromise()
-      //   // .then(d => this.data)
-      //   .then((data: any) => {
-      //     console.log(data)
-      //     if (data !== null) {
-      //       console.log(data)
-      //       this.searchData.setInvData('Inv'+data)
-      //     }
-      //   })
-
-      console.log(this.http)
-      this.http.post('http://10.80.3.58:8080/dev-report', resource, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .toPromise()
-        // .then(d => this.data)
-        .then((data: any) => {
-          console.log(data)
-          if (data !== null) {
-          }
-        })
-        .catch(err => {
-          console.log(err)
-
-          return false
-        })
-
-    }
+  close(data): void {
+    this.dialogRef.close(data)
   }
 }

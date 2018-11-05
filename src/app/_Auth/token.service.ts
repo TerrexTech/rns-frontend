@@ -55,7 +55,7 @@ export class TokenService {
     return isExpired
   }
 
-  setMemAccessToken(accessToken: string) {
+  setMemAccessToken(accessToken: string): void {
     this.decodedAccessToken = jwt_decode(accessToken)
   }
 

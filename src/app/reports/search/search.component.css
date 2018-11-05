@@ -10,6 +10,5 @@ a{
 }
 
 .generate-btn {
-  position: absolute;
-  right: 23px;
+    float: right
 }

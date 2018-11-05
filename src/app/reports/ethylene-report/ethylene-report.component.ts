@@ -15,17 +15,7 @@ import { SearchComponent } from '../search/search.component'
   styleUrls: ['./ethylene-report.component.css']
 })
 export class EthyleneReportComponent implements OnInit {
-
-  data: any = [1, 59, 68]
-  testData: string
-  totalChart: any
   ethyChart: any
-  distChart: any
-  donationChart: any
-  date: Date = new Date()
-  @ViewChild('arrival') arrival: ElementRef
-  @ViewChild('total') total: ElementRef
-  @ViewChild('average') average: ElementRef
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }
@@ -47,6 +37,7 @@ export class EthyleneReportComponent implements OnInit {
 
   loadEthyleneGraph(): void {
     const mock = new MockUtils()
+    mock.genEthyData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('arr1'))
     console.log(arr1.map(e => {

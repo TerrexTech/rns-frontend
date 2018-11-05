@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
+import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
+import { SearchComponent } from '../search/search.component'
 
 @Component({
   selector: 'component-inventory-report',
@@ -14,31 +16,30 @@ import { MockUtils } from '../mocks'
 })
 export class InventoryReportComponent implements OnInit {
 
-  data: any = [1, 59, 68]
-  testData: string
-  totalChart: any
-  ethyChart: any
-  distChart: any
-  donationChart: any
-  date: Date = new Date()
-  @ViewChild('arrival') arrival: ElementRef
-  @ViewChild('total') total: ElementRef
-  @ViewChild('average') average: ElementRef
+  invChart: any
 
-  constructor(private http: HttpClient) {
-    // this.searchData.getInvData().subscribe(data => {
-    //   console.log(data)
-    //   this.testData = data
-    //   // console.log(this.testData)
-    // })
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.loadInvGraph()
   }
 
+  openSearch(): void {
+    this.dialog.open(SearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => console.log(data)
+        // refreshDataMethod()
+      )
+  }
+
   loadInvGraph(): void {
     console.log('7&&&&&&&&&&&&&&&&&&&')
+    const mock = new MockUtils()
+    mock.genInvData()
     const arr2 = JSON.parse(localStorage.getItem('arr2'))
     console.log(arr2.map(e => {
 
@@ -47,7 +48,7 @@ export class InventoryReportComponent implements OnInit {
     // console.log(mock.genFloat(30, 90))
     // this.ethyData = mock.genFloat(30, 90)
     // this.dataSource.data = this.ethyData
-    this.ethyChart = new Chart('inventory', {
+    this.invChart = new Chart('inventory', {
       type: 'bar',
       // data: {
       //   datasets: [

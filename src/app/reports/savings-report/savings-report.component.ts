@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
+import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
+import { SearchComponent } from '../search/search.component'
 
 @Component({
   selector: 'component-savings-report',
@@ -13,36 +15,38 @@ import { MockUtils } from '../mocks'
   styleUrls: ['./savings-report.component.css']
 })
 export class SavingsReportComponent implements OnInit {
+  savingsChart: any
 
-  data: any = [1, 59, 68]
-  testData: string
-  totalChart: any
-  ethyChart: any
-  distChart: any
-  donationChart: any
-  date: Date = new Date()
-  @ViewChild('arrival') arrival: ElementRef
-  @ViewChild('total') total: ElementRef
-  @ViewChild('average') average: ElementRef
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.loadSavingsGraph()
   }
 
+  openSearch(): void {
+    this.dialog.open(SearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => console.log(data)
+        // refreshDataMethod()
+      )
+  }
+
   loadSavingsGraph(): void {
     console.log('7&&&&&&&&&&&&&&&&&&&')
+    const mock = new MockUtils()
+    mock.genSavingsData()
     const arr1 = JSON.parse(localStorage.getItem('arr4'))
     console.log(arr1.map(e => {
       return e
     }))
-    const mock = new MockUtils()
     // console.log(mock.genFloat(30, 90))
     // this.ethyData = mock.genFloat(30, 90)
     // this.dataSource.data = this.ethyData
-    this.ethyChart = new Chart('savings', {
+    this.savingsChart = new Chart('savings', {
       type: 'bar',
       // data: {
       //   datasets: [

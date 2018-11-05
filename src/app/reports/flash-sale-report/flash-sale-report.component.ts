@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
+import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
+import { SearchComponent } from '../search/search.component'
 
 @Component({
   selector: 'component-flash-sale-report',
@@ -13,36 +15,38 @@ import { MockUtils } from '../mocks'
   styleUrls: ['./flash-sale-report.component.css']
 })
 export class FlashSaleReportComponent implements OnInit {
+  flashChart: any
 
-  data: any = [1, 59, 68]
-  testData: string
-  totalChart: any
-  ethyChart: any
-  distChart: any
-  donationChart: any
-  date: Date = new Date()
-  @ViewChild('arrival') arrival: ElementRef
-  @ViewChild('total') total: ElementRef
-  @ViewChild('average') average: ElementRef
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.loadFlashGraph()
   }
 
+  openSearch(): void {
+    this.dialog.open(SearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => console.log(data)
+        // refreshDataMethod()
+      )
+  }
+
   loadFlashGraph(): void {
     console.log('7&&&&&&&&&&&&&&&&&&&')
+    const mock = new MockUtils()
+    mock.genFlashData()
     const arr3 = JSON.parse(localStorage.getItem('arr3'))
     console.log(arr3.map(e => {
       return e
     }))
-    const mock = new MockUtils()
     // console.log(mock.genFloat(30, 90))
     // this.ethyData = mock.genFloat(30, 90)
     // this.dataSource.data = this.ethyData
-    this.ethyChart = new Chart('flash', {
+    this.flashChart = new Chart('flash', {
       type: 'bar',
       // data: {
       //   datasets: [

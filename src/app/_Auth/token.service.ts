@@ -9,6 +9,8 @@ import { root } from 'rxjs/internal/util/root'
 })
 export class TokenService {
   decodedAccessToken: AccessToken
+  accessToken: string
+  refreshToken: string
 
   getAccessToken(): AccessToken {
     const rawAccessToken = this.getAccessTokenRaw()
@@ -52,4 +54,31 @@ export class TokenService {
 
     return isExpired
   }
+
+  setMemAccessToken(accessToken: string) {
+    this.decodedAccessToken = jwt_decode(accessToken)
+  }
+
+  getMemAccessToken(): AccessToken {
+    const isExpired = this.isTokenExpired(this.decodedAccessToken)
+    if (!isExpired) {
+      return this.decodedAccessToken
+    }
+
+    return undefined
+  }
+
+  setMemRefreshToken(refreshToken: string) {
+    this.refreshToken = refreshToken
+  }
+
+  getMemRefreshToken(): string {
+    return this.refreshToken
+  }
+
+  changeToken(): void {
+
+  }
+
+
 }

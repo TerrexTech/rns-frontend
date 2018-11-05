@@ -3,6 +3,7 @@ import * as jwt_decode from 'jwt-decode'
 
 import { AccessToken } from './access-token.model'
 import { root } from 'rxjs/internal/util/root'
+import { HttpClient } from '@angular/common/http'
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,10 @@ export class TokenService {
   decodedAccessToken: AccessToken
   accessToken: string
   refreshToken: string
+
+  constructor(private http: HttpClient) {
+    this.http = http
+  }
 
   getAccessToken(): AccessToken {
     const rawAccessToken = this.getAccessTokenRaw()
@@ -76,8 +81,17 @@ export class TokenService {
     return this.refreshToken
   }
 
-  changeToken(): void {
+  changeToken(): any {
+    this.http.post('http://162.212.158.16:30653/api', this.refreshToken)
+      .toPromise()
+      .then((data: any) => {
+        if (data.data.login) {
+          this.accessToken = data.data.login.access_token
+        }
+      })
+      .catch(console.log)
 
+    return
   }
 
 }

@@ -60,8 +60,8 @@
 
             <div class="card-footer ">
               <button type="submit" class="btn btn-warning btn-round btn-block mb-3" (click)="onSubmit()">Login</button>
-              <div *ngIf='!showError' id="response">
-                  test
+              <div *ngIf="showError" class="err-msg">
+                Invalid Credentials
               </div>
             </div>
           </div>

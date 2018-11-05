@@ -17,15 +17,15 @@ export class AuthenticationService {
     this.http = http
   }
 
-  login(resource: string): boolean {
+  login(resource: string, lStorage: boolean): boolean {
     const returnURL = this.route.snapshot.queryParamMap.get('returnURL')
-    console.log(resource)
-
+    console.log(`${resource} &&&&&&&&&&&&&`)
     this.http.post('http://162.212.158.16:30653/api', resource)
       .toPromise()
       .then((data: any) => {
         console.log(data.data.login)
-        if (data.data.login !== null) {
+        if (lStorage && data.data.login !== null) {
+        // if (data.data.login !== null) {
           localStorage.setItem('access_token', data.data.login.access_token)
           localStorage.setItem('refresh_token', data.data.login.refresh_token)
           this.router.navigate([`/${returnURL || 'dashboard'}`])
@@ -42,6 +42,9 @@ export class AuthenticationService {
           // this.showError = false
 
           return this.showError
+        }
+        else if (!lStorage && data.data.login !== null) {
+
         }
         else {
           this.showError = true

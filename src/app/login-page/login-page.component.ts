@@ -46,6 +46,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit(): void {
+    let lStorage: boolean
     this.formSubmitAttempt = true
     // this.submitted = true
     if (this.loginForm.valid) {
@@ -59,7 +60,12 @@ export class LoginPageComponent implements OnInit {
         }
       }`
 
-      this.showError = this.authenticationService.login(resource)
+      if (this.loginForm.controls.rememberCheck.value === true) {
+        lStorage = true
+      }
+
+      this.showError = this.authenticationService.login(resource, lStorage)
+
       console.log(`${this.showError} %%%%%%%%%%%%%`)
       this.reset()
     }

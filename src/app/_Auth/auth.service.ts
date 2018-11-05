@@ -44,7 +44,22 @@ export class AuthenticationService {
           return this.showError
         }
         else if (!lStorage && data.data.login !== null) {
+          localStorage.setItem('access_token', data.data.login.access_token)
+          localStorage.setItem('refresh_token', data.data.login.refresh_token)
+          this.router.navigate([`/${returnURL || 'dashboard'}`])
+            .then(log => {
+              console.log(log)
+              // return true
+              this.showError = true
+            })
+            .catch(err => {
+              console.log(err)
+              // return false
+              this.showError = false
+            })
+          // this.showError = false
 
+          return this.showError
         }
         else {
           this.showError = true

@@ -15,6 +15,7 @@ export class SearchComponent implements OnInit {
 
   form: FormGroup
   formSubmitAttempt: boolean
+  checked = false
 
   constructor(
     private dialogRef: MatDialogRef<SearchComponent>,
@@ -35,7 +36,9 @@ export class SearchComponent implements OnInit {
       device_id: [''],
       lot: [''],
       start_date: [''],
-      end_date: ['']
+      end_date: [''],
+      period: [''],
+      filter: ['']
     })
   }
 

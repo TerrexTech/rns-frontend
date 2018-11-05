@@ -1,43 +1,142 @@
-<div class="card mx-auto">
-  <div class="card-body">
-    <h6 class="text-center">Filter Report Results</h6>
-    <form>
-      <div class="row">
-        <div class="col-sm-4 offset-sm-2">
-          <mat-form-field class="example-full-width">
-            <input #sku matInput type="number" placeholder="SKU">
-          </mat-form-field>
+<h3 mat-dialog-title>Filter Report Results</h3>
+<button mat-dialog-close class="btn btn-fill">X</button>
+      <form [formGroup]="form">
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">UPC</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="upc" required>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-4">
-          <mat-form-field class="example-full-width">
-            <input #name matInput type="text" placeholder="Product Name">
-          </mat-form-field>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">SKU</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="sku" required>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4 offset-sm-2">
-          <mat-form-field class="example-full-width">
-            <input #start matInput [matDatepicker]="picker" placeholder="Choose a start date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">Name</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="name" required>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-4">
-          <mat-form-field class="example-full-width">
-            <input #end matInput [matDatepicker]="picker2" placeholder="Choose an end date">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
+
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">Origin</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="origin" required>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-3 offset-3">
-          <a mat-raised-button color="warn" (click)="onSubmit()">Filter</a>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">Arrival Date</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input #date type="string" class="form-control" placeholder="" formControlName="date_arrived" required name="dp">
+            </div>
+          </div>
         </div>
-        <div class="col-3">
-          <a mat-raised-button color="warn">Reset</a>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">Weight</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="total_weight" required>
+            </div>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
-</div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">Price</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="price" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">Device ID</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="device_id" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-2 text-md-right">
+              <label class="form-label">Lot</label>
+            </div>
+
+            <div class="col-sm-10">
+              <input type="string" class="form-control" formControlName="lot" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-5 offset-sm-1">
+            <mat-form-field class="example-full-width">
+              <input #start matInput [matDatepicker]="picker" placeholder="Start date" formControlName="start_date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-5">
+            <mat-form-field class="example-full-width">
+              <input #end matInput [matDatepicker]="picker2" placeholder="End date" formControlName="end_date">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row submit-btn-container">
+          <div class="col-sm-3 offset-sm-3">
+            <button mat-flat-button type="submit" id="addProduct" class="w-100" (click)="onSubmit()" color="accent">
+              Add Product
+            </button>
+          </div>
+
+          <div class="col-sm-3 offset-sm-1">
+            <button mat-flat-button type="submit" id="cancelProduct" class="w-100" color="warn" (click)="reset()">Reset</button>
+          </div>
+        </div>
+      </form>

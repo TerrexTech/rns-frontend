@@ -8,3 +8,8 @@ mat-form-field{
 a{
     width: 50%
 }
+
+.generate-btn {
+  position: absolute;
+  right: 23px;
+}

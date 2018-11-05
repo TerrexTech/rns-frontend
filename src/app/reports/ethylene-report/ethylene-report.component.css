@@ -13,3 +13,7 @@ height: 400px !important;
 .big-title {
     font-size: 16px;
 }
+
+.generate-btn {
+  float: right
+}

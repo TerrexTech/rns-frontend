@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
+import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
+import { SearchComponent } from '../search/search.component'
 
 @Component({
   selector: 'component-waste-report',
@@ -14,35 +16,38 @@ import { MockUtils } from '../mocks'
 })
 export class WasteReportComponent implements OnInit {
 
-  data: any = [1, 59, 68]
-  testData: string
-  totalChart: any
-  ethyChart: any
-  distChart: any
-  donationChart: any
-  date: Date = new Date()
-  @ViewChild('arrival') arrival: ElementRef
-  @ViewChild('total') total: ElementRef
-  @ViewChild('average') average: ElementRef
+  wasteChart: any
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.loadEthyleneGraph()
+    this.loadWasteGraph()
   }
 
-  loadEthyleneGraph(): void {
+  openSearch(): void {
+    this.dialog.open(SearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => console.log(data)
+        // refreshDataMethod()
+      )
+  }
+
+  loadWasteGraph(): void {
     console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('arr1'))
+    const mock = new MockUtils()
+    mock.genWasteData()
+    const arr1 = JSON.parse(localStorage.getItem('arr7'))
     console.log(arr1.map(e => {
       return e.Ethylene
     }))
-    const mock = new MockUtils()
     // console.log(mock.genFloat(30, 90))
     // this.ethyData = mock.genFloat(30, 90)
     // this.dataSource.data = this.ethyData
-    this.ethyChart = new Chart('waste', {
+    this.wasteChart = new Chart('waste', {
       type: 'bar',
       // data: {
       //   datasets: [

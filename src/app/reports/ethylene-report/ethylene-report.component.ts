@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
+import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
+import { SearchComponent } from '../search/search.component'
 
 @Component({
   selector: 'component-ethylene-report',
@@ -13,27 +15,29 @@ import { MockUtils } from '../mocks'
   styleUrls: ['./ethylene-report.component.css']
 })
 export class EthyleneReportComponent implements OnInit {
-
-  data: any = [1, 59, 68]
-  testData: string
-  totalChart: any
   ethyChart: any
-  distChart: any
-  donationChart: any
-  date: Date = new Date()
-  @ViewChild('arrival') arrival: ElementRef
-  @ViewChild('total') total: ElementRef
-  @ViewChild('average') average: ElementRef
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.loadEthyleneGraph()
   }
 
+  openSearch(): void {
+    this.dialog.open(SearchComponent, {
+      width: '500px'
+    })
+    .afterClosed()
+    .subscribe(
+      data => console.log(data)
+      // refreshDataMethod()
+    )
+  }
+
   loadEthyleneGraph(): void {
     const mock = new MockUtils()
+    mock.genEthyData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('arr1'))
     console.log(arr1.map(e => {

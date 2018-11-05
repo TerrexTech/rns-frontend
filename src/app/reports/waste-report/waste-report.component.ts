@@ -17,6 +17,7 @@ import { SearchComponent } from '../search/search.component'
 export class WasteReportComponent implements OnInit {
 
   wasteChart: any
+  date: Date = new Date()
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }

@@ -15,8 +15,8 @@ import { SearchComponent } from '../search/search.component'
   styleUrls: ['./inventory-report.component.css']
 })
 export class InventoryReportComponent implements OnInit {
-
   invChart: any
+  date: Date = new Date()
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }

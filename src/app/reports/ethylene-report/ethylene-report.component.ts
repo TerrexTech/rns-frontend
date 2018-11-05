@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
 import { SearchComponent } from '../search/search.component'
+import { setTimeout } from 'timers'
 
 @Component({
   selector: 'component-ethylene-report',
@@ -16,11 +17,14 @@ import { SearchComponent } from '../search/search.component'
 })
 export class EthyleneReportComponent implements OnInit {
   ethyChart: any
-
+  date: Date = new Date()
+  isClicked: boolean
+  // @Output() messageEvent = new EventEmitter<string>()
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.isClicked = true
     this.loadEthyleneGraph()
   }
 
@@ -217,22 +221,37 @@ export class EthyleneReportComponent implements OnInit {
   }
 
   captureScreen(): void {
-    const data = document.getElementById('testCapture')
-    console.log(data)
-    html2canvas(data)
-    .then(canvas => {
-      // Few necessary setting options
-      const imgWidth = 208
-      const pageHeight = 295
-      const imgHeight = canvas.height * imgWidth / canvas.width
-      const heightLeft = imgHeight
+    this.isClicked = false
 
-      const contentDataURL = canvas.toDataURL('image/png')
-      const pdf = new jspdf('p', 'mm', 'a4') // A4 size page of PDF
-      const position = 0
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-      pdf.save('MYPdf.pdf') // Generated PDF
-    })
+    setTimeout(() => {
+      const data = document.getElementById('testCapture')
+      console.log(data)
+      html2canvas(data)
+        .then(canvas => {
+          // Few necessary setting options
+          const imgWidth = 208
+          const pageHeight = 295
+          const imgHeight = canvas.height * imgWidth / canvas.width
+          let heightLeft = imgHeight
+
+          const contentDataURL = canvas.toDataURL('image/png')
+          const pdf = new jspdf('p', 'mm') // A4 size page of PDF
+          let position = 0
+
+          pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+          heightLeft -= pageHeight
+
+          while (heightLeft >= 0) {
+            position = heightLeft - imgHeight
+            pdf.addPage()
+            pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+            heightLeft -= pageHeight
+          }
+
+          pdf.save('MYPdf.pdf') // Generated PDF
+          this.isClicked = true
+        })
+    }, 1000)
   }
 
 }

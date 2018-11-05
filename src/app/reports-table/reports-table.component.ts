@@ -62,6 +62,8 @@ export class ReportsTableComponent implements OnInit {
       console.log(mock.genEthyData())
       this.ethyData = mock.genEthyData()
       this.dataSource.data = this.ethyData
+      this.dataSource.paginator = this.paginator
+      this.dataSource.paginator.pageSize = this.ethyData.length
     }
 
     else if (this.jsonFields === 2) {
@@ -154,7 +156,7 @@ export class ReportsTableComponent implements OnInit {
         // this.dataSource.data = this.mock.genEthyData()
         // Food = data
       // })
-    this.dataSource.paginator = this.paginator
+    // this.dataSource.paginator.pageSize = this.ethyData.length - 1
     this.dataSource.sort = this.sort
   }
 

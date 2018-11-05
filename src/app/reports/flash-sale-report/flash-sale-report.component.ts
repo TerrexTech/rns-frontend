@@ -16,6 +16,7 @@ import { SearchComponent } from '../search/search.component'
 })
 export class FlashSaleReportComponent implements OnInit {
   flashChart: any
+  date: Date = new Date()
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }

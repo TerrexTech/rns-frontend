@@ -27,7 +27,7 @@
                 <br>
                 <p>Date Generated: {{ date | date:'yyyy/MM/dd' }} </p>
                   <div class="row mx-auto">
-                  <button mat-raised-button class="mx-auto" color="warn" (click)="captureScreen()">Convert Report to
+                  <button *ngIf='isClicked' mat-raised-button class="mx-auto" color="warn" (click)="captureScreen()">Convert Report to
                     PDF</button>
                 </div>
               </div>

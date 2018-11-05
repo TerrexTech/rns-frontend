@@ -16,6 +16,7 @@ import { SearchComponent } from '../search/search.component'
 })
 export class TemphumidReportComponent implements OnInit {
   tempChart: any
+  date: Date = new Date()
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }

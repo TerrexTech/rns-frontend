@@ -68,7 +68,7 @@ export class TokenService {
     return undefined
   }
 
-  setMemRefreshToken(refreshToken: string) {
+  setMemRefreshToken(refreshToken: string): void {
     this.refreshToken = refreshToken
   }
 
@@ -79,6 +79,5 @@ export class TokenService {
   changeToken(): void {
 
   }
-
 
 }

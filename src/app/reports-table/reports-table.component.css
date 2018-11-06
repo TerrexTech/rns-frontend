@@ -104,11 +104,13 @@ th.mat-sort-header-sorted {
   padding-left: 24px;
 }
 
+*/
+
 td.mat-cell {
   padding: 0 24px 0 24px;
       font-size: 14px;
-      border-right: 1px solid rgb(224, 224, 224);
-  } */
+    border: 1px solid rgb(224, 224, 224);
+  }
 
  @media only screen and (min-width: 768px) {
         .one{

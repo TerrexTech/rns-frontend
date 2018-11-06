@@ -17,3 +17,12 @@ height: 400px !important;
 .generate-btn {
   float: right
 }
+
+.generate-btn {
+  position: absolute;
+  right: 23px;
+}
+
+.generate-btn button {
+  margin-top :0 !important;
+}

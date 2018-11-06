@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
+import { MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 import { Http } from '@angular/http'
 // import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 import { Inventory } from '../../models/inventory'
 import { SelectionModel } from '@angular/cdk/collections'
+import { SearchComponent } from '../../search/search.component'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import swal from 'sweetalert'
 
@@ -60,6 +61,17 @@ export class ShowComponent implements OnInit {
     //     this.dataSource.data = data
     //     Food = data
     //   })
+  }
+
+  openSearch(): void {
+    this.dialog.open(SearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => console.log(data)
+        // refreshDataMethod()
+      )
   }
 
   // make method more efficient in future

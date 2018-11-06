@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
-import { SearchComponent } from '../search/search.component'
+import { SearchComponent } from '../../search/search.component'
 
 @Component({
   selector: 'component-sensor-report',

@@ -7,6 +7,15 @@ img{
     width: 400px
 }
 
+.generate-btn {
+  position: absolute;
+  right: 23px;
+}
+
+.generate-btn button {
+  margin-top :0 !important;
+}
+
 .example-form {
   min-width: 150px;
   max-width: 500px;
@@ -59,5 +68,5 @@ td.mat-cell {
   padding: 0 24px 0 24px;
       font-size: 14px;
       /* text-align: center; */
-      border-right: 1px solid rgb(224, 224, 224);
+      border: 1px solid rgb(224, 224, 224);
   }

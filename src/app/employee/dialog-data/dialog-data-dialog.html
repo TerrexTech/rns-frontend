@@ -1,3 +1,6 @@
+<h4 mat-dialog-title>
+    Edit Employee: {{ this.curField.data.first_name }} {{ this.curField.data.last_name }}
+</h4>
 <mat-dialog-content>
     <form [formGroup]="registerForm" #reg="ngForm">
         <div class="row form-group">

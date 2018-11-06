@@ -42,6 +42,7 @@ export class ReportsTableComponent implements OnInit {
   @ViewChild('table') table: any
   @Input() displayedColumns: string[]
   @Input() jsonFields: number
+  @Input() numRows: number
   @ViewChild(MatPaginator) paginator: MatPaginator
   @ViewChild(MatSort) sort: MatSort
   @ViewChild('query') query: ElementRef

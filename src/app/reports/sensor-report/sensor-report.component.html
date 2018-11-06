@@ -1,12 +1,17 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12 col-sm-12">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h3>Sensor Report</h3>
+        </mat-card-title>
         <div class="generate-btn">
-          <button class="btn btn-fill" (click)="openSearch()">Search</button>
+          <button class="btn btn-fill" (click)="addNewFlashSale()">Add</button>
         </div>
-      </div>
-    </div>
+      </mat-card-header>
+    </mat-card>
+    <br>
+    <mat-card>
     <div id="testCapture">
       <div class="row">
         <div class="col-lg-8 col-sm-8">
@@ -40,5 +45,6 @@
       </div>
       <component-reports-table [jsonFields]=6 [displayedColumns]="['Sensor', 'Date Installed', 'Last Maintenance', 'Status', 'Price ($)']"></component-reports-table>
     </div>
+    </mat-card>
   </div>
 </div>

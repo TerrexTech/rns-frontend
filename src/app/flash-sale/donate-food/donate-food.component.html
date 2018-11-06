@@ -9,7 +9,10 @@
           <button class="btn btn-fill" (click)="addNewDonation()">Add</button>
         </div>
       </mat-card-header>
-      <mat-card-content class="row table-wrapper-scroll-y">
+    </mat-card>
+    <br>
+    <mat-card>
+      <mat-card-content class="row">
         <!--
                 <form>
                     <div class="row mx-auto">
@@ -49,7 +52,7 @@
                     </div>
                 </form> -->
 
-        <div class="mat-elevation-z8 table-responsive">
+        <div class="table-responsive-lg">
           <table mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="select">

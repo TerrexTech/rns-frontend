@@ -9,6 +9,9 @@
                     <button class="btn btn-fill" (click)="addNewFlashSale()">Add</button>
                 </div>
             </mat-card-header>
+        </mat-card>
+        <br>
+        <mat-card>
             <mat-card-content>
 <!--
                 <form>
@@ -49,7 +52,7 @@
                     </div>
                 </form> -->
 
-                <div class="mat-elevation-z8 table-responsive-lg">
+                <div class="table-responsive-lg">
                     <table mat-table [dataSource]="dataSource" matSort>
 
                         <ng-container matColumnDef="select">

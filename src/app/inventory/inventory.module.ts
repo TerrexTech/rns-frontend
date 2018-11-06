@@ -28,6 +28,8 @@ import { AddComponent } from './add/add.component'
 import { AddInventoryService } from './add/add.service'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { ShowComponent } from './show/show.component'
+import { SearchModule } from '../search/search.module'
+import { SearchComponent } from '../search/search.component'
 
 @NgModule({
     imports: [
@@ -51,7 +53,8 @@ import { ShowComponent } from './show/show.component'
         MatTabsModule,
         MatToolbarModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        SearchModule
     ],
     declarations: [
         AddComponent,
@@ -67,7 +70,8 @@ import { ShowComponent } from './show/show.component'
         TokenService
     ],
     entryComponents: [
-        DialogDataDialogComponent
+        DialogDataDialogComponent,
+        SearchComponent
     ]
 })
 

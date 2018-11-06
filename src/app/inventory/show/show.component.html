@@ -1,48 +1,22 @@
 <div class="main-content">
 <div class="container-fluid">
   <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h4>View Inventory</h4>
+      </mat-card-title>
+        <div class="generate-btn">
+          <button class="btn btn-fill" (click)="openSearch()">Search</button>
+        </div>
+    </mat-card-header>
+  </mat-card>
+  <br>
+  <mat-card>
     <mat-card-content class="row table-wrapper-scroll-y">
 
-      <form>
-        <div class="row mx-auto">
-          <div class="col-sm-6">
-            <select #field name="field" class="form-control">
-              <option value="upc">UPC</option>
-              <option value="sku">SKU</option>
-              <option value="name">Name</option>
-              <option value="origin">Origin</option>
-              <option value="location">Location</option>
-              <option value="date_arrived">Arrival Date</option>
-              <option value="expiry_date">Expiry Date</option>
-              <option value="sale_price">Sale Price</option>
-              <option value="sold_weight">Sold Weight</option>
-            </select>
-          </div>
-          <div class="col-sm-6">
-              <input style="height:100%" #query name="query" class="form-control" placeholder="Search">
-          </div>
-          </div>
-          <div class="row mx-auto">
-            <div class="col-auto">
-              <button class="btn btn-primary" type="submit" (click)="onSearch()">
-                Search
-              </button>
-              </div>
-              <div class="col-sm-6">
-              <button class="btn btn-primary" type="submit" (click)="resetData()">
-                Reset
-              </button>
-              </div>
-          </div>
+      <!-- <component-search></component-search> -->
 
-
-            <div>
-
-          </div>
-      </form>
-
-
-      <div class="mat-elevation-z8 table-responsive-lg">
+      <div class="table-responsive-lg">
         <table mat-table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="select">

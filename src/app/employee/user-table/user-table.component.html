@@ -3,50 +3,14 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          <h3>View Employees</h3>
+          <h4>View Employees</h4>
         </mat-card-title>
       </mat-card-header>
+      </mat-card>
+      <br>
+      <mat-card>
       <mat-card-content>
-        <!--
-                <form>
-                    <div class="row mx-auto">
-                        <div class="col-sm-6">
-                            <select #field name="field" class="form-control">
-                                <option value="upc">UPC</option>
-                                <option value="sku">SKU</option>
-                                <option value="name">Name</option>
-                                <option value="origin">Origin</option>
-                                <option value="location">Location</option>
-                                <option value="date_arrived">Arrival Date</option>
-                                <option value="expiry_date">Expiry Date</option>
-                                <option value="sale_price">Sale Price</option>
-                                <option value="sold_weight">Sold Weight</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <input style="height:100%" #query name="query" class="form-control" placeholder="Search">
-                        </div>
-                    </div>
-                    <div class="row mx-auto">
-                        <div class="col-auto">
-                            <button class="btn btn-primary" type="submit" (click)="onSearch()">
-                                Search
-                            </button>
-                        </div>
-                        <div class="col-sm-6">
-                            <button class="btn btn-primary" type="submit" (click)="resetData()">
-                                Reset
-                            </button>
-                        </div>
-                    </div>
-
-
-                    <div>
-
-                    </div>
-                </form> -->
-
-        <div class="mat-elevation-z8 table-responsive-lg">
+        <div class="table-responsive-lg">
           <table mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="select">
@@ -62,7 +26,7 @@
 
             <!-- Item No Column -->
             <ng-container matColumnDef="first_name">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">First Name</th>
               <td mat-cell *matCellDef="let element">{{ element.first_name }}</td>
             </ng-container>
 
@@ -91,7 +55,7 @@
             </ng-container>
 
             <ng-container matColumnDef="modify">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Modify</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Modify</th>
               <td mat-cell *matCellDef="let element">
                 <a id="editBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields(element.email)">
                   <i class="fa fa-edit"></i>

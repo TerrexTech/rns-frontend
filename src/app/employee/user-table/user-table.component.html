@@ -5,6 +5,14 @@
         <mat-card-title>
           <h4>View Employees</h4>
         </mat-card-title>
+        <div class="generate-btn">
+          <a id="editBtn" [attr.disabled]="selected() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
+            <i class="fa fa-edit"></i>
+          </a>
+          <a id="deleteBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="removeSelectedRows()">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
       </mat-card-header>
       </mat-card>
       <br>
@@ -52,15 +60,6 @@
             <ng-container matColumnDef="role">
               <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Account Type</th>
               <td mat-cell *matCellDef="let element">{{ element.role }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="modify">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Modify</th>
-              <td mat-cell *matCellDef="let element">
-                <a id="editBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields(element.email)">
-                  <i class="fa fa-edit"></i>
-                </a>
-              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

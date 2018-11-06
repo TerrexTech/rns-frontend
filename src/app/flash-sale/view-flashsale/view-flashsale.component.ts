@@ -20,10 +20,10 @@ export class ViewFlashsaleComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
-  selection = new SelectionModel<Employee>(true, [])
+  selection = new SelectionModel<FlashSale>(true, [])
 
   displayedColumns = ['select', 'upc', 'sku', 'name',
-                      'device_id', 'price', 'sale_price', 'ethylene', 'status', 'timestamp', 'modify']
+                      'device_id', 'price', 'sale_price', 'ethylene', 'status', 'timestamp']
   // displayedColumns = ['select', 'sku', 'name', 'leftover waste', 'status', 'projected expiry', 'modify']
   curField: any
 
@@ -50,21 +50,27 @@ export class ViewFlashsaleComponent implements OnInit {
     })
   }
 
-  populateFields(e): FlashSale {
-    console.log(e)
-    if (e !== undefined) {
-      this.curField = flash_data.filter(i => i.upc === e)[0]
-      console.log(this.curField)
-      this.dialog.open(DialogDataDialogComponent, {
+  selected(): boolean {
+    console.log(this.selection.selected.length)
+    if (this.selection.selected.length >= 2) {
+      return true
+    }
+
+    return false
+  }
+
+  populateFields(): void {
+     this.selection.selected.forEach(item => {
+        this.curField = flash_data.filter(i => i.upc === item.upc)[0]
+        console.log(this.curField)
+        console.log('++++++++++++++++++==')
+      })
+     this.dialog.open(DialogDataDialogComponent, {
         data: {
           data: this.curField
         }
       })
-      // this.formDate.nativeElement.value = this.curField.date_arrived
-      console.log()
-    }
-
-    return e
+     console.log()
   }
 
   removeSelectedRows(): void {

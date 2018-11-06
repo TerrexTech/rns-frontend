@@ -19,7 +19,7 @@ export class UserTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator
   selection = new SelectionModel<Employee>(true, [])
 
-  displayedColumns = ['select', 'first_name', 'last_name', 'username', 'email', 'role', 'modify']
+  displayedColumns = ['select', 'first_name', 'last_name', 'username', 'email', 'role']
   ELEMENT_DATA: Employee[] = [
     {
       first_name: 'Danny', last_name: 'Santhos', username: 'dsanthos', password: 'test', email: 'dsanthos@gmail.com', role: 'Corporate'
@@ -49,21 +49,27 @@ export class UserTableComponent implements OnInit {
     this.dataSource.paginator = this.paginator
   }
 
-  populateFields(e): Employee {
-    console.log(e)
-    if (e !== undefined) {
-      this.curField = this.ELEMENT_DATA.filter(i => i.email === e)[0]
-      console.log(this.curField)
-      this.dialog.open(DialogDataDialogComponent, {
-        data: {
-          data: this.curField
-        }
-      })
-      // this.formDate.nativeElement.value = this.curField.date_arrived
-      console.log()
+  selected(): boolean {
+    console.log(this.selection.selected.length)
+    if (this.selection.selected.length >= 2) {
+      return true
     }
 
-    return e
+    return false
+  }
+
+  populateFields(): void {
+    this.selection.selected.forEach(item => {
+      this.curField = this.ELEMENT_DATA.filter(i => i.email === item.email)[0]
+      console.log(this.curField)
+      console.log('++++++++++++++++++==')
+    })
+    this.dialog.open(DialogDataDialogComponent, {
+      data: {
+        data: this.curField
+      }
+    })
+    console.log()
   }
 
   removeSelectedRows(): void {

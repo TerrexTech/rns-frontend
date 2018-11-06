@@ -132,11 +132,25 @@ export class ShowComponent implements OnInit {
       })
 }
 
-  populateFields(e): Inventory {
-    console.log(e)
-    if (e !== undefined) {
-      this.curField = Food.filter(i => i.item_id === e)[0]
-      this.dialog.open(DialogDataDialogComponent, {
+  selected(): boolean {
+    console.log(this.selection.selected.length)
+    if (this.selection.selected.length >= 2) {
+      return true
+    }
+
+    return false
+  }
+
+  populateFields(): void {
+    // console.log(e)
+    // if (e !== undefined) {
+    //   this.curField = Food.filter(i => i.item_id === e)[0]
+    this.selection.selected.forEach(item => {
+      this.curField = Food.filter(i => i.item_id === item.item_id)[0]
+      console.log(this.curField)
+      console.log('++++++++++++++++++==')
+    })
+    this.dialog.open(DialogDataDialogComponent, {
         width: '500px',
         data: {
           data: this.curField
@@ -151,9 +165,6 @@ export class ShowComponent implements OnInit {
       //       Food = data
       //   })
     })
-    }
-
-    return e
   }
 
   onSearch(): void {

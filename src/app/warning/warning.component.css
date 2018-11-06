@@ -7,19 +7,9 @@ img{
     width: 400px
 }
 
-.generate-btn-add {
+.generate-btn {
   position: absolute;
-  right: 395px;
-}
-
-.generate-btn-donate {
-  position: absolute;
-  right: 225px;
-}
-
-.generate-btn-dispose {
-  position: absolute;
-  right: 25px;
+  right: 23px;
 }
 
 .generate-btn button {

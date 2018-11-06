@@ -5,7 +5,21 @@
         <mat-card-title>
           <h3>Warnings</h3>
         </mat-card-title>
+        <div class="generate-btn">
+          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
+            <i class="fa fa-bolt"></i>
+          </a>
+          <a id="donateBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="donateRows()">
+            <i class="fa fa-donate"></i>
+          </a>
+          <a id="disposeBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="disposeRows()">
+            <i class="fa fa-trash"></i>
+          </a>
+        </div>
       </mat-card-header>
+    </mat-card>
+    <br>
+    <mat-card>
       <mat-card-content class="row table-wrapper-scroll-y">
         <!--
                 <form>
@@ -45,18 +59,7 @@
 
                     </div>
                 </form> -->
-        <div class="row justify-content-md-center">
-          <div class="col col-md-auto">
-            <button class="btn btn-fill" (click)="populateFields()">Create Flash Sale</button>
-          </div>
-          <div class="col col-md-auto">
-            <button class="btn btn-fill" (click)="donateRows()">Create Donation</button>
-          </div>
-          <div class="col col-md-auto">
-            <button class="btn btn-fill" (click)="disposeRows()">Create Disposal Item</button>
-          </div>
-        </div>
-        <div class="mat-elevation-z8 table-responsive-lg">
+        <div class="table-responsive-lg">
           <table mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="select">

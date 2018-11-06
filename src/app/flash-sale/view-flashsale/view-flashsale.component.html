@@ -3,10 +3,18 @@
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
-                    <h3>Current Flash Sales</h3>
+                    <h3>Flash Sales</h3>
                 </mat-card-title>
                 <div class="generate-btn">
-                    <button class="btn btn-fill" (click)="addNewFlashSale()">Add</button>
+                    <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewFlashSale()">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a id="editBtn" [attr.disabled]="selected() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a id="deleteBtn" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="removeSelectedRows()">
+                        <i class="fa fa-times"></i>
+                    </a>
                 </div>
             </mat-card-header>
         </mat-card>
@@ -120,18 +128,6 @@
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
                             <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.timestamp * 1000 | date:
                                     'dd/MM/yyyy' }}</a> </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="modify">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Modify</th>
-                            <td mat-cell *matCellDef="let element">
-                                <a id="editBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields(element.upc)">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a id="deleteBtn" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="removeSelectedRows()">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

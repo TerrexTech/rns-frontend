@@ -43,6 +43,15 @@ export class WarningComponent implements OnInit {
     return this.http.get('./static/mock_flash.json')
   }
 
+  selected(): boolean {
+    console.log(this.selection.selected.length)
+    if (this.selection.selected.length >= 2) {
+      return true
+    }
+
+    return false
+  }
+
   populateFields(): void {
     // console.log(e)
     // if (e !== undefined) {

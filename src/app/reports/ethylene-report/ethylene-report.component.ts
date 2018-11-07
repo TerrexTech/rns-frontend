@@ -19,6 +19,7 @@ export class EthyleneReportComponent implements OnInit {
   ethyChart: any
   date: Date = new Date()
   isClicked: boolean
+  searchData: any
   // @Output() messageEvent = new EventEmitter<string>()
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }
@@ -34,9 +35,9 @@ export class EthyleneReportComponent implements OnInit {
     })
     .afterClosed()
     .subscribe(
-      data => console.log(data)
-      // refreshDataMethod()
+      data => this.searchData = data
     )
+
   }
 
   loadEthyleneGraph(): void {

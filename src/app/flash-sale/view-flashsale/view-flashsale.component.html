@@ -1,6 +1,7 @@
 <div class="main-content">
     <div class="container-fluid">
-        <mat-card>
+       <component-alert-popup message="test" [buttons]="[{text:'test', url:'test'}]"></component-alert-popup>
+            <mat-card>
             <mat-card-header>
                 <mat-card-title>
                     <h3>Flash Sales</h3>
@@ -14,6 +15,9 @@
                     </a>
                     <a id="deleteBtn" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="removeSelectedRows()">
                         <i class="fa fa-times"></i>
+                    </a>
+                    <a id="endFlashSale" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="endFlashSale()">
+                        <i class="fa fa-thumbs-up"></i>
                     </a>
                 </div>
             </mat-card-header>

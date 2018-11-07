@@ -3,5 +3,5 @@ export class Warning {
     name: string
     qty_unsold: number
     status: string
-    projected_expiry: Date
+    projected_expiry: number
 }

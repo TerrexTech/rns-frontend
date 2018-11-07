@@ -4,8 +4,10 @@ import { RouterModule } from '@angular/router'
 
 import { NavbarComponent } from './navbar.component'
 
+import { MatBadgeModule } from '@angular/material'
+
 @NgModule({
-    imports: [ RouterModule, CommonModule ],
+    imports: [ RouterModule, CommonModule, MatBadgeModule ],
     declarations: [ NavbarComponent ],
     exports: [ NavbarComponent ]
 })

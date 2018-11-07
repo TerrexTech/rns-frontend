@@ -6,10 +6,10 @@ export class Inventory {
     origin: string
     device_id: string
     total_weight: number
-    price: number
+    price: string
     location: string
-    date_arrived: Date
-    expiry_date: Date
+    date_arrived: number
+    expiry_date: number
     timestamp: number
     rs_customer_id: string
     waste_weight: number
@@ -17,4 +17,5 @@ export class Inventory {
     date_sold: number
     sale_price: number
     sold_weight: number
+    lot: number
 }

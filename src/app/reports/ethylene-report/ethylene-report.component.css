@@ -26,3 +26,9 @@ height: 400px !important;
 .generate-btn button {
   margin-top :0 !important;
 }
+
+td.mat-cell {
+  padding: 0 24px 0 24px;
+      font-size: 14px;
+    border: 1px solid rgb(224, 224, 224);
+  }

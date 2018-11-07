@@ -1,6 +1,6 @@
 export class FlashSale {
     flash_id: number
-    item_id: number
+    item_id: string
     upc: number
     sku: number
     name: string

@@ -1,4 +1,4 @@
-<div class="main-content">
+<div id="testCapture" class="main-content">
   <div class="container-fluid">
         <mat-card>
           <mat-card-header>
@@ -6,13 +6,13 @@
               <h4>Ethylene Report</h4>
             </mat-card-title>
               <div class="generate-btn">
-                <button class="btn btn-fill" (click)="openSearch()">Search</button>
+                <button *ngIf='isClicked' class="btn btn-fill" (click)="openSearch()">Search</button>
               </div>
           </mat-card-header>
         </mat-card>
     <br>
     <mat-card>
-    <div id="testCapture">
+    <div>
       <div class="row">
         <div class="col-lg-8 col-sm-8">
           <div class="card">

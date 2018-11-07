@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { Alert, AlertType } from './alert'
 import { AlertService } from './alert.service'
+
+interface ButtonConfig {
+    text: string,
+    url: string
+}
 
 @Component({
   selector: 'component-alert-popup',
@@ -9,45 +14,16 @@ import { AlertService } from './alert.service'
 })
 export class AlertPopupComponent implements OnInit {
 
-  alerts: Alert[] = []
-
+    @Input() message: string
+    @Input() buttons: ButtonConfig[]
     constructor(private alertService: AlertService) { }
 
     ngOnInit(): void {
-        this.alertService.getAlert()
-        .subscribe((alert: Alert) => {
-            if (!alert) {
-                // clear alerts when an empty alert is received
-                this.alerts = []
-
-                return
-            }
-
-            // add alert to array
-            this.alerts.push(alert)
-        })
+        console.log(this.message)
+        console.log(this.buttons)
     }
 
     removeAlert(alert: Alert): void {
-        this.alerts = this.alerts.filter(x => x !== alert)
     }
 
-    cssClass(alert: Alert): any {
-        if (!alert) {
-            return
-        }
-
-        // return css class based on alert type
-        switch (alert.type) {
-            case AlertType.Success:
-                return 'alert alert-success'
-            case AlertType.Error:
-                return 'alert alert-danger'
-            case AlertType.Info:
-                return 'alert alert-info'
-            case AlertType.Warning:
-                return 'alert alert-warning'
-            default:
-        }
-    }
 }

@@ -1,11 +1,15 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA } from '@angular/material'
+import { MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort, MatSortable, MatTableDataSource } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
+import { SelectionModel } from '@angular/cdk/collections'
+import { Warning } from '../../models/warning'
+import { HttpClient } from '@angular/common/http'
 import swal from 'sweetalert'
 
 @Component({
   selector: 'component-add-dialog-data-dialog',
+  styleUrls: ['./add-dialog-data.css'],
   templateUrl: 'add-dialog-data-dialog.html'
 })
 export class AddDialogDataComponent implements OnInit {
@@ -14,22 +18,35 @@ export class AddDialogDataComponent implements OnInit {
   formSubmitAttempt: boolean
   curField: any
   returnUrl: string
+  @ViewChild(MatSort) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
+
+  dataSource = new MatTableDataSource()
+  selection = new SelectionModel<Warning>(true, [])
+  displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projected expiry']
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      sku: ['', [Validators.required, Validators.minLength(1)]],
-      name: ['', [Validators.required, Validators.minLength(1)]],
-      leftover_waste: ['', [Validators.required, Validators.minLength(1)]],
-      status: ['', [Validators.required, Validators.minLength(1)]],
-      projected_expiry: ['', [Validators.required, Validators.minLength(1)]]
-    })
-    this.returnUrl = this.route.snapshot.queryParams[''] || '/'
+    this.getJSON()
+      .subscribe(data => {
+        console.log(data)
+        // console.log(JSON.parse(data._body))
+        const json = data
+        this.dataSource.data = json
+      })
+    this.dataSource.paginator = this.paginator
+    this.dataSource.sort = this.sort
+  }
+
+  public getJSON(): any {
+
+    return this.http.get('./static/mock_flash.json')
   }
 
   isFieldValid(field: string): any {

@@ -161,6 +161,10 @@ export class ReportsTableComponent implements OnInit {
     this.dataSource.sort = this.sort
   }
 
+  searchData(data): void {
+    this.dataSource.data = data
+  }
+
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length
     const numRows = this.dataSource.data.length

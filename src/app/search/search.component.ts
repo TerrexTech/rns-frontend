@@ -42,10 +42,24 @@ export class SearchComponent implements OnInit {
     })
   }
 
+  checkDates(): boolean {
+    if (this.form.value.start_date !== '' && this.form.value.end_date !== '') {
+      console.log('heretrue')
+
+      return true
+    }
+    else if (this.form.value.period !== '') {
+      console.log('herefalse')
+
+      return false
+    }
+  }
+
   onSubmit(): void {
     this.formSubmitAttempt = true
     const searchData = []
     const object = this.form.value
+
     for (const property in object) {
       if (object.hasOwnProperty(property)) {
           searchData[property] = object[property]
@@ -69,9 +83,9 @@ export class SearchComponent implements OnInit {
     month[11] = 'December'
     const origDate = this.form.value.date_arrived
     console.log(origDate)
-    // this.form.value.date_arrived = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
     this.form.value.date_arrived = Math.floor((new Date(origDate).getTime() / 1000))
     console.log(this.form.value.date_arrived)
+    // searchService
     // this.addData.addProd(this.form.value)
     this.reset()
     this.close(searchData)

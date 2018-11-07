@@ -59,17 +59,17 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material'
-import { AlertPopupComponent } from './alert-popup/alert-popup.component'
 import { AlertService } from './alert-popup/alert.service'
+import { AlertPopupModule } from './alert-popup/alert-popup.module'
 
 @NgModule({
   declarations: [
     AdminLayoutComponent,
     AppContainer,
-    AuthLayoutComponent,
-    AlertPopupComponent
+    AuthLayoutComponent
   ],
   imports: [
+    AlertPopupModule,
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,

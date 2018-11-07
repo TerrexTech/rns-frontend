@@ -7,6 +7,8 @@ import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import { AddDialogDataComponent } from '../add-dialog-data/add-dialog-data.component'
 import { FlashSale } from '../../models/flash-sale'
 import { Http } from '@angular/http'
+import { ViewFlashSaleService } from './view-flashsale.service'
+import { AlertService } from '../../alert-popup/alert.service'
 
 let flash_data: any[] = []
 @Component({
@@ -16,7 +18,8 @@ let flash_data: any[] = []
 })
 export class ViewFlashsaleComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private http: Http) { }
+  constructor(public dialog: MatDialog, private http: Http, private viewService: ViewFlashSaleService,
+              private alertService: AlertService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
@@ -66,7 +69,9 @@ export class ViewFlashsaleComponent implements OnInit {
         console.log('++++++++++++++++++==')
       })
      this.dialog.open(DialogDataDialogComponent, {
-        data: {
+       minHeight: 600,
+       minWidth: 1000,
+       data: {
           data: this.curField
         }
       })
@@ -137,6 +142,21 @@ export class ViewFlashsaleComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach((row: any) => this.selection.select(row))
+  }
+
+  endFlashSale(): void {
+    const dataArray = []
+    // call to back-end with item_id
+    this.selection.selected.forEach(item => {
+      this.viewService.getEndFlashSale(item.item_id)
+                      .subscribe(data => dataArray
+                      )
+    })
+    // if total_weight - sale_weight > 0
+    // call alert (in notepad)
+  }
+  warn(message: string): void {
+    this.alertService.warn(message)
   }
 
 }

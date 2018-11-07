@@ -19,7 +19,7 @@ const Food: Inventory[] = []
 export class ShowComponent implements OnInit {
   food: Inventory
   displayedColumns: string[] =
-  ['select' , 'upc', 'sku', 'name', 'origin', 'location', 'date_arrived', 'expiry_date', 'sale_price', 'total_weight', 'modify']
+  ['select' , 'upc', 'sku', 'name', 'origin', 'location', 'date_arrived', 'expiry_date', 'sale_price', 'total_weight']
   dataSource = new MatTableDataSource()
   today: number = Date.now()
   @ViewChild(MatPaginator) paginator: MatPaginator

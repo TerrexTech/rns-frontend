@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
     private toggleButton
     private sidebarVisible: boolean
     private _router: Subscription
+    notifCount: number
 
     @ViewChild('navbar-cmp') button
 
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.notifCount = 10
         const navbar: HTMLElement = this.element.nativeElement
         const body = document.getElementsByTagName('body')[0]
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0]

@@ -49,6 +49,56 @@ export class SidebarComponent implements OnInit {
       ]
     },
     {
+      route: AppRoutes.flashsale,
+      icon: 'nc-icon nc-box-2',
+      children: [
+        {
+          route: AppRoutes.flashsale.children.viewsales,
+          ab: 'FS'
+        },
+        {
+          route: AppRoutes.flashsale.children.donatefood,
+          ab: 'DF'
+        },
+        {
+          route: AppRoutes.flashsale.children.disposefood,
+          ab: 'DF'
+        }
+      ]
+    },
+    {
+      route: AppRoutes.monitoring,
+      icon: 'nc-icon nc-box-2',
+      children: [
+        {
+          route: AppRoutes.monitoring.children.carbon,
+          ab: 'CA'
+        },
+        {
+          route: AppRoutes.monitoring.children.ethylene,
+          ab: 'ET'
+        },
+        {
+          route: AppRoutes.monitoring.children.sensor,
+          ab: 'SE'
+        },
+        {
+          route: AppRoutes.monitoring.children.temperature,
+          ab: 'TH'
+        }
+      ]
+    },
+    {
+      route: AppRoutes.warning,
+      icon: 'nc-icon nc-box-2',
+      children: [
+        {
+          route: AppRoutes.warning,
+          ab: 'WA'
+        }
+      ]
+    },
+    {
       route: AppRoutes.reports,
       icon: 'nc-icon nc-box-2',
       children: [
@@ -78,56 +128,6 @@ export class SidebarComponent implements OnInit {
         },
         {
           route: AppRoutes.reports.children.waste,
-          ab: 'WA'
-        }
-      ]
-    },
-    {
-      route: AppRoutes.monitoring,
-      icon: 'nc-icon nc-box-2',
-      children: [
-        {
-          route: AppRoutes.monitoring.children.carbon,
-          ab: 'CA'
-        },
-        {
-          route: AppRoutes.monitoring.children.ethylene,
-          ab: 'ET'
-        },
-        {
-          route: AppRoutes.monitoring.children.sensor,
-          ab: 'SE'
-        },
-        {
-          route: AppRoutes.monitoring.children.temperature,
-          ab: 'TH'
-        }
-      ]
-    },
-    {
-      route: AppRoutes.flashsale,
-      icon: 'nc-icon nc-box-2',
-      children: [
-        {
-          route: AppRoutes.flashsale.children.viewsales,
-          ab: 'FS'
-        },
-        {
-          route: AppRoutes.flashsale.children.donatefood,
-          ab: 'DF'
-        },
-        {
-          route: AppRoutes.flashsale.children.disposefood,
-          ab: 'DF'
-        }
-      ]
-    },
-    {
-      route: AppRoutes.warning,
-      icon: 'nc-icon nc-box-2',
-      children: [
-        {
-          route: AppRoutes.warning,
           ab: 'WA'
         }
       ]

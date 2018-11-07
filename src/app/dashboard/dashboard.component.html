@@ -1,16 +1,4 @@
 <div class="main-content">
-
-<div class="card-body">
-  <div class="col-md-10 col-md-offset-1 text-center">
-    <h1>Angular 2/5 Alerts</h1>
-    <button class="btn btn-success" (click)="success('Success!!')">Success</button>
-    <button class="btn btn-danger" (click)="error('Error :(')">Error</button>
-    <button class="btn btn-info" (click)="info('Some info....')">Info</button>
-    <button class="btn btn-warning" (click)="warn('Warning: ...')">Warn</button>
-    <button class="btn btn-default" (click)="clear()">Clear</button>
-</div>
-</div>
-
   <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-6">
       <div class="card card-stats">
@@ -96,7 +84,7 @@
     <div class="col-lg-6 col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h6 class="big-title">Total (Kg) | Sold (Kg) | Waste (Kg)</h6>
+          <h6 class="big-title">Total (Kg) | Sold (Kg) | Waste (Kg) / Day</h6>
           <canvas id="totalChart" width="400" height="400"></canvas>
         </div>
       </div>
@@ -104,7 +92,7 @@
     <div class="col-lg-6 col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h6 class="big-title">Products sold (Kg/hr)</h6>
+          <h6 class="big-title">Products sold (Kg/Day)</h6>
           <canvas id="soldChart" width="400" height="400"></canvas>
         </div>
       </div>
@@ -114,7 +102,7 @@
     <div class="col-lg-6 col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h6 class="big-title">Distribution by weight (Kg)</h6>
+          <h6 class="big-title">Distribution by weight (Kg/Day)</h6>
           <canvas id="distChart" width="400" height="400"></canvas>
         </div>
       </div>

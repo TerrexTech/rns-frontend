@@ -1,0 +1,88 @@
+#btnSearch{
+  padding-right: 10px
+}
+
+img{
+    height: 400px;
+    width: 400px
+}
+
+.generate-btn-add {
+  position: absolute;
+  right: 395px;
+}
+
+.generate-btn-donate {
+  position: absolute;
+  right: 225px;
+}
+
+.generate-btn-dispose {
+  position: absolute;
+  right: 25px;
+}
+
+.generate-btn button {
+  margin-top :0 !important;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%
+}
+
+.example-full-width {
+  width: 100%
+}
+
+table {
+  width: 100%
+}
+
+td a {
+    color: black;
+    text-decoration: none;
+    display: block
+}
+
+th.mat-sort-header-sorted {
+  color: black
+}
+
+.yellow{
+  background-color: yellow
+}
+
+.green{
+ background-color: green
+}
+
+.bad{
+ background-color: red;
+ border-right: 1px solid rgb(224, 224, 224);
+   padding: 0 24px 0 24px;
+      font-size: 14px;
+      /* text-align: center; */
+      border-right: 1px solid rgb(224, 224, 224);
+      border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.control-label.required:after {
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 5px;
+    top:7px
+  }
+
+.mat-sort-header- {
+  padding-left: 24px;
+}
+
+td.mat-cell {
+  padding: 0 24px 0 24px;
+      font-size: 14px;
+      /* text-align: center; */
+      border-right: 1px solid rgb(224, 224, 224);
+  }

@@ -13,7 +13,7 @@ interface ButtonConfig {
   styleUrls: ['./alert-popup.component.css']
 })
 export class AlertPopupComponent implements OnInit {
-
+    isClosed = false
     @Input() message: string
     @Input() buttons: ButtonConfig[]
     constructor(private alertService: AlertService) { }
@@ -23,7 +23,8 @@ export class AlertPopupComponent implements OnInit {
         console.log(this.buttons)
     }
 
-    removeAlert(alert: Alert): void {
+    removeAlert(): void {
+        this.isClosed = true
     }
 
 }

@@ -6,16 +6,25 @@ import { Observable } from 'rxjs/Observable'
 @Injectable()
 export class NavbarService {
 
+    alertCount: number
     constructor(private http: HttpClient, private jwt: TokenService) {
 
     }
 
-    public getAlertCount(): Observable<Object> {
+    // public getAlertCount(): Observable<Object> {
 
-        return this.http.get('http://localhost:8081' + '/api', {
-            headers: {
-                'Content-Type': 'application/text'
-            }
-        })
+    //     return this.http.get('http://localhost:8081' + '/api', {
+    //         headers: {
+    //             'Content-Type': 'application/text'
+    //         }
+    //     })
+    // }
+
+    public setAlertCount(count: number): void {
+        this.alertCount = count
+    }
+
+    public getAlertCount(): number {
+        return this.alertCount
     }
 }

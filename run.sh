@@ -11,4 +11,4 @@ else
 fi
 
 echo "Compiling bundles...."
-npm run build
+npm run dev

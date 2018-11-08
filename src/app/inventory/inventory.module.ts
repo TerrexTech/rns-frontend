@@ -33,7 +33,7 @@ import { TableSearchComponent } from '../search/table-search/table-search.compon
 import { ShowTableService } from './show/show.service'
 import { AlertPopupModule } from '../alert-popup/alert-popup.module'
 import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
-
+import { NavbarService } from '../shared/navbar/navbar.service'
 @NgModule({
     imports: [
         CommonModule,
@@ -72,7 +72,8 @@ import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
         // AlertService
         Inventory,
         TokenService,
-        ShowTableService
+        ShowTableService,
+        NavbarService
     ],
     entryComponents: [
         DialogDataDialogComponent,

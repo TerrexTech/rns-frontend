@@ -9,7 +9,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer/lib/BundleAnalyzer
 const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { PurifyPlugin } = require('@angular-devkit/build-optimizer')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const baseWebpackConfig = require('./webpack.base.conf')
@@ -138,11 +137,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       mainPath: utils.resolvePath('src/main.ts'),
       sourceMap: config.build.productionSourceMap,
       tsConfigPath: utils.resolvePath('config/tsconfig.app.json')
-    }),
-
-    new PurifyPlugin({
-		  info: true
-	  })
+    })
   ],
 
   optimization: {

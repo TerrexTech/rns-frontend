@@ -3,6 +3,7 @@ import { NavigationEnd, NavigationStart, Router } from '@angular/router'
 import { Location } from '@angular/common'
 import { Subscription } from 'rxjs/Subscription'
 import { filter } from 'rxjs/operators'
+import { NavbarService } from './navbar.service'
 
 const misc: any = {
     navbar_menu_visible: 0,
@@ -26,14 +27,15 @@ export class NavbarComponent implements OnInit {
 
     @ViewChild('navbar-cmp') button
 
-    constructor(location: Location, private renderer: Renderer, private element: ElementRef, private router: Router) {
+    constructor(location: Location, private renderer: Renderer, private element: ElementRef, private router: Router,
+                private navServ: NavbarService) {
         this.location = location
         this.nativeElement = element.nativeElement
         this.sidebarVisible = false
     }
 
     ngOnInit(): void {
-        this.notifCount = 10
+        this.notifCount = this.navServ.getAlertCount()
         const navbar: HTMLElement = this.element.nativeElement
         const body = document.getElementsByTagName('body')[0]
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0]

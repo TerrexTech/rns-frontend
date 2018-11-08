@@ -6,6 +6,7 @@ import { SelectionModel } from '@angular/cdk/collections'
 import { Warning } from '../../models/warning'
 import { Http } from '@angular/http'
 import swal from 'sweetalert'
+import { DialogDataService } from './dialog-data.service'
 
 @Component({
   selector: 'component-dialog-data-dialog',
@@ -29,7 +30,8 @@ export class DialogDataDialogComponent implements OnInit {
   private formBuilder: FormBuilder,
   @Inject(MAT_DIALOG_DATA) public data: any,
   private route: ActivatedRoute,
-  private router: Router
+  private router: Router,
+  private dialogService: DialogDataService
              ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,18 @@ export class DialogDataDialogComponent implements OnInit {
 
   onSubmit(): void {
 
+    if (this.data.data[1] === 'Flash Sale') {
+      console.log('here')
+      this.dialogService.newFlashSale(this.data.data[0])
+    }
+    else if (this.data.data[1] === 'Donation') {
+      console.log('here1')
+      this.dialogService.newDonation(this.data.data[0])
+    }
+    else if (this.data.data[1] === 'Disposal') {
+      console.log('here2')
+      this.dialogService.newDisposal(this.data.data[0])
+    }
     this.router.navigate([this.data.data[2]])
                .catch(console.log)
   }

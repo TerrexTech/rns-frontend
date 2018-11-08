@@ -11,12 +11,50 @@ interface Warning {
 }
 
 @Injectable()
-export class CarbonService {
+export class DialogDataService {
 
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
-    getData(data: Warning): Observable<Object> {
+    newFlashSale(data: Warning): Observable<Object> {
+
+        const gqlQuery = `
+    mutation{
+      addInventory(
+        sku: '${data.sku}',
+        name: '${data.name}',
+        lot: '${data.lot}'
+      ){access_token, refresh_token}
+    }
+    `
+
+        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
+    newDonation(data: Warning): Observable<Object> {
+
+        const gqlQuery = `
+    mutation{
+      addInventory(
+        sku: '${data.sku}',
+        name: '${data.name}',
+        lot: '${data.lot}'
+      ){access_token, refresh_token}
+    }
+    `
+
+        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
+    newDisposal(data: Warning): Observable<Object> {
 
         const gqlQuery = `
     mutation{

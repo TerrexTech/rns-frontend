@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CdkTableModule } from '@angular/cdk/table'
 import { ReportsTableComponent } from './reports-table.component'
+import { ReportTableService } from './reports-table.service'
 import {
     MatButtonModule,
     MatCardModule,
@@ -50,6 +51,9 @@ import {
     ],
     exports: [
         ReportsTableComponent
+    ],
+    providers: [
+        ReportTableService
     ]
 
 })

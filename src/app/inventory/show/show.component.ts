@@ -9,6 +9,7 @@ import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import { ShowTableService } from './show.service'
 import swal from 'sweetalert'
 import { AddInventoryService } from '../add/add.service'
+import { NavbarService } from '../../shared/navbar/navbar.service'
 
 let Food: Inventory[] = []
 
@@ -31,12 +32,12 @@ export class ShowComponent implements OnInit {
   @ViewChild('formDate') formDate: ElementRef
   curField: any
   returnVal: any
-  alertShown = false
+  alertShown = true
 
   selection = new SelectionModel<Inventory>(true, [])
 
   constructor(private http: Http, public dialog: MatDialog, private showService: ShowTableService,
-              private addService: AddInventoryService) {
+              private addService: AddInventoryService, private navServ: NavbarService) {
   }
 
   ngOnInit(): void {
@@ -201,6 +202,11 @@ export class ShowComponent implements OnInit {
       this.curField = Food.filter(i => i.itemId === item.itemId)[0]
       console.log(this.curField)
       this.alertShown = true
+      this.curField.ethylene = 700
+      this.curField.timestamp = this.curField.timestamp - 1000000
+      this.navServ.setAlertCount(1)
+      // ethylene value jumps to 700
+      // projected date (timestamp) becomes closer
       this.showService.sendWarning(this.curField)
                       .toPromise()
                       .then((data: any) => {

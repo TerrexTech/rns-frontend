@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections'
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MockUtils } from '../reports/mocks'
 import { MockMonitor } from '../monitoring/mocks-monitor'
+import { ReportTableService } from './reports-table.service'
 const Food: Inventory[] = []
 
 @Component({
@@ -43,6 +44,7 @@ export class ReportsTableComponent implements OnInit {
   @Input() displayedColumns: string[]
   @Input() jsonFields: number
   @Input() numRows: number
+  @Input() endPoint: string
   @ViewChild(MatPaginator) paginator: MatPaginator
   @ViewChild(MatSort) sort: MatSort
   @ViewChild('query') query: ElementRef
@@ -53,10 +55,22 @@ export class ReportsTableComponent implements OnInit {
   constructor(
     private http: Http,
     // private loadInventoryJsonService: LoadInventoryJsonService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private getTable: ReportTableService
              ) { }
 
   ngOnInit(): void {
+
+    // this.getTable.getTable(this.endPoint)
+    //              .toPromise()
+    //               .then((data: any) => {
+    //                 console.log(data.data)
+    //                 this.dataSource.data = data.data
+    //                 this.dataSource.paginator = this.paginator
+    //                 this.dataSource.paginator.pageSize = data.data.length
+    //               }
+    //               )
+    //               .catch()
 
     if (this.jsonFields === 1) {
       const mock = new MockUtils()

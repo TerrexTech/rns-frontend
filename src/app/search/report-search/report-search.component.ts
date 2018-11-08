@@ -140,7 +140,16 @@ export class ReportSearchComponent implements OnInit {
       if (!this.dateNotValid && !this.periodNotValid) {
         // searchService
         this.reset()
-        this.close(this.searchService.search(searchData))
+        this.close(this.searchService.search(searchData)
+                                     .toPromise()
+                                     .then((data: any) => {
+                                       console.log(data.data)
+
+                                       return data.data
+                                     }
+                                     )
+                                     .catch()
+        )
       }
     }
   }

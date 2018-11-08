@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { Http } from '@angular/http'
 import { MockMonitor } from '../mocks-monitor'
+import { OverviewService } from './overview.service'
 
 @Component({
   selector: 'component-overview',
@@ -15,9 +16,16 @@ export class OverviewComponent implements OnInit {
   temperature: any
   humidity: any
 
-  constructor() { }
+  constructor(private overviewServ: OverviewService) { }
 
   ngOnInit(): void {
+    this.overviewServ.getMetrics()
+      .toPromise()
+      .then((data: any) => {
+        console.log(data.data)
+      }
+      )
+      .catch()
     // this.getData()
     setInterval(() => {
       this.fakeData()
@@ -32,7 +40,8 @@ export class OverviewComponent implements OnInit {
                             .toFixed(2)
     this.temperature = mockData.genFloat(100, 200)
                                .toFixed(2)
-    this.sensor = 20
+    this.humidity = mockData.genFloat(100, 200)
+                            .toFixed(2)
   }
 
   // public getJSON(): any {

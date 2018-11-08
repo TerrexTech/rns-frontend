@@ -17,7 +17,7 @@ export class ShowTableService {
         const gqlQuery = `
             {
         InventoryQuery(
-            timestamp: ${date},
+            barcode: "a",
         ){
             _id,
             itemID,
@@ -43,7 +43,7 @@ export class ShowTableService {
         }
     `
 
-        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+        return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }

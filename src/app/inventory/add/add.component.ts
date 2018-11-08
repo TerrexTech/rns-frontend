@@ -90,7 +90,7 @@ export class AddComponent implements OnInit {
       this.addService.addItem(this.form.value)
                      .toPromise()
                      .then((data: any) => {
-                        console.log(data.data)
+                        console.log(data)
                         }
                       )
                      .catch()

@@ -32,19 +32,20 @@ export class AddInventoryService {
     const gqlQuery = `
     mutation{
       InventoryInsert(
-        itemId: '${data.item_id}',
+        itemID: "${data.item_id}",
+        barcode: "a",
         dateArrived: ${data.date_arrived},
-        deviceId: '${data.device_id}',
-        lot: '${data.lot}',
-        name: '${data.name}',
-        origin: '${data.origin}',
-        price: ${data.price},
-        rsCustomerId: '${this.jwt.getAccessToken().sub}',
-        salePrice: ${data.price},
-        sku: ${data.sku},
-        timestamp: ${date},
-        totalWeight: ${data.total_weight},
-        upc: ${data.upc}
+        deviceID: "${data.device_id}",
+        lot: "${data.lot}",
+        name: "${data.name}",
+        origin: "${data.origin}",
+        price: ${12},
+        rsCustomerID: "${this.jwt.getAccessToken().sub}",
+        salePrice: ${12},
+        sku: "${data.sku}",
+        timestamp: ${Math.floor(date)},
+        totalWeight: ${12},
+        upc: ${54754}
     ){
       _id,
     itemID,
@@ -69,8 +70,9 @@ export class AddInventoryService {
     }
     }
     `
+    console.log(gqlQuery)
 
-    return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+    return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
       headers: {
         'Content-Type': 'application/text'
       }

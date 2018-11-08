@@ -22,7 +22,7 @@ let Food: Inventory[] = []
 export class ShowComponent implements OnInit {
   food: Inventory
   displayedColumns: string[] =
-  ['select' , 'upc', 'sku', 'name', 'origin', 'location', 'date_arrived', 'expiry_date', 'sold_weight', 'total_weight']
+  ['select' , 'upc', 'sku', 'name', 'origin', 'lot', 'dateArrived', 'expiryDate', 'soldWeight', 'totalWeight']
   dataSource = new MatTableDataSource()
   today: number = Date.now()
   @ViewChild(MatPaginator) paginator: MatPaginator
@@ -47,11 +47,12 @@ export class ShowComponent implements OnInit {
     //     this.dataSource.data = data
     //     Food = data
     //   })
+
     this.showService.getTable()
                     .toPromise()
                     .then((data: any) => {
-                      console.log(data.data)
-                      this.dataSource.data = data.data
+                      console.log(data.data.InventoryQuery)
+                      this.dataSource.data = data.data.InventoryQuery
                     }
                     )
                     .catch()

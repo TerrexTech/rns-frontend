@@ -5,7 +5,7 @@ export interface ItemModel {
   lot: string
   name: string
   origin: string
-  price: string
+  price: number
   sku: string
   total_weight: string
   upc: number

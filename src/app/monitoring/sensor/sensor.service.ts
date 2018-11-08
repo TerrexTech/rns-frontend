@@ -42,4 +42,44 @@ export class ShowTableService {
             }
         })
     }
+
+    public getTable(): Observable<Object> {
+
+        const date = new Date().getTime() / 1000
+
+        const gqlQuery = `
+            {
+        InventoryQuery(
+            timestamp: ${date},
+        ){
+            _id,
+            itemID,
+            barcode,
+            dateArrived,
+            dateSold,
+            deviceID,
+            donateWeight,
+            expiryDate,
+            lot,
+            name,
+            origin,
+            price,
+            rsCustomerID,
+            salePrice,
+            sku,
+            soldWeight,
+            timestamp,
+            totalWeight,
+            upc,
+            wasteWeight
+        }
+        }
+    `
+
+        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
 }

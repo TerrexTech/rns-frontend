@@ -14,6 +14,7 @@ export class SensorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.openSearch()
   }
 
   openSearch(): void {
@@ -23,6 +24,7 @@ export class SensorComponent implements OnInit {
       .afterClosed()
       .subscribe(
         data => this.sensorData = data
+
       )
 
   }

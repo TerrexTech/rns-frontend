@@ -87,6 +87,13 @@ export class AddComponent implements OnInit {
       this.form.value.date_arrived = Math.floor((new Date(origDate).getTime() / 1000))
       console.log(this.form.value.date_arrived)
       // this.addData.addProd(this.form.value)
+      this.addService.addItem(this.form.value)
+                     .toPromise()
+                     .then((data: any) => {
+                        console.log(data.data)
+                        }
+                      )
+                     .catch()
       this.reset()
     }
   }

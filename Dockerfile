@@ -1,6 +1,6 @@
 FROM node:slim
 
-MAINTAINER Jaskaranbir Dhillon
+LABEL MAINTAINER Jaskaranbir Dhillon
 
 COPY run.sh /
 

@@ -47,21 +47,26 @@ export class ShowComponent implements OnInit {
     //     Food = data
     //   })
     this.showService.getTable()
-                    .subscribe(data => {
-                      console.log(data[0])
-                      this.dataSource.data = data[0]
-                    })
+                    .toPromise()
+                    .then((data: any) => {
+                      console.log(data.data)
+                      this.dataSource.data = data.data
+                    }
+                    )
+                    .catch()
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
   }
 
   resetData(): void {
-    // this.loadInventoryJsonService.getJSON()
-    //   .subscribe(data => {
-    //     console.log(data)
-    //     this.dataSource.data = data
-    //     Food = data
-    //   })
+    this.showService.getTable()
+                    .toPromise()
+                    .then((data: any) => {
+                      console.log(data.data)
+                      this.dataSource.data = data.data
+                    }
+                    )
+                    .catch()
   }
 
   openSearch(): void {
@@ -94,7 +99,12 @@ export class ShowComponent implements OnInit {
             console.log('++++++++++++++++++==')
             console.log(item.itemId)
             this.showService.deleteRows(item.itemId)
-            // this.loadInventoryJsonService.deleteRow(item.item_id)
+                            .toPromise()
+                            .then((data: any) => {
+                              console.log(data.data)
+                            }
+                            )
+                            .catch()
             this.resetData()
           })
           swal('Your item has been deleted!', {
@@ -166,9 +176,23 @@ export class ShowComponent implements OnInit {
       console.log(this.curField)
       console.log('++++++++++++++++++==')
       this.returnVal = this.showService.getQuery(this.curField)
+                                       .toPromise()
+                                       .then((data: any) => {
+                                          console.log(data.data)
+                                          this.dataSource.data = data.data
+                                        }
+                                        )
+                                       .catch()
       console.log(this.returnVal)
       this.addService.addItem(this.returnVal)
-      this.showService.getTable()
+                     .toPromise()
+                     .then((data: any) => {
+                        console.log(data.data)
+                        this.dataSource.data = data.data
+                      }
+                      )
+                     .catch()
+      this.resetData()
     })
   }
 
@@ -178,6 +202,13 @@ export class ShowComponent implements OnInit {
       console.log(this.curField)
       this.alertShown = true
       this.showService.sendWarning(this.curField)
+                      .toPromise()
+                      .then((data: any) => {
+                        console.log(data.data)
+                        this.dataSource.data = data.data
+                      }
+                      )
+                      .catch()
       // bell number increases
       console.log('++++++++++++++++++==')
     })
@@ -201,17 +232,14 @@ export class ShowComponent implements OnInit {
       .afterClosed()
       .subscribe(result => {
         this.showService.getTable()
-          .subscribe(data => {
-             console.log(data)
-             this.dataSource.data = data[0]
-             Food = data[0]
-           })
-      // this.loadInventoryJsonService.getJSON()
-      //     .subscribe(data => {
-      //       console.log(data)
-      //       this.dataSource.data = data
-      //       Food = data
-      //   })
+                        .toPromise()
+                        .then((data: any) => {
+                          console.log(data.data)
+                          this.dataSource.data = data.data
+                          Food = data.data
+                        }
+                        )
+                        .catch()
     })
   }
 

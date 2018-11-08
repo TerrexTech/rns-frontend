@@ -12,17 +12,35 @@ export class ShowTableService {
 
     public getTable(): Observable<Object> {
 
-        const d: any = [{
-            end_date: new Date().getTime()
-        }]
-        console.log(d)
+        const date = new Date().getTime() / 1000
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        end_date: '${d.end_date}'
-      ){access_token, refresh_token}
-    }
+            {
+        InventoryQuery(
+            timestamp: ${date},
+        ){
+            _id,
+            itemID,
+            barcode,
+            dateArrived,
+            dateSold,
+            deviceID,
+            donateWeight,
+            expiryDate,
+            lot,
+            name,
+            origin,
+            price,
+            rsCustomerID,
+            salePrice,
+            sku,
+            soldWeight,
+            timestamp,
+            totalWeight,
+            upc,
+            wasteWeight
+        }
+        }
     `
 
         return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
@@ -40,12 +58,13 @@ export class ShowTableService {
         console.log(d)
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        item_id: '${d.item_id}'
-      ){access_token, refresh_token}
-    }
-    `
+        mutation{
+        InventoryDelete(
+            itemID: ${item_id},
+        ){
+            deletedCount
+        }
+        }`
 
         return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
             headers: {
@@ -56,12 +75,32 @@ export class ShowTableService {
 
     public getQuery(data: Inventory): Observable<Object> {
         const gqlQuery = `
-    mutation{
-      addInventory(
-        item_id: '${data.itemId}',
-        timestamp: '${data.timestamp}'
-      ){access_token, refresh_token}
-    }
+    {
+        InventoryQuery(
+            itemID: ${data.itemId},
+        ){
+            _id,
+            itemID,
+            barcode,
+            dateArrived,
+            dateSold,
+            deviceID,
+            donateWeight,
+            expiryDate,
+            lot,
+            name,
+            origin,
+            price,
+            rsCustomerID,
+            salePrice,
+            sku,
+            soldWeight,
+            timestamp,
+            totalWeight,
+            upc,
+            wasteWeight
+        }
+        }
     `
 
         return this.http.post('http://localhost:8081' + '/api', gqlQuery, {

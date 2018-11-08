@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
 import { AuthResponse } from '../../models/auth-response'
+import { UserAddService } from './user-add.service'
 
 @Component({
   selector: 'component-user-add',
@@ -38,7 +39,8 @@ constructor(
   private formBuilder: FormBuilder,
   private route: ActivatedRoute,
   private router: Router,
-  private http: HttpClient
+  private http: HttpClient,
+  private useradd: UserAddService
            ) { this.http = http }
 
   ngOnInit(): void {
@@ -63,53 +65,79 @@ constructor(
 
   onSubmit(): void {
     this.formSubmitAttempt = true
-    console.log('+++++++++++++++++++++++++')
-    console.log(this.registerForm.controls.roleSelect.value)
-    // this.registerForm.valid
-    // if (this.registerForm.valid) {
-
     if (this.registerForm.valid) {
-      console.log(this.registerForm.controls.lastname.value)
-      console.log(this.registerForm.controls.roleSelect.value)
-
-      const resource = `mutation{
-          register(
-            username:'${this.registerForm.controls.username.value}',
-            password:'${this.registerForm.controls.password.value}',
-            firstName:'${this.registerForm.controls.firstname.value}',
-            lastName:'${this.registerForm.controls.lastname.value}',
-            email:'${this.registerForm.controls.email.value}',
-            role:'${this.registerForm.controls.roleSelect.value}'
-          )
-          {
-            access_token,
-            refresh_token
-          }
-        }`
-
-      console.log(resource)
-      this.http.post('http://162.212.158.16:30653/api', resource)
-        .toPromise()
-        .then((data: any) => {
-          console.log(data)
-          if (data.data.register !== null) {
-            localStorage.setItem('access_token', data.data.register.access_token)
-            localStorage.setItem('refresh_token', data.data.register.refresh_token)
-            //   this.router.navigate([this.returnUrl])
-            this.reset()
-          }
-          console.log(data.data)
-          if (data.errors[0].message === '2: Registeration Error') {
-            this.showError = true
-            this.message = 'User already exists'
-          } else if (data.errors[0].message === '1: Registeration Error') {
-            this.message = 'Server error'
-          }
-        }
-        )
-        .catch()
+      this.useradd.registerEmployee(this.registerForm.value)
+                  .toPromise()
+                  .then((data: any) => {
+                    console.log(data)
+                    if (data.data.register !== null) {
+                      localStorage.setItem('access_token', data.data.register.access_token)
+                      localStorage.setItem('refresh_token', data.data.register.refresh_token)
+                      //   this.router.navigate([this.returnUrl])
+                      this.reset()
+                    }
+                    console.log(data.data)
+                    if (data.errors[0].message === '2: Registeration Error') {
+                      this.showError = true
+                      this.message = 'User already exists'
+                    } else if (data.errors[0].message === '1: Registeration Error') {
+                      this.message = 'Server error'
+                    }
+                  }
+                  )
+                  .catch()
+              }
     }
-  }
+
+  // onSubmit(): void {
+  //   this.formSubmitAttempt = true
+  //   console.log('+++++++++++++++++++++++++')
+  //   console.log(this.registerForm.controls.roleSelect.value)
+  //   // this.registerForm.valid
+  //   // if (this.registerForm.valid) {
+
+  //   if (this.registerForm.valid) {
+  //     console.log(this.registerForm.controls.lastname.value)
+  //     console.log(this.registerForm.controls.roleSelect.value)
+
+  //     const resource = `mutation{
+  //         register(
+  //           username:'${this.registerForm.controls.username.value}',
+  //           password:'${this.registerForm.controls.password.value}',
+  //           firstName:'${this.registerForm.controls.firstname.value}',
+  //           lastName:'${this.registerForm.controls.lastname.value}',
+  //           email:'${this.registerForm.controls.email.value}',
+  //           role:'${this.registerForm.controls.roleSelect.value}'
+  //         )
+  //         {
+  //           access_token,
+  //           refresh_token
+  //         }
+  //       }`
+
+  //     console.log(resource)
+  //     this.http.post('http://162.212.158.16:30653/api', resource)
+  //       .toPromise()
+  //       .then((data: any) => {
+  //         console.log(data)
+  //         if (data.data.register !== null) {
+  //           localStorage.setItem('access_token', data.data.register.access_token)
+  //           localStorage.setItem('refresh_token', data.data.register.refresh_token)
+  //           //   this.router.navigate([this.returnUrl])
+  //           this.reset()
+  //         }
+  //         console.log(data.data)
+  //         if (data.errors[0].message === '2: Registeration Error') {
+  //           this.showError = true
+  //           this.message = 'User already exists'
+  //         } else if (data.errors[0].message === '1: Registeration Error') {
+  //           this.message = 'Server error'
+  //         }
+  //       }
+  //       )
+  //       .catch()
+  //   }
+  // }
 
   reset(): void {
     this.registerForm.reset()

@@ -91,6 +91,16 @@ export class DialogDataDialogComponent implements OnInit {
     this.form.value.date_arrived = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
     console.log('submitted')
     this.updateInv.updateItem(this.form.value)
+                  .toPromise()
+                  .then((data: any) => {
+                    console.log(data)
+                    if (data.data !== null) {
+                      this.reset()
+                      }
+                    }
+                    )
+                    .catch()
+
     swal('Record successfully inserted!')
       .then(log => {
         console.log(log)
@@ -104,4 +114,9 @@ export class DialogDataDialogComponent implements OnInit {
       })
   }
 }
+
+  reset(): void {
+    this.form.reset()
+    this.formSubmitAttempt = false
+  }
 }

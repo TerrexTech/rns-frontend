@@ -11,4 +11,6 @@ export class FlashSale {
     status: string
     price: number
     sale_price: number
+    sold_weight: number
+    total_weight: number
 }

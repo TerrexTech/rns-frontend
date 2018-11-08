@@ -9,10 +9,10 @@
           <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
             <i class="fa fa-bolt"></i>
           </a>
-          <a id="donateBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="donateRows()">
+          <a id="donateBtn" [attr.disabled]="selected() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="donateRows()">
             <i class="fa fa-donate"></i>
           </a>
-          <a id="disposeBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="disposeRows()">
+          <a id="disposeBtn" [attr.disabled]="selected() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="disposeRows()">
             <i class="fa fa-trash"></i>
           </a>
         </div>
@@ -100,7 +100,7 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="projected expiry">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Projected Expiry </th>
               <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.projected_expiry * 1000 | date:
                   'dd/MM/yyyy' }}</a> </td>
             </ng-container>

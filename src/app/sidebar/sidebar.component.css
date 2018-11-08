@@ -40,3 +40,24 @@ a[id="user-profile-collapse"][data-toggle="collapse"][aria-expanded="true"] .car
 #user-menu ul {
   margin-top: 0;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: sgrey;
+}

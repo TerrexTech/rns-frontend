@@ -90,7 +90,6 @@ export class TableSearchComponent implements OnInit {
     const today = new Date().getTime() / 1000
     let startDate = this.form.value.start_date
     let endDate = this.form.value.end_date
-    let period = 0
 
     if (this.form.value.exact_match === '') {
       this.form.value.exact_match = false
@@ -106,56 +105,28 @@ export class TableSearchComponent implements OnInit {
       endDate = this.form.value.end_date
     }
 
-    if (startDate && endDate && startDate > endDate) {
+    if ((startDate && endDate) && startDate > endDate) {
       this.dateNotValid = true
       this.message = 'Start date cannot be greater than end date'
+    }
+
+    if ((startDate && endDate) && endDate > today) {
+      this.dateNotValid = true
+      this.message = 'End date cannot be greater than today'
     }
 
     else {
       this.dateNotValid = false
     }
 
-    if (startDate > today || endDate > today) {
-      this.periodNotValid = true
-      this.message = 'Selected date cannot be greater than current day'
+    if (startDate && !endDate) {
+      this.dateNotValid = true
+      this.message = 'End date is required'
     }
 
-    else {
-      this.periodNotValid = false
+    if (endDate && this.form.value.period && !startDate) {
+      this.form.value.start_date = endDate - this.switchTime(this.form.value.period)
     }
-
-    if (endDate) {
-    switch (this.form.value.period) {
-      case 'week': {
-        period = 604800
-        this.form.value.start_date = endDate - period
-        break
-      }
-      case 'mon': {
-        period = 2629743
-        this.form.value.start_date = endDate - period
-        break
-      }
-      case '3mons': {
-        period = 2629743 * 3
-        this.form.value.start_date = endDate - period
-        break
-      }
-      case '6mons': {
-        period = 2629743 * 6
-        this.form.value.start_date = endDate - period
-        break
-      }
-      case 'year': {
-        period = 31556926
-        this.form.value.start_date = endDate - period
-        break
-      }
-      default: {
-        break
-      }
-    }
-  }
 
     const object = this.form.value
 
@@ -172,6 +143,37 @@ export class TableSearchComponent implements OnInit {
       this.reset()
       this.close(this.searchService.search(searchData))
     }
+  }
+
+  switchTime(period: string): number {
+    let periodNum = 0
+    switch (period) {
+      case 'week': {
+        periodNum = 604800
+        break
+      }
+      case 'mon': {
+        periodNum = 2629743
+        break
+      }
+      case '3mons': {
+        periodNum = 2629743 * 3
+        break
+      }
+      case '6mons': {
+        periodNum = 2629743 * 6
+        break
+      }
+      case 'year': {
+        periodNum = 31556926
+        break
+      }
+      default: {
+        break
+      }
+    }
+
+    return periodNum
   }
 
   reset(): void {

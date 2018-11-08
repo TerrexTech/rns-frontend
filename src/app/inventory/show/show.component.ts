@@ -20,7 +20,7 @@ let Food: Inventory[] = []
 export class ShowComponent implements OnInit {
   food: Inventory
   displayedColumns: string[] =
-  ['select' , 'upc', 'sku', 'name', 'origin', 'location', 'date_arrived', 'expiry_date', 'sale_price', 'total_weight']
+  ['select' , 'upc', 'sku', 'name', 'origin', 'location', 'date_arrived', 'expiry_date', 'sold_weight', 'total_weight']
   dataSource = new MatTableDataSource()
   today: number = Date.now()
   @ViewChild(MatPaginator) paginator: MatPaginator
@@ -29,6 +29,7 @@ export class ShowComponent implements OnInit {
   @ViewChild('field') field: ElementRef
   @ViewChild('formDate') formDate: ElementRef
   curField: any
+  returnVal: any
 
   selection = new SelectionModel<Inventory>(true, [])
 
@@ -49,15 +50,6 @@ export class ShowComponent implements OnInit {
                     })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
-  }
-
-  getSearchData(query, field): void {
-    // this.loadInventoryJsonService.getSearchJSON(query, field)
-    //   .subscribe(data => {
-    //     console.log(data)
-    //     this.dataSource.data = data
-    //     Food = data
-    //   })
   }
 
   resetData(): void {
@@ -97,8 +89,8 @@ export class ShowComponent implements OnInit {
           this.selection.selected.forEach(item => {
             const index: number = Food.findIndex(d => d === item)
             console.log('++++++++++++++++++==')
-            console.log(item.item_id)
-            this.showService.deleteRows(item.item_id)
+            console.log(item.itemId)
+            this.showService.deleteRows(item.itemId)
             // this.loadInventoryJsonService.deleteRow(item.item_id)
             this.resetData()
           })
@@ -165,12 +157,33 @@ export class ShowComponent implements OnInit {
     return false
   }
 
+  genSold(): void {
+    this.selection.selected.forEach(item => {
+      this.curField = Food.filter(i => i.itemId === item.itemId)[0]
+      console.log(this.curField)
+      console.log('++++++++++++++++++==')
+      this.returnVal = this.showService.getQuery(this.curField)
+    })
+  }
+
+  genWarning(): void {
+   // this.returnVal
+
+    this.selection.selected.forEach(item => {
+      this.curField = Food.filter(i => i.itemId === item.itemId)[0]
+      console.log(this.curField)
+      console.log('++++++++++++++++++==')
+
+      this.showService.sendWarning(this.curField)
+    })
+  }
+
   populateFields(): void {
     // console.log(e)
     // if (e !== undefined) {
     //   this.curField = Food.filter(i => i.item_id === e)[0]
     this.selection.selected.forEach(item => {
-      this.curField = Food.filter(i => i.item_id === item.item_id)[0]
+      this.curField = Food.filter(i => i.itemId === item.itemId)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
     })
@@ -195,12 +208,6 @@ export class ShowComponent implements OnInit {
       //       Food = data
       //   })
     })
-  }
-
-  onSearch(): void {
-    const query = this.query.nativeElement.value
-    const field = this.field.nativeElement.value
-    this.getSearchData(query, field)
   }
 
   isAllSelected(): boolean {

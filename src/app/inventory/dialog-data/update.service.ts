@@ -28,23 +28,23 @@ export class UpdateInventoryService {
     const gqlQuery = `
     mutation{
       addInventory(
-        item_id: '${data[0].item_id}',
+        item_id: '${data[0].itemId}',
         upc: ${data[0].upc},
         name: '${data[0].name}',
         origin: '${data[0].origin}',
-        device_id: '${data[0].device_id}',
-        total_weight: ${data[0].total_weight},
+        device_id: '${data[0].deviceId}',
+        total_weight: ${data[0].totalWeight},
         price: ${data[0].price},
         lot: '${data[0].lot}',
-        date_arrived: ${data[0].date_arrived},
+        date_arrived: ${data[0].dateArrived},
         timestamp: ${Date.now()},
         rs_customer_id: '${this.jwt.getAccessToken().sub}',
-        waste_weight: ${data[0].waste_weight},
-        donate_weight: ${data[0].donate_weight},
-        date_sold: ${data[0].date_sold},
-        sale_price: ${data[0].sale_price},
-        sold_weight: ${data[0].sold_weight},
-        quantity: ${Math.floor(data[0].total_weight / data[0].sold_weight)}
+        waste_weight: ${data[0].wasteWeight},
+        donate_weight: ${data[0].donateWeight},
+        date_sold: ${data[0].dateSold},
+        sale_price: ${data[0].salePrice},
+        sold_weight: ${data[0].soldWeight},
+        quantity: ${Math.floor(data[0].totalWeight / data[0].soldWeight)}
       ){access_token, refresh_token}
     }
     `

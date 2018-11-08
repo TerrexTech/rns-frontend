@@ -21,6 +21,7 @@ export class WarningComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
   createType: string
+  url: string
 
   displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projected expiry']
   curField: any
@@ -65,6 +66,7 @@ export class WarningComponent implements OnInit {
         console.log(item)
         itemArray.push(item)
         this.createType = 'Flash Sale'
+        this.url = 'flash-sales'
         // this.curField = flash_data.findIndex(d => d === item.sku)
       })
     console.log(itemArray)
@@ -72,7 +74,7 @@ export class WarningComponent implements OnInit {
       minHeight: 600,
       minWidth: 1000,
       data: {
-        data: [itemArray, this.createType]
+        data: [itemArray, this.createType, this.url]
       }
     })
   }
@@ -91,6 +93,7 @@ export class WarningComponent implements OnInit {
       console.log(item)
       itemArray.push(item)
       this.createType = 'Donation'
+      this.url = 'donate-dispose/donate-food'
       // this.curField = flash_data.findIndex(d => d === item.sku)
     })
     console.log(itemArray)
@@ -98,7 +101,7 @@ export class WarningComponent implements OnInit {
       minHeight: 600,
       minWidth: 1000,
       data: {
-        data: [itemArray, this.createType]
+        data: [itemArray, this.createType, this.url]
       }
     })
   }
@@ -117,6 +120,7 @@ export class WarningComponent implements OnInit {
       console.log(item)
       itemArray.push(item)
       this.createType = 'Disposal'
+      this.url = 'donate-dispose/dispose-food'
       // this.curField = flash_data.findIndex(d => d === item.sku)
     })
     console.log(itemArray)
@@ -124,7 +128,7 @@ export class WarningComponent implements OnInit {
       minHeight: 600,
       minWidth: 1000,
       data: {
-        data: [itemArray, this.createType]
+        data: [itemArray, this.createType, this.url]
       }
     })
   }

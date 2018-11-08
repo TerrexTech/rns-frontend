@@ -79,7 +79,7 @@
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="projected expiry">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Projected Expiry </th>
                             <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.projected_expiry * 1000 | date:
                                     'dd/MM/yyyy' }}</a> </td>
                         </ng-container>
@@ -92,9 +92,9 @@
                 </div>
             </mat-card-content>
             <mat-dialog-actions>
-                <button [mat-dialog-close]="true" (click)="onSubmit()">Create</button>
+                <button mat-button [mat-dialog-close]="true" (click)="onSubmit()">Create</button>
                 <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-                <button [mat-dialog-close]="true">Close</button>
+                <button mat-button [mat-dialog-close]="true">Close</button>
             </mat-dialog-actions>
         </mat-card>
     </div>

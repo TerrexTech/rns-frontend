@@ -1,21 +1,21 @@
 export class Inventory {
-    item_id: string
+    itemId: string
     upc: number
     sku: string
     name: string
     origin: string
-    device_id: string
-    total_weight: number
+    deviceId: string
+    totalWeight: number
     price: number
     location: string
-    date_arrived: number
-    expiry_date: number
+    dateArrived: number
+    expiryDate: number
     timestamp: number
-    rs_customer_id: string
-    waste_weight: number
-    donate_weight: number
-    date_sold: number
-    sale_price: number
-    sold_weight: number
+    rsCustomerId: string
+    wasteWeight: number
+    donateWeight: number
+    dateSold: number
+    salePrice: number
+    soldWeight: number
     lot: string
 }

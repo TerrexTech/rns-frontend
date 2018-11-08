@@ -7,6 +7,14 @@ import { MockMonitor } from '../mocks-monitor'
 import { MatDialog } from '@angular/material'
 import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
 
+interface Monitoring {
+  sku: string
+  name: string
+  lot: string
+}
+
+let searchData: Monitoring[] = []
+
 @Component({
   selector: 'component-carbon',
   templateUrl: './carbon.component.html',
@@ -14,7 +22,7 @@ import { MonitorSearchComponent } from '../../search/monitor-search/monitor-sear
 })
 export class CarbonComponent implements OnInit {
   carbonChart: any
-  carbonData: any
+  fruitName = 'Apple'
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }
@@ -23,25 +31,25 @@ export class CarbonComponent implements OnInit {
     this.loadCarbonGraph()
   }
 
-  openSearch(): void {
+  openSearch(): any {
     this.dialog.open(MonitorSearchComponent, {
       width: '500px'
     })
       .afterClosed()
       .subscribe(
-        data => this.carbonData = data
+        data => searchData = data
       )
 
-    return this.carbonData
+    return searchData
   }
 
   loadCarbonGraph(): void {
-    this.openSearch()
+    // this.openSearch()
     const m = new MockMonitor()
     m.genCarbonData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('carbon'))
-  //  const arr1 = this.openSearch()
+   // const arr1 = JSON.parse(localStorage.getItem('carbon'))
+    const arr1 = this.openSearch()
     console.log(arr1.map(e => {
       return e.Carbon
     }))

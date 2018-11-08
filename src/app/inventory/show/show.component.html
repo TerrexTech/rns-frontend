@@ -15,6 +15,12 @@
           <a id="disposeBtn" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canDelete() ? true : null" (click)="removeSelectedRows()">
             <i class="fa fa-times"></i>
           </a>
+          <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()">
+            <i class="fa fa-dollar-sign"></i>
+          </a>
+          <a id="warningBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genWarning()">
+            <i class="fa fa-exclamation-triangle"></i>
+          </a>
         </div>
     </mat-card-header>
   </mat-card>
@@ -80,20 +86,20 @@
 
           <!-- Symbol Column -->
           <ng-container matColumnDef="expiry_date">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiry Date </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Projected Date </th>
             <td mat-cell *matCellDef="let element"><a> {{ element.expiry_date * 1000 | date: 'dd/MM/yyyy' }}</a> </td>
           </ng-container>
 
           <!-- Symbol Column -->
-          <ng-container matColumnDef="sale_price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sale Price </th>
-            <td mat-cell *matCellDef="let element"><a> {{ element.price }}</a> </td>
+          <ng-container matColumnDef="total_weight">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Original Weight </th>
+            <td mat-cell *matCellDef="let element"><a> {{ element.total_weight }}</a> </td>
           </ng-container>
 
           <!-- Symbol Column -->
-          <ng-container matColumnDef="total_weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-            <td mat-cell *matCellDef="let element"><a> {{ element.total_weight }}</a> </td>
+          <ng-container matColumnDef="sale_price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sold Weight </th>
+            <td mat-cell *matCellDef="let element"><a> {{ element.sold_weight }}</a> </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

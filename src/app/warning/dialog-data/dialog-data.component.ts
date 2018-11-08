@@ -42,5 +42,7 @@ export class DialogDataDialogComponent implements OnInit {
 
   onSubmit(): void {
 
+    this.router.navigate([this.data.data[2]])
+               .catch(console.log)
   }
 }

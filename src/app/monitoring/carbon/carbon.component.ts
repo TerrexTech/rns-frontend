@@ -23,6 +23,8 @@ let searchData: Monitoring[] = []
 export class CarbonComponent implements OnInit {
   carbonChart: any
   fruitName = 'Apple'
+  sku = 'Apple'
+  lot = 'Apple'
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }

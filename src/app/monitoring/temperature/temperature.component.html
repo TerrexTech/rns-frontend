@@ -3,15 +3,20 @@
     <component-overview></component-overview>
     <div class="row">
       <div class="col-sm-3">
-        <div class="card report-info">
-          <div id="info" class="card-body card-body2">
         <rg-gauge-chart [canvasWidth]="300" [needleValue]="20" [centralLabel]="" [options]="{
                     hasNeedle: true,
                     rangeLabel: ['0', '100']
                 }"
           [name]="'Current Temperature'" [bottomLabel]="20">
         </rg-gauge-chart>
-        </div>
+        <br>
+        <div class="card report-info">
+          <div id="info" class="card-body card-body2 text-center">
+            <br>
+            <h6>Fruit Name: {{ fruitName }}</h6><br>
+            <h6>SKU: SKU</h6><br>
+            <h6>Lot : Lot #</h6><br>
+          </div>
         </div>
         <!--Try to find angular component that shows same as grafana-->
       </div>

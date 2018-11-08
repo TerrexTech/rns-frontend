@@ -32,6 +32,7 @@ export class ReportSearchComponent implements OnInit {
   dateNotValid = false
   periodNotValid = false
   message: string
+  data: any
 
   constructor(
     private dialogRef: MatDialogRef<ReportSearchComponent>,
@@ -140,16 +141,15 @@ export class ReportSearchComponent implements OnInit {
       if (!this.dateNotValid && !this.periodNotValid) {
         // searchService
         this.reset()
-        this.close(this.searchService.search(searchData)
-                                     .toPromise()
-                                     .then((data: any) => {
-                                       console.log(data.data)
-
-                                       return data.data
-                                     }
-                                     )
-                                     .catch()
-        )
+        this.searchService.search(searchData)
+                          .toPromise()
+                          .then((data: any) => {
+                            console.log(data.data)
+                            this.data = data.data
+                          }
+                          )
+                          .catch()
+        this.close(this.data)
       }
     }
   }

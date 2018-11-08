@@ -16,6 +16,9 @@ export class TemperatureComponent implements OnInit {
 
   tempChart: any
   tempData: any
+  fruitName = 'Apple'
+  sku = 'Apple'
+  lot = 'Apple'
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }

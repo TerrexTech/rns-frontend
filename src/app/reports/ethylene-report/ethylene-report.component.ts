@@ -55,6 +55,7 @@ export class EthyleneReportComponent implements OnInit {
     mock.genEthyData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = this.openSearch()
+    console.log(arr1)
     // const arr1 = JSON.parse(localStorage.getItem('arr1'))
     console.log(arr1.map(e => {
       return e.Ethylene

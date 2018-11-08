@@ -16,6 +16,9 @@ export class EthyleneComponent implements OnInit {
 
   ethyleneChart: any
   ethyData: any
+  fruitName = 'Apple'
+  sku = 'Apple'
+  lot = 'Apple'
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }

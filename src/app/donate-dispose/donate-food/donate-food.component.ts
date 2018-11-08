@@ -4,6 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections'
 import swal from 'sweetalert'
 import { Http } from '@angular/http'
 import { Warning } from '../../models/warning'
+import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 
 let donate: any[] = []
 
@@ -41,22 +42,22 @@ export class DonateFoodComponent implements OnInit {
     return this.http.get('./static/mock_flash.json')
   }
 
-  // populateFields(): void {
-  //   // console.log(e)
-  //   // if (e !== undefined) {
-  //   //   // this.curField = flash_data.filter(i => i.sku === e)[0]
-  //   this.selection.selected.forEach(item => {
-  //     console.log(item)
-  //     this.curField = item
-  //     // this.curField = flash_data.findIndex(d => d === item.sku)
-  //     console.log(this.curField)
-  //   })
-  //   this.dialog.open(DialogDataDialogComponent, {
-  //     data: {
-  //       data: this.curField
-  //     }
-  //   })
-  // }
+  populateFields(): void {
+    // console.log(e)
+    // if (e !== undefined) {
+    //   // this.curField = flash_data.filter(i => i.sku === e)[0]
+    this.selection.selected.forEach(item => {
+      console.log(item)
+      this.curField = item
+      // this.curField = flash_data.findIndex(d => d === item.sku)
+      console.log(this.curField)
+    })
+    this.dialog.open(DialogDataDialogComponent, {
+      data: {
+        data: [this.curField, 'Donate']
+      }
+    })
+  }
 
   // removeSelectedRows(): void {
 

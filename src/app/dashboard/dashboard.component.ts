@@ -46,20 +46,20 @@ export class DashboardComponent implements OnInit {
     let sendDates = []
 
     const sendDate = new SendDate()
-    sendDate.end_date = this.getDays(1)[0]
-    sendDate.start_date = this.getDays(1)[1]
+    sendDate.endDate = this.getDays(1)[0]
+    sendDate.startDate = this.getDays(1)[1]
 
     const sendDate2 = new SendDate()
-    sendDate2.end_date = this.getDays(2)[0]
-    sendDate2.start_date = this.getDays(2)[1]
+    sendDate2.endDate = this.getDays(2)[0]
+    sendDate2.startDate = this.getDays(2)[1]
 
     const sendDate3 = new SendDate()
-    sendDate3.end_date = this.getDays(3)[0]
-    sendDate3.start_date = this.getDays(3)[1]
+    sendDate3.endDate = this.getDays(3)[0]
+    sendDate3.startDate = this.getDays(3)[1]
 
     const sendDate4 = new SendDate()
-    sendDate4.end_date = this.getDays(4)[0]
-    sendDate4.start_date = this.getDays(4)[1]
+    sendDate4.endDate = this.getDays(4)[0]
+    sendDate4.startDate = this.getDays(4)[1]
 
     sendDates = [sendDate, sendDate2, sendDate3, sendDate4]
     const url = '/total-inv'
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
     let sendDates = []
 
     const sendDate = new SendDate()
-    sendDate.end_date = this.getDays(1)[0]
+    sendDate.endDate = this.getDays(1)[0]
     // sendDate.start_date = this.getDays(0)[1]
     console.log(sendDate)
     sendDates = [sendDate]
@@ -93,20 +93,20 @@ export class DashboardComponent implements OnInit {
     let sendDates = []
 
     const sendDate = new SendDate()
-    sendDate.end_date = this.getDays(1)[0]
-    sendDate.start_date = this.getDays(1)[1]
+    sendDate.endDate = this.getDays(1)[0]
+    sendDate.startDate = this.getDays(1)[1]
 
     const sendDate2 = new SendDate()
-    sendDate2.end_date = this.getDays(2)[0]
-    sendDate2.start_date = this.getDays(2)[1]
+    sendDate2.endDate = this.getDays(2)[0]
+    sendDate2.startDate = this.getDays(2)[1]
 
     const sendDate3 = new SendDate()
-    sendDate3.end_date = this.getDays(3)[0]
-    sendDate3.start_date = this.getDays(3)[1]
+    sendDate3.endDate = this.getDays(3)[0]
+    sendDate3.startDate = this.getDays(3)[1]
 
     const sendDate4 = new SendDate()
-    sendDate4.end_date = this.getDays(4)[0]
-    sendDate4.start_date = this.getDays(4)[1]
+    sendDate4.endDate = this.getDays(4)[0]
+    sendDate4.startDate = this.getDays(4)[1]
 
     sendDates = [sendDate, sendDate2, sendDate3, sendDate4]
 

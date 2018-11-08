@@ -29,7 +29,7 @@ export class CarbonService {
         let sendDates = []
 
         const sendDate = new SendDate()
-        sendDate.end_date = this.getDays(1)[0]
+        sendDate.endDate = this.getDays(1)[0]
         // sendDate.start_date = this.getDays(0)[1]
         console.log(sendDate)
         sendDates = [sendDate]
@@ -37,7 +37,7 @@ export class CarbonService {
         const gqlQuery = `
     mutation{
       addInventory(
-        end_date: '${sendDate.end_date}'
+        end_date: '${sendDate.endDate}'
       ){access_token, refresh_token}
     }
     `

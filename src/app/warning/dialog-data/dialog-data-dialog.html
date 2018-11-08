@@ -92,9 +92,9 @@
                 </div>
             </mat-card-content>
             <mat-dialog-actions>
-                <button mat-button [mat-dialog-close]="true" (click)="onSubmit()">Create</button>
+                <button mat-flat-button color="accent" [mat-dialog-close]="true" (click)="onSubmit()">Create</button>
                 <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-                <button mat-button [mat-dialog-close]="true">Close</button>
+                <button mat-flat-button color="warn" [mat-dialog-close]="true">Close</button>
             </mat-dialog-actions>
         </mat-card>
     </div>

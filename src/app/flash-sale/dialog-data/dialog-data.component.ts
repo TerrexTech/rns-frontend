@@ -2,8 +2,8 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
-// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 import swal from 'sweetalert'
+import { UpdateFlashSaleService } from './dialog-data.service'
 
 @Component({
   selector: 'component-dialog-data-dialog',
@@ -19,9 +19,9 @@ export class DialogDataDialogComponent implements OnInit {
   constructor(
   private formBuilder: FormBuilder,
   @Inject(MAT_DIALOG_DATA) public data: any,
-  // private loadInv: LoadInventoryJsonService,
   private route: ActivatedRoute,
-  private router: Router
+  private router: Router,
+  private updateServ: UpdateFlashSaleService
              ) { }
 
   ngOnInit(): void {
@@ -86,8 +86,8 @@ export class DialogDataDialogComponent implements OnInit {
     this.formSubmitAttempt = true
     const origDate = this.form.value.timestamp
     this.form.value.timestamp = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
+    this.updateServ.updateFlashSale(this.form.value)
     console.log('submitted')
-    // this.loadInv.updateRow(this.form.value)
     swal('Record successfully inserted!')
       .then(log => {
         console.log(log)

@@ -28,6 +28,8 @@ import { AddDialogDataComponent } from './add-dialog-data/add-dialog-data.compon
 import { AlertPopupModule } from '../alert-popup/alert-popup.module'
 import { SearchModule } from '../search/search.module'
 import { TableSearchComponent } from '../search/table-search/table-search.component'
+import { AddFlashSaleService } from './add-dialog-data/add-dialog-data.service'
+import { UpdateFlashSaleService } from './dialog-data/dialog-data.service'
 @NgModule({
     declarations: [
         ViewFlashsaleComponent,
@@ -56,7 +58,9 @@ import { TableSearchComponent } from '../search/table-search/table-search.compon
     ],
     providers: [
         AlertService,
-        ViewFlashSaleService
+        ViewFlashSaleService,
+        AddFlashSaleService,
+        UpdateFlashSaleService
     ],
     exports: [
     ],

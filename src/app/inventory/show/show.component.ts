@@ -177,12 +177,9 @@ export class ShowComponent implements OnInit {
       this.curField = Food.filter(i => i.itemId === item.itemId)[0]
       console.log(this.curField)
       this.alertShown = true
-      // bell number increases
-
-      // this.curField
-      console.log('++++++++++++++++++==')
-
       this.showService.sendWarning(this.curField)
+      // bell number increases
+      console.log('++++++++++++++++++==')
     })
   }
 

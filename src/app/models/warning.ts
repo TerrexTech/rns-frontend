@@ -1,7 +1,7 @@
 export class Warning {
     sku: number
     name: string
-    qty_unsold: number
+    qtyUnsold: number
     status: string
-    projected_expiry: number
+    projectedExpiry: number
 }

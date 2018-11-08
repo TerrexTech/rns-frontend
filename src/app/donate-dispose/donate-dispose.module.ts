@@ -26,10 +26,12 @@ import { DisposeFoodComponent } from './dispose-food/dispose-food.component'
 import { AlertPopupModule } from '../alert-popup/alert-popup.module'
 import { SearchModule } from '../search/search.module'
 import { TableSearchComponent } from '../search/table-search/table-search.component'
+import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 @NgModule({
     declarations: [
         DonateFoodComponent,
-        DisposeFoodComponent
+        DisposeFoodComponent,
+        DialogDataDialogComponent
     ],
     imports: [
         CommonModule,
@@ -58,7 +60,8 @@ import { TableSearchComponent } from '../search/table-search/table-search.compon
     ],
     entryComponents: [
         AlertPopupComponent,
-        TableSearchComponent
+        TableSearchComponent,
+        DialogDataDialogComponent
     ]
 })
 export class DonateDisposeModule { }

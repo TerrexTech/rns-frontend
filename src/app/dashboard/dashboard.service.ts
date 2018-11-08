@@ -9,26 +9,26 @@ export class ShowTableService {
 
     getDays(days?: number): any[] {
         let dates = []
-        const end_date = Math.round((new Date().getTime() / 1000) + (days * 86400))
-        const start_date = Math.round(new Date().getTime() / 1000) - (days * 86400)
+        const endDate = Math.round((new Date().getTime() / 1000) + (days * 86400))
+        const startDate = Math.round(new Date().getTime() / 1000) - (days * 86400)
 
         return dates = [
-            end_date, start_date
+            endDate, startDate
         ]
     }
     getToday(): any {
         let sendDates = []
 
         const sendDate = new SendDate()
-        sendDate.end_date = this.getDays(1)[0]
-        // sendDate.start_date = this.getDays(0)[1]
+        sendDate.endDate = this.getDays(1)[0]
+        // sendDate.startDate = this.getDays(0)[1]
         console.log(sendDate)
         sendDates = [sendDate]
 
         const gqlQuery = `
     mutation{
       addInventory(
-        end_date: '${sendDate.end_date}'
+        endDate: '${sendDate.endDate}'
       ){access_token, refresh_token}
     }
     `
@@ -48,32 +48,32 @@ export class ShowTableService {
         let sendDates = []
 
         const sendDate = new SendDate()
-        sendDate.end_date = this.getDays(1)[0]
-        sendDate.start_date = this.getDays(1)[1]
+        sendDate.endDate = this.getDays(1)[0]
+        sendDate.startDate = this.getDays(1)[1]
 
         const sendDate2 = new SendDate()
-        sendDate2.end_date = this.getDays(2)[0]
-        sendDate2.start_date = this.getDays(2)[1]
+        sendDate2.endDate = this.getDays(2)[0]
+        sendDate2.startDate = this.getDays(2)[1]
 
         const sendDate3 = new SendDate()
-        sendDate3.end_date = this.getDays(3)[0]
-        sendDate3.start_date = this.getDays(3)[1]
+        sendDate3.endDate = this.getDays(3)[0]
+        sendDate3.startDate = this.getDays(3)[1]
 
         const sendDate4 = new SendDate()
-        sendDate4.end_date = this.getDays(4)[0]
-        sendDate4.start_date = this.getDays(4)[1]
+        sendDate4.endDate = this.getDays(4)[0]
+        sendDate4.startDate = this.getDays(4)[1]
 
         sendDates = [sendDate, sendDate2, sendDate3, sendDate4]
 
         const d: any = [{
-            end_date: new Date().getTime()
+            endDate: new Date().getTime()
         }]
         console.log(d)
 
         const gqlQuery = `
     mutation{
       addInventory(
-        end_date: '${d.end_date}'
+        endDate: '${d.endDate}'
       ){access_token, refresh_token}
     }
     `

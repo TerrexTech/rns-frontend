@@ -1,16 +1,16 @@
 export class FlashSale {
-    flash_id: number
-    item_id: string
+    flashId: number
+    itemId: string
     upc: number
     sku: number
     name: string
     origin: string
-    device_id: string
+    deviceId: string
     timestamp: number
     ethylene: number
     status: string
     price: number
-    sale_price: number
-    sold_weight: number
-    total_weight: number
+    salePrice: number
+    soldWeight: number
+    totalWeight: number
 }

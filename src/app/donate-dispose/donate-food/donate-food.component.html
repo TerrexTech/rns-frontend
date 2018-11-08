@@ -9,7 +9,7 @@
           <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
             <i class="fa fa-plus"></i>
           </a>
-          <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="donateRows()">
+          <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
             <i class="fa fa-edit"></i>
           </a>
           <a id="deleteBtn" [attr.disabled]="canDelete() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="disposeRows()">

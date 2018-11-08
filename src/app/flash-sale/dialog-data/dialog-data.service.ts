@@ -5,37 +5,30 @@ import { Observable } from 'rxjs/Observable'
 import { FlashSale } from '../../models/flash-sale'
 
 @Injectable()
-export class ViewFlashSaleService {
+export class UpdateFlashSaleService {
 
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
-    public getEndFlashSale(item_id: string): Observable<Object> {
-        const d: any = {
-            item_id: {item_id}
-        }
+    public updateFlashSale(data: FlashSale): Observable<Object> {
 
         const gqlQuery = `
     mutation{
       addInventory(
-        item_id: '${d.item_id}'
-      ){access_token, refresh_token}
-    }
-    `
-
-        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
-            headers: {
-                'Content-Type': 'application/text'
-            }
-        })
-    }
-
-    public removeFlashSale(item_id: string): Observable<Object> {
-
-        const gqlQuery = `
-    mutation{
-      addInventory(
-        item_id: '${item_id}'
+        flash_id: ${data.itemId},
+        item_id: ${data.itemId},
+        upc: ${data.upc},
+        sku: ${data.sku},
+        name: ${data.name},
+        origin: ${data.origin},
+        device_id: ${data.deviceId},
+        timestamp: ${data.timestamp},
+        ethylene: ${data.ethylene},
+        status: ${data.status},
+        price: ${data.price},
+        sale_price: ${data.salePrice},
+        sold_weight: ${data.soldWeight},
+        total_weight: ${data.totalWeight},
       ){access_token, refresh_token}
     }
     `

@@ -2,7 +2,6 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
-// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 import swal from 'sweetalert'
 
 @Component({
@@ -14,51 +13,38 @@ export class DialogDataDialogComponent implements OnInit {
   form: FormGroup
   formSubmitAttempt: boolean
   curField: any
+  pageType: string
   returnUrl: string
 
   constructor(
   private formBuilder: FormBuilder,
   @Inject(MAT_DIALOG_DATA) public data: any,
-  // private loadInv: LoadInventoryJsonService,
   private route: ActivatedRoute,
   private router: Router
              ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      upc: ['', [Validators.required, Validators.minLength(1)]],
       sku: ['', [Validators.required, Validators.minLength(1)]],
       name: ['', [Validators.required, Validators.minLength(1)]],
-      origin: ['', [Validators.required, Validators.minLength(1)]],
-      device_id: ['', [Validators.required, Validators.minLength(1)]],
+      leftover_amount: ['', [Validators.required, Validators.minLength(1)]],
       timestamp: ['', [Validators.required, Validators.minLength(1)]],
-      ethylene: ['', [Validators.required, Validators.minLength(1)]],
-      price: ['', [Validators.required, Validators.minLength(1)]],
-      sale_price: ['', [Validators.required, Validators.minLength(1)]],
       status: ['', [Validators.required, Validators.minLength(1)]]
     })
     this.returnUrl = this.route.snapshot.queryParams[''] || '/'
-    this.curField = this.data
-    this.form.get('upc')
-             .setValue(this.curField.data.upc)
+    this.curField = this.data.data[0]
+    this.pageType = this.data.data[1]
+
     this.form.get('sku')
-             .setValue(this.curField.data.sku)
+             .setValue(this.curField.sku)
     this.form.get('name')
-             .setValue(this.curField.data.name)
-    this.form.get('origin')
-             .setValue(this.curField.data.origin)
-    this.form.get('device_id')
-             .setValue(this.curField.data.device_id)
+             .setValue(this.curField.name)
+    this.form.get('leftover_amount')
+             .setValue(this.curField.leftover_amount)
     this.form.get('timestamp')
-             .setValue(this.curField.data.timestamp)
-    this.form.get('ethylene')
-             .setValue(this.curField.data.ethylene)
-    this.form.get('price')
-             .setValue(this.curField.data.price)
-    this.form.get('sale_price')
-             .setValue(this.curField.data.sale_price)
+             .setValue(this.curField.timestamp)
     this.form.get('status')
-             .setValue(this.curField.data.status)
+             .setValue(this.curField.status)
   }
 
   isFieldValid(field: string): any {
@@ -87,7 +73,6 @@ export class DialogDataDialogComponent implements OnInit {
     const origDate = this.form.value.timestamp
     this.form.value.timestamp = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
     console.log('submitted')
-    // this.loadInv.updateRow(this.form.value)
     swal('Record successfully inserted!')
       .then(log => {
         console.log(log)

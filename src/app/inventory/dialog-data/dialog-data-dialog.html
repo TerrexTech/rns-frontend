@@ -138,9 +138,9 @@
         </div>
         <div class="modal-footer mx-auto">
             <mat-dialog-actions>
-                <button [mat-dialog-close]="true" (click)="onSubmit()">Update</button>
+                <button mat-flat-button color="accent" [mat-dialog-close]="true" (click)="onSubmit()">Update</button>
                 <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-                <button [mat-dialog-close]="true">Close</button>
+                <button mat-flat-button color="warn" [mat-dialog-close]="true">Close</button>
             </mat-dialog-actions>
             <!-- <button type="submit" id="addProduct" class="btn btn-info btn-fill col-sm-6 col-md-6">Update Product</button>
             <button type="submit" id="cancelProduct" class="btn btn-danger btn-fill col-sm-6 col-md-6" (click)="reset()">Reset</button> -->

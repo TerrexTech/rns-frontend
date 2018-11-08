@@ -32,6 +32,12 @@ import {
 } from '@angular/material'
 import { ReportSearchService } from '../search/report-search/report-search.service'
 import { EthyleneReportService } from './ethylene-report/ethylene-report.service'
+import { FlashSaleReportService } from './flash-sale-report/flash-sale-report.service'
+import { InventoryReportService } from './inventory-report/inventory-report.service'
+import { SavingsReportService } from './savings-report/savings-report.service'
+import { SensorReportService } from './sensor-report/sensor-report.service'
+import { TempHumidReportService } from './temphumid-report/temphumid-report.service'
+import { WasteReportService } from './waste-report/waste-report.service'
 
 @NgModule({
     imports: [
@@ -72,7 +78,13 @@ import { EthyleneReportService } from './ethylene-report/ethylene-report.service
     ],
     providers: [
         ReportSearchService,
-        EthyleneReportService
+        EthyleneReportService,
+        FlashSaleReportService,
+        InventoryReportService,
+        SavingsReportService,
+        SensorReportService,
+        TempHumidReportService,
+        WasteReportService
     ]
 })
 

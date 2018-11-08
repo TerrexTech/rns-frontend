@@ -4,8 +4,14 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 import { SendDate } from '../../models'
 
+interface Reporting {
+    sku: string
+    name: string
+    lot: string
+}
+
 @Injectable()
-export class EthyleneService {
+export class TempHumidReportService {
 
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
@@ -42,4 +48,24 @@ export class EthyleneService {
             }
         })
     }
+
+    getData(data: Reporting): Observable<Object> {
+
+        const gqlQuery = `
+    mutation{
+      addInventory(
+        sku: '${data.sku}',
+        name: '${data.name}',
+        lot: '${data.lot}'
+      ){access_token, refresh_token}
+    }
+    `
+
+        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
 }

@@ -109,7 +109,7 @@ export class ViewFlashsaleComponent implements OnInit {
 
     swal({
       title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this imaginary file!',
+      text: 'Once deleted, you will not be able to recover this flash sale!',
       icon: 'warning',
       buttons: ['Yes', 'No'],
       dangerMode: true
@@ -119,9 +119,9 @@ export class ViewFlashsaleComponent implements OnInit {
           this.selection.selected.forEach(item => {
             const index: number = flash_data.findIndex(d => d === item)
             console.log('++++++++++++++++++==')
-            // this.loadInventoryJsonService.deleteRow(item.item_id)
+            this.viewService.removeFlashSale(item.itemId)
           })
-          swal('Poof! Your imaginary file has been deleted!', {
+          swal('The flash sale has been removed!', {
             icon: 'success'
           })
             .then(log => {
@@ -135,7 +135,7 @@ export class ViewFlashsaleComponent implements OnInit {
               return false
             })
         } else {
-          swal('Inventory not removed')
+          swal('Flash sale not removed')
             .then(log => {
               console.log(log)
 
@@ -175,7 +175,7 @@ export class ViewFlashsaleComponent implements OnInit {
     const dataArray = []
     // call to back-end with item_id
     this.selection.selected.forEach(item => {
-      this.viewService.getEndFlashSale(item.item_id)
+      this.viewService.getEndFlashSale(item.itemId)
                       .subscribe(data => dataArray
                       )
     })

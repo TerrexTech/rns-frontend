@@ -202,7 +202,7 @@ export class WasteReportComponent implements OnInit {
     let sendDates = []
 
     const sendDate = new SendDate()
-    sendDate.end_date = this.getDays(1)[0]
+    sendDate.endDate = this.getDays(1)[0]
     // sendDate.start_date = this.getDays(0)[1]
     console.log(sendDate)
     sendDates = [sendDate]

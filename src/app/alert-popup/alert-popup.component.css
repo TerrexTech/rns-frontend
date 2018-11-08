@@ -1,4 +1,4 @@
-/* #note {
+#note {
     position: absolute;
     width: 500px;
     z-index: 101;
@@ -28,7 +28,7 @@
     -webkit-animation: slideDown 2.5s 1.0s 1 ease forwards;
     -moz-transform:    translateY(-50px);
     -moz-animation:    slideDown 2.5s 1.0s 1 ease forwards;
-} */
+}
 
 .alert-messages {
     margin-top: 80px;

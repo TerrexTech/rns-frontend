@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http'
 import { TableSearchService } from './table-search.service'
 
 interface Query {
-  upc: string
   sku: string
   name: string
   origin: string
@@ -45,11 +44,11 @@ export class TableSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      sku: ['', Validators.required],
-      name: ['', Validators.required],
+      sku: ['', [Validators.required]],
+      name: ['', [Validators.required]],
       origin: [''],
       price: [''],
-      lot: ['', Validators.required],
+      lot: ['', [Validators.required]],
       start_date: [''],
       end_date: [''],
       period: [''],
@@ -72,7 +71,7 @@ export class TableSearchComponent implements OnInit {
 
   onSubmit(): void {
     this.formSubmitAttempt = true
-
+    if (this.form.valid) {
     const month = new Array()
     month[0] = 'January'
     month[1] = 'February'
@@ -105,12 +104,14 @@ export class TableSearchComponent implements OnInit {
       endDate = this.form.value.end_date
     }
 
-    if ((startDate && endDate) && startDate > endDate) {
+    if ((startDate && endDate) && (startDate > endDate)) {
+      console.log(startDate)
+      console.log(endDate)
       this.dateNotValid = true
       this.message = 'Start date cannot be greater than end date'
     }
 
-    if ((startDate && endDate) && endDate > today) {
+    if ((startDate && endDate) && (endDate > today)) {
       this.dateNotValid = true
       this.message = 'End date cannot be greater than today'
     }
@@ -119,7 +120,7 @@ export class TableSearchComponent implements OnInit {
       this.dateNotValid = false
     }
 
-    if (startDate && !endDate) {
+    if (startDate && endDate === '') {
       this.dateNotValid = true
       this.message = 'End date is required'
     }
@@ -143,6 +144,7 @@ export class TableSearchComponent implements OnInit {
       this.reset()
       this.close(this.searchService.search(searchData))
     }
+  }
   }
 
   switchTime(period: string): number {
@@ -183,6 +185,10 @@ export class TableSearchComponent implements OnInit {
 
   close(data): void {
     this.dialogRef.close(data)
+  }
+
+  isFieldValid(field: string): any {
+    return this.formSubmitAttempt && this.form.controls[field].status === 'INVALID'
   }
 
 }

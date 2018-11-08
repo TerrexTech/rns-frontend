@@ -10,6 +10,14 @@ import { MockUtils } from '../mocks'
 import { ReportSearchComponent } from '../../search/report-search/report-search.component'
 import { setTimeout } from 'timers'
 
+interface Reporting {
+  sku: string
+  name: string
+  lot: string
+}
+
+let searchData: Reporting[] = []
+
 @Component({
   selector: 'component-ethylene-report',
   templateUrl: './ethylene-report.component.html',
@@ -29,14 +37,16 @@ export class EthyleneReportComponent implements OnInit {
     this.loadEthyleneGraph()
   }
 
-  openSearch(): void {
+  openSearch(): any {
     this.dialog.open(ReportSearchComponent, {
       width: '500px'
     })
     .afterClosed()
     .subscribe(
-      data => this.searchData = data
+      data => searchData = data
     )
+
+    return searchData
 
   }
 
@@ -44,7 +54,8 @@ export class EthyleneReportComponent implements OnInit {
     const mock = new MockUtils()
     mock.genEthyData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('arr1'))
+    const arr1 = this.openSearch()
+    // const arr1 = JSON.parse(localStorage.getItem('arr1'))
     console.log(arr1.map(e => {
       return e.Ethylene
     }))

@@ -28,6 +28,7 @@ import {
     MatTableModule,
     MatTabsModule
 } from '@angular/material'
+import { MonitorSearchService } from '../search/monitor-search/monitor-search.service'
 
 @NgModule({
     imports: [
@@ -62,6 +63,9 @@ import {
     ],
     entryComponents: [
         MonitorSearchComponent
+    ],
+    providers: [
+        MonitorSearchService
     ]
 })
 

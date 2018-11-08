@@ -4,11 +4,8 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 
 interface Query {
-    upc: string
     sku: string
     name: string
-    origin: string
-    price: string
     lot: string
     start_date: number
     end_date: number

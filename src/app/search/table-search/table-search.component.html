@@ -11,7 +11,10 @@
       </div>
 
       <div class="col-sm-10">
-        <input type="string" class="form-control" formControlName="sku">
+        <input type="string" class="form-control" formControlName="sku" [ngClass]="{ 'is-invalid': isFieldValid('sku') }">
+        <span *ngIf="isFieldValid('sku')" class="invalid-feedback">
+          SKU is required
+        </span>
       </div>
     </div>
   </div>
@@ -23,7 +26,10 @@
       </div>
 
       <div class="col-sm-10">
-        <input type="string" class="form-control" formControlName="name">
+        <input type="string" class="form-control" formControlName="name" [ngClass]="{ 'is-invalid': isFieldValid('name') }">
+        <span *ngIf="isFieldValid('name')" class="invalid-feedback">
+          Name is required
+        </span>
       </div>
     </div>
   </div>
@@ -96,7 +102,10 @@
       </div>
 
       <div class="col-sm-10">
-        <input type="string" class="form-control" formControlName="lot">
+        <input type="string" class="form-control" formControlName="lot" [ngClass]="{ 'is-invalid': isFieldValid('lot') }">
+        <span *ngIf="isFieldValid('lot')" class="invalid-feedback">
+          Lot is required
+        </span>
       </div>
     </div>
   </div>
@@ -108,19 +117,19 @@
       </div>
       <div class="col-sm-5">
         <mat-form-field class="example-full-width">
-          <input type="date" matInput [attr.disabled]="!checkDates() ? true : null" placeholder="Start date" formControlName="start_date" (change)="checkDates()">
+          <input type="date" matInput placeholder="Start date" formControlName="start_date" (change)="checkDates()">
         </mat-form-field>
       </div>
       <div class="col-sm-5">
         <mat-form-field class="example-full-width">
-          <input type="date" matInput [attr.disabled]="!checkDates() ? true : null" placeholder="End date" formControlName="end_date" (change)="checkDates()">
+          <input type="date" matInput placeholder="End date" formControlName="end_date" (change)="checkDates()">
         </mat-form-field>
       </div>
     </div>
   </div>
 
   <div *ngIf="dateNotValid">
-    <p class="error-msg">Start date cannot be greater than end date</p>
+    <p class="error-msg">{{ message }}</p>
   </div>
 
   <div class="form-group">

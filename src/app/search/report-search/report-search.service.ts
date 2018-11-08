@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 
 interface Query {
-    upc: string
     sku: string
     name: string
     origin: string
@@ -28,9 +27,6 @@ export class ReportSearchService {
       search(
         sku: '${searchQuery[0].sku}',
         name: '${searchQuery[0].name}',
-        origin: '${searchQuery[0].origin}',
-        ethylene: '${searchQuery[0].ethylene}',
-        lot: '${searchQuery[0].lot}',
         start_date: '${searchQuery[0].start_date}',
         end_date: '${searchQuery[0].end_date}',
         exact_match: '${searchQuery[0].exact_match}',

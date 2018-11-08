@@ -4,6 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { NgModule } from '@angular/core'
 import { WarningModule } from '../warning/warning.module'
 import { AlertService } from '../alert-popup/alert.service'
+import { Router, RouterModule } from '@angular/router'
 
 // Material Components
 import {
@@ -42,7 +43,8 @@ import { AlertPopupComponent } from './alert-popup.component'
         MatSelectModule,
         MatTableModule,
         MatTabsModule,
-        MatButtonModule
+        MatButtonModule,
+        RouterModule
     ],
     providers: [
         AlertService

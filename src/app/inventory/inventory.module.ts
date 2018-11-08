@@ -31,6 +31,8 @@ import { ShowComponent } from './show/show.component'
 import { SearchModule } from '../search/search.module'
 import { TableSearchComponent } from '../search/table-search/table-search.component'
 import { ShowTableService } from './show/show.service'
+import { AlertPopupModule } from '../alert-popup/alert-popup.module'
+import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
 
 @NgModule({
     imports: [
@@ -55,7 +57,8 @@ import { ShowTableService } from './show/show.service'
         MatToolbarModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        SearchModule
+        SearchModule,
+        AlertPopupModule
     ],
     declarations: [
         AddComponent,
@@ -73,7 +76,8 @@ import { ShowTableService } from './show/show.service'
     ],
     entryComponents: [
         DialogDataDialogComponent,
-        TableSearchComponent
+        TableSearchComponent,
+        AlertPopupComponent
     ]
 })
 

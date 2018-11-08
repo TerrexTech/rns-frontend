@@ -7,7 +7,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">*SKU</label>
+        <label class="form-label">SKU</label>
       </div>
 
       <div class="col-sm-10">
@@ -22,7 +22,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">*Name</label>
+        <label class="form-label">Name</label>
       </div>
 
       <div class="col-sm-10">
@@ -98,7 +98,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">*Lot</label>
+        <label class="form-label">Lot</label>
       </div>
 
       <div class="col-sm-10">
@@ -117,21 +117,19 @@
       </div>
       <div class="col-sm-5">
         <mat-form-field class="example-full-width">
-          <input #start matInput [matDatepicker]="picker" placeholder="Start date" formControlName="start_date" (click)="checkDates()"
-            [attr.disabled]="checkDates() ? true : null">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input type="date" matInput placeholder="Start date" formControlName="start_date" (change)="checkDates()">
         </mat-form-field>
       </div>
       <div class="col-sm-5">
         <mat-form-field class="example-full-width">
-          <input #end matInput [matDatepicker]="picker2" placeholder="End date" formControlName="end_date" (click)="checkDates()"
-            [attr.disabled]="!checkDates() ? true : null">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
+          <input type="date" matInput placeholder="End date" formControlName="end_date" (change)="checkDates()">
         </mat-form-field>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="dateNotValid">
+    <p class="error-msg">{{ message }}</p>
   </div>
 
   <div class="form-group">

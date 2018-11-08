@@ -30,6 +30,8 @@ import {
     MatTableModule,
     MatTabsModule
 } from '@angular/material'
+import { ReportSearchService } from '../search/report-search/report-search.service'
+import { EthyleneReportService } from './ethylene-report/ethylene-report.service'
 
 @NgModule({
     imports: [
@@ -67,6 +69,10 @@ import {
     ],
     entryComponents: [
         ReportSearchComponent
+    ],
+    providers: [
+        ReportSearchService,
+        EthyleneReportService
     ]
 })
 

@@ -8,6 +8,7 @@ import { TableSearchComponent } from '../../search/table-search/table-search.com
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import { ShowTableService } from './show.service'
 import swal from 'sweetalert'
+import { AddInventoryService } from '../add/add.service'
 
 let Food: Inventory[] = []
 
@@ -30,10 +31,12 @@ export class ShowComponent implements OnInit {
   @ViewChild('formDate') formDate: ElementRef
   curField: any
   returnVal: any
+  alertShown = false
 
   selection = new SelectionModel<Inventory>(true, [])
 
-  constructor(private http: Http, public dialog: MatDialog, private showService: ShowTableService) {
+  constructor(private http: Http, public dialog: MatDialog, private showService: ShowTableService,
+              private addService: AddInventoryService) {
   }
 
   ngOnInit(): void {
@@ -163,15 +166,20 @@ export class ShowComponent implements OnInit {
       console.log(this.curField)
       console.log('++++++++++++++++++==')
       this.returnVal = this.showService.getQuery(this.curField)
+      console.log(this.returnVal)
+      this.addService.addItem(this.returnVal)
+      this.showService.getTable()
     })
   }
 
   genWarning(): void {
-   // this.returnVal
-
     this.selection.selected.forEach(item => {
       this.curField = Food.filter(i => i.itemId === item.itemId)[0]
       console.log(this.curField)
+      this.alertShown = true
+      // bell number increases
+
+      // this.curField
       console.log('++++++++++++++++++==')
 
       this.showService.sendWarning(this.curField)

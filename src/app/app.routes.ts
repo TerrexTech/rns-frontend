@@ -5,8 +5,9 @@ import { EmployeeRoutes } from './employee/employee.routes'
 import { InventoryRoutes } from './inventory/inventory.routes'
 import { ReportsRoutes } from './reports/reports.routes'
 import { MonitoringRoutes } from './monitoring/monitoring.routing'
-import { FlashSaleRoutes } from './flash-sale/flash-sale.routes'
 import { WarningComponent } from './warning/warning.component'
+import { ViewFlashsaleComponent } from './flash-sale/view-flashsale/view-flashsale.component'
+import { DonateDisposeRoutes } from './donate-dispose/donate-dispose.routes'
 
 export const AppRoutes = {
   root: {
@@ -55,7 +56,13 @@ export const AppRoutes = {
   flashsale: {
     path: 'flash-sales',
     title: 'Flash-Sales',
-    children: FlashSaleRoutes
+    component: ViewFlashsaleComponent
+  },
+
+  donatedispose: {
+    path: 'donate-dispose',
+    title: 'Donate-Dispose',
+    children: DonateDisposeRoutes
   },
 
   warning: {

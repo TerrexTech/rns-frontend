@@ -1,0 +1,14 @@
+form{
+    text-align: center
+}
+mat-form-field{
+    width: 60%
+}
+
+a{
+    width: 50%
+}
+
+.generate-btn {
+    float: right
+}

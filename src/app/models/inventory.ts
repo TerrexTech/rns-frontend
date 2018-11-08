@@ -1,12 +1,12 @@
 export class Inventory {
     item_id: string
     upc: number
-    sku: number
+    sku: string
     name: string
     origin: string
     device_id: string
     total_weight: number
-    price: string
+    price: number
     location: string
     date_arrived: number
     expiry_date: number
@@ -17,5 +17,5 @@ export class Inventory {
     date_sold: number
     sale_price: number
     sold_weight: number
-    lot: number
+    lot: string
 }

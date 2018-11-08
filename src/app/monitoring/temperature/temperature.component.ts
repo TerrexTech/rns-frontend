@@ -4,6 +4,8 @@ import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
 import { MockMonitor } from '../mocks-monitor'
+import { MatDialog } from '@angular/material'
+import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
 
 @Component({
   selector: 'component-temperature',
@@ -13,8 +15,20 @@ import { MockMonitor } from '../mocks-monitor'
 export class TemperatureComponent implements OnInit {
 
   tempChart: any
+  tempData: any
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
+  }
+
+  openSearch(): void {
+    this.dialog.open(MonitorSearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => this.tempData = data
+      )
+
   }
 
   ngOnInit(): void {

@@ -11,6 +11,8 @@ import { SensorReportComponent } from './sensor-report/sensor-report.component'
 import { WasteReportComponent } from './waste-report/waste-report.component'
 import { ReportsTableModule } from '../reports-table/reports-table.module'
 import { TemphumidReportComponent } from './temphumid-report/temphumid-report.component'
+import { SearchModule } from '../search/search.module'
+import { ReportSearchComponent } from '../search/report-search/report-search.component'
 import {
     MatButtonModule,
     MatCardModule,
@@ -51,7 +53,8 @@ import {
         MatGridListModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        ReportsTableModule
+        ReportsTableModule,
+        SearchModule
     ],
     declarations: [
         EthyleneReportComponent,
@@ -61,6 +64,9 @@ import {
         SensorReportComponent,
         WasteReportComponent,
         TemphumidReportComponent
+    ],
+    entryComponents: [
+        ReportSearchComponent
     ]
 })
 

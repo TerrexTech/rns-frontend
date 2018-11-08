@@ -11,6 +11,8 @@ import { TemperatureComponent } from './temperature/temperature.component'
 import { CdkTableModule } from '@angular/cdk/table'
 import { GaugeChartComponent } from 'angular-gauge-chart'
 import { ReportsTableModule } from '../reports-table/reports-table.module'
+import { SearchModule } from '../search/search.module'
+import { MonitorSearchComponent } from '../search/monitor-search/monitor-search.component'
 
 import {
     MatButtonModule,
@@ -47,7 +49,8 @@ import {
         MatPaginatorModule,
         MatButtonModule,
         MatGridListModule,
-        ReportsTableModule
+        ReportsTableModule,
+        SearchModule
     ],
     declarations: [
         CarbonComponent,
@@ -56,6 +59,9 @@ import {
         SensorComponent,
         TemperatureComponent,
         EthyleneComponent
+    ],
+    entryComponents: [
+        MonitorSearchComponent
     ]
 })
 

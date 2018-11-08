@@ -12,9 +12,19 @@ img{
   right: 23px;
 }
 
-.generate-btn button {
-  margin-top :0 !important;
+@media only screen and (max-width: 414px) {
+        .generate-btn{
+          left: 20%;
+          top: 50px;
+        }
+        .mat-card{
+          padding-bottom: 30px;
+        }
 }
+
+/* .generate-btn button {
+  margin-top :0 !important;
+} */
 
 .example-form {
   min-width: 150px;

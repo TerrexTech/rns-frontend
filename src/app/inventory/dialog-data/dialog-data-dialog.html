@@ -21,7 +21,7 @@
             <div class="row">
                 <label class="col-sm-2 col-md-3 control-label mx-auto"> SKU </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="number" class="form-control" formControlName="sku" required
+                    <input type="string" class="form-control" formControlName="sku" required
                         [ngClass]="{ 'is-invalid': isFieldValid('sku') }"
                         readonly>
                         <span *ngIf="isFieldValid('sku')" class="invalid-feedback">
@@ -92,7 +92,7 @@
             <div class="row">
                 <label class="col-sm-2 col-md-3 control-label mx-auto"> Price </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" formControlName="price" required
+                    <input type="number" class="form-control" formControlName="price" required
                         [ngClass]="{ 'is-invalid': isFieldValid('price') }">
                         <span *ngIf="isFieldValid('price')" class="invalid-feedback">
                             Price is required

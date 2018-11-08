@@ -58,6 +58,22 @@ export class UserTableComponent implements OnInit {
     return false
   }
 
+  canUpdate(): boolean {
+    if (this.selection.selected.length < 1 || this.selection.selected.length > 1) {
+      return true
+    }
+
+    return false
+  }
+
+  canDelete(): boolean {
+    if (this.selection.selected.length < 1) {
+      return true
+    }
+
+    return false
+  }
+
   populateFields(): void {
     this.selection.selected.forEach(item => {
       this.curField = this.ELEMENT_DATA.filter(i => i.email === item.email)[0]

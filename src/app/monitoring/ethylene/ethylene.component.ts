@@ -4,6 +4,8 @@ import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
 import { MockMonitor } from '../mocks-monitor'
+import { MatDialog } from '@angular/material'
+import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
 
 @Component({
   selector: 'component-ethylene',
@@ -13,12 +15,24 @@ import { MockMonitor } from '../mocks-monitor'
 export class EthyleneComponent implements OnInit {
 
   ethyleneChart: any
+  ethyData: any
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.loadEthyGraph()
+  }
+
+  openSearch(): void {
+    this.dialog.open(MonitorSearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => this.ethyData = data
+      )
+
   }
 
   loadEthyGraph(): void {

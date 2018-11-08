@@ -4,11 +4,12 @@ import { Http } from '@angular/http'
 // import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 import { Inventory } from '../../models/inventory'
 import { SelectionModel } from '@angular/cdk/collections'
-import { SearchComponent } from '../../search/search.component'
+import { TableSearchComponent } from '../../search/table-search/table-search.component'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
+import { ShowTableService } from './show.service'
 import swal from 'sweetalert'
 
-const Food: Inventory[] = []
+let Food: Inventory[] = []
 
 @Component({
   selector: 'component-show',
@@ -31,7 +32,7 @@ export class ShowComponent implements OnInit {
 
   selection = new SelectionModel<Inventory>(true, [])
 
-  constructor(private http: Http, public dialog: MatDialog) {
+  constructor(private http: Http, public dialog: MatDialog, private showService: ShowTableService) {
   }
 
   ngOnInit(): void {
@@ -41,6 +42,11 @@ export class ShowComponent implements OnInit {
     //     this.dataSource.data = data
     //     Food = data
     //   })
+    this.showService.getTable()
+                    .subscribe(data => {
+                      console.log(data[0])
+                      this.dataSource.data = data[0]
+                    })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
   }
@@ -64,22 +70,24 @@ export class ShowComponent implements OnInit {
   }
 
   openSearch(): void {
-    this.dialog.open(SearchComponent, {
+    this.dialog.open(TableSearchComponent, {
       width: '500px'
     })
       .afterClosed()
       .subscribe(
-        data => console.log(data)
+        data => {
+          console.log(data)
+          this.dataSource.data = data[0]
+        }
         // refreshDataMethod()
       )
   }
 
-  // make method more efficient in future
   removeSelectedRows(): void {
 
     swal({
       title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this fruit!',
+      text: 'Once deleted, you will not be able to recover this item!',
       icon: 'warning',
       buttons: ['Yes', 'No'],
       dangerMode: true
@@ -90,10 +98,11 @@ export class ShowComponent implements OnInit {
             const index: number = Food.findIndex(d => d === item)
             console.log('++++++++++++++++++==')
             console.log(item.item_id)
+            this.showService.deleteRows(item.item_id)
             // this.loadInventoryJsonService.deleteRow(item.item_id)
             this.resetData()
           })
-          swal('Your fruit has been deleted!', {
+          swal('Your item has been deleted!', {
             icon: 'success'
           })
             .then(log => {
@@ -133,8 +142,23 @@ export class ShowComponent implements OnInit {
 }
 
   selected(): boolean {
-    console.log(this.selection.selected.length)
     if (this.selection.selected.length >= 2) {
+      return true
+    }
+
+    return false
+  }
+
+  canUpdate(): boolean {
+    if (this.selection.selected.length < 1 || this.selection.selected.length > 1) {
+      return true
+    }
+
+    return false
+  }
+
+  canDelete(): boolean {
+    if (this.selection.selected.length < 1) {
       return true
     }
 
@@ -158,6 +182,12 @@ export class ShowComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(result => {
+        this.showService.getTable()
+          .subscribe(data => {
+             console.log(data)
+             this.dataSource.data = data[0]
+             Food = data[0]
+           })
       // this.loadInventoryJsonService.getJSON()
       //     .subscribe(data => {
       //       console.log(data)

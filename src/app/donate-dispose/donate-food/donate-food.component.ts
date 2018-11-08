@@ -5,14 +5,14 @@ import swal from 'sweetalert'
 import { Http } from '@angular/http'
 import { Warning } from '../../models/warning'
 
-let dispose: any[] = []
+let donate: any[] = []
 
 @Component({
-  selector: 'component-dispose-food',
-  templateUrl: './dispose-food.component.html',
-  styleUrls: ['./dispose-food.component.css']
+  selector: 'component-donate-food',
+  templateUrl: './donate-food.component.html',
+  styleUrls: ['./donate-food.component.css']
 })
-export class DisposeFoodComponent implements OnInit {
+export class DonateFoodComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private http: Http) { }
   @ViewChild(MatSort) sort: MatSort
@@ -29,7 +29,7 @@ export class DisposeFoodComponent implements OnInit {
         console.log(JSON.parse(data._body))
         const json = JSON.parse(data._body)
         this.dataSource.data = json
-        dispose = json
+        donate = json
       })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
@@ -122,6 +122,30 @@ export class DisposeFoodComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach((row: any) => this.selection.select(row))
+  }
+
+  selected(): boolean {
+    if (this.selection.selected.length >= 2) {
+      return true
+    }
+
+    return false
+  }
+
+  canUpdate(): boolean {
+    if (this.selection.selected.length < 1 || this.selection.selected.length > 1) {
+      return true
+    }
+
+    return false
+  }
+
+  canDelete(): boolean {
+    if (this.selection.selected.length < 1) {
+      return true
+    }
+
+    return false
   }
 
 }

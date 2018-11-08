@@ -29,7 +29,8 @@ import { AddInventoryService } from './add/add.service'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { ShowComponent } from './show/show.component'
 import { SearchModule } from '../search/search.module'
-import { SearchComponent } from '../search/search.component'
+import { TableSearchComponent } from '../search/table-search/table-search.component'
+import { ShowTableService } from './show/show.service'
 
 @NgModule({
     imports: [
@@ -67,11 +68,12 @@ import { SearchComponent } from '../search/search.component'
         AddInventoryService,
         // AlertService
         Inventory,
-        TokenService
+        TokenService,
+        ShowTableService
     ],
     entryComponents: [
         DialogDataDialogComponent,
-        SearchComponent
+        TableSearchComponent
     ]
 })
 

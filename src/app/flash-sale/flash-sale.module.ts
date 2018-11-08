@@ -25,16 +25,14 @@ import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
 import { ViewFlashsaleComponent } from './view-flashsale/view-flashsale.component'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { AddDialogDataComponent } from './add-dialog-data/add-dialog-data.component'
-import { DonateFoodComponent } from './donate-food/donate-food.component'
-import { DisposeFoodComponent } from './dispose-food/dispose-food.component'
 import { AlertPopupModule } from '../alert-popup/alert-popup.module'
+import { SearchModule } from '../search/search.module'
+import { TableSearchComponent } from '../search/table-search/table-search.component'
 @NgModule({
     declarations: [
         ViewFlashsaleComponent,
         DialogDataDialogComponent,
-        AddDialogDataComponent,
-        DonateFoodComponent,
-        DisposeFoodComponent
+        AddDialogDataComponent
     ],
     imports: [
         CommonModule,
@@ -53,7 +51,8 @@ import { AlertPopupModule } from '../alert-popup/alert-popup.module'
         MatTableModule,
         MatTabsModule,
         MatButtonModule,
-        AlertPopupModule
+        AlertPopupModule,
+        SearchModule
     ],
     providers: [
         AlertService,
@@ -64,7 +63,8 @@ import { AlertPopupModule } from '../alert-popup/alert-popup.module'
     entryComponents: [
         DialogDataDialogComponent,
         AddDialogDataComponent,
-        AlertPopupComponent
+        AlertPopupComponent,
+        TableSearchComponent
     ]
 })
 export class FlashSaleModule { }

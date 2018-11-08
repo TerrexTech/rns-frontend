@@ -22,6 +22,7 @@ import { TokenService } from './_Auth/token.service'
 import { MonitoringModule } from './monitoring/monitoring.module'
 import { FlashSaleModule } from './flash-sale/flash-sale.module'
 import { WarningModule } from './warning/warning.module'
+import { DonateDisposeModule } from './donate-dispose/donate-dispose.module'
 
 // Font-Awesome
 import fontawesome from '@fortawesome/fontawesome'
@@ -109,7 +110,8 @@ import { AlertPopupModule } from './alert-popup/alert-popup.module'
     MatNativeDateModule,
     MatTabsModule,
     ReactiveFormsModule,
-    WarningModule
+    WarningModule,
+    DonateDisposeModule
   ],
   providers: [
     AuthGuard,

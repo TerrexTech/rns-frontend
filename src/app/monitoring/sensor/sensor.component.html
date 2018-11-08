@@ -2,6 +2,11 @@
   <div class="container-fluid">
     <component-overview></component-overview>
     <br>
+    <div class="generate-btn">
+      <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+        <i class="fa fa-search"></i>
+      </a>
+    </div>
       <component-reports-table [jsonFields]=12 [displayedColumns]="['Sensor #', 'Name', 'Last Maintenance', 'Timestamp']"></component-reports-table>
   </div>
   </div>

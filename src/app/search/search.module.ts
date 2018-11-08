@@ -22,6 +22,10 @@ import {
     MatTableModule,
     MatTabsModule
 } from '@angular/material'
+import { ReportSearchComponent } from './report-search/report-search.component'
+import { MonitorSearchComponent } from './monitor-search/monitor-search.component'
+import { TableSearchComponent } from './table-search/table-search.component'
+import { TableSearchService } from './table-search/table-search.service'
 
 @NgModule({
     imports: [
@@ -47,11 +51,20 @@ import {
         MatNativeDateModule
     ],
     declarations: [
-        SearchComponent
+        SearchComponent,
+        ReportSearchComponent,
+        MonitorSearchComponent,
+        TableSearchComponent
     ],
     exports: [
-        SearchComponent
+        ReportSearchComponent,
+        TableSearchComponent,
+        MonitorSearchComponent
+    ],
+    providers: [
+        TableSearchService
     ]
+
 })
 
 export class SearchModule { }

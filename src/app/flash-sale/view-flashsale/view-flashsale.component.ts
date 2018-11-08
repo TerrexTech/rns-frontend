@@ -9,6 +9,7 @@ import { FlashSale } from '../../models/flash-sale'
 import { Http } from '@angular/http'
 import { ViewFlashSaleService } from './view-flashsale.service'
 import { AlertService } from '../../alert-popup/alert.service'
+import { TableSearchComponent } from '../../search/table-search/table-search.component'
 
 let flash_data: any[] = []
 @Component({
@@ -43,6 +44,17 @@ export class ViewFlashsaleComponent implements OnInit {
 
   }
 
+  openSearch(): void {
+    this.dialog.open(TableSearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => flash_data = data
+      )
+    this.dataSource.data = flash_data
+  }
+
   public getJSON(): any {
 
     return this.http.get('./static/mock_flash.json')
@@ -54,8 +66,23 @@ export class ViewFlashsaleComponent implements OnInit {
   }
 
   selected(): boolean {
-    console.log(this.selection.selected.length)
     if (this.selection.selected.length >= 2) {
+      return true
+    }
+
+    return false
+  }
+
+  canUpdate(): boolean {
+    if (this.selection.selected.length < 1 || this.selection.selected.length > 1) {
+      return true
+    }
+
+    return false
+  }
+
+  canDelete(): boolean {
+    if (this.selection.selected.length < 1) {
       return true
     }
 

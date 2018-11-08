@@ -7,16 +7,19 @@
                     <h3>Flash Sales</h3>
                 </mat-card-title>
                 <div class="generate-btn">
+                    <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+                        <i class="fa fa-search"></i>
+                    </a>
                     <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewFlashSale()">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a id="editBtn" [attr.disabled]="selected() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
+                    <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <a id="deleteBtn" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="removeSelectedRows()">
+                    <a id="deleteBtn" [attr.disabled]="canDelete() ? true : null" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="removeSelectedRows()">
                         <i class="fa fa-times"></i>
                     </a>
-                    <a id="endFlashSale" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="endFlashSale()">
+                    <a id="endFlashSale" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="endFlashSale()">
                         <i class="fa fa-thumbs-up"></i>
                     </a>
                 </div>

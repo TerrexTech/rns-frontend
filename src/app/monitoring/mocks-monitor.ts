@@ -100,7 +100,7 @@ export class MockMonitor {
     genCarbonData(): any {
         const array1 = []
         console.log(localStorage.getItem('carbon') !== undefined)
-        if (!localStorage.getItem('carbon')) {
+        if (localStorage.getItem('carbon') === undefined) {
 
             return JSON.parse(localStorage.getItem('carbon'))
         } else {

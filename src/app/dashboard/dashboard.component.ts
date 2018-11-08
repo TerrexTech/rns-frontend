@@ -304,7 +304,6 @@ export class DashboardComponent implements OnInit {
       const metrics: any = [
         []
       ]
-      // total_weight: 195, sold_weight: 58, waste_weight: 49
       Object.keys(dataArr)
             .forEach(k => {
         const prods = dataArr[k]
@@ -476,23 +475,23 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-  success(message: string): void {
-    this.alertService.success(message)
-  }
+  // success(message: string): void {
+  //   this.alertService.success(message)
+  // }
 
-  error(message: string): void {
-      this.alertService.error(message)
-  }
+  // error(message: string): void {
+  //     this.alertService.error(message)
+  // }
 
-  info(message: string): void {
-      this.alertService.info(message)
-  }
+  // info(message: string): void {
+  //     this.alertService.info(message)
+  // }
 
-  warn(message: string): void {
-      this.alertService.warn(message)
-  }
+  // warn(message: string): void {
+  //     this.alertService.warn(message)
+  // }
 
-  clear(): void {
-      this.alertService.clear()
-  }
+  // clear(): void {
+  //     this.alertService.clear()
+  // }
 }

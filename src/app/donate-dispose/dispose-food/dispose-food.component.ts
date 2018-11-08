@@ -5,14 +5,14 @@ import swal from 'sweetalert'
 import { Http } from '@angular/http'
 import { Warning } from '../../models/warning'
 
-let donate: any[] = []
+let dispose: any[] = []
 
 @Component({
-  selector: 'component-donate-food',
-  templateUrl: './donate-food.component.html',
-  styleUrls: ['./donate-food.component.css']
+  selector: 'component-dispose-food',
+  templateUrl: './dispose-food.component.html',
+  styleUrls: ['./dispose-food.component.css']
 })
-export class DonateFoodComponent implements OnInit {
+export class DisposeFoodComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private http: Http) { }
   @ViewChild(MatSort) sort: MatSort
@@ -29,11 +29,35 @@ export class DonateFoodComponent implements OnInit {
         console.log(JSON.parse(data._body))
         const json = JSON.parse(data._body)
         this.dataSource.data = json
-        donate = json
+        dispose = json
       })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
 
+  }
+
+  selected(): boolean {
+    if (this.selection.selected.length >= 2) {
+      return true
+    }
+
+    return false
+  }
+
+  canUpdate(): boolean {
+    if (this.selection.selected.length < 1 || this.selection.selected.length > 1) {
+      return true
+    }
+
+    return false
+  }
+
+  canDelete(): boolean {
+    if (this.selection.selected.length < 1) {
+      return true
+    }
+
+    return false
   }
 
   public getJSON(): any {

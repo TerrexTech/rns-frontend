@@ -2,6 +2,15 @@ table {
   width: 100%;
 }
 
+.generate-btn {
+  position: absolute;
+  right: 23px;
+}
+
+.generate-btn button {
+  margin-top :0 !important;
+}
+
 u,p{
   font-weight: normal !important;
 }

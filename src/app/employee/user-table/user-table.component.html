@@ -3,13 +3,13 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          <h4>View Employees</h4>
+          <h6>View Employees</h6>
         </mat-card-title>
         <div class="generate-btn">
-          <a id="editBtn" [attr.disabled]="selected() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
+          <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
             <i class="fa fa-edit"></i>
           </a>
-          <a id="deleteBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="removeSelectedRows()">
+          <a id="deleteBtn" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canDelete() ? true : null" (click)="removeSelectedRows()">
             <i class="fa fa-times"></i>
           </a>
         </div>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+import { MatDialog } from '@angular/material'
+import { HttpClient } from '@angular/common/http'
+import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
 
 @Component({
   selector: 'component-sensor',
@@ -6,11 +9,22 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./sensor.component.css']
 })
 export class SensorComponent implements OnInit {
-  row: number[] = [1, 2, 3, 4]
-  count: number[] = [1, 2, 3, 4]
-  constructor() { }
+  sensorData: any
+  constructor(private http: HttpClient, public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
+  }
+
+  openSearch(): void {
+    this.dialog.open(MonitorSearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => this.sensorData = data
+      )
+
   }
 
   showPopup(): void {

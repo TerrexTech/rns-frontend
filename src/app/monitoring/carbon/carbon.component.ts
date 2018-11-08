@@ -4,6 +4,8 @@ import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
 import { MockMonitor } from '../mocks-monitor'
+import { MatDialog } from '@angular/material'
+import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
 
 @Component({
   selector: 'component-carbon',
@@ -12,19 +14,34 @@ import { MockMonitor } from '../mocks-monitor'
 })
 export class CarbonComponent implements OnInit {
   carbonChart: any
+  carbonData: any
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.loadCarbonGraph()
   }
 
+  openSearch(): void {
+    this.dialog.open(MonitorSearchComponent, {
+      width: '500px'
+    })
+      .afterClosed()
+      .subscribe(
+        data => this.carbonData = data
+      )
+
+    return this.carbonData
+  }
+
   loadCarbonGraph(): void {
+    this.openSearch()
     const m = new MockMonitor()
     m.genCarbonData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('carbon'))
+  //  const arr1 = this.openSearch()
     console.log(arr1.map(e => {
       return e.Carbon
     }))

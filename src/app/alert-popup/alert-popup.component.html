@@ -1,7 +1,7 @@
-<div *ngIf='!isClosed' class="alert alert-warning alert-dismissable alert-messages">
+<div *ngIf='!isClosed' id="note" class="mx-auto alert alert-warning alert-dismissable alert-messages">
     <a class="close" (click)="removeAlert()">&times;</a>
      <h4 class="text-center">{{ message }}</h4>
-     <div class="mx-auto" *ngFor="let button of buttons">
+     <div *ngFor="let button of buttons">
          <button class="mx-auto" color="primary" mat-raised-button routerLink='/{{ button.url }}'>{{ button.text }}</button>
      </div>
 </div>

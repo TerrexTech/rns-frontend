@@ -40,6 +40,10 @@ export class AuthGuard implements CanActivate {
       return false
     }
 
+    if (accessToken.role === 'employee') {
+
+    }
+
     return true
   }
 

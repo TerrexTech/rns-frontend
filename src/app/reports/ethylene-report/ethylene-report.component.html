@@ -31,9 +31,9 @@
                 <p>Report Type: Ethylene</p>
                 <br>
                 <p>Date Generated: {{ date | date:'yyyy/MM/dd' }} </p>
-                  <div class="row mx-auto">
-
-                  <button *ngIf='isClicked' mat-raised-button class="mx-auto" color="warn" (click)="captureScreen()">Convert Report to
+                <br>
+                <div class="row mx-auto">
+                  <button *ngIf='isClicked' mat-raised-button color="warn" (click)="captureScreen()">Convert Report to
                     PDF</button>
                 </div>
               </div>

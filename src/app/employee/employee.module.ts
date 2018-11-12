@@ -21,6 +21,8 @@ import {
 import { UserAddComponent } from './user-add/user-add.component'
 import { UserTableComponent } from './user-table/user-table.component'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
+import { UserAddService } from './user-add/user-add.service'
+import { UserTableService } from './user-table/user-table.service'
 
 @NgModule({
   declarations: [
@@ -46,7 +48,10 @@ import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
     MatTabsModule,
     MatButtonModule
   ],
-  providers: [],
+  providers: [
+    UserAddService,
+    UserTableService
+  ],
   exports: [
   ],
   entryComponents: [ DialogDataDialogComponent ]

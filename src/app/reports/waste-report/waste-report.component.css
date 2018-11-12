@@ -2,10 +2,6 @@
 height: 400px !important;
 }
 
-#convert{
-    margin: auto
-}
-
 #info{
     height: auto
 }
@@ -15,5 +11,14 @@ height: 400px !important;
 }
 
 .generate-btn {
-  float: right
-}
+    float: right
+  }
+
+  .generate-btn {
+    position: absolute;
+    right: 23px;
+  }
+
+  .generate-btn button {
+    margin-top :0 !important;
+  }

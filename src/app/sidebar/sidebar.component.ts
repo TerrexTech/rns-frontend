@@ -133,6 +133,7 @@ export class SidebarComponent implements OnInit {
       ]
     }
   ]
+  public routerIconDef2 = this.routeIconDef
 
   constructor(jwt: TokenService) {
     this.jwt = jwt
@@ -158,6 +159,12 @@ export class SidebarComponent implements OnInit {
         lastName: lName,
         role
       }
+      console.log(token.role)
+    }
+
+    if (token.role === 'test') {
+      this.routeIconDef.pop()
+      console.log(this.routeIconDef)
     }
   }
 }

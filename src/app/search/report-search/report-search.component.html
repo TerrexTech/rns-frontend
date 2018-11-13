@@ -12,10 +12,10 @@
 
 <form [formGroup]="form">
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">SKU</label>
+        <label class="form-label field-name">SKU</label>
       </div>
 
       <div class="col-sm-10">
@@ -25,12 +25,12 @@
         </span>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Name</label>
+        <label class="form-label field-name">Name</label>
       </div>
 
       <div class="col-sm-10">
@@ -40,12 +40,12 @@
         </span>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Lot</label>
+        <label class="form-label field-name">Lot</label>
       </div>
 
       <div class="col-sm-10">
@@ -55,25 +55,33 @@
         </span>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Date Range</label>
+        <label class="form-label field-name">Start Date</label>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-10">
         <mat-form-field class="example-full-width">
           <input type="date" matInput placeholder="Start date" formControlName="start_date" (change)="checkDates()">
         </mat-form-field>
       </div>
-      <div class="col-sm-5">
-        <mat-form-field class="example-full-width">
-          <input type="date" matInput placeholder="End date" formControlName="end_date" (change)="checkDates()">
-        </mat-form-field>
-      </div>
     </div>
   </div>
+
+  <div class="form-group">
+      <div class="row">
+        <div class="col-sm-2 text-md-right">
+          <label class="form-label field-name">End Date</label>
+        </div>
+        <div class="col-sm-10">
+          <mat-form-field class="example-full-width">
+            <input type="date" matInput placeholder="End date" formControlName="end_date" (change)="checkDates()">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
 
   <div *ngIf="dateNotValid">
     <p class="error-msg">{{ message }}</p>
@@ -82,7 +90,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Time Period</label>
+        <label class="form-label field-name">Time Period</label>
       </div>
 
       <div class="col-sm-10">
@@ -99,17 +107,17 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Search Filter</label>
+        <label class="form-label field-name">Search Filter</label>
       </div>
 
       <div class="col-sm-10">
         <mat-checkbox formControlName="exact_match">Check box to apply all search fields to specific search.</mat-checkbox>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="row submit-btn-container">
     <div class="col-sm-3 offset-sm-3">

@@ -1,13 +1,21 @@
-<button mat-dialog-close class="btn btn-fill generate-btn" style="float:right">X</button>
-
-<h3 mat-dialog-title>Filter Results</h3>
+<div class="search">
+    <div class="row">
+      <div class="col-9">
+      <h3 mat-dialog-title>Filter Results</h3>
+      </div>
+      <div class="col-3">
+      <button class="btn btn-icon btn-md edit generate-btn" mat-dialog-close>
+        <i class="fa fa-times"></i>
+      </button>
+      </div>
+    </div>
 
 <form [formGroup]="form">
 
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">SKU</label>
+        <label class="form-label field-name">SKU</label>
       </div>
 
       <div class="col-sm-10">
@@ -22,7 +30,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Name</label>
+        <label class="form-label field-name">Name</label>
       </div>
 
       <div class="col-sm-10">
@@ -38,7 +46,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Origin</label>
+        <label class="form-label field-name">Origin</label>
       </div>
 
       <div class="col-sm-10">
@@ -47,34 +55,10 @@
     </div>
   </div>
 
-  <!-- <div class="form-group">
-          <div class="row">
-            <div class="col-sm-2 text-md-right">
-              <label class="form-label">Arrival Date</label>
-            </div>
-
-            <div class="col-sm-10">
-              <input #date type="string" class="form-control" placeholder="" formControlName="date_arrived" name="dp">
-            </div>
-          </div>
-        </div> -->
-
-  <!-- <div class="form-group">
-    <div class="row">
-      <div class="col-sm-2 text-md-right">
-        <label class="form-label">Weight</label>
-      </div>
-
-      <div class="col-sm-10">
-        <input type="string" class="form-control" formControlName="total_weight">
-      </div>
-    </div>
-  </div> -->
-
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Price</label>
+        <label class="form-label field-name">Price</label>
       </div>
 
       <div class="col-sm-10">
@@ -83,22 +67,10 @@
     </div>
   </div>
 
-  <!-- <div class="form-group">
-    <div class="row">
-      <div class="col-sm-2 text-md-right">
-        <label class="form-label">Device ID</label>
-      </div>
-
-      <div class="col-sm-10">
-        <input type="string" class="form-control" formControlName="device_id">
-      </div>
-    </div>
-  </div> -->
-
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Lot</label>
+        <label class="form-label field-name">Lot</label>
       </div>
 
       <div class="col-sm-10">
@@ -113,7 +85,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Date Range</label>
+        <label class="form-label field-name">Date Range</label>
       </div>
       <div class="col-sm-5">
         <mat-form-field class="example-full-width">
@@ -135,7 +107,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Time Period</label>
+        <label class="form-label field-name">Time Period</label>
       </div>
 
       <div class="col-sm-10">
@@ -160,7 +132,7 @@
   <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
-        <label class="form-label">Search Filter</label>
+        <label class="form-label field-name">Search Filter</label>
       </div>
 
       <div class="col-sm-10">
@@ -181,3 +153,4 @@
     </div>
   </div>
 </form>
+</div>

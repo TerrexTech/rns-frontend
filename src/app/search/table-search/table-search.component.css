@@ -10,7 +10,30 @@ a{
 }
 
 .generate-btn {
-    float: right
+    top: -20%;
+    float:right
+  }
+
+  @media only screen and (max-width: 414px) {
+          .generate-btn{
+              float: right
+          }
+  }
+
+.field-name {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.search{
+    max-width: 85vw;
+    pointer-events: auto;
+    /* margin-top: 5%; */
+    position: static;
+    z-index: 9999;
+    position: relative;
+    max-height: 83vh;
 }
 
 .error-msg{

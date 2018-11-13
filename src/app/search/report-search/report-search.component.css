@@ -5,6 +5,11 @@ mat-form-field{
     width: 60%
 }
 
+.error-msg{
+    color: red;
+    font-size: 8pt
+}
+
 a{
     width: 50%
 }

@@ -28,7 +28,6 @@ export class ViewFlashsaleComponent implements OnInit {
 
   displayedColumns = ['select', 'upc', 'sku', 'name',
                       'device_id', 'price', 'sale_price', 'ethylene', 'status', 'timestamp']
-  // displayedColumns = ['select', 'sku', 'name', 'leftover waste', 'status', 'projected expiry', 'modify']
   curField: any
 
   ngOnInit(): void {
@@ -39,6 +38,7 @@ export class ViewFlashsaleComponent implements OnInit {
         this.dataSource.data = json
         flash_data = json
       })
+
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
 

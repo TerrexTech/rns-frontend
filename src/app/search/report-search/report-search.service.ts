@@ -19,19 +19,17 @@ export class ReportSearchService {
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
-    public search(searchQuery: Query[]): Observable<Object> {
-
+    public search(searchQuery): Observable<Object> {
+        console.log(searchQuery)
         const gqlQuery = `
     mutation{
       search(
-        sku: '${searchQuery[0].sku}',
-        name: '${searchQuery[0].name}',
-        start_date: '${searchQuery[0].start_date}',
-        end_date: '${searchQuery[0].end_date}',
-        exact_match: '${searchQuery[0].exact_match}',
-      ){access_token, refresh_token}
+        start_date: '${searchQuery['start_date']}',
+        end_date: '${searchQuery['end_date']}',
+       ){access_token, refresh_token}
     }
     `
+        console.log(gqlQuery)
 
         return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
             headers: {

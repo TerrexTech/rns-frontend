@@ -17,7 +17,7 @@ interface Query {
   exact_match: boolean
 }
 
-const searchData: Query[] = []
+const searchData = {}
 @Component({
   selector: 'component-report-search',
   templateUrl: './report-search.component.html',
@@ -42,14 +42,14 @@ export class ReportSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      sku: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      origin: [''],
-      lot: ['', [Validators.required]],
+      // sku: ['', [Validators.required]],
+      // name: ['', [Validators.required]],
+      // origin: [''],
+      // lot: ['', [Validators.required]],
       start_date: [''],
       end_date: [''],
-      period: [''],
-      exact_match: ['']
+      period: ['']
+      // exact_match: ['']
     })
   }
 
@@ -101,16 +101,21 @@ export class ReportSearchComponent implements OnInit {
         endDate = this.form.value.end_date
       }
 
-      if ((startDate && endDate) && (startDate > endDate)) {
+      if (startDate > endDate) {
         console.log(startDate)
         console.log(endDate)
         this.dateNotValid = true
         this.message = 'Start date cannot be greater than end date'
       }
 
-      if ((startDate && endDate) && (endDate > today)) {
+      else if (endDate > today) {
         this.dateNotValid = true
         this.message = 'End date cannot be greater than today'
+      }
+
+      else if (endDate && !this.form.value.period && !startDate) {
+        this.dateNotValid = true
+        this.message = 'Start Date is required'
       }
 
       else {
@@ -130,7 +135,12 @@ export class ReportSearchComponent implements OnInit {
 
       for (const property in object) {
         if (object.hasOwnProperty(property)) {
-          searchData[property] = object[property]
+          if (!object[property]) {
+            console.log(object[property])
+          }
+          else {
+          searchData[property] =  ` { $eq: ${object[property]} },`
+          }
         }
       }
 

@@ -1,4 +1,4 @@
-<div *ngIf='!isClosed' id="note" class="mx-auto alert alert-warning alert-dismissable alert-messages">
+<div *ngIf='!isClosed' id="note" class="mx-auto col-12 alert alert-warning alert-dismissable alert-messages">
     <a class="close" (click)="removeAlert()">&times;</a>
      <h4 class="text-center">{{ message }}</h4>
      <div *ngFor="let button of buttons">

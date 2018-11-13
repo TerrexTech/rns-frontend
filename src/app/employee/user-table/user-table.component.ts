@@ -3,9 +3,10 @@ import { MatDialog, MatPaginator, MatSort, MatSortable, MatTableDataSource } fro
 import { Employee } from '../../models/employee'
 import { SelectionModel } from '@angular/cdk/collections'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
+import { UserTableService } from './user-table.service'
 import swal from 'sweetalert'
 
-const Employees: any[] = []
+let Employees: any[] = []
 
 @Component({
   selector: 'component-user-table',
@@ -14,7 +15,7 @@ const Employees: any[] = []
 })
 export class UserTableComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public userServ: UserTableService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   selection = new SelectionModel<Employee>(true, [])
@@ -44,6 +45,17 @@ export class UserTableComponent implements OnInit {
   curField: any
 
   ngOnInit(): void {
+
+    this.userServ.getTable()
+                 .toPromise()
+                 .then((data: any) => {
+                    console.log(data.data.InventoryQuery)
+                    this.dataSource.data = data.data.InventoryQuery
+                    Employees = data.data.InventoryQuery
+                  }
+                  )
+                 .catch()
+
     this.dataSource.data = this.ELEMENT_DATA
     this.dataSource.sort = this.sort
     this.dataSource.paginator = this.paginator
@@ -76,7 +88,7 @@ export class UserTableComponent implements OnInit {
 
   populateFields(): void {
     this.selection.selected.forEach(item => {
-      this.curField = this.ELEMENT_DATA.filter(i => i.email === item.email)[0]
+      this.curField = Employees.filter(i => i.email === item.email)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
     })
@@ -102,9 +114,10 @@ export class UserTableComponent implements OnInit {
           this.selection.selected.forEach(item => {
             const index: number = Employees.findIndex(d => d === item)
             console.log('++++++++++++++++++==')
+            this.userServ.deleteRows(item.email)
             // this.loadInventoryJsonService.deleteRow(item.item_id)
           })
-          swal('Poof! The following employee has been deleted!', {
+          swal('The following employee has been deleted!', {
             icon: 'success'
           })
           .then(log => {

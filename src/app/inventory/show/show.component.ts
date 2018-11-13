@@ -53,6 +53,7 @@ export class ShowComponent implements OnInit {
                     .then((data: any) => {
                       console.log(data.data.InventoryQuery)
                       this.dataSource.data = data.data.InventoryQuery
+                      Food = data.data.InventoryQuery
                     }
                     )
                     .catch()

@@ -11,7 +11,6 @@ interface Query {
   sku: string
   name: string
   origin: string
-  ethylene: number
   lot: string
   start_date: number
   end_date: number
@@ -46,7 +45,6 @@ export class ReportSearchComponent implements OnInit {
       sku: ['', [Validators.required]],
       name: ['', [Validators.required]],
       origin: [''],
-      ethylene: [''],
       lot: ['', [Validators.required]],
       start_date: [''],
       end_date: [''],

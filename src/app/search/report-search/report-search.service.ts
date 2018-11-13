@@ -7,7 +7,6 @@ interface Query {
     sku: string
     name: string
     origin: string
-    ethylene: number
     lot: string
     start_date: number
     end_date: number

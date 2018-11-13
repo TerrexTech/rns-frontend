@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CdkTableModule } from '@angular/cdk/table'
-import { SearchComponent } from '../search/search.component'
 
 import {
     MatButtonModule,
@@ -51,7 +50,6 @@ import { TableSearchService } from './table-search/table-search.service'
         MatNativeDateModule
     ],
     declarations: [
-        SearchComponent,
         ReportSearchComponent,
         MonitorSearchComponent,
         TableSearchComponent

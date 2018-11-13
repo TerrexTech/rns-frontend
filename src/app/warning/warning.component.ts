@@ -71,8 +71,6 @@ export class WarningComponent implements OnInit {
       })
     console.log(itemArray)
     this.dialog.open(DialogDataDialogComponent, {
-      minHeight: 600,
-      minWidth: 1000,
       data: {
         data: [itemArray, this.createType, this.url]
       }
@@ -98,8 +96,6 @@ export class WarningComponent implements OnInit {
     })
     console.log(itemArray)
     this.dialog.open(DialogDataDialogComponent, {
-      minHeight: 600,
-      minWidth: 1000,
       data: {
         data: [itemArray, this.createType, this.url]
       }
@@ -125,8 +121,6 @@ export class WarningComponent implements OnInit {
     })
     console.log(itemArray)
     this.dialog.open(DialogDataDialogComponent, {
-      minHeight: 600,
-      minWidth: 1000,
       data: {
         data: [itemArray, this.createType, this.url]
       }

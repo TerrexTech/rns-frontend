@@ -8,7 +8,7 @@
         <h6>View Inventory</h6>
       </mat-card-title>
         <div class="generate-btn">
-          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="loadExpiry()">
             <i class="fa fa-search"></i>
           </a>
           <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">

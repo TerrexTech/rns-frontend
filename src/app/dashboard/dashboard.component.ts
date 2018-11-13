@@ -4,6 +4,7 @@ import { environment } from '../../config'
 import { SendDate } from '../models'
 import Chart from 'chart.js'
 import { AlertService } from '../alert-popup/alert.service'
+import { DashboardService } from './dashboard.service'
 
 @Component({
   selector: 'component-dashboard',
@@ -23,112 +24,13 @@ export class DashboardComponent implements OnInit {
   @ViewChild('total') total: ElementRef
   @ViewChild('average') average: ElementRef
 
-  constructor(private http: HttpClient, private alertService: AlertService) { }
+  constructor(private http: HttpClient, private alertService: AlertService, private dashServ: DashboardService) { }
 
   ngOnInit(): void {
-    this.loadTotalGraph()
-    this.loadSoldGraph()
-    this.loadDistGraph()
-    this.loadDonationGraph()
-  }
-
-  getDays(days?: number): any[] {
-    let dates = []
-    const end_date = Math.round((new Date().getTime() / 1000) + (days * 86400))
-    const start_date = Math.round(new Date().getTime() / 1000) - (days * 86400)
-
-    return dates = [
-      end_date, start_date
-    ]
-  }
-
-  getJSON(): any {
-    let sendDates = []
-
-    const sendDate = new SendDate()
-    sendDate.endDate = this.getDays(1)[0]
-    sendDate.startDate = this.getDays(1)[1]
-
-    const sendDate2 = new SendDate()
-    sendDate2.endDate = this.getDays(2)[0]
-    sendDate2.startDate = this.getDays(2)[1]
-
-    const sendDate3 = new SendDate()
-    sendDate3.endDate = this.getDays(3)[0]
-    sendDate3.startDate = this.getDays(3)[1]
-
-    const sendDate4 = new SendDate()
-    sendDate4.endDate = this.getDays(4)[0]
-    sendDate4.startDate = this.getDays(4)[1]
-
-    sendDates = [sendDate, sendDate2, sendDate3, sendDate4]
-    const url = '/total-inv'
-
-    return this.http.post(environment.apiUrl + url, sendDates, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-  }
-
-  getToday(): any {
-    let sendDates = []
-
-    const sendDate = new SendDate()
-    sendDate.endDate = this.getDays(1)[0]
-    // sendDate.start_date = this.getDays(0)[1]
-    console.log(sendDate)
-    sendDates = [sendDate]
-    const url = '/total-inv'
-
-    return this.http.post(environment.apiUrl + url, sendDates, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-  }
-
-  getSoldJSON(): any {
-
-    let sendDates = []
-
-    const sendDate = new SendDate()
-    sendDate.endDate = this.getDays(1)[0]
-    sendDate.startDate = this.getDays(1)[1]
-
-    const sendDate2 = new SendDate()
-    sendDate2.endDate = this.getDays(2)[0]
-    sendDate2.startDate = this.getDays(2)[1]
-
-    const sendDate3 = new SendDate()
-    sendDate3.endDate = this.getDays(3)[0]
-    sendDate3.startDate = this.getDays(3)[1]
-
-    const sendDate4 = new SendDate()
-    sendDate4.endDate = this.getDays(4)[0]
-    sendDate4.startDate = this.getDays(4)[1]
-
-    sendDates = [sendDate, sendDate2, sendDate3, sendDate4]
-
-    console.log('}}}}}}}}}}}}}}}}}}}}')
-    console.log(sendDate)
-    const url = '/sold-inv'
-
-    return this.http.post(environment.apiUrl + url, sendDates, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-  }
-
-  getDistJSON(): any {
-    const url = '/dist-inv'
-
-    return this.http.get(environment.apiUrl + url, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    // this.loadTotalGraph()
+    // this.loadSoldGraph()
+    // this.loadDistGraph()
+    // this.loadDonationGraph()
   }
 
   changeAxis(dateArray: JSON): JSON {
@@ -188,8 +90,9 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    this.getJSON()
-      .subscribe(dataArr => {
+    this.dashServ.getTotal()
+                 .toPromise()
+      .then(dataArr => {
         console.log(dataArr)
         const metrics: any = [
           [],
@@ -218,40 +121,42 @@ export class DashboardComponent implements OnInit {
 
         // Moving Graph
       })
+      .catch(console.log)
 
-    // setInterval(() => {
-    //   this.getToday()
-    //     .subscribe(newDate => {
-    //       const newMetrics: any = [
-    //         [],
-    //         [],
-    //         []
-    //       ]
-    //       console.log(newDate)
-    //       Object.keys(newDate)
-    //         .forEach(k => {
-    //           console.log(k)
-    //           const weights = newDate[k]
-    //           const date = new Date(weights.dates * 1000).toDateString()
-    //           this.totalChart.data.labels.push(date)
-    //           this.total.nativeElement.innerHTML = weights.total_weight
+    setInterval(() => {
+      this.dashServ.getToday()
+                   .toPromise()
+        .then(newDate => {
+          const newMetrics: any = [
+            [],
+            [],
+            []
+          ]
+          console.log(newDate)
+          Object.keys(newDate)
+            .forEach(k => {
+              console.log(k)
+              const weights = newDate[k]
+              const date = new Date(weights.dates * 1000).toDateString()
+              this.totalChart.data.labels.push(date)
+              this.total.nativeElement.innerHTML = weights.total_weight
 
-    //           this.totalChart.data.datasets.forEach((dataset  , index) => {
-    //             console.log(index)
-    //             const metric = dataset.data.shift()
-    //             dataset.data.push(newMetrics[index])
-    //             console.log(dataset)
+              this.totalChart.data.datasets.forEach((dataset  , index) => {
+                console.log(index)
+                const metric = dataset.data.shift()
+                dataset.data.push(newMetrics[index])
+                console.log(dataset)
 
-    //             newMetrics[0].push(weights.total_weight)
-    //             newMetrics[1].push(weights.sold_weight)
-    //             newMetrics[2].push(weights.waste_weight)
-    //           })
-    //           this.totalChart.update()
-    //         })
+                newMetrics[0].push(weights.total_weight)
+                newMetrics[1].push(weights.sold_weight)
+                newMetrics[2].push(weights.waste_weight)
+              })
+              this.totalChart.update()
+            })
 
-    //     })
+        })
 
-    // }, 5000)
+    }, 5000)
   }
 
   loadSoldGraph(): void {
@@ -298,8 +203,9 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    this.getSoldJSON()
-        .subscribe(dataArr => {
+    this.dashServ.getSold()
+                 .toPromise()
+      .then(dataArr => {
       console.log(dataArr)
       const metrics: any = [
         []
@@ -326,6 +232,7 @@ export class DashboardComponent implements OnInit {
       //   this.soldChart.update()
       // }, 5000)
     })
+    .catch(console.log)
   }
 
   loadDistGraph(): void {
@@ -372,7 +279,7 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    this.getDistJSON()
+    this.dashServ.getDist()
       .subscribe(dataArr => {
         console.log(dataArr)
         const metrics: any = [
@@ -444,7 +351,7 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    this.getJSON()
+    this.dashServ.getTotal()
       .subscribe(dataArr => {
         console.log(dataArr)
         const metrics: any = [

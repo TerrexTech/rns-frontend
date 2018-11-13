@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import { SendDate } from '../models'
 
 @Injectable()
-export class ShowTableService {
+export class DashboardService {
 
     getDays(days?: number): any[] {
         let dates = []
@@ -43,9 +43,7 @@ export class ShowTableService {
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
-    public getTotal(): Observable<Object> {
-
-        let sendDates = []
+    public getDates(): any[] {
 
         const sendDate = new SendDate()
         sendDate.endDate = this.getDays(1)[0]
@@ -63,7 +61,15 @@ export class ShowTableService {
         sendDate4.endDate = this.getDays(4)[0]
         sendDate4.startDate = this.getDays(4)[1]
 
-        sendDates = [sendDate, sendDate2, sendDate3, sendDate4]
+        return [sendDate, sendDate, sendDate3, sendDate4]
+
+    }
+
+    public getTotal(): Observable<Object> {
+
+        let sendDates = []
+
+        sendDates = this.getDates()
 
         const d: any = [{
             endDate: new Date().getTime()
@@ -87,10 +93,18 @@ export class ShowTableService {
 
     public getSold(): Observable<Object> {
 
+        let sendDates = []
+        sendDates = this.getDates()
+
+        const d: any = [{
+            endDate: new Date().getTime()
+        }]
+        console.log(d)
+
         const gqlQuery = `
     mutation{
       addInventory(
-        item_id: ''
+        endDate: '${d.endDate}'
       ){access_token, refresh_token}
     }
     `
@@ -108,28 +122,6 @@ export class ShowTableService {
     mutation{
       addInventory(
         item_id: ''
-      ){access_token, refresh_token}
-    }
-    `
-
-        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
-            headers: {
-                'Content-Type': 'application/text'
-            }
-        })
-    }
-
-    public getDonations(): Observable<Object> {
-
-        const d: any = [{
-            item_id: {  }
-        }]
-        console.log(d)
-
-        const gqlQuery = `
-    mutation{
-      addInventory(
-        item_id: '${d.item_id}'
       ){access_token, refresh_token}
     }
     `

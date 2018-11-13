@@ -12,6 +12,7 @@ import { AddInventoryService } from '../add/add.service'
 import { NavbarService } from '../../shared/navbar/navbar.service'
 
 let Food: Inventory[] = []
+const ProjectedExpiry: number[] = []
 
 @Component({
   selector: 'component-show',
@@ -41,24 +42,48 @@ export class ShowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadInventoryJsonService.getJSON()
-    //   .subscribe(data => {
-    //     console.log(data)
-    //     this.dataSource.data = data
-    //     Food = data
-    //   })
+    this.http.get('./static/MOCK_DATA.json')
+      .subscribe(data => {
+        console.log(JSON.parse(data['_body']))
+        const data2 = JSON.parse(data['_body'])
+        this.dataSource.data = data2
+        Food = data2
+      })
 
-    this.showService.getTable()
-                    .toPromise()
-                    .then((data: any) => {
-                      console.log(data.data.InventoryQuery)
-                      this.dataSource.data = data.data.InventoryQuery
-                      Food = data.data.InventoryQuery
-                    }
-                    )
-                    .catch()
+    // this.showService.getTable()
+    //                 .toPromise()
+    //                 .then((data: any) => {
+    //                   console.log(data.data.InventoryQuery)
+    //                   this.dataSource.data = data.data.InventoryQuery
+    //                   Food = data.data.InventoryQuery
+    //                 }
+    //                 )
+    //                 .catch()
+
+    // setInterval(() => {
+    //   this.loadExpiry()
+    // })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
+  }
+
+  loadExpiry(): void {
+
+    this.dataSource.data.forEach(element => {
+      element['expiryDate'] = 2
+    })
+    // this.dataSource.data[0]['expiryDate'] = 2
+    console.log(this.dataSource.data)
+    this.dataSource.data = this.dataSource.data
+    // this.showService.getTable()
+    //                 .toPromise()
+    //                 .then((data: any) => {
+    //                   console.log(data.data.InventoryQuery)
+    //                   this.dataSource.data['expiryDate'] = 2
+    //                   Food['expiryDate'] = 2
+    //                 }
+    //                 )
+    //                 .catch()
   }
 
   resetData(): void {

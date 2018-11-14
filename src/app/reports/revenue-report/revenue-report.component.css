@@ -1,0 +1,24 @@
+.card-body2{
+    height: 400px !important;
+    }
+
+    #info{
+        height: auto
+    }
+
+    .big-title {
+        font-size: 16px;
+    }
+
+    .generate-btn {
+      float: right
+    }
+
+    .generate-btn {
+      position: absolute;
+      right: 23px;
+    }
+
+    .generate-btn button {
+      margin-top :0 !important;
+    }

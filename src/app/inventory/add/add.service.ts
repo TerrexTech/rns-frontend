@@ -33,28 +33,27 @@ export class AddInventoryService {
     mutation{
       InventoryInsert(
         itemID: "${data.item_id}",
-        barcode: "a",
         dateArrived: ${data.date_arrived},
         deviceID: "${data.device_id}",
+        donateWeight: 0,
         lot: "${data.lot}",
         name: "${data.name}",
         origin: "${data.origin}",
-        price: ${12},
+        price: ${data.price},
         rsCustomerID: "${this.jwt.getAccessToken().sub}",
-        salePrice: ${12},
+        salePrice: 0,
         sku: "${data.sku}",
+        soldWeight: 0,
         timestamp: ${Math.floor(date)},
-        totalWeight: ${12},
-        upc: ${54754}
+        totalWeight: ${data.total_weight},
+        upc: "${54754}",
+        wasteWeight: 0
     ){
       _id,
     itemID,
-    barcode,
     dateArrived,
-    dateSold,
     deviceID,
     donateWeight,
-    expiryDate,
     lot,
     name,
     origin,
@@ -72,7 +71,7 @@ export class AddInventoryService {
     `
     console.log(gqlQuery)
 
-    return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
+    return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
       headers: {
         'Content-Type': 'application/text'
       }

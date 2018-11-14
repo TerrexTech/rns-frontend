@@ -7,6 +7,7 @@ import { SavingsReportComponent } from './savings-report/savings-report.componen
 import { SensorReportComponent } from './sensor-report/sensor-report.component'
 import { WasteReportComponent } from './waste-report/waste-report.component'
 import { TemphumidReportComponent } from './temphumid-report/temphumid-report.component'
+import { RevenueReportComponent } from './revenue-report/revenue-report.component'
 
 export const ReportsRoutes = {
   ethylene: {
@@ -23,6 +24,11 @@ export const ReportsRoutes = {
         path: 'inventory-report',
         title: 'Inventory Report',
         component: InventoryReportComponent
+    },
+    revenue: {
+        path: 'revenue-report',
+        title: 'Revenue Report',
+        component: RevenueReportComponent
     },
     savings: {
         path: 'savings-report',

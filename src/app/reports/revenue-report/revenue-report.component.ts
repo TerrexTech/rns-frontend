@@ -3,109 +3,53 @@ import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
-import { MockMonitor } from '../mocks-monitor'
 import { MatDialog } from '@angular/material'
-import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
-import { GaugeChartComponent } from 'angular-gauge-chart'
-
-interface Monitoring {
-  sku: string
-  name: string
-  lot: string
-}
-
-let searchData: Monitoring[] = []
+import * as jspdf from 'jspdf'
+import * as html2canvas from 'html2canvas'
+import { MockUtils } from '../mocks'
+import { ReportSearchComponent } from '../../search/report-search/report-search.component'
 
 @Component({
-  selector: 'component-carbon',
-  templateUrl: './carbon.component.html',
-  styleUrls: ['./carbon.component.css']
+  selector: 'component-revenue-report',
+  templateUrl: './revenue-report.component.html',
+  styleUrls: ['./revenue-report.component.css']
 })
-export class CarbonComponent implements OnInit {
-  carbonChart: any
-  fruitName = 'Apple'
-  sku = 'Apple'
-  lot = 'Apple'
-
-  public carbonCanvasWidth = 200
-  public carbonNeedleValue = 20
-  public carbonCentralLabel = ''
-  public carbonName = 'Carbon Levels (PPM)'
-  public carbonBottomLabel = '20'
-  public carbonOptions = {
-    hasNeedle: true,
-    needleColor: 'gray',
-    needleUpdateSpeed: 1000,
-    arcColors: ['rgb(44, 151, 222)', 'lightgray'],
-    arcDelimiters: [20],
-    rangeLabel: ['0', '100'],
-    needleStartValue: 50
-  }
-
-  public ethyCanvasWidth = 200
-  public ethyNeedleValue = 20
-  public ethyCentralLabel = ''
-  public ethyName = 'Ethylene Levels (PPM)'
-  public ethyBottomLabel = '20'
-  public ethyOptions = {
-    hasNeedle: true,
-    needleColor: 'gray',
-    needleUpdateSpeed: 1000,
-    arcColors: ['rgb(44, 151, 222)', 'lightgray'],
-    arcDelimiters: [20],
-    rangeLabel: ['0', '100'],
-    needleStartValue: 50
-  }
-
-  public tempCanvasWidth = 200
-  public tempNeedleValue = 20
-  public tempCentralLabel = ''
-  public tempName = 'Temperature Levels (PPM)'
-  public tempBottomLabel = '20'
-  public tempOptions = {
-    hasNeedle: true,
-    needleColor: 'gray',
-    needleUpdateSpeed: 1000,
-    arcColors: ['rgb(44, 151, 222)', 'lightgray'],
-    arcDelimiters: [20],
-    rangeLabel: ['0', '100'],
-    needleStartValue: 50
-  }
+export class RevenueReportComponent implements OnInit {
+  revChart: any
+  date: Date = new Date()
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.loadCarbonGraph()
+    this.loadRevGraph()
   }
 
-  openSearch(): any {
-    this.dialog.open(MonitorSearchComponent, {
+  openSearch(): void {
+    this.dialog.open(ReportSearchComponent, {
       width: '500px'
     })
       .afterClosed()
       .subscribe(
-        data => searchData = data
+        data => console.log(data)
+        // refreshDataMethod()
       )
-
-    return searchData
   }
 
-  loadCarbonGraph(): void {
-    // this.openSearch()
-    const m = new MockMonitor()
-    m.genCarbonData()
+  loadRevGraph(): void {
     console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('carbon'))
-   // const arr1 = this.openSearch()
-    console.log(arr1.map(e => {
-      return e.Carbon
+    const mock = new MockUtils()
+    mock.genInvData()
+    const arr2 = JSON.parse(localStorage.getItem('arr2'))
+    console.log(arr2.map(e => {
+
+      return e
     }))
     // console.log(mock.genFloat(30, 90))
     // this.ethyData = mock.genFloat(30, 90)
     // this.dataSource.data = this.ethyData
-    this.carbonChart = new Chart('carbon', {
-      type: 'line',
+    this.revChart = new Chart('revenue', {
+      type: 'bar',
       // data: {
       //   datasets: [
       //     {
@@ -148,14 +92,21 @@ export class CarbonComponent implements OnInit {
       data: {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
-          label: 'Carbon',
-          data: arr1.map(e => {
-            console.log(parseFloat(e.Carbon))
+          label: 'Previous Waste',
+          data: arr2.map(e => {
 
-            return parseFloat(e.Carbon)
+            return parseFloat(e['Total Weight'])
           }),
           backgroundColor: 'rgba(153,255,51,0.4)'
-        }]
+        },
+          {
+            label: 'Current Waste',
+            data: arr2.map(e => {
+
+              return parseFloat(e['Sold Weight'])
+            }),
+            backgroundColor: 'rgba(153,25,51,0.4)'
+          }]
       },
       options: {
         responsive: true,
@@ -177,7 +128,7 @@ export class CarbonComponent implements OnInit {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'PPM'
+              labelString: 'Products'
             },
             ticks: {
               beginAtZero: true
@@ -273,4 +224,24 @@ export class CarbonComponent implements OnInit {
       end_date, start_date
     ]
   }
+
+  captureScreen(): void {
+    const data = document.getElementById('testCapture')
+    console.log(data)
+    html2canvas(data)
+    .then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208
+      const pageHeight = 295
+      const imgHeight = canvas.height * imgWidth / canvas.width
+      const heightLeft = imgHeight
+
+      const contentDataURL = canvas.toDataURL('image/png')
+      const pdf = new jspdf('p', 'mm', 'a4') // A4 size page of PDF
+      const position = 0
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      pdf.save('MYPdf.pdf') // Generated PDF
+    })
+  }
+
 }

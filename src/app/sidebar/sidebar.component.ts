@@ -68,25 +68,7 @@ export class SidebarComponent implements OnInit {
     },
     {
       route: AppRoutes.monitoring,
-      icon: 'nc-icon nc-box-2',
-      children: [
-        {
-          route: AppRoutes.monitoring.children.carbon,
-          ab: 'CA'
-        },
-        {
-          route: AppRoutes.monitoring.children.ethylene,
-          ab: 'ET'
-        },
-        {
-          route: AppRoutes.monitoring.children.sensor,
-          ab: 'SE'
-        },
-        {
-          route: AppRoutes.monitoring.children.temperature,
-          ab: 'TH'
-        }
-      ]
+      icon: 'nc-icon nc-box-2'
     },
     {
       route: AppRoutes.warning,
@@ -115,12 +97,12 @@ export class SidebarComponent implements OnInit {
           ab: 'IN'
         },
         {
-          route: AppRoutes.reports.children.savings,
-          ab: 'SA'
+          route: AppRoutes.reports.children.revenue,
+          ab: 'RE'
         },
         {
-          route: AppRoutes.reports.children.sensor,
-          ab: 'SE'
+          route: AppRoutes.reports.children.savings,
+          ab: 'SA'
         },
         {
           route: AppRoutes.reports.children.temphumid,

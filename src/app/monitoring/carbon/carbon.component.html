@@ -2,48 +2,115 @@
     <div class="container-fluid">
        <component-overview></component-overview>
         <div class="row">
-        <div class="col-sm-3">
-            <rg-gauge-chart
-                [canvasWidth]="300"
-                [needleValue]="20"
-                [centralLabel]=""
-                [options]="{
-                    hasNeedle: true,
-                    rangeLabel: ['0', '100']
-                }"
-                [name]="'Carbon Level'"
-                [bottomLabel]="20">
-            </rg-gauge-chart>
-            <br>
-            <div class="card report-info">
-                <div id="info" class="card-body card-body2 text-center">
-                    <br>
-                    <h6>Fruit Name: {{ fruitName }}</h6><br>
-                    <h6>SKU: SKU</h6><br>
-                    <h6>Lot : Lot #</h6><br>
-                </div>
-            </div>
+                <div class="card report-info mx-auto col-12">
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-4 text-center">
+                                <h6>Fruit Name: {{ fruitName }}</h6>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h6>SKU: SKU</h6>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h6>Lot : Lot #</h6>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
         </div>
+        <div class="row">
+        <div class="col-sm-3">
+                <div class="card report-info">
+                        <div id="info" class="card-body card-body2 mx-auto ">
+                <rg-gauge-chart
+                    [canvasWidth]="carbonCanvasWidth"
+                    [needleValue]="carbonNeedleValue"
+                    [centralLabel]="carbonCentralLabel"
+                    [options]="carbonOptions"
+                    [name]="carbonName"
+                    [bottomLabel]="carbonBottomLabel">
+                </rg-gauge-chart>
+                </div>
+                </div>
+            <br>
+        </div>
+
         <div class="col-sm-9">
             <div class="card report-info">
-                <div id="info" class="card-body card-body2">
+                <div class="card-body">
                     <div class="generate-btn">
                         <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
                             <i class="fa fa-search"></i>
                         </a>
-                        <a id="simBtn" class="btn btn-warning btn-link btn-icon btn-md " (click)="openSearch()">
-                            <i class="fa fa-search"></i>
-                        </a>
                     </div>
-                    <h6 class="text-center">Carbon Levels: {{ fruitName }}</h6>
-            <canvas id="carbon"></canvas>
+                    <h6 class="text-center">Carbon Levels</h6>
+            <canvas class="canvas" height="30%" width="100%"></canvas>
         </div>
         </div>
         </div>
         </div>
+        <div class="row">
+            <div class="col-sm-6">
+                    <div class="card report-info">
+                            <div id="info" class="card-body card-body2 mx-auto">
+                    <rg-gauge-chart
+                        [canvasWidth]="ethyCanvasWidth"
+                        [needleValue]="ethyNeedleValue"
+                        [centralLabel]="ethyCentralLabel"
+                        [options]="ethyOptions"
+                        [name]="ethyName"
+                        [bottomLabel]="ethyBottomLabel">
+                    </rg-gauge-chart>
+                    </div>
+                    </div>
+              <br>
+              <!--Try to find angular component that shows same as grafana-->
+            </div>
+            <div class="col-6">
+              <div class="card report-info">
+                <div id="info" class="card-body card-body2">
+                  <div class="generate-btn">
+                    <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </div>
+              <canvas class="canvas" height="30%" width="100%"></canvas>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+                <div class="col-sm-6">
+                        <div class="card report-info">
+                                <div id="info" class="card-body card-body2 mx-auto">
+                        <rg-gauge-chart
+                            [canvasWidth]="tempCanvasWidth"
+                            [needleValue]="tempNeedleValue"
+                            [centralLabel]="tempCentralLabel"
+                            [options]="tempOptions"
+                            [name]="tempName"
+                            [bottomLabel]="tempBottomLabel">
+                        </rg-gauge-chart>
+                        </div>
+                        </div>
+                  <br>
+                </div>
+                <div class="col-6">
+                  <div class="card report-info">
+                    <div id="info" class="card-body card-body2">
+                      <div class="generate-btn">
+                        <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+                          <i class="fa fa-search"></i>
+                        </a>
+                      </div>
+                  <canvas class="canvas" height="30%" width="100%"></canvas>
+                </div>
+                </div>
+                </div>
+              </div>
         <br>
         <div row="row">
-
+            <component-sensor></component-sensor>
             <!-- <div class="col-sm-8">
                 <component-reports-table [jsonFields]=8 [displayedColumns]="['SKU', 'Name', 'Carbon', 'Timestamp', 'Status', 'Projected Expiry', 'Trend (%)']"></component-reports-table>
             </div> -->

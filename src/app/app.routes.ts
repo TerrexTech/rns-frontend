@@ -8,6 +8,7 @@ import { MonitoringRoutes } from './monitoring/monitoring.routing'
 import { WarningComponent } from './warning/warning.component'
 import { ViewFlashsaleComponent } from './flash-sale/view-flashsale/view-flashsale.component'
 import { DonateDisposeRoutes } from './donate-dispose/donate-dispose.routes'
+import { CarbonComponent } from './monitoring/carbon/carbon.component'
 
 export const AppRoutes = {
   root: {
@@ -43,7 +44,7 @@ export const AppRoutes = {
   monitoring: {
     path: 'monitoring',
     title: 'Monitoring',
-    children: MonitoringRoutes
+    component: CarbonComponent
   },
 
   login: {

@@ -109,7 +109,7 @@
             </div>
 
             <div class="col-sm-10">
-              <input type="string" class="form-control" [ngClass]="{'is-invalid': isFieldValid('total_weight')}"
+              <input type="number" class="form-control" [ngClass]="{'is-invalid': isFieldValid('total_weight')}"
                 formControlName="total_weight" required>
 
               <span *ngIf="isFieldValid('total_weight')" class="invalid-feedback">
@@ -126,7 +126,7 @@
             </div>
 
             <div class="col-sm-10">
-              <input type="string" class="form-control" [ngClass]="{'is-invalid': isFieldValid('price')}"
+              <input type="number" class="form-control" [ngClass]="{'is-invalid': isFieldValid('price')}"
                 formControlName="price" required>
 
               <span *ngIf="isFieldValid('price')" class="invalid-feedback">

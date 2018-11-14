@@ -156,6 +156,7 @@ export class ReportsTableComponent implements OnInit {
       console.log(mock.genSensorData())
       this.sensorMon = mock.genSensorData()
       this.dataSource.data = this.sensorMon
+      this.dataSource.paginator = this.paginator
     }
 
     // this.loadInventoryJsonService.getJsonTest()

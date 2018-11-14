@@ -1,0 +1,89 @@
+<div class="main-content">
+    <div class="container-fluid">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>
+                <h4>Revenue Report</h4>
+              </mat-card-title>
+                <div class="generate-btn">
+                  <button class="btn btn-fill" (click)="openSearch()">Search</button>
+                </div>
+            </mat-card-header>
+          </mat-card>
+      <br>
+      <mat-card>
+      <div id="testCapture">
+        <div class="row">
+          <div class="col-lg-8 col-sm-8">
+            <div class="card">
+              <div class="card-body">
+                <!-- <h6></h6> -->
+                <canvas id="revenue"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-sm-4">
+            <div class="card report-info">
+              <div class="card-body card-body2">
+                <h6 class="big-title">Revenue</h6>
+                <br>
+                <div>
+                  <p>Report Type: Revenue</p>
+                  <br>
+                  <!-- <p>Product Name: </p>
+                <br> -->
+                  <p>Date Generated: {{ date | date:'yyyy/MM/dd' }} </p>
+                  <br>
+                  <div class="row">
+                    <button mat-raised-button color="warn" (click)="captureScreen()">Convert Report to
+                      PDF</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <component-reports-table [jsonFields]=2
+          [displayedColumns]="['SKU', 'Name', 'Prev. Waste Weight', 'Curr. Waste Amount', 'Prev. Waste Amount ($)',
+                              'Curr. Waste Amount ($)', 'Savings (%)']"></component-reports-table>
+      </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- <form>
+    <mat-form-field class="col-sm-12">
+      <input matInput [matDatepicker]="picker" placeholder="Choose a start date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="col-sm-12">
+      <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="col-sm-12">
+      <mat-select placeholder="Date Range">
+        <mat-option>
+          Weekly
+        </mat-option>
+        <mat-option>
+          Bi-weekly
+        </mat-option>
+        <mat-option>
+          1 Month
+        </mat-option>
+        <mat-option>
+          3 months
+        </mat-option>
+        <mat-option>
+          6 months
+        </mat-option>
+        <mat-option>
+          1 year
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form> -->

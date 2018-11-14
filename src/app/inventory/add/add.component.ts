@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import swal from 'sweetalert'
 import { MockUtils } from './mockutils'
-// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 
 @Component({
   selector: 'component-add',
@@ -54,10 +53,10 @@ export class AddComponent implements OnInit {
       .split('T')[0])
     this.form.get('total_weight')
       .setValue(`${m.genWeight()
-        .toFixed(2)} Kilograms`)
+        .toFixed(2)}`)
     this.form.get('price')
       .setValue(`${m.genPrice()
-                 .toFixed(2)} Dollars`)
+                 .toFixed(2)}`)
     this.form.get('device_id')
       .setValue(m.genUUID())
     this.form.get('lot')

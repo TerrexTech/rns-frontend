@@ -99,16 +99,21 @@ export class MonitorSearchComponent implements OnInit {
         endDate = this.form.value.end_date
       }
 
-      if ((startDate && endDate) && (startDate > endDate)) {
+      if (startDate > endDate) {
         console.log(startDate)
         console.log(endDate)
         this.dateNotValid = true
         this.message = 'Start date cannot be greater than end date'
       }
 
-      if ((startDate && endDate) && (endDate > today)) {
+      else if (endDate > today) {
         this.dateNotValid = true
         this.message = 'End date cannot be greater than today'
+      }
+
+      else if (endDate && !this.form.value.period && !startDate) {
+        this.dateNotValid = true
+        this.message = 'Start Date is required'
       }
 
       else {
@@ -128,7 +133,9 @@ export class MonitorSearchComponent implements OnInit {
 
       for (const property in object) {
         if (object.hasOwnProperty(property)) {
-          searchData[property] = object[property]
+          if (object[property]) {
+            searchData[property] =  `{ $eq: ${object[property]} },`
+          }
         }
       }
 

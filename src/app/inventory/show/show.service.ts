@@ -12,12 +12,52 @@ export class ShowTableService {
 
     public getTable(): Observable<Object> {
 
-        const date = new Date().getTime() / 1000
+        const date = new Date().getTime()
 
         const gqlQuery = `
             {
         InventoryQuery(
             barcode: "a",
+        ){
+            _id,
+            itemID,
+            barcode,
+            dateArrived,
+            dateSold,
+            deviceID,
+            donateWeight,
+            expiryDate,
+            lot,
+            name,
+            origin,
+            price,
+            rsCustomerID,
+            salePrice,
+            sku,
+            soldWeight,
+            timestamp,
+            totalWeight,
+            upc,
+            wasteWeight
+        }
+        }
+    `
+
+        return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
+    public getBeforeRows(): Observable<Object> {
+
+        const date = new Date().getTime()
+
+        const gqlQuery = `
+            {
+        InventoryQuery(
+            timestamp: ${date},
         ){
             _id,
             itemID,

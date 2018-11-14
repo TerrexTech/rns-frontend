@@ -97,6 +97,19 @@ export class ShowComponent implements OnInit {
                     .catch()
   }
 
+  onPaginateChange($event): void {
+    const date = new Date().getTime()
+    const date2 = new Date().getTime() / 1000
+    if ($event.pageIndex > $event.previousPageIndex) {
+      console.log(1)
+      console.log(date)
+      console.log(date2)
+    }
+    else if ($event.pageIndex < $event.previousPageIndex) {
+      console.log(2)
+    }
+  }
+
   openSearch(): void {
     this.dialog.open(TableSearchComponent, {
       width: '500px'
@@ -138,40 +151,13 @@ export class ShowComponent implements OnInit {
           swal('Your item has been deleted!', {
             icon: 'success'
           })
-            .then(log => {
-              console.log(log)
-
-              return true
-            })
-            .catch(err => {
-              console.log(err)
-
-              return false
-            })
+            .catch(console.log)
         } else {
           swal('Inventory not removed')
-            .then(log => {
-              console.log(log)
-
-              return true
-            })
-            .catch(err => {
-              console.log(err)
-
-              return false
-            })
+            .catch(console.log)
         }
       })
-      .then(log => {
-        console.log(log)
-
-        return true
-      })
-      .catch(err => {
-        console.log(err)
-
-        return false
-      })
+      .catch(console.log)
 }
 
   selected(): boolean {

@@ -49,8 +49,6 @@ export class DialogDataDialogComponent implements OnInit {
              .setValue(this.curField.data.name)
     this.form.get('origin')
              .setValue(this.curField.data.origin)
-    // this.form.get('date_arrived').setValue(new Date(this.curField.data.date_arrived * 1000).toJSON().split('T')[0])
-    // this.dateSel.nativeElement.value = new Date(this.curField.data.date_arrived * 1000).toJSON().split('T')[0]
     this.form.get('total_weight')
              .setValue(this.curField.data.total_weight)
     this.form.get('price')
@@ -61,7 +59,6 @@ export class DialogDataDialogComponent implements OnInit {
              .setValue(this.curField.data.location)
     this.form.get('lot')
              .setValue(this.curField.data.lot)
-
   }
 
   isFieldValid(field: string): any {

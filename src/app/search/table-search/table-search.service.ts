@@ -25,14 +25,14 @@ export class TableSearchService {
         const gqlQuery = `
     mutation{
       search(
-        sku: '${searchQuery[0].sku}',
-        name: '${searchQuery[0].name}',
-        origin: '${searchQuery[0].origin}',
-        price: '${searchQuery[0].price}',
-        lot: '${searchQuery[0].lot}',
-        start_date: '${searchQuery[0].start_date}',
-        end_date: '${searchQuery[0].end_date}',
-        exact_match: '${searchQuery[0].exact_match}',
+        sku: '${searchQuery['sku']}',
+        name: '${searchQuery['name']}',
+        origin: '${searchQuery['origin']}',
+        price: '${searchQuery['price']}',
+        lot: '${searchQuery['lot']}',
+        start_date: '${searchQuery['start_date']}',
+        end_date: '${searchQuery['end_date']}',
+        exact_match: '${searchQuery['exact_match']}',
       ){access_token, refresh_token}
     }
     `

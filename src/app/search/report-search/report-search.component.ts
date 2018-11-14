@@ -139,7 +139,7 @@ export class ReportSearchComponent implements OnInit {
             console.log(object[property])
           }
           else {
-          searchData[property] =  ` { $eq: ${object[property]} },`
+          searchData[property] =  `{ $eq: ${object[property]} },`
           }
         }
       }

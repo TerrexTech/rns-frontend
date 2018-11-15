@@ -197,7 +197,23 @@ export class ShowComponent implements OnInit {
     })
     this.loadExpiry()
     this.sendSale(this.curField)
-  }
+    const array2 = []
+    console.log(localStorage.getItem('showTable') !== undefined)
+    if (localStorage.getItem('showTable') === undefined) {
+
+        return JSON.parse(localStorage.getItem('showTable'))
+    }
+
+    else {
+        for (let index = 0; index < 10; index++) {
+            array2.push({
+              expiryDate: this.curField.expiryDate
+            })
+        }
+        localStorage.setItem('showTable', JSON.stringify(array2))
+    }
+    console.log(array2)
+    }
 
   genWarning(): void {
     this.selection.selected.forEach(item => {
@@ -205,7 +221,6 @@ export class ShowComponent implements OnInit {
       console.log(this.curField)
       this.alertShown = true
       this.navServ.newEvent(1)
-      this.curField.timestamp -= 1000000
       console.log(this.curField)
       // ethylene value jumps to 700
 

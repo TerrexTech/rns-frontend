@@ -37,7 +37,7 @@ export class UpdateInventoryService {
     `
     console.log(gqlQuery)
 
-    return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
+    return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
       headers: {
         'Content-Type': 'application/text'
       }

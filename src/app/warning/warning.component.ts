@@ -7,7 +7,7 @@ import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { Http } from '@angular/http'
 import { NavbarService } from '../shared/navbar/navbar.service'
 
-let flash_data: any[] = []
+const flash_data: any[] = []
 
 @Component({
   selector: 'component-warning',
@@ -24,18 +24,22 @@ export class WarningComponent implements OnInit {
   createType: string
   url: string
 
-  displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projected expiry']
+  displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projectedExpiry']
   curField: any
 
   ngOnInit(): void {
     this.navServ.newEvent(0)
-    this.getJSON()
-      .subscribe(data => {
-        console.log(JSON.parse(data._body))
-        const json = JSON.parse(data._body)
-        this.dataSource.data = json
-        flash_data = json
-      })
+    const arr1 = JSON.parse(localStorage.getItem('showTable'))
+    console.log(arr1.map(e => {
+
+    return e.expiryDate
+  }))
+
+    console.log(arr1[0].expiryDate)
+
+    // this.dataSource.data.forEach(element => {
+    //   element['projectedExpiry'] = arr1.expiryDate
+    // })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
 
@@ -134,7 +138,7 @@ export class WarningComponent implements OnInit {
 
     swal({
       title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this imaginary file!',
+      text: 'Once deleted, you will not be able to recover this warning!',
       icon: 'warning',
       buttons: ['Yes', 'No'],
       dangerMode: true
@@ -146,7 +150,7 @@ export class WarningComponent implements OnInit {
             console.log('++++++++++++++++++==')
             // this.loadInventoryJsonService.deleteRow(item.item_id)
           })
-          swal('Poof! Your imaginary file has been deleted!', {
+          swal('Your warning has been deleted!', {
             icon: 'success'
           })
             .then(log => {
@@ -160,7 +164,7 @@ export class WarningComponent implements OnInit {
               return false
             })
         } else {
-          swal('Inventory not removed')
+          swal('Warning not removed')
             .then(log => {
               console.log(log)
 

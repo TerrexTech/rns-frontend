@@ -6,6 +6,9 @@ import { SelectionModel } from '@angular/cdk/collections'
 import { Warning } from '../../models/warning'
 import { HttpClient } from '@angular/common/http'
 import swal from 'sweetalert'
+import { AddFlashSaleService } from './add-dialog-data.service'
+
+let flash_data: any[] = []
 
 @Component({
   selector: 'component-add-dialog-data-dialog',
@@ -29,7 +32,8 @@ export class AddDialogDataComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private addServ: AddFlashSaleService
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +43,7 @@ export class AddDialogDataComponent implements OnInit {
         // console.log(JSON.parse(data._body))
         const json = data
         this.dataSource.data = json
+        flash_data = json
       })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
@@ -56,37 +61,12 @@ export class AddDialogDataComponent implements OnInit {
   f(): any { return this.form.controls }
 
   onSubmit(): void {
-    this.formSubmitAttempt = true
-    if (this.form.valid) {
-      const month = new Array()
-      month[0] = 'January'
-      month[1] = 'February'
-      month[2] = 'March'
-      month[3] = 'April'
-      month[4] = 'May'
-      month[5] = 'June'
-      month[6] = 'July'
-      month[7] = 'August'
-      month[8] = 'September'
-      month[9] = 'October'
-      month[10] = 'November'
-      month[11] = 'December'
-      this.formSubmitAttempt = true
-      const origDate = this.form.value.projected_expiry
-      this.form.value.projected_expiry = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
-      console.log('submitted')
-      // this.loadInv.updateRow(this.form.value)
-      swal('Record successfully inserted!')
-        .then(log => {
-          console.log(log)
+    this.selection.selected.forEach(item => {
+      this.curField = flash_data.filter(i => i.itemID === item.itemID)[0]
+      console.log(this.curField)
+      console.log('++++++++++++++++++==')
+    })
+    this.addServ.newFlashSale(this.curField)
 
-          return true
-        })
-        .catch(err => {
-          console.log(err)
-
-          return false
-        })
     }
   }
-}

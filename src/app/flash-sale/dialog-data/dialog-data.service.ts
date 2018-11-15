@@ -15,13 +15,13 @@ export class UpdateFlashSaleService {
         const gqlQuery = `
     mutation{
       addInventory(
-        flash_id: ${data.itemId},
-        item_id: ${data.itemId},
+        flash_id: ${data.flashID},
+        item_id: ${data.itemID},
         upc: ${data.upc},
         sku: ${data.sku},
         name: ${data.name},
         origin: ${data.origin},
-        device_id: ${data.deviceId},
+        device_id: ${data.deviceID},
         timestamp: ${data.timestamp},
         ethylene: ${data.ethylene},
         status: ${data.status},

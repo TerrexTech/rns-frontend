@@ -159,7 +159,7 @@ export class CarbonComponent implements OnInit {
 
             return parseFloat(e.Carbon)
           }),
-          backgroundColor: 'rgba(153,255,51,0.4)'
+          backgroundColor: 'rgba(153,155,231,0.4)'
         }]
       },
       options: {
@@ -211,13 +211,19 @@ export class CarbonComponent implements OnInit {
     //   this.ethyChart.update()
 
     //   // Moving Graph
-    //   // setInterval(() => {
-    //   //   this.ethyChart.data.datasets.forEach((dataset, index) => {
-    //   //     const metric = dataset.data.shift()
-    //   //     dataset.data.push(metric + 1)
-    //   //   })
-    //   //   this.ethyChart.update()
-    //   // }, 40000)
+    setInterval(() => {
+      this.carbonChart.data.datasets.forEach((dataset, index) => {
+        // console.log(dataset)
+        const g = dataset.data.length
+        // console.log(dataset.data)
+        this.carbonNeedleValue = dataset.data[g - 1]
+        const metric = dataset.data.shift()
+        dataset.data.push(metric + 1)
+        // this.ethyNeedleValue = metric + 1
+        this.carbonBottomLabel = `${dataset.data[g - 1]}`
+      })
+      this.ethyleneChart.update()
+    }, 4000)
     // })
   }
 
@@ -282,7 +288,7 @@ export class CarbonComponent implements OnInit {
 
             return parseFloat(e.Ethylene)
           }),
-          backgroundColor: 'rgba(153,255,51,0.4)'
+          backgroundColor: '#FF0000'
         }]
       },
       options: {
@@ -472,13 +478,19 @@ export class CarbonComponent implements OnInit {
     //   this.ethyChart.update()
 
     //   // Moving Graph
-    //   // setInterval(() => {
-    //   //   this.ethyChart.data.datasets.forEach((dataset, index) => {
-    //   //     const metric = dataset.data.shift()
-    //   //     dataset.data.push(metric + 1)
-    //   //   })
-    //   //   this.ethyChart.update()
-    //   // }, 40000)
+    // setInterval(() => {
+    //   this.tempChart.data.datasets.forEach((dataset, index) => {
+    //     // console.log(dataset)
+    //     const g = dataset.data.length
+    //     // console.log(dataset.data)
+    //     this.tempNeedleValue = dataset.data[g - 1]
+    //     const metric = dataset.data.shift()
+    //     dataset.data.push(metric + 1)
+    //     // this.ethyNeedleValue = metric + 1
+    //     this.tempBottomLabel = `${dataset.data[g - 1]}`
+    //   })
+    //   this.ethyleneChart.update()
+    // }, 4000)
     // })
   }
 

@@ -5,6 +5,7 @@ import { SendDate } from '../models'
 import Chart from 'chart.js'
 import { AlertService } from '../alert-popup/alert.service'
 import { DashboardService } from './dashboard.service'
+import { MockUtils } from './mockutils'
 
 @Component({
   selector: 'component-dashboard',
@@ -27,14 +28,123 @@ export class DashboardComponent implements OnInit {
   constructor(private http: HttpClient, private alertService: AlertService, private dashServ: DashboardService) { }
 
   ngOnInit(): void {
-    // this.loadTotalGraph()
-    // this.loadSoldGraph()
+     this.loadTotalNew()
+     this.loadSoldGraph()
     // this.loadDistGraph()
     // this.loadDonationGraph()
   }
 
   changeAxis(dateArray: JSON): JSON {
     return dateArray
+  }
+
+  loadTotalNew(): void {
+    // this.openSearch()
+    const m = new MockUtils()
+    m.genTotalGraph()
+    console.log('7&&&&&&&&&&&&&&&&&&&')
+    const arr1 = JSON.parse(localStorage.getItem('total'))
+   // const arr1 = this.openSearch()
+    // console.log(arr1.map(e => {
+    //   return e.Total, e.Sold, e.Waste
+    // }))
+    // console.log(mock.genFloat(30, 90))
+    // this.ethyData = mock.genFloat(30, 90)
+    // this.dataSource.data = this.ethyData
+    this.totalChart = new Chart('totalChart', {
+      type: 'bar',
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Total Weight',
+            data: arr1.map(e => {
+              console.log(parseFloat(e.Total))
+
+              return parseFloat(e.Total)
+            }),
+            backgroundColor: 'rgba(255, 99, 132, 1)'
+          },
+          {
+            label: 'Sold Weight',
+            data: arr1.map(e => {
+              console.log(parseFloat(e.Sold))
+
+              return parseFloat(e.Sold)
+            }),
+            backgroundColor: 'rgba(25, 99, 132, 1)'
+          },
+          {
+            label: 'Waste Weight',
+            data: arr1.map(e => {
+              console.log(parseFloat(e.Waste))
+
+              return parseFloat(e.Waste)
+            }),
+            backgroundColor: 'rgba(125, 30, 255, 1)'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        hover: {
+          mode: 'dataset'
+        },
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Date'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Weight(Kg)'
+            },
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    })
+    // this.getJSON().subscribe(dataArr => {
+    //   console.log(dataArr)
+    //   const metrics: any = [
+    //     []
+    //   ]
+    //   // total_weight: 195, sold_weight: 58, waste_weight: 49
+    //   Object.keys(dataArr).forEach(k => {
+    //     const prods = dataArr[k]
+    //     const date = new Date(prods.dates * 1000).toDateString()
+    //     this.ethyChart.data.labels.push(date)
+    //     metrics[0].push(prods.Ethylene)
+    //   })
+
+    //   this.ethyChart.data.datasets.forEach((dataset, index) =>
+    //     dataset.data = dataset.data.concat(metrics[index])
+    //   )
+    //   this.ethyChart.update()
+
+    //   // Moving Graph
+    setInterval(() => {
+      this.totalChart.data.datasets.forEach((dataset, index) => {
+        // console.log(dataset)
+        const g = dataset.data.length
+        // console.log(dataset.data)
+        const metric = dataset.data.shift()
+        dataset.data.push(metric + 1)
+        // this.ethyNeedleValue = metric + 1
+      })
+      this.totalChart.update()
+    }, 10000)
+    // })
   }
 
   loadTotalGraph(): void {
@@ -160,18 +270,27 @@ export class DashboardComponent implements OnInit {
   }
 
   loadSoldGraph(): void {
+    const m = new MockUtils()
+    m.genSoldGraph()
+    console.log('7&&&&&&&&&&&&&&&&&&&')
+    const arr1 = JSON.parse(localStorage.getItem('sold'))
+    console.log(arr1.map(e => {
+      return e.Sold
+    }))
     this.soldChart = new Chart('soldChart', {
       type: 'line',
       data: {
-        labels: [],
-        datasets: [
-          {
-            label: 'Average Products',
-            data: [],
-            backgroundColor: 'rgba(255, 99, 132, 1)',
-            fill: false
-          }
-        ]
+        labels: [new Date().getDate()],
+        datasets: [{
+          fill: false,
+          label: 'Sold',
+          data: arr1.map(e => {
+            console.log(parseFloat(e.Sold))
+
+            return parseFloat(e.Sold)
+          }),
+          borderColor: '#FF0000'
+        }]
       },
       options: {
         responsive: true,
@@ -186,14 +305,14 @@ export class DashboardComponent implements OnInit {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Date'
+              labelString: 'Period'
             }
           }],
           yAxes: [{
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Weight (Kg)'
+              labelString: 'PPM'
             },
             ticks: {
               beginAtZero: true
@@ -203,37 +322,15 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    this.dashServ.getSold()
-                 .toPromise()
-      .then(dataArr => {
-      console.log(dataArr)
-      const metrics: any = [
-        []
-      ]
-      Object.keys(dataArr)
-            .forEach(k => {
-        const prods = dataArr[k]
-        const date = new Date(prods.dates * 1000).toDateString()
-        this.soldChart.data.labels.push(date)
-        metrics[0].push(prods.sold_weight)
-      })
-
-      this.soldChart.data.datasets.forEach((dataset, index) =>
-        dataset.data = dataset.data.concat(metrics[index])
-      )
-      this.soldChart.update()
-
       // Moving Graph
-      // setInterval(() => {
-      //   this.soldChart.data.datasets.forEach((dataset, index) => {
-      //     const metric = dataset.data.shift()
-      //     dataset.data.push(metric + 1)
-      //   })
-      //   this.soldChart.update()
-      // }, 5000)
-    })
-    .catch(console.log)
-  }
+    setInterval(() => {
+      this.soldChart.data.datasets.forEach((dataset, index) => {
+        const metric = dataset.data.shift()
+        dataset.data.push(metric + 1)
+      })
+      this.soldChart.update()
+    }, 5000)
+    }
 
   loadDistGraph(): void {
     this.distChart = new Chart('distChart', {

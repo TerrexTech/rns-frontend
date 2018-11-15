@@ -118,4 +118,52 @@ export class MockUtils {
 
     return `${s1}${i1}`.toUpperCase()
   }
+
+  genTotalGraph(): any {
+    const array1 = []
+    console.log(localStorage.getItem('total') !== undefined)
+    if (localStorage.getItem('total') === undefined) {
+
+        return JSON.parse(localStorage.getItem('total'))
+    } else {
+
+        for (let index = 0; index < 25; index++) {
+            array1.push({
+                Sold: this.genFloat(100, 300),
+                Waste: this.genFloat(100, 200),
+                Total: this.genFloat(300, 500)
+            })
+        }
+        localStorage.setItem('total', JSON.stringify(array1))
+    }
+
+    return array1
+  }
+
+  genSoldGraph(): any {
+    const array1 = []
+    console.log(localStorage.getItem('sold') !== undefined)
+    if (localStorage.getItem('sold') === undefined) {
+
+        return JSON.parse(localStorage.getItem('sold'))
+    } else {
+
+        for (let index = 0; index < 25; index++) {
+            array1.push({
+                Sold: this.genFloat(100, 300)
+            })
+        }
+        localStorage.setItem('sold', JSON.stringify(array1))
+    }
+
+    return array1
+  }
+
+  genDistGraph(): any {
+
+  }
+
+  genDonateGraph(): any {
+
+  }
 }

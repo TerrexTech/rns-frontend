@@ -101,24 +101,18 @@ export class MockUtils {
     const array1 = []
     console.log(localStorage.getItem('arr1') !== undefined)
     if (localStorage.getItem('arr1') === undefined) {
-      console.log('here')
 
       return JSON.parse(localStorage.getItem('arr1'))
     } else {
 
-      for (let index = 0; index < 100; index++) {
+      for (let index = 0; index < 12; index++) {
         array1.push({
           SKU: this.genSKU(),
           Name: this.genName(),
-          Ethylene: this.genFloat(1, 80)
+          'Donation Weight': this.genFloat(50, 200)
                         .toFixed(2),
-          Timestamp: new Date(this.genArrivalDate())
-                                    .toISOString()
-                                    .split('T')[0],
-          Status: 'Warning',
-          'Projected Expiry': new Date(this.genArrivalDate() * 1.0001).toISOString()
-                                                                      .split('T')[0],
-          'Trend (%)': (this.genFloat(-1, 1) * 5).toFixed(0)
+          'Avg. Total Weight': this.genFloat(300, 800)
+                                   .toFixed(2)
         })
       }
       console.log(array1)

@@ -3,7 +3,7 @@
         <mat-card>
           <mat-card-header>
             <mat-card-title>
-              <h4>Ethylene Report</h4>
+              <h4>Donation Report</h4>
             </mat-card-title>
               <div class="generate-btn">
                 <button *ngIf='isClicked' class="btn btn-fill" (click)="openSearch()">Search</button>
@@ -25,10 +25,10 @@
         <div class="col-lg-4 col-sm-4">
           <div class="card report-info">
             <div id="info" class="card-body card-body2">
-              <h6 class="big-title">Average Ethylene (PPM)</h6>
+              <h6 class="big-title">Donations</h6>
               <br>
               <div>
-                <p>Report Type: Ethylene</p>
+                <p>Report Type: Donations</p>
                 <br>
                 <p>Date Generated: {{ date | date:'yyyy/MM/dd' }} </p>
                 <br>
@@ -42,7 +42,7 @@
         </div>
       </div>
       <component-reports-table [jsonFields]=1
-        [displayedColumns]="['SKU', 'Name', 'Ethylene', 'Timestamp', 'Status', 'Projected Expiry', 'Trend (%)']"></component-reports-table>
+        [displayedColumns]="['SKU', 'Name', 'Donation Weight', 'Avg. Total Weight']"></component-reports-table>
     </div>
     </mat-card>
   </div>

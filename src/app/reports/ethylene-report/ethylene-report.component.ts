@@ -54,9 +54,8 @@ export class EthyleneReportComponent implements OnInit {
     const mock = new MockUtils()
     mock.genEthyData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = this.openSearch()
-    console.log(arr1)
-    // const arr1 = JSON.parse(localStorage.getItem('arr1'))
+    // const arr1 = this.openSearch()
+    const arr1 = JSON.parse(localStorage.getItem('arr1'))
     console.log(arr1.map(e => {
       return e.Ethylene
     }))
@@ -64,7 +63,7 @@ export class EthyleneReportComponent implements OnInit {
     // this.ethyData = mock.genFloat(30, 90)
     // this.dataSource.data = this.ethyData
     this.ethyChart = new Chart('ethylene', {
-      type: 'line',
+      type: 'bar',
       // data: {
       //   datasets: [
       //     {
@@ -107,13 +106,22 @@ export class EthyleneReportComponent implements OnInit {
       data: {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
-          label: 'Ethylene',
+          label: 'Avg. Total Weight',
           data: arr1.map(e => {
-            console.log(parseFloat(e.Ethylene))
+            // console.log(parseFloat(e['Avg. Total Weight']))
 
-            return parseFloat(e.Ethylene)
+            return parseFloat(e['Avg. Total Weight'])
           }),
           backgroundColor: 'rgba(153,255,51,0.4)'
+        },
+        {
+          label: 'Donation Weight',
+          data: arr1.map(e => {
+            // console.log(parseFloat(e['Donation Weight']))
+
+            return parseFloat(e['Donation Weight'])
+          }),
+          backgroundColor: 'rgba(153,25,51,0.4)'
         }]
       },
       options: {
@@ -136,7 +144,7 @@ export class EthyleneReportComponent implements OnInit {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'PPM'
+              labelString: 'Weight (Kg)'
             },
             ticks: {
               beginAtZero: true

@@ -26,18 +26,10 @@ export class ViewFlashsaleComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<FlashSale>(true, [])
 
-  displayedColumns = ['select', 'upc', 'sku', 'name',
-                      'device_id', 'price', 'sale_price', 'ethylene', 'status', 'timestamp']
+  displayedColumns = ['select', 'sku', 'name', 'lot', 'soldWeight', 'totalWeight', 'status']
   curField: any
 
   ngOnInit(): void {
-    this.getJSON()
-      .subscribe(data => {
-        console.log(JSON.parse(data._body))
-        const json = JSON.parse(data._body)
-        this.dataSource.data = json
-        flash_data = json
-      })
 
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
@@ -55,14 +47,22 @@ export class ViewFlashsaleComponent implements OnInit {
     this.dataSource.data = flash_data
   }
 
-  public getJSON(): any {
-
-    return this.http.get('./static/mock_flash.json')
-  }
-
   addNewFlashSale(): void {
     this.dialog.open(AddDialogDataComponent, {
     })
+  }
+
+  newSale(): void {
+    this.selection.selected.forEach(item => {
+      this.curField = flash_data.filter(i => i.itemID === item.itemID)[0]
+      console.log(this.curField)
+      console.log('++++++++++++++++++==')
+    })
+    this.dataSource.data.forEach(element => {
+      element['soldWeight'] *= 2
+    })
+
+    // this.viewService.newFlashSale(this.curField)
   }
 
   selected(): boolean {
@@ -119,7 +119,7 @@ export class ViewFlashsaleComponent implements OnInit {
           this.selection.selected.forEach(item => {
             const index: number = flash_data.findIndex(d => d === item)
             console.log('++++++++++++++++++==')
-            this.viewService.removeFlashSale(item.itemId)
+            this.viewService.removeFlashSale(item.itemID)
           })
           swal('The flash sale has been removed!', {
             icon: 'success'
@@ -175,7 +175,7 @@ export class ViewFlashsaleComponent implements OnInit {
     const dataArray = []
     // call to back-end with item_id
     this.selection.selected.forEach(item => {
-      this.viewService.getEndFlashSale(item.itemId)
+      this.viewService.getEndFlashSale(item.itemID)
                       .subscribe(data => dataArray
                       )
     })

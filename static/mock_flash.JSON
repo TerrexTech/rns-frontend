@@ -1,28 +1,34 @@
 [
     {
+        "itemID": "6d002637-9b4e-44c6-91fc-321d0129d559",
         "upc": 600263794446913210129559,
         "sku": 12345678,
         "name": "Apple",
         "origin": "Canada",
-        "device_id": "123456",
+        "deviceID": "123456",
         "price": 10,
-        "sale_price": 8,
-        "qty_unsold": 10,
+        "salePrice": 8,
+        "qtyUnsold": 10,
         "ethylene": 10,
         "status": "bad",
-        "timestamp": "10/10/2010"
+        "timestamp": "10/10/2010",
+        "soldWeight": 12,
+        "lot": "12345"
     },
     {
+        "itemID": "6d992337-9b4e-44c6-91fc-32145129d559",
         "upc": 600263794446913210129559,
         "sku": 12345678,
         "name": "Banana",
         "origin": "Canada",
-        "device_id": "123456",
+        "deviceID": "123456",
         "price": 10,
-        "sale_price": 8,
-        "qty_unsold": 10,
+        "salePrice": 8,
+        "qtyUnsold": 10,
         "ethylene": 10,
         "status": "bad",
-        "timestamp": "10/10/2010"
+        "timestamp": "10/10/2010",
+        "soldWeight": 12,
+        "lot": "12345"
     }
 ]

@@ -159,7 +159,8 @@ export class CarbonComponent implements OnInit {
 
             return parseFloat(e.Carbon)
           }),
-          backgroundColor: 'rgba(153,155,231,0.4)'
+          borderColor: 'rgba(153,15,231,0.4)',
+          fill: false
         }]
       },
       options: {
@@ -288,7 +289,8 @@ export class CarbonComponent implements OnInit {
 
             return parseFloat(e.Ethylene)
           }),
-          backgroundColor: '#FF0000'
+          borderColor: '#FF0000',
+          fill: false
         }]
       },
       options: {

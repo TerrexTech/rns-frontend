@@ -110,7 +110,7 @@ export class MockMonitor {
                     SKU: this.genSKU(),
 
                     Name: this.genName(),
-                    Carbon: this.genFloat(1, 80)
+                    Carbon: this.genFloat(40, 60)
                         .toFixed(2),
                     Timestamp: new Date(this.genArrivalDate())
                         .toISOString()
@@ -140,7 +140,7 @@ export class MockMonitor {
                 array2.push({
                     SKU: this.genSKU(),
                     Name: this.genName(),
-                    Ethylene: this.genFloat(1, 80)
+                    Ethylene: this.genFloat(40, 60)
                         .toFixed(2),
                     Timestamp: new Date(this.genArrivalDate())
                         .toISOString()

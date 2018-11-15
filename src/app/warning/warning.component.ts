@@ -37,9 +37,15 @@ export class WarningComponent implements OnInit {
 
     console.log(arr1[0].expiryDate)
 
-    // this.dataSource.data.forEach(element => {
-    //   element['projectedExpiry'] = arr1.expiryDate
-    // })
+    const arr2 = JSON.parse(localStorage.getItem('warning'))
+    console.log(arr2)
+    this.dataSource.data = arr2
+
+    this.dataSource.data.forEach(element => {
+      element['qty_unsold'] = 60
+      element['status'] = 'bad'
+      element['projectedExpiry'] = arr1[0].expiryDate
+    })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
 

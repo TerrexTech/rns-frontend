@@ -222,6 +222,18 @@ export class ShowComponent implements OnInit {
       this.alertShown = true
       this.navServ.newEvent(1)
       console.log(this.curField)
+
+      const array1 = []
+      console.log(localStorage.getItem('warning') !== undefined)
+      if (localStorage.getItem('warning') === undefined) {
+
+        return JSON.parse(localStorage.getItem('warning'))
+      }
+      else {
+          array1.push(this.curField)
+      }
+      localStorage.setItem('warning', JSON.stringify(array1))
+
       // ethylene value jumps to 700
 
       // projected date (timestamp) becomes closer

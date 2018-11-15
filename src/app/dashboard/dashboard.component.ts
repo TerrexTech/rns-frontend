@@ -30,8 +30,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
      this.loadTotalNew()
      this.loadSoldGraph()
-    // this.loadDistGraph()
-    // this.loadDonationGraph()
+     this.loadDistNew()
+     this.loadDonationGraph()
   }
 
   changeAxis(dateArray: JSON): JSON {
@@ -143,7 +143,7 @@ export class DashboardComponent implements OnInit {
         // this.ethyNeedleValue = metric + 1
       })
       this.totalChart.update()
-    }, 10000)
+    }, 20000)
     // })
   }
 
@@ -329,8 +329,8 @@ export class DashboardComponent implements OnInit {
         dataset.data.push(metric + 1)
       })
       this.soldChart.update()
-    }, 5000)
-    }
+    }, 20000)
+  }
 
   loadDistGraph(): void {
     this.distChart = new Chart('distChart', {
@@ -407,17 +407,78 @@ export class DashboardComponent implements OnInit {
       })
   }
 
+  loadDistNew(): void {
+    const m = new MockUtils()
+    m.genDistGraph()
+    console.log('7&&&&&&&&&&&&&&&&&&&')
+    const arr1 = JSON.parse(localStorage.getItem('dist'))
+    this.distChart = new Chart('distChart', {
+      type: 'pie',
+      data: {
+        labels: arr1.map(e => {
+          return e.Name
+        }) ,
+        datasets: [
+          {
+            label: 'Fruit',
+            data: arr1.map(e => {
+              return parseFloat(e.Quantity)
+            }),
+            backgroundColor: ['#001f3f', '#0074D9', '#7FDBFF', '#39CCCC', '#FFCC00',
+                              '##FFAC00', '#FF0000', '#FF4136', '#FF851B', '#5F523B', '#3D56', '#000'],
+            fill: 'true'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        hover: {
+          mode: 'dataset'
+        },
+        legend: {
+          display: true
+        }
+        // scales: {
+        //   xAxes: [{
+        //     display: true,
+        //     scaleLabel: {
+        //       display: true,
+        //       labelString: 'Date'
+        //     }
+        //   }],
+        //   yAxes: [{
+        //     display: true,
+        //     scaleLabel: {
+        //       display: true,
+        //       labelString: 'Weight'
+        //     },
+        //     ticks: {
+        //       beginAtZero: true
+        //     }
+        //   }]
+        // }
+      }
+    })
+  }
+
   loadDonationGraph(): void {
+    const m = new MockUtils()
+    m.genDonateGraph()
+    console.log('7&&&&&&&&&&&&&&&&&&&')
+    const arr1 = JSON.parse(localStorage.getItem('donate'))
     this.donationChart = new Chart('donationChart', {
       type: 'bar',
       data: {
-        labels: [],
+        labels: arr1.map(e => {
+          return e.Name
+        }),
         datasets: [
           {
             label: 'Average Products',
-            data: [],
-            backgroundColor: 'rgba(255, 99, 132, 1)',
-            fill: false
+            data: arr1.map(e => {
+              return e.Donated
+            }),
+            backgroundColor: 'rgba(255, 99, 132, 1)'
           }
         ]
       },
@@ -431,14 +492,14 @@ export class DashboardComponent implements OnInit {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Date'
+              labelString: 'Fruit'
             }
           }],
           yAxes: [{
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Weight'
+              labelString: 'Weight (Kg)'
             },
             ticks: {
               beginAtZero: true
@@ -448,36 +509,15 @@ export class DashboardComponent implements OnInit {
       }
     })
 
-    this.dashServ.getTotal()
-      .subscribe(dataArr => {
-        console.log(dataArr)
-        const metrics: any = [
-          []
-        ]
-        // total_weight: 195, sold_weight: 58, waste_weight: 49
-        Object.keys(dataArr)
-          .forEach(k => {
-            const donations = dataArr[k]
-            const date = new Date(donations.dates * 1000).toDateString()
-            this.donationChart.data.labels.push(date)
-            metrics[0].push(donations.donate_weight)
-          })
-
-        this.donationChart.data.datasets.forEach((dataset, index) =>
-          dataset.data = dataset.data.concat(metrics[index])
-        )
-        this.donationChart.update()
-
-        // Moving Graph
-        // setInterval(() => {
-        //   this.donationChart.data.datasets.forEach((dataset, index) => {
-        //     const metric = dataset.data.shift()
-        //     dataset.data.push(metric + 1)
-        //   })
-        //   this.donationChart.update()
-        // }, 10000)
+           // Moving Graph
+    setInterval(() => {
+      this.donationChart.data.datasets.forEach((dataset, index) => {
+        const metric = dataset.data.shift()
+        dataset.data.push(metric + 1)
       })
-  }
+      this.donationChart.update()
+    }, 20000)
+      }
 
   // success(message: string): void {
   //   this.alertService.success(message)

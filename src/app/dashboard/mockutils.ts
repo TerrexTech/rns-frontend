@@ -160,10 +160,44 @@ export class MockUtils {
   }
 
   genDistGraph(): any {
+    const array1 = []
+    console.log(localStorage.getItem('dist') !== undefined)
+    if (localStorage.getItem('dist') === undefined) {
 
+        return JSON.parse(localStorage.getItem('dist'))
+    } else {
+
+        for (let index = 0; index < 12; index++) {
+            array1.push({
+                Name: this.genName(),
+                Quantity: this.genFloat(5, 50)
+                              .toFixed(0)
+            })
+        }
+        localStorage.setItem('dist', JSON.stringify(array1))
+    }
+
+    return array1
   }
 
   genDonateGraph(): any {
+    const array1 = []
+    console.log(localStorage.getItem('donate') !== undefined)
+    if (localStorage.getItem('donate') === undefined) {
 
+        return JSON.parse(localStorage.getItem('donate'))
+    } else {
+
+        for (let index = 0; index < 12; index++) {
+            array1.push({
+                Name: this.genName(),
+                Donated: this.genFloat(1, 10)
+                              .toFixed(0)
+            })
+        }
+        localStorage.setItem('donate', JSON.stringify(array1))
+    }
+
+    return array1
   }
 }

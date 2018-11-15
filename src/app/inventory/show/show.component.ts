@@ -1,15 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 import { Http } from '@angular/http'
-// import { LoadInventoryJsonService } from '../../services/load-inventory-json/load-inventory-json.service'
 import { Inventory } from '../../models/inventory'
 import { SelectionModel } from '@angular/cdk/collections'
 import { TableSearchComponent } from '../../search/table-search/table-search.component'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import { ShowTableService } from './show.service'
 import swal from 'sweetalert'
-import { AddInventoryService } from '../add/add.service'
 import { NavbarService } from '../../shared/navbar/navbar.service'
+import dateFns from 'date-fns'
 
 let Food: Inventory[] = []
 const ProjectedExpiry: number[] = []
@@ -49,24 +48,33 @@ export class ShowComponent implements OnInit {
         console.log(data.data.InventoryQueryCount)
         this.dataSource.data = data.data.InventoryQueryCount
         Food = data.data.InventoryQueryCount
+        this.genExpiry()
       }
       )
       .catch()
 
-    // setInterval(() => {
-    //   this.loadExpiry()
-    // })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
   }
 
-  loadExpiry(): void {
-
+  genExpiry(): void {
     this.dataSource.data.forEach(element => {
-      element['expiryDate'] = new Date().getTime() / 1000
-      element['soldWeight'] = 50
-      element['totalWeight'] -= 2
+
+      element['expiryDate'] = (element['dateArrived'] + (86400 * 5))
     })
+  }
+
+  loadExpiry(): void {
+    let item: Inventory
+    this.selection.selected.forEach(selItem => {
+      item = selItem
+    })
+    console.log(item)
+
+    const row = this.dataSource.data.findIndex(rowData =>  rowData['itemID'] === item.itemID)
+    this.dataSource.data[row]['expiryDate'] = (this.dataSource.data[row]['dateArrived'] + (86400 * 13))
+    this.dataSource.data[row]['soldWeight'] = 50
+
   }
 
   resetData(): void {
@@ -215,7 +223,8 @@ export class ShowComponent implements OnInit {
       width: '500px',
       data: {
         data: this.curField
-      }
+      },
+      disableClose: true
     })
       .afterClosed()
       .subscribe(result => {

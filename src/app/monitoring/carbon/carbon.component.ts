@@ -22,7 +22,9 @@ let searchData: Monitoring[] = []
   styleUrls: ['./carbon.component.css']
 })
 export class CarbonComponent implements OnInit {
+  ethyleneChart: any
   carbonChart: any
+  tempChart: any
   fruitName = 'Apple'
   sku = 'Apple'
   lot = 'Apple'
@@ -77,11 +79,14 @@ export class CarbonComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCarbonGraph()
+    this.loadEthyGraph()
+    this.loadTempGraph()
   }
 
   openSearch(): any {
     this.dialog.open(MonitorSearchComponent, {
-      width: '500px'
+      width: '500px',
+      disableClose: true
     })
       .afterClosed()
       .subscribe(
@@ -155,6 +160,261 @@ export class CarbonComponent implements OnInit {
             return parseFloat(e.Carbon)
           }),
           backgroundColor: 'rgba(153,255,51,0.4)'
+        }]
+      },
+      options: {
+        responsive: true,
+        hover: {
+          mode: 'dataset'
+        },
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Period'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'PPM'
+            },
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    })
+
+    // this.getJSON().subscribe(dataArr => {
+    //   console.log(dataArr)
+    //   const metrics: any = [
+    //     []
+    //   ]
+    //   // total_weight: 195, sold_weight: 58, waste_weight: 49
+    //   Object.keys(dataArr).forEach(k => {
+    //     const prods = dataArr[k]
+    //     const date = new Date(prods.dates * 1000).toDateString()
+    //     this.ethyChart.data.labels.push(date)
+    //     metrics[0].push(prods.Ethylene)
+    //   })
+
+    //   this.ethyChart.data.datasets.forEach((dataset, index) =>
+    //     dataset.data = dataset.data.concat(metrics[index])
+    //   )
+    //   this.ethyChart.update()
+
+    //   // Moving Graph
+    //   // setInterval(() => {
+    //   //   this.ethyChart.data.datasets.forEach((dataset, index) => {
+    //   //     const metric = dataset.data.shift()
+    //   //     dataset.data.push(metric + 1)
+    //   //   })
+    //   //   this.ethyChart.update()
+    //   // }, 40000)
+    // })
+  }
+
+  loadEthyGraph(): void {
+    const m = new MockMonitor()
+    m.genEthyleneData()
+    console.log('7&&&&&&&&&&&&&&&&&&&')
+    const arr1 = JSON.parse(localStorage.getItem('ethylene'))
+    console.log(arr1.map(e => {
+      return e.Ethylene
+    }))
+    // console.log(mock.genFloat(30, 90))
+    // this.ethyData = mock.genFloat(30, 90)
+    // this.dataSource.data = this.ethyData
+    this.ethyleneChart = new Chart('ethylene', {
+      type: 'line',
+      // data: {
+      //   datasets: [
+      //     {
+      //       label: 'Ethylene level',
+      //       data: this.data,
+      //       backgroundColor: 'rgba(255, 99, 132, 1)',
+      //       fill: false
+      //     }
+      //   ]
+      // },
+      // options: {
+      //   responsive: true,
+      //   hover: {
+      //     mode: 'dataset'
+      //   },
+      //   legend: {
+      //     display: true
+      //   },
+      //   scales: {
+      //     xAxes: [{
+      //       display: true,
+      //       scaleLabel: {
+      //         display: true,
+      //         labelString: 'Period'
+      //       }
+      //     }],
+      //     yAxes: [{
+      //       display: true,
+      //       scaleLabel: {
+      //         display: true,
+      //         labelString: 'PPM'
+      //       },
+      //       ticks: {
+      //         beginAtZero: true
+      //       }
+      //     }]
+      //   }
+      // }
+
+      data: {
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        datasets: [{
+          label: 'Ethylene',
+          data: arr1.map(e => {
+            console.log(parseFloat(e.Ethylene))
+
+            return parseFloat(e.Ethylene)
+          }),
+          backgroundColor: 'rgba(153,255,51,0.4)'
+        }]
+      },
+      options: {
+        responsive: true,
+        hover: {
+          mode: 'dataset'
+        },
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Period'
+            }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'PPM'
+            },
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    })
+
+    // this.getJSON().subscribe(dataArr => {
+    //   console.log(dataArr)
+    //   const metrics: any = [
+    //     []
+    //   ]
+    //   // total_weight: 195, sold_weight: 58, waste_weight: 49
+    //   Object.keys(dataArr).forEach(k => {
+    //     const prods = dataArr[k]
+    //     const date = new Date(prods.dates * 1000).toDateString()
+    //     this.ethyChart.data.labels.push(date)
+    //     metrics[0].push(prods.Ethylene)
+    //   })
+
+    //   this.ethyChart.data.datasets.forEach((dataset, index) =>
+    //     dataset.data = dataset.data.concat(metrics[index])
+    //   )
+    //   this.ethyChart.update()
+
+ //     Moving Graph
+    setInterval(() => {
+      this.ethyleneChart.data.datasets.forEach((dataset, index) => {
+        const metric = dataset.data.shift()
+        dataset.data.push(metric + 1)
+      })
+      this.ethyleneChart.update()
+    }, 4000)
+    // })
+  }
+
+  loadTempGraph(): void {
+    const m = new MockMonitor()
+    m.genTempData()
+    console.log('7&&&&&&&&&&&&&&&&&&&')
+    const arr1 = JSON.parse(localStorage.getItem('temp'))
+    console.log(arr1.map(e => {
+      return e
+    }))
+    // console.log(mock.genFloat(30, 90))
+    // this.ethyData = mock.genFloat(30, 90)
+    // this.dataSource.data = this.ethyData
+    this.tempChart = new Chart('temperature', {
+      type: 'line',
+      // data: {
+      //   datasets: [
+      //     {
+      //       label: 'Ethylene level',
+      //       data: this.data,
+      //       backgroundColor: 'rgba(255, 99, 132, 1)',
+      //       fill: false
+      //     }
+      //   ]
+      // },
+      // options: {
+      //   responsive: true,
+      //   hover: {
+      //     mode: 'dataset'
+      //   },
+      //   legend: {
+      //     display: true
+      //   },
+      //   scales: {
+      //     xAxes: [{
+      //       display: true,
+      //       scaleLabel: {
+      //         display: true,
+      //         labelString: 'Period'
+      //       }
+      //     }],
+      //     yAxes: [{
+      //       display: true,
+      //       scaleLabel: {
+      //         display: true,
+      //         labelString: 'PPM'
+      //       },
+      //       ticks: {
+      //         beginAtZero: true
+      //       }
+      //     }]
+      //   }
+      // }
+
+      data: {
+        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        datasets: [{
+          label: 'Temperature',
+          data: arr1.map(e => {
+            console.log(parseFloat(e.Temperature))
+
+            return parseFloat(e.Temperature)
+          }),
+          backgroundColor: 'rgba(153,255,51,0.4)'
+        },
+        {
+          label: 'Humidity',
+          data: arr1.map(e => {
+            console.log(parseFloat(e.Humidity))
+
+            return parseFloat(e.Humidity)
+          }),
+          backgroundColor: 'rgba(153,25,51,0.4)'
         }]
       },
       options: {

@@ -14,7 +14,7 @@ export class SensorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.openSearch()
+     // this.openSearch()
   }
 
   openSearch(): void {

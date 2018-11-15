@@ -44,13 +44,13 @@
                         </a>
                     </div>
                     <h6 class="text-center">Carbon Levels</h6>
-            <canvas class="canvas" height="30%" width="100%"></canvas>
+            <canvas id="carbon" class="canvas" height="30%" width="100%"></canvas>
         </div>
         </div>
         </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                     <div class="card report-info">
                             <div id="info" class="card-body card-body2 mx-auto">
                     <rg-gauge-chart
@@ -66,7 +66,7 @@
               <br>
               <!--Try to find angular component that shows same as grafana-->
             </div>
-            <div class="col-6">
+            <div class="col-sm-9">
               <div class="card report-info">
                 <div id="info" class="card-body card-body2">
                   <div class="generate-btn">
@@ -74,13 +74,14 @@
                       <i class="fa fa-search"></i>
                     </a>
                   </div>
-              <canvas class="canvas" height="30%" width="100%"></canvas>
+                  <h6 class="text-center">Ethylene Levels</h6>
+              <canvas id="ethylene" class="canvas" height="30%" width="100%"></canvas>
               </div>
               </div>
             </div>
           </div>
           <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                         <div class="card report-info">
                                 <div id="info" class="card-body card-body2 mx-auto">
                         <rg-gauge-chart
@@ -95,7 +96,7 @@
                         </div>
                   <br>
                 </div>
-                <div class="col-6">
+                <div class="col-sm-9">
                   <div class="card report-info">
                     <div id="info" class="card-body card-body2">
                       <div class="generate-btn">
@@ -103,7 +104,7 @@
                           <i class="fa fa-search"></i>
                         </a>
                       </div>
-                  <canvas class="canvas" height="30%" width="100%"></canvas>
+                  <canvas id="temperature" class="canvas" height="30%" width="100%"></canvas>
                 </div>
                 </div>
                 </div>

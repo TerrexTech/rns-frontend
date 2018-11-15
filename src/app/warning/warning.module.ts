@@ -21,6 +21,7 @@ import {
 import { WarningComponent } from './warning.component'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { DialogDataService } from './dialog-data/dialog-data.service'
+import { NavbarService } from '../shared/navbar/navbar.service'
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { DialogDataService } from './dialog-data/dialog-data.service'
         MatTabsModule
     ],
     providers: [
-        DialogDataService
+        DialogDataService,
+        NavbarService
     ],
     exports: [
     ],

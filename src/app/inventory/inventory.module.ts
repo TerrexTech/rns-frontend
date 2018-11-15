@@ -35,6 +35,7 @@ import { AlertPopupModule } from '../alert-popup/alert-popup.module'
 import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
 import { NavbarService } from '../shared/navbar/navbar.service'
 import { UpdateInventoryService } from './dialog-data/update.service'
+import { NavbarModule } from '../shared/navbar/navbar.module'
 @NgModule({
     imports: [
         CommonModule,
@@ -59,7 +60,8 @@ import { UpdateInventoryService } from './dialog-data/update.service'
         MatDatepickerModule,
         MatNativeDateModule,
         SearchModule,
-        AlertPopupModule
+        AlertPopupModule,
+        NavbarModule
     ],
     declarations: [
         AddComponent,

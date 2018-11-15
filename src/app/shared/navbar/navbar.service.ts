@@ -1,32 +1,23 @@
 import { TokenService } from '../../_Auth/token.service'
-import { Injectable } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
+import { Subject } from 'rxjs/Subject'
 
 @Injectable()
 export class NavbarService {
+    constructor(
+        @Inject(HttpClient)
+        private http: HttpClient
+      ) {}
 
-    alertCount: number
-    constructor(private http: HttpClient, private jwt: TokenService) {
+      private _subject = new Subject<any>()
 
-    }
+      newEvent(event: number): void {
+        this._subject.next(event++)
+      }
 
-    // public getAlertCount(): Observable<Object> {
-
-    //     return this.http.get('http://localhost:8081' + '/api', {
-    //         headers: {
-    //             'Content-Type': 'application/text'
-    //         }
-    //     })
-    // }
-
-    public setAlertCount(count: number): void {
-        this.alertCount = count
-    }
-
-    public getAlertCount(): number {
-        console.log(this.alertCount)
-
-        return this.alertCount
-    }
+      get events$(): any {
+        return this._subject.asObservable()
+      }
 }

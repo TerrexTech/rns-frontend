@@ -5,6 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections'
 import swal from 'sweetalert'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { Http } from '@angular/http'
+import { NavbarService } from '../shared/navbar/navbar.service'
 
 let flash_data: any[] = []
 
@@ -15,7 +16,7 @@ let flash_data: any[] = []
 })
 export class WarningComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private http: Http) { }
+  constructor(public dialog: MatDialog, private http: Http, private navServ: NavbarService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
@@ -27,6 +28,7 @@ export class WarningComponent implements OnInit {
   curField: any
 
   ngOnInit(): void {
+    this.navServ.newEvent(0)
     this.getJSON()
       .subscribe(data => {
         console.log(JSON.parse(data._body))

@@ -63,20 +63,10 @@ export class ShowComponent implements OnInit {
   loadExpiry(): void {
 
     this.dataSource.data.forEach(element => {
-      element['expiryDate'] = 2
+      element['expiryDate'] = new Date().getTime() / 1000
+      element['soldWeight'] = 50
+      element['totalWeight'] -= 2
     })
-    // this.dataSource.data[0]['expiryDate'] = 2
-    console.log(this.dataSource.data)
-    this.dataSource.data = this.dataSource.data
-    // this.showService.getTable()
-    //                 .toPromise()
-    //                 .then((data: any) => {
-    //                   console.log(data.data.InventoryQuery)
-    //                   this.dataSource.data['expiryDate'] = 2
-    //                   Food['expiryDate'] = 2
-    //                 }
-    //                 )
-    //                 .catch()
   }
 
   resetData(): void {
@@ -179,17 +169,17 @@ export class ShowComponent implements OnInit {
       this.curField = Food.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
-      this.returnVal = this.showService.getQuery(this.curField)
-        .toPromise()
-        .then((data: any) => {
-          console.log(data.data)
-          this.dataSource.data = data.data
-        }
-        )
-        .catch()
-      console.log(this.returnVal)
-      this.resetData()
+      // this.showService.getQuery(this.curField)
+      //   .toPromise()
+      //   .then((data: any) => {
+      //     console.log(data.data)
+      //     this.dataSource.data = data.data
+      //   }
+      //   )
+      //   .catch()
+      // this.resetData()
     })
+    this.loadExpiry()
   }
 
   genWarning(): void {
@@ -197,9 +187,11 @@ export class ShowComponent implements OnInit {
       this.curField = Food.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       this.alertShown = true
-      this.curField.timestamp = this.curField.timestamp - 1000000
-      this.navServ.setAlertCount(1)
+      this.navServ.newEvent(1)
+      this.curField.timestamp -= 1000000
+      console.log(this.curField)
       // ethylene value jumps to 700
+
       // projected date (timestamp) becomes closer
       // this.showService.sendWarning(this.curField)
       //   .toPromise()
@@ -209,7 +201,6 @@ export class ShowComponent implements OnInit {
       //   }
       //   )
       //   .catch()
-      // bell number increases
       console.log('++++++++++++++++++==')
     })
   }

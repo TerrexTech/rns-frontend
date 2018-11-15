@@ -34,6 +34,7 @@ import { ShowTableService } from './show/show.service'
 import { AlertPopupModule } from '../alert-popup/alert-popup.module'
 import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
 import { NavbarService } from '../shared/navbar/navbar.service'
+import { UpdateInventoryService } from './dialog-data/update.service'
 @NgModule({
     imports: [
         CommonModule,
@@ -73,7 +74,8 @@ import { NavbarService } from '../shared/navbar/navbar.service'
         Inventory,
         TokenService,
         ShowTableService,
-        NavbarService
+        NavbarService,
+        UpdateInventoryService
     ],
     entryComponents: [
         DialogDataDialogComponent,

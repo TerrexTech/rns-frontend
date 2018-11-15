@@ -23,7 +23,7 @@ const ProjectedExpiry: number[] = []
 export class ShowComponent implements OnInit {
   food: Inventory
   displayedColumns: string[] =
-  ['select' , 'upc', 'sku', 'name', 'origin', 'lot', 'dateArrived', 'expiryDate', 'soldWeight', 'totalWeight']
+    ['select', 'upc', 'sku', 'name', 'origin', 'lot', 'dateArrived', 'expiryDate', 'soldWeight', 'totalWeight']
   dataSource = new MatTableDataSource()
   today: number = Date.now()
   @ViewChild(MatPaginator) paginator: MatPaginator
@@ -33,32 +33,25 @@ export class ShowComponent implements OnInit {
   @ViewChild('formDate') formDate: ElementRef
   curField: any
   returnVal: any
-  alertShown = true
+  alertShown = false
 
   selection = new SelectionModel<Inventory>(true, [])
 
   constructor(private http: Http, public dialog: MatDialog, private showService: ShowTableService,
-              private addService: AddInventoryService, private navServ: NavbarService) {
+              private navServ: NavbarService) {
   }
 
   ngOnInit(): void {
-    this.http.get('./static/MOCK_DATA.json')
-      .subscribe(data => {
-        console.log(JSON.parse(data['_body']))
-        const data2 = JSON.parse(data['_body'])
-        this.dataSource.data = data2
-        Food = data2
-      })
 
-    // this.showService.getTable()
-    //                 .toPromise()
-    //                 .then((data: any) => {
-    //                   console.log(data.data.InventoryQuery)
-    //                   this.dataSource.data = data.data.InventoryQuery
-    //                   Food = data.data.InventoryQuery
-    //                 }
-    //                 )
-    //                 .catch()
+    this.showService.getTable()
+      .toPromise()
+      .then((data: any) => {
+        console.log(data.data.InventoryQueryCount)
+        this.dataSource.data = data.data.InventoryQueryCount
+        Food = data.data.InventoryQueryCount
+      }
+      )
+      .catch()
 
     // setInterval(() => {
     //   this.loadExpiry()
@@ -88,13 +81,13 @@ export class ShowComponent implements OnInit {
 
   resetData(): void {
     this.showService.getTable()
-                    .toPromise()
-                    .then((data: any) => {
-                      console.log(data.data)
-                      this.dataSource.data = data.data
-                    }
-                    )
-                    .catch()
+      .toPromise()
+      .then((data: any) => {
+        console.log(data.data.InventoryQueryCount)
+        this.dataSource.data = data.data.InventoryQueryCount
+      }
+      )
+      .catch()
   }
 
   onPaginateChange($event): void {
@@ -124,41 +117,38 @@ export class ShowComponent implements OnInit {
       )
   }
 
-  removeSelectedRows(): void {
+  async removeSelectedRows(): Promise<any> {
 
-    swal({
+    const willDelete = await swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this item!',
       icon: 'warning',
       buttons: ['Yes', 'No'],
+      closeOnClickOutside: false,
+      closeOnEsc: false,
       dangerMode: true
     })
-      .then(willDelete => {
-        if (!willDelete) {
-          this.selection.selected.forEach(item => {
-            const index: number = Food.findIndex(d => d === item)
-            console.log('++++++++++++++++++==')
-            console.log(item.itemId)
-            this.showService.deleteRows(item.itemId)
-                            .toPromise()
-                            .then((data: any) => {
-                              console.log(data.data)
-                            }
-                            )
-                            .catch()
-            this.resetData()
-          })
-          swal('Your item has been deleted!', {
-            icon: 'success'
-          })
-            .catch(console.log)
-        } else {
-          swal('Inventory not removed')
-            .catch(console.log)
+    if (!willDelete) {
+      const selectedItemIDs = this.selection.selected.map(item => item.itemID)
+      console.log(selectedItemIDs)
+
+      for (const itemID of selectedItemIDs) {
+        try {
+        const deleteResult = await this.showService.deleteRows(itemID)
+                             .toPromise()
         }
+        catch (e) {
+          swal('Inventory not removed')
+          .catch(console.log)
+        }
+      }
+      this.resetData()
+      swal('Your item has been deleted!', {
+        icon: 'success'
       })
-      .catch(console.log)
-}
+        .catch(console.log)
+    }
+  }
 
   selected(): boolean {
     if (this.selection.selected.length >= 2) {
@@ -186,80 +176,70 @@ export class ShowComponent implements OnInit {
 
   genSold(): void {
     this.selection.selected.forEach(item => {
-      this.curField = Food.filter(i => i.itemId === item.itemId)[0]
+      this.curField = Food.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
       this.returnVal = this.showService.getQuery(this.curField)
-                                       .toPromise()
-                                       .then((data: any) => {
-                                          console.log(data.data)
-                                          this.dataSource.data = data.data
-                                        }
-                                        )
-                                       .catch()
+        .toPromise()
+        .then((data: any) => {
+          console.log(data.data)
+          this.dataSource.data = data.data
+        }
+        )
+        .catch()
       console.log(this.returnVal)
-      this.addService.addItem(this.returnVal)
-                     .toPromise()
-                     .then((data: any) => {
-                        console.log(data.data)
-                        this.dataSource.data = data.data
-                      }
-                      )
-                     .catch()
       this.resetData()
     })
   }
 
   genWarning(): void {
     this.selection.selected.forEach(item => {
-      this.curField = Food.filter(i => i.itemId === item.itemId)[0]
+      this.curField = Food.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       this.alertShown = true
-      this.curField.ethylene = 700
       this.curField.timestamp = this.curField.timestamp - 1000000
       this.navServ.setAlertCount(1)
       // ethylene value jumps to 700
       // projected date (timestamp) becomes closer
-      this.showService.sendWarning(this.curField)
-                      .toPromise()
-                      .then((data: any) => {
-                        console.log(data.data)
-                        this.dataSource.data = data.data
-                      }
-                      )
-                      .catch()
+      // this.showService.sendWarning(this.curField)
+      //   .toPromise()
+      //   .then((data: any) => {
+      //     console.log(data.data)
+      //     this.dataSource.data = data.data
+      //   }
+      //   )
+      //   .catch()
       // bell number increases
       console.log('++++++++++++++++++==')
     })
   }
 
   populateFields(): void {
-    // console.log(e)
-    // if (e !== undefined) {
-    //   this.curField = Food.filter(i => i.item_id === e)[0]
     this.selection.selected.forEach(item => {
-      this.curField = Food.filter(i => i.itemId === item.itemId)[0]
+      this.curField = Food.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
     })
     this.dialog.open(DialogDataDialogComponent, {
-        width: '500px',
-        data: {
-          data: this.curField
-        }
-      })
+      width: '500px',
+      data: {
+        data: this.curField
+      }
+    })
       .afterClosed()
       .subscribe(result => {
         this.showService.getTable()
-                        .toPromise()
-                        .then((data: any) => {
-                          console.log(data.data)
-                          this.dataSource.data = data.data
-                          Food = data.data
-                        }
-                        )
-                        .catch()
-    })
+          .toPromise()
+          .then((data: any) => {
+            // if (data) {
+             console.log(data.data.InventoryQueryCount)
+             this.dataSource.data = data.data.InventoryQueryCount
+             Food = data.data.InventoryQueryCount
+            // }
+          }
+          )
+          .catch()
+      })
   }
 
   isAllSelected(): boolean {

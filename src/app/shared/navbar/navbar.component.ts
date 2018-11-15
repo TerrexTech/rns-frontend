@@ -35,7 +35,6 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.notifCount = this.navServ.getAlertCount()
         const navbar: HTMLElement = this.element.nativeElement
         const body = document.getElementsByTagName('body')[0]
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0]
@@ -49,6 +48,11 @@ export class NavbarComponent implements OnInit {
             $layer.remove()
           }
         })
+    }
+
+    change(): void {
+        this.notifCount = this.navServ.getAlertCount()
+        console.log(this.notifCount)
     }
 
     minimizeSidebar(): void {

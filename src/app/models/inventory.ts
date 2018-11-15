@@ -1,10 +1,10 @@
 export class Inventory {
-    itemId: string
+    itemID: string
     upc: number
     sku: string
     name: string
     origin: string
-    deviceId: string
+    deviceID: string
     totalWeight: number
     price: number
     location: string

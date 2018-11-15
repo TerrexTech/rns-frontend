@@ -25,6 +25,8 @@ export class NavbarService {
     }
 
     public getAlertCount(): number {
+        console.log(this.alertCount)
+
         return this.alertCount
     }
 }

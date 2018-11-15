@@ -58,8 +58,8 @@
             <div class="row">
                 <label class="col-sm-2 col-md-3 control-label mx-auto"> Date of Arrival </label>
                 <div class="col-sm-8 mx-auto">
-                    <input #date type="date" class="form-control" [ngClass]="{ 'is-invalid': isFieldValid('date_arrived') }"
-                        formControlName="date_arrived" required name="dp">
+                    <input type="text" class="form-control" [ngClass]="{ 'is-invalid': isFieldValid('dateArrived') }"
+                        formControlName="dateArrived" required name="dp">
                 </div>
             </div>
         </div>
@@ -67,9 +67,9 @@
             <div class="row">
                 <label class="col-sm-2 col-md-3 control-label mx-auto"> Weight </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="number" class="form-control" formControlName="total_weight" required
-                        [ngClass]="{ 'is-invalid': isFieldValid('total_weight') }">
-                        <span *ngIf="isFieldValid('total_weight')" class="invalid-feedback">
+                    <input type="number" class="form-control" formControlName="totalWeight" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('totalWeight') }">
+                        <span *ngIf="isFieldValid('totalWeight')" class="invalid-feedback">
                             Weight is required
                         </span>
                 </div>
@@ -91,22 +91,10 @@
             <div class="row">
                 <label class="col-sm-2 col-md-3 control-label mx-auto"> Device ID </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" formControlName="device_id" required readonly
-                        [ngClass]="{ 'is-invalid': isFieldValid('device_id') }">
-                        <span *ngIf="isFieldValid('device_id')" class="invalid-feedback">
+                    <input type="text" class="form-control" formControlName="deviceID" required readonly
+                        [ngClass]="{ 'is-invalid': isFieldValid('deviceID') }">
+                        <span *ngIf="isFieldValid('deviceID')" class="invalid-feedback">
                             Device ID is required
-                        </span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Location </label>
-                <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" id="location" formControlName="location" placeholder="Aisle No."
-                        required [ngClass]="{ 'is-invalid': isFieldValid('location') }">
-                        <span *ngIf="isFieldValid('location')" class="invalid-feedback">
-                            Location is required
                         </span>
                 </div>
             </div>

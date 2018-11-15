@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA } from '@angular/material'
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import swal from 'sweetalert'
 import { UpdateInventoryService } from './update.service'
@@ -21,21 +21,22 @@ export class DialogDataDialogComponent implements OnInit {
   @Inject(MAT_DIALOG_DATA) public data: any,
   private route: ActivatedRoute,
   private router: Router,
-  private updateInv: UpdateInventoryService
+  private updateInv: UpdateInventoryService,
+  private dialogRef: MatDialogRef<DialogDataDialogComponent>
              ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       upc: ['', [Validators.required, Validators.minLength(1)]],
       sku: ['', [Validators.required, Validators.minLength(1)]],
-      item_id: ['', [Validators.required, Validators.minLength(1)]],
+      itemID: ['', [Validators.required, Validators.minLength(1)]],
       name: ['', [Validators.required, Validators.minLength(1)]],
       origin: ['', [Validators.required, Validators.minLength(1)]],
-      date_arrived: ['', [Validators.required, Validators.minLength(1)]],
-      total_weight: ['', [Validators.required, Validators.minLength(1)]],
+      dateArrived: ['', [Validators.required, Validators.minLength(1)]],
+      totalWeight: ['', [Validators.required, Validators.minLength(1)]],
       price: ['', [Validators.required, Validators.minLength(1)]],
-      device_id: ['', [Validators.required, Validators.minLength(1)]],
-      location: ['', [Validators.required, Validators.minLength(1)]]
+      deviceID: ['', [Validators.required, Validators.minLength(1)]],
+      lot: ['', [Validators.required, Validators.minLength(1)]]
     })
     this.returnUrl = this.route.snapshot.queryParams[''] || '/'
     this.curField = this.data
@@ -43,20 +44,22 @@ export class DialogDataDialogComponent implements OnInit {
              .setValue(this.curField.data.upc)
     this.form.get('sku')
              .setValue(this.curField.data.sku)
-    this.form.get('item_id')
-             .setValue(this.curField.data.item_id)
+    this.form.get('itemID')
+             .setValue(this.curField.data.itemID)
     this.form.get('name')
              .setValue(this.curField.data.name)
+    this.form.get('dateArrived')
+             .setValue(new Date(this.curField.data.dateArrived)
+             .toLocaleDateString()
+             .split('T')[0])
     this.form.get('origin')
              .setValue(this.curField.data.origin)
-    this.form.get('total_weight')
-             .setValue(this.curField.data.total_weight)
+    this.form.get('totalWeight')
+             .setValue(this.curField.data.totalWeight)
     this.form.get('price')
              .setValue(this.curField.data.price)
-    this.form.get('device_id')
-             .setValue(this.curField.data.device_id)
-    this.form.get('location')
-             .setValue(this.curField.data.location)
+    this.form.get('deviceID')
+             .setValue(this.curField.data.deviceID)
     this.form.get('lot')
              .setValue(this.curField.data.lot)
   }
@@ -68,6 +71,17 @@ export class DialogDataDialogComponent implements OnInit {
   f(): any { return this.form.controls }
 
   onSubmit(): void {
+    console.log(this.data)
+    console.log(this.form.value)
+
+    for (const item in this.form.value) {
+      if (!item) {
+        swal('Missing Field(s)!')
+            .catch(console.log)
+        this.dialogRef.close()
+      }
+    }
+
     this.formSubmitAttempt = true
     if (this.form.valid) {
     const month = new Array()
@@ -84,8 +98,8 @@ export class DialogDataDialogComponent implements OnInit {
     month[10] = 'November'
     month[11] = 'December'
     this.formSubmitAttempt = true
-    const origDate = this.form.value.date_arrived
-    this.form.value.date_arrived = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
+    const origDate = this.form.value.dateArrived
+    this.form.value.dateArrived = Math.floor(Date.parse(origDate))
     console.log('submitted')
     this.updateInv.updateItem(this.form.value)
                   .toPromise()

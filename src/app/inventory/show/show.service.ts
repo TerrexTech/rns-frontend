@@ -15,35 +15,33 @@ export class ShowTableService {
         const date = new Date().getTime()
 
         const gqlQuery = `
-            {
-        InventoryQuery(
-            barcode: "a",
-        ){
-            _id,
-            itemID,
-            barcode,
-            dateArrived,
-            dateSold,
-            deviceID,
-            donateWeight,
-            expiryDate,
-            lot,
-            name,
-            origin,
-            price,
-            rsCustomerID,
-            salePrice,
-            sku,
-            soldWeight,
-            timestamp,
-            totalWeight,
-            upc,
-            wasteWeight
-        }
-        }
+        {
+            InventoryQueryCount(
+              count: 50
+            ){
+              _id,
+              itemID,
+              dateArrived,
+              dateSold,
+              deviceID,
+              donateWeight,
+              lot,
+              name,
+              origin,
+              price,
+              rsCustomerID,
+              salePrice,
+              sku,
+              soldWeight,
+              timestamp,
+              totalWeight,
+              upc,
+              wasteWeight
+            }
+          }
     `
 
-        return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
+        return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -91,22 +89,17 @@ export class ShowTableService {
     }
 
     public deleteRows(item_id: string): Observable<Object> {
-
-        const d: any = [{
-            item_id: {item_id}
-        }]
-        console.log(d)
-
+        console.log(item_id)
         const gqlQuery = `
         mutation{
-        InventoryDelete(
-            itemID: ${item_id},
-        ){
-            deletedCount
-        }
-        }`
+            InventoryDelete(
+              itemID: "${item_id}"
+            ){
+                deletedCount
+            }
+          }`
 
-        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+        return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -117,7 +110,7 @@ export class ShowTableService {
         const gqlQuery = `
     {
         InventoryQuery(
-            itemID: ${data.itemId},
+            itemID: ${data.itemID},
         ){
             _id,
             itemID,
@@ -154,12 +147,12 @@ export class ShowTableService {
         const gqlQuery = `
     mutation{
       addInventory(
-        item_id: '${data.itemId}',
+        item_id: '${data.itemID}',
         upc: '${data.upc}',
         sku: '${data.sku}',
         name: '${data.name}',
         origin: '${data.origin}',
-        device_id: '${data.deviceId}',
+        device_id: '${data.deviceID}',
         total_weight: '${data.totalWeight}',
         price: '${data.price}',
         location: '${data.location}',

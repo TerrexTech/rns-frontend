@@ -33,7 +33,7 @@ export class CarbonComponent implements OnInit {
   public carbonNeedleValue = 20
   public carbonCentralLabel = ''
   public carbonName = 'Carbon Levels (PPM)'
-  public carbonBottomLabel = '20'
+  public carbonBottomLabel = this.carbonNeedleValue.toString()
   public carbonOptions = {
     hasNeedle: true,
     needleColor: 'gray',
@@ -48,13 +48,13 @@ export class CarbonComponent implements OnInit {
   public ethyNeedleValue = 20
   public ethyCentralLabel = ''
   public ethyName = 'Ethylene Levels (PPM)'
-  public ethyBottomLabel = '20'
+  public ethyBottomLabel = this.ethyNeedleValue.toString()
   public ethyOptions = {
     hasNeedle: true,
     needleColor: 'gray',
     needleUpdateSpeed: 1000,
     arcColors: ['rgb(44, 151, 222)', 'lightgray'],
-    arcDelimiters: [20],
+    arcDelimiters: [this.ethyNeedleValue],
     rangeLabel: ['0', '100'],
     needleStartValue: 50
   }
@@ -63,7 +63,7 @@ export class CarbonComponent implements OnInit {
   public tempNeedleValue = 20
   public tempCentralLabel = ''
   public tempName = 'Temperature Levels (PPM)'
-  public tempBottomLabel = '20'
+  public tempBottomLabel = this.tempNeedleValue.toString()
   public tempOptions = {
     hasNeedle: true,
     needleColor: 'gray',
@@ -336,8 +336,14 @@ export class CarbonComponent implements OnInit {
  //     Moving Graph
     setInterval(() => {
       this.ethyleneChart.data.datasets.forEach((dataset, index) => {
+        // console.log(dataset)
+        const g = dataset.data.length
+        // console.log(dataset.data)
+        this.ethyNeedleValue = dataset.data[g - 1]
         const metric = dataset.data.shift()
         dataset.data.push(metric + 1)
+        // this.ethyNeedleValue = metric + 1
+        this.ethyBottomLabel = `${dataset.data[g - 1]}`
       })
       this.ethyleneChart.update()
     }, 4000)

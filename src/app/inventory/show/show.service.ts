@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 import { Inventory } from '../../models/inventory'
+import uuid from 'uuid/v4'
 
 @Injectable()
 export class ShowTableService {
@@ -41,7 +42,7 @@ export class ShowTableService {
           }
     `
 
-        return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
+        return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -99,7 +100,7 @@ export class ShowTableService {
             }
           }`
 
-        return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
+        return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -136,7 +137,7 @@ export class ShowTableService {
         }
     `
 
-        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+        return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -171,6 +172,36 @@ export class ShowTableService {
     `
 
         return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
+    public insertSale(saleData: Inventory): Observable<Object> {
+
+        const gqlQuery = `
+        mutation{
+            SaleInsert(
+              saleID: "${uuid()}",
+              items: [
+                {
+                  itemID: "${saleData.itemID}",
+                  weight: ${saleData.soldWeight},
+                  lot: "${saleData.lot}",
+                  upc: "${saleData.upc}",
+                  sku: "${saleData.sku}"
+                }
+              ]
+              timestamp: ${saleData.timestamp},
+            )
+            {
+             timestamp
+            }
+          }`
+        console.log(gqlQuery)
+
+        return this.http.post('http://107.152.35.153:8081' + '/api', gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }

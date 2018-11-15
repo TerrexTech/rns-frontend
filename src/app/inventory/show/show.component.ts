@@ -77,6 +77,14 @@ export class ShowComponent implements OnInit {
 
   }
 
+  sendSale(saleData: Inventory): void {
+      this.showService.insertSale(saleData)
+                      .toPromise()
+                      .catch()
+      swal('Sale Inserted')
+          .catch(console.log)
+  }
+
   resetData(): void {
     this.showService.getTable()
       .toPromise()
@@ -188,6 +196,7 @@ export class ShowComponent implements OnInit {
       // this.resetData()
     })
     this.loadExpiry()
+    this.sendSale(this.curField)
   }
 
   genWarning(): void {

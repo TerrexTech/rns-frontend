@@ -136,7 +136,7 @@ export class MockMonitor {
 
             const ethyleneArr = []
 
-            for (let index = 0; index < 100; index++) {
+            for (let index = 0; index < 10; index++) {
                 array2.push({
                     SKU: this.genSKU(),
                     Name: this.genName(),

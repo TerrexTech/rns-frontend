@@ -30,7 +30,10 @@ export class ViewFlashsaleComponent implements OnInit {
   curField: any
 
   ngOnInit(): void {
-
+    const arr2 = JSON.parse(localStorage.getItem('flashSale'))
+    console.log(arr2[0])
+    this.dataSource.data = arr2[0]
+    flash_data = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
 
@@ -48,7 +51,13 @@ export class ViewFlashsaleComponent implements OnInit {
   }
 
   addNewFlashSale(): void {
+    this.selection.selected.forEach(item => {
+    const index: number = flash_data.findIndex(d => d === item)
+    this.curField = item
+    })
+
     this.dialog.open(AddDialogDataComponent, {
+      data: this.curField
     })
   }
 

@@ -68,4 +68,28 @@ export class EthyleneReportService {
         })
     }
 
+    getReport(): Observable<Object> {
+
+        const gqlQuery = `
+        {
+            Donate(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
+        `
+
+        return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
 }

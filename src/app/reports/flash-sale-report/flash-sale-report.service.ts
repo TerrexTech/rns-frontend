@@ -68,4 +68,31 @@ export class FlashSaleReportService {
         })
     }
 
+    getReport(): Observable<Object> {
+
+        const gqlQuery = `
+        {
+            "FlashSale": &graphql.Field{
+                Type:        graphql.NewList(FlashSale),
+                Description: "FlashSale",
+                Args: graphql.FieldConfigArgument{
+                    "lt": &graphql.ArgumentConfig{
+                        Type: graphql.Float,
+                    },
+                    "gt": &graphql.ArgumentConfig{
+                        Type: graphql.Float,
+                    },
+                },
+                Resolve: resolver.Revenue,
+            },
+        }
+        `
+
+        return this.http.post('http://162.212.158.16:8081' + '/api', gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+
+    }
 }

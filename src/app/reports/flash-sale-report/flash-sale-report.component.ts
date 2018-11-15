@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
 import { ReportSearchComponent } from '../../search/report-search/report-search.component'
+import { FlashSaleReportService } from './flash-sale-report.service'
 
 @Component({
   selector: 'component-flash-sale-report',
@@ -18,10 +19,17 @@ export class FlashSaleReportComponent implements OnInit {
   flashChart: any
   date: Date = new Date()
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private flashServ: FlashSaleReportService) {
   }
 
   ngOnInit(): void {
+    this.flashServ.getReport()
+    .toPromise()
+    .then((data: any) => {
+    console.log(data)
+    }
+    )
+    .catch()
     this.loadFlashGraph()
   }
 

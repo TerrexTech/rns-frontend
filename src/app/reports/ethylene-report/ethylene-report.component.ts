@@ -9,6 +9,7 @@ import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
 import { ReportSearchComponent } from '../../search/report-search/report-search.component'
 import { setTimeout } from 'timers'
+import { EthyleneReportService } from './ethylene-report.service'
 
 interface Reporting {
   sku: string
@@ -17,6 +18,8 @@ interface Reporting {
 }
 
 let searchData: Reporting[] = []
+
+let graphData = []
 
 @Component({
   selector: 'component-ethylene-report',
@@ -29,10 +32,18 @@ export class EthyleneReportComponent implements OnInit {
   isClicked: boolean
   searchData: any
   // @Output() messageEvent = new EventEmitter<string>()
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private donationServ: EthyleneReportService) {
   }
 
   ngOnInit(): void {
+    this.donationServ.getReport()
+    .toPromise()
+    .then((data: any) => {
+    console.log(data.data)
+    graphData = data.data
+    }
+    )
+    .catch()
     this.isClicked = true
     this.loadEthyleneGraph()
   }
@@ -107,11 +118,10 @@ export class EthyleneReportComponent implements OnInit {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
           label: 'Avg. Total Weight',
-          data: arr1.map(e => {
+          data:
             // console.log(parseFloat(e['Avg. Total Weight']))
 
-            return parseFloat(e['Avg. Total Weight'])
-          }),
+          parseFloat(graphData['avg_total']),
           backgroundColor: 'rgba(153,255,51,0.4)'
         },
         {

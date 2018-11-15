@@ -29,7 +29,7 @@
         </ng-container>
 
         <!-- Symbol Column -->
-        <ng-container matColumnDef="qty. unsold">
+        <ng-container matColumnDef="qty_unsold">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Qty. Unsold </th>
             <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.qty_unsold }}</a> </td>
         </ng-container>
@@ -41,9 +41,9 @@
         </ng-container>
 
         <!-- Weight Column -->
-        <ng-container matColumnDef="projected expiry">
+        <ng-container matColumnDef="projectedExpiry">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
-            <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.projected_expiry * 1000
+            <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.projectedExpiry * 1000
                     | date:
                     'dd/MM/yyyy' }}</a> </td>
         </ng-container>

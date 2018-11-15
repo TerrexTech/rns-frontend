@@ -26,32 +26,23 @@ export class AddDialogDataComponent implements OnInit {
 
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
-  displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projected expiry']
+  displayedColumns = ['select', 'sku', 'name', 'qty_unsold', 'status', 'projectedExpiry']
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private addServ: AddFlashSaleService
+    private addServ: AddFlashSaleService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
-    this.getJSON()
-      .subscribe(data => {
-        console.log(data)
-        // console.log(JSON.parse(data._body))
-        const json = data
-        this.dataSource.data = json
-        flash_data = json
-      })
+    console.log(this.data)
+    this.dataSource.data = this.data
+    flash_data = this.data
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
-  }
-
-  public getJSON(): any {
-
-    return this.http.get('./static/mock_flash.json')
   }
 
   isFieldValid(field: string): any {

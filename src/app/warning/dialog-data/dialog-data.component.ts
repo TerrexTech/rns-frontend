@@ -24,7 +24,7 @@ export class DialogDataDialogComponent implements OnInit {
   returnUrl: string
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
-  displayedColumns = ['sku', 'name', 'qty. unsold', 'status', 'projected expiry']
+  displayedColumns = ['sku', 'name', 'qty. unsold', 'status', 'projectedExpiry']
 
   constructor(
   private formBuilder: FormBuilder,
@@ -45,15 +45,48 @@ export class DialogDataDialogComponent implements OnInit {
   onSubmit(): void {
 
     if (this.data.data[1] === 'Flash Sale') {
-      console.log('here')
-      this.dialogService.newFlashSale(this.data.data[0])
+
+      const array1 = []
+      console.log(localStorage.getItem('flashSale') !== undefined)
+      if (localStorage.getItem('flashSale') === undefined) {
+
+        return JSON.parse(localStorage.getItem('flashSale'))
+      }
+      else {
+          array1.push(this.data.data[0])
+      }
+      localStorage.setItem('flashSale', JSON.stringify(array1))
+
+      // this.dialogService.newFlashSale(this.data.data[0])
     }
     else if (this.data.data[1] === 'Donation') {
-      console.log('here1')
-      this.dialogService.newDonation(this.data.data[0])
+
+      const array1 = []
+      console.log(localStorage.getItem('donation') !== undefined)
+      if (localStorage.getItem('donation') === undefined) {
+
+        return JSON.parse(localStorage.getItem('donation'))
+      }
+      else {
+          array1.push(this.data.data[0])
+      }
+      localStorage.setItem('donation', JSON.stringify(array1))
+
+      // this.dialogService.newDonation(this.data.data[0])
     }
     else if (this.data.data[1] === 'Disposal') {
-      console.log('here2')
+
+      const array1 = []
+      console.log(localStorage.getItem('disposal') !== undefined)
+      if (localStorage.getItem('disposal') === undefined) {
+
+        return JSON.parse(localStorage.getItem('disposal'))
+      }
+      else {
+          array1.push(this.data.data[0])
+      }
+      localStorage.setItem('disposal', JSON.stringify(array1))
+
       this.dialogService.newDisposal(this.data.data[0])
     }
     this.router.navigate([this.data.data[2]])

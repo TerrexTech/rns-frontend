@@ -12,7 +12,7 @@ import { RevenueReportComponent } from './revenue-report/revenue-report.componen
 export const ReportsRoutes = {
   ethylene: {
     path: 'ethylene-report',
-    title: 'Ethylene Report',
+    title: 'Donation Report',
     component: EthyleneReportComponent
   },
   flashsale: {

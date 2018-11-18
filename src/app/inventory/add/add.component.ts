@@ -1,4 +1,4 @@
-import { AddInventoryService } from './add.service'
+import { InventoryService } from '../inventory.service'
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import swal from 'sweetalert'
@@ -7,16 +7,16 @@ import { MockUtils } from './mockutils'
 @Component({
   selector: 'component-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css'],
-  providers: [AddInventoryService]
+  styleUrls: ['./add.component.css']
 })
+
 export class AddComponent implements OnInit {
   form: FormGroup
   formSubmitAttempt: boolean
 
   constructor(
     private formBuilder: FormBuilder,
-    private addService: AddInventoryService
+    private addService: InventoryService
   ) {}
 
   ngOnInit(): void {

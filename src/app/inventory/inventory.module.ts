@@ -1,6 +1,19 @@
+import { AddComponent } from './add/add.component'
+import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
+import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
+import { ShowComponent } from './show/show.component'
+import { TableSearchComponent } from '../search/table-search/table-search.component'
+
+import { AlertPopupModule } from '../alert-popup/alert-popup.module'
 import { CommonModule } from '@angular/common'
-import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { NavbarModule } from '../shared/navbar/navbar.module'
+import { NgModule } from '@angular/core'
+import { SearchModule } from '../search/search.module'
+
+import { InventoryService } from './inventory.service'
+import { NavbarService } from '../shared/navbar/navbar.service'
+import { TokenService } from '../_Auth/token.service'
 import {
   MatButtonModule,
   MatCardModule,
@@ -21,21 +34,7 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material'
-import { TokenService } from '../_Auth/token.service'
 
-import { Inventory } from '../models/inventory'
-import { AddComponent } from './add/add.component'
-import { AddInventoryService } from './add/add.service'
-import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
-import { ShowComponent } from './show/show.component'
-import { SearchModule } from '../search/search.module'
-import { TableSearchComponent } from '../search/table-search/table-search.component'
-import { ShowTableService } from './show/show.service'
-import { AlertPopupModule } from '../alert-popup/alert-popup.module'
-import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
-import { NavbarService } from '../shared/navbar/navbar.service'
-import { UpdateInventoryService } from './dialog-data/update.service'
-import { NavbarModule } from '../shared/navbar/navbar.module'
 @NgModule({
     imports: [
         CommonModule,
@@ -71,13 +70,10 @@ import { NavbarModule } from '../shared/navbar/navbar.module'
         // FieldErrorDisplayComponent,
     ],
     providers: [
-        AddInventoryService,
         // AlertService
-        Inventory,
+        InventoryService,
         TokenService,
-        ShowTableService,
-        NavbarService,
-        UpdateInventoryService
+        NavbarService
     ],
     entryComponents: [
         DialogDataDialogComponent,

@@ -89,6 +89,7 @@ export class DialogDataDialogComponent implements OnInit {
 
       this.dialogService.newDisposal(this.data.data[0])
     }
+    localStorage.removeItem('warning')
     this.router.navigate([this.data.data[2]])
                .catch(console.log)
   }

@@ -25,22 +25,19 @@ export class DonateFoodComponent implements OnInit {
   curField: any
 
   ngOnInit(): void {
-    this.getJSON()
-      .subscribe(data => {
-        console.log(JSON.parse(data._body))
-        const json = JSON.parse(data._body)
-        this.dataSource.data = json
-        donate = json
-      })
+    const arr2 = JSON.parse(localStorage.getItem('donation'))
+    console.log(arr2[0])
+    this.dataSource.data = arr2[0]
+    donate = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
 
   }
 
-  public getJSON(): any {
+  // public getJSON(): any {
 
-    return this.http.get('./static/mock_flash.json')
-  }
+  //   return this.http.get('./static/mock_flash.json')
+  // }
 
   populateFields(): void {
     // console.log(e)

@@ -37,6 +37,7 @@ export class WarningComponent implements OnInit {
 
     console.log(arr1[0].expiryDate)
 
+    if (localStorage.getItem('warning')) {
     const arr2 = JSON.parse(localStorage.getItem('warning'))
     console.log(arr2)
     this.dataSource.data = arr2
@@ -48,7 +49,7 @@ export class WarningComponent implements OnInit {
     })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
-
+    }
   }
 
   public getJSON(): any {

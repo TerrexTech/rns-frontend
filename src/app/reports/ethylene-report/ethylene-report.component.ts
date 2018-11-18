@@ -9,7 +9,7 @@ import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
 import { ReportSearchComponent } from '../../search/report-search/report-search.component'
 import { setTimeout } from 'timers'
-import { EthyleneReportService } from './ethylene-report.service'
+import { ReportService } from '../reports.service'
 
 interface Reporting {
   sku: string
@@ -19,7 +19,7 @@ interface Reporting {
 
 let searchData: Reporting[] = []
 
-let graphData = []
+const graphData = []
 
 @Component({
   selector: 'component-ethylene-report',
@@ -32,18 +32,18 @@ export class EthyleneReportComponent implements OnInit {
   isClicked: boolean
   searchData: any
   // @Output() messageEvent = new EventEmitter<string>()
-  constructor(private http: HttpClient, public dialog: MatDialog, private donationServ: EthyleneReportService) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private donationServ: ReportService) {
   }
 
   ngOnInit(): void {
-    this.donationServ.getReport()
-    .toPromise()
-    .then((data: any) => {
-    console.log(data.data)
-    graphData = data.data
-    }
-    )
-    .catch()
+    // this.donationServ.getEthyleneReport()
+    // .toPromise()
+    // .then((data: any) => {
+    // console.log(data.data)
+    // graphData = data.data
+    // }
+    // )
+    // .catch()
     this.isClicked = true
     this.loadEthyleneGraph()
   }

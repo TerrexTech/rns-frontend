@@ -5,10 +5,9 @@ import { Inventory } from '../../models/inventory'
 import { SelectionModel } from '@angular/cdk/collections'
 import { TableSearchComponent } from '../../search/table-search/table-search.component'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
-import { ShowTableService } from './show.service'
+import { InventoryService } from '../inventory.service'
 import swal from 'sweetalert'
 import { NavbarService } from '../../shared/navbar/navbar.service'
-import dateFns from 'date-fns'
 
 let Food: Inventory[] = []
 const ProjectedExpiry: number[] = []
@@ -36,7 +35,7 @@ export class ShowComponent implements OnInit {
 
   selection = new SelectionModel<Inventory>(true, [])
 
-  constructor(private http: Http, public dialog: MatDialog, private showService: ShowTableService,
+  constructor(private http: Http, public dialog: MatDialog, private showService: InventoryService,
               private navServ: NavbarService) {
   }
 

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import swal from 'sweetalert'
-import { UpdateInventoryService } from './update.service'
+import { InventoryService } from '../inventory.service'
 
 @Component({
   selector: 'component-dialog-data-dialog',
@@ -21,7 +21,7 @@ export class DialogDataDialogComponent implements OnInit {
   @Inject(MAT_DIALOG_DATA) public data: any,
   private route: ActivatedRoute,
   private router: Router,
-  private updateInv: UpdateInventoryService,
+  private updateInv: InventoryService,
   private dialogRef: MatDialogRef<DialogDataDialogComponent>
              ) { }
 

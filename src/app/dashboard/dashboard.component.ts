@@ -143,7 +143,7 @@ export class DashboardComponent implements OnInit {
         // this.ethyNeedleValue = metric + 1
       })
       this.totalChart.update()
-    }, 20000)
+    }, 200000)
     // })
   }
 
@@ -266,7 +266,7 @@ export class DashboardComponent implements OnInit {
 
         })
 
-    }, 5000)
+    }, 200000)
   }
 
   loadSoldGraph(): void {
@@ -312,7 +312,7 @@ export class DashboardComponent implements OnInit {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'PPM'
+              labelString: 'Weight (Kg)'
             },
             ticks: {
               beginAtZero: true
@@ -329,7 +329,7 @@ export class DashboardComponent implements OnInit {
         dataset.data.push(metric + 1)
       })
       this.soldChart.update()
-    }, 20000)
+    }, 200000)
   }
 
   loadDistGraph(): void {
@@ -516,7 +516,7 @@ export class DashboardComponent implements OnInit {
         dataset.data.push(metric + 1)
       })
       this.donationChart.update()
-    }, 20000)
+    }, 200000)
       }
 
   // success(message: string): void {

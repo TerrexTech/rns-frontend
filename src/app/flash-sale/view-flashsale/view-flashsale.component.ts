@@ -26,7 +26,7 @@ export class ViewFlashsaleComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<FlashSale>(true, [])
 
-  displayedColumns = ['select', 'sku', 'name', 'lot', 'soldWeight', 'totalWeight', 'status']
+  displayedColumns = ['select', 'sku', 'name', 'lot', 'soldWeight', 'totalWeight', 'remainingWeight', 'status']
   curField: any
 
   ngOnInit(): void {

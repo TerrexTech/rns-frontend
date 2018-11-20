@@ -45,6 +45,14 @@ export class SidebarComponent implements OnInit {
         {
           route: AppRoutes.inventory.children.view,
           ab: 'V'
+        },
+        {
+          route: AppRoutes.inventory.children.sale,
+          ab: 'SA'
+        },
+        {
+          route: AppRoutes.inventory.children.history,
+          ab: 'HI'
         }
       ]
     },

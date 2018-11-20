@@ -21,7 +21,7 @@ const ProjectedExpiry: number[] = []
 export class ShowComponent implements OnInit {
   food: Inventory
   displayedColumns: string[] =
-    ['select', 'upc', 'sku', 'name', 'origin', 'lot', 'dateArrived', 'expiryDate', 'soldWeight', 'totalWeight']
+    ['select', 'upc', 'sku', 'name', 'origin', 'lot', 'dateArrived', 'expiryDate', 'soldWeight', 'totalWeight', 'leftover']
   dataSource = new MatTableDataSource()
   today: number = Date.now()
   @ViewChild(MatPaginator) paginator: MatPaginator
@@ -289,19 +289,5 @@ export class ShowComponent implements OnInit {
           )
           .catch()
       })
-  }
-
-  isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length
-    const numRows = this.dataSource.data.length
-
-    return numSelected === numRows
-  }
-
-  /** Selects all rows if they are not all selected otherwise clear selection. */
-  masterToggle(): void {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row))
   }
 }

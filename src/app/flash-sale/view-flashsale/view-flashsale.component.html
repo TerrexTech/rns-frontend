@@ -18,56 +18,15 @@
                     <a id="deleteBtn" [attr.disabled]="canDelete() ? true : null" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="removeSelectedRows()">
                         <i class="fa fa-times"></i>
                     </a>
-                    <a id="endFlashSale" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="endFlashSale()">
-                        <i class="fa fa-thumbs-up"></i>
-                    </a>
                     <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="newSale()">
-                        <i class="fa fa-dollar-sign"></i>
-                      </a>
+                        <i class="fa fa-check"></i>
+                    </a>
                 </div>
             </mat-card-header>
         </mat-card>
         <br>
         <mat-card>
             <mat-card-content>
-<!--
-                <form>
-                    <div class="row mx-auto">
-                        <div class="col-sm-6">
-                            <select #field name="field" class="form-control">
-                                <option value="upc">UPC</option>
-                                <option value="sku">SKU</option>
-                                <option value="name">Name</option>
-                                <option value="origin">Origin</option>
-                                <option value="location">Location</option>
-                                <option value="date_arrived">Arrival Date</option>
-                                <option value="expiry_date">Expiry Date</option>
-                                <option value="sale_price">Sale Price</option>
-                                <option value="sold_weight">Sold Weight</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-6">
-                            <input style="height:100%" #query name="query" class="form-control" placeholder="Search">
-                        </div>
-                    </div>
-                    <div class="row mx-auto">
-                        <div class="col-auto">
-                            <button class="btn btn-primary" type="submit" (click)="onSearch()">
-                                Search
-                            </button>
-                        </div>
-                        <div class="col-sm-6">
-                            <button class="btn btn-primary" type="submit" (click)="resetData()">
-                                Reset
-                            </button>
-                        </div>
-                    </div>
-
-
-                    <div>
-
-                    </div>
-                </form> -->
 
                 <div class="table-responsive-lg">
                     <table mat-table [dataSource]="dataSource" matSort>
@@ -102,15 +61,21 @@
                         </ng-container>
 
                         <!-- Symbol Column -->
+                        <ng-container matColumnDef="totalWeight">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Original Weight </th>
+                            <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.totalWeight }}</a> </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
                         <ng-container matColumnDef="soldWeight">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Sold Weight </th>
                             <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.soldWeight }}</a> </td>
                         </ng-container>
 
                         <!-- Symbol Column -->
-                        <ng-container matColumnDef="totalWeight">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Weight </th>
-                            <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.totalWeight }}</a> </td>
+                        <ng-container matColumnDef="remainingWeight">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Remaining Weight </th>
+                            <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.totalWeight - element.soldWeight }}</a> </td>
                         </ng-container>
 
                         <!-- Symbol Column -->

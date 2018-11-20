@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import * as jwt_decode from 'jwt-decode'
-
+import { environment } from '../../config'
 import { AccessToken } from './access-token.model'
 import { root } from 'rxjs/internal/util/root'
 import { HttpClient } from '@angular/common/http'
@@ -82,7 +82,7 @@ export class TokenService {
   }
 
   changeToken(): any {
-    this.http.post('http://162.212.158.16:30653/api', this.refreshToken)
+    this.http.post(`${environment.apiUrl}/api`, this.refreshToken)
       .toPromise()
       .then((data: any) => {
         if (data.data.login) {

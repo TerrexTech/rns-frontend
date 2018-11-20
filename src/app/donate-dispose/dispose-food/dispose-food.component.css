@@ -58,8 +58,9 @@ th.mat-sort-header-sorted {
  background-color: green
 }
 
-.red{
- background-color: red
+.bad{
+ background-color: rgb(238, 40, 40);
+ border-right: 1px solid rgb(224, 224, 224);
 }
 
 .control-label.required:after {
@@ -78,5 +79,5 @@ td.mat-cell {
   padding: 0 24px 0 24px;
       font-size: 14px;
       /* text-align: center; */
-      border-right: 1px solid rgb(224, 224, 224);
+
   }

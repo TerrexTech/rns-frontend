@@ -36,14 +36,19 @@ export class EthyleneReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.donationServ.getEthyleneReport()
-    // .toPromise()
-    // .then((data: any) => {
-    // console.log(data.data)
+    this.donationServ.getDonationReport()
+    .toPromise()
+    .then((data: any) => {
+      if (data) {
+    console.log(data)
     // graphData = data.data
-    // }
-    // )
-    // .catch()
+      }
+      else {
+        alert('Timed out.')
+      }
+    }
+    )
+    .catch()
     this.isClicked = true
     this.loadEthyleneGraph()
   }

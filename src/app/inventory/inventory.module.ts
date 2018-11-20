@@ -34,6 +34,8 @@ import {
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material'
+import { SaleComponent } from './sale/sale.component'
+import { HistoryComponent } from './history/history.component'
 
 @NgModule({
     imports: [
@@ -65,7 +67,9 @@ import {
     declarations: [
         AddComponent,
         ShowComponent,
-        DialogDataDialogComponent
+        DialogDataDialogComponent,
+        SaleComponent,
+        HistoryComponent
         // InvDashComponent
         // FieldErrorDisplayComponent,
     ],

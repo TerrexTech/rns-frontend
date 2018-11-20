@@ -105,10 +105,14 @@ export class DialogDataDialogComponent implements OnInit {
                   .toPromise()
                   .then((data: any) => {
                     console.log(data)
-                    if (data.data !== null) {
+                    if (data.data) {
                       this.reset()
                       }
+                    else {
+                      alert('Row not updated')
                     }
+                    }
+
                     )
                     .catch()
 

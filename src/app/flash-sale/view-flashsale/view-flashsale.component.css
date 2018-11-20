@@ -59,7 +59,7 @@ th.mat-sort-header-sorted {
 }
 
 .bad{
- background-color: red;
+ background-color: #ffae42;
  border-right: 1px solid rgb(224, 224, 224);
    padding: 0 24px 0 24px;
       font-size: 14px;

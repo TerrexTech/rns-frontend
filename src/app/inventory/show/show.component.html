@@ -20,7 +20,7 @@
           <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()" (click)="loadExpiry()">
             <i class="fa fa-dollar-sign"></i>
           </a>
-          <a id="warningBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genWarning()">
+          <a id="warningBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genWarning()">
             <i class="fa fa-exclamation-triangle"></i>
           </a>
         </div>
@@ -105,7 +105,9 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row columns: displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+          (click)="highlightedRows.push(row)"
+          [style.background]="highlightedRows.indexOf(row) === 0 ? 'lightblue' : ''"></tr>
         </table>
 
         <mat-paginator [pageSizeOptions]="[10, 20, 30]"showFirstLastButtons></mat-paginator>

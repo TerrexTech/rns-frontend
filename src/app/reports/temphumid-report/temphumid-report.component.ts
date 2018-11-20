@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
 import { ReportSearchComponent } from '../../search/report-search/report-search.component'
+import { ReportService } from '../reports.service'
 
 @Component({
   selector: 'component-temphumid-report',
@@ -18,10 +19,22 @@ export class TemphumidReportComponent implements OnInit {
   tempChart: any
   date: Date = new Date()
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public dialog: MatDialog, public tempServ: ReportService) {
   }
 
   ngOnInit(): void {
+    this.tempServ.getTempReport()
+    .toPromise()
+    .then((data: any) => {
+      if (data) {
+       console.log(data)
+       // graphData = data.data
+      }
+      else {
+        alert('Timed out.')
+      }
+    })
+    .catch()
     this.loadTempGraph()
   }
 

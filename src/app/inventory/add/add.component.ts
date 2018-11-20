@@ -90,7 +90,12 @@ export class AddComponent implements OnInit {
       this.addService.addItem(this.form.value)
                      .toPromise()
                      .then((data: any) => {
+                       if (data) {
                         console.log(data)
+                       }
+                       else {
+                        alert('Record not inserted into Inventory.')
+                       }
                         }
                       )
                      .catch()

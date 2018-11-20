@@ -11,54 +11,21 @@ export class ReportService {
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
-    getEthyleneReport(data): Observable<Object> {
+    getDonationReport(): Observable<Object> {
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
-    }
-    `
-
-        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
-            headers: {
-                'Content-Type': 'application/text'
+        {
+            Donate(
+              lt: 1542647468
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
             }
-        })
-    }
-
-    getFlashSaleReport(data): Observable<Object> {
-
-        const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
-    }
-    `
-
-        return this.http.post('http://localhost:8081' + '/api', gqlQuery, {
-            headers: {
-                'Content-Type': 'application/text'
-            }
-        })
-    }
-
-    getInventoryReport(data): Observable<Object> {
-
-        const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
-    }
+          }
     `
 
         return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
@@ -68,16 +35,21 @@ export class ReportService {
         })
     }
 
-    getRevenueReport(data): Observable<Object> {
+    getFlashSaleReport(): Observable<Object> {
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
-    }
+        {
+            Flashsale(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
     `
 
         return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
@@ -87,16 +59,21 @@ export class ReportService {
         })
     }
 
-    getSavingsReport(data): Observable<Object> {
+    getInventoryReport(): Observable<Object> {
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
-    }
+        {
+            Inventory(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
     `
 
         return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
@@ -106,16 +83,21 @@ export class ReportService {
         })
     }
 
-    getSensorReport(data): Observable<Object> {
+    getRevenueReport(): Observable<Object> {
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
-    }
+        {
+            Revenue(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
     `
 
         return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
@@ -125,16 +107,21 @@ export class ReportService {
         })
     }
 
-    getTempReport(data): Observable<Object> {
+    getSavingsReport(): Observable<Object> {
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
-    }
+        {
+            Savings(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
     `
 
         return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
@@ -144,16 +131,69 @@ export class ReportService {
         })
     }
 
-    getWasteReport(data): Observable<Object> {
+    getSensorReport(): Observable<Object> {
 
         const gqlQuery = `
-    mutation{
-      addInventory(
-        sku: '${data.sku}',
-        name: '${data.name}',
-        lot: '${data.lot}'
-      ){access_token, refresh_token}
+        {
+            Sensor(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
+    `
+
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
     }
+
+    getTempReport(): Observable<Object> {
+
+        const gqlQuery = `
+        {
+            Temperature(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
+    `
+
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
+    getWasteReport(): Observable<Object> {
+
+        const gqlQuery = `
+        {
+            Waste(
+              lt: 9999999999999
+              gt: 0,
+            ){
+              avg_total,
+              _id {
+                sku,
+                name
+              }
+            }
+          }
     `
 
         return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { environment } from '../../config'
 
 @Injectable()
 export class AuthenticationService {
@@ -20,9 +21,10 @@ export class AuthenticationService {
   login(resource: string, lStorage: boolean): boolean {
     const returnURL = this.route.snapshot.queryParamMap.get('returnURL')
     console.log(`${resource} &&&&&&&&&&&&&`)
-    this.http.post('http://162.212.158.16:30653/api', resource)
+    this.http.post(`${environment.apiUrl}/api`, resource)
       .toPromise()
       .then((data: any) => {
+        console.log(data)
         console.log(data.data.login)
         if (lStorage && data.data.login !== null) {
         // if (data.data.login !== null) {

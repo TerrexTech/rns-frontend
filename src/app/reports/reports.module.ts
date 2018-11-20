@@ -39,6 +39,7 @@ import { SensorReportService } from './sensor-report/sensor-report.service'
 import { TempHumidReportService } from './temphumid-report/temphumid-report.service'
 import { WasteReportService } from './waste-report/waste-report.service'
 import { RevenueReportComponent } from './revenue-report/revenue-report.component'
+import { ReportService } from './reports.service'
 
 @NgModule({
     imports: [
@@ -79,14 +80,7 @@ import { RevenueReportComponent } from './revenue-report/revenue-report.componen
         ReportSearchComponent
     ],
     providers: [
-        ReportSearchService,
-        EthyleneReportService,
-        FlashSaleReportService,
-        InventoryReportService,
-        SavingsReportService,
-        SensorReportService,
-        TempHumidReportService,
-        WasteReportService
+        ReportService
     ]
 })
 

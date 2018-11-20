@@ -32,6 +32,7 @@ export class ShowComponent implements OnInit {
   curField: any
   returnVal: any
   alertShown = false
+  highlightedRows = []
 
   selection = new SelectionModel<Inventory>(true, [])
 
@@ -44,10 +45,16 @@ export class ShowComponent implements OnInit {
     this.showService.getTable()
       .toPromise()
       .then((data: any) => {
+        if (data.data.InventoryQueryCount) {
         console.log(data.data.InventoryQueryCount)
         this.dataSource.data = data.data.InventoryQueryCount
         Food = data.data.InventoryQueryCount
         this.genExpiry()
+        }
+        else {
+          alert('Timed out.')
+        }
+
       }
       )
       .catch()
@@ -187,8 +194,13 @@ export class ShowComponent implements OnInit {
       // this.showService.getQuery(this.curField)
       //   .toPromise()
       //   .then((data: any) => {
+      //     if (data.data) {
       //     console.log(data.data)
       //     this.dataSource.data = data.data
+      //     }
+      //     else {
+      //       alert("Sale Not Created")
+      //     }
       //   }
       //   )
       //   .catch()
@@ -215,6 +227,7 @@ export class ShowComponent implements OnInit {
     }
 
   genWarning(): void {
+    const array1 = []
     this.selection.selected.forEach(item => {
       this.curField = Food.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
@@ -222,7 +235,6 @@ export class ShowComponent implements OnInit {
       this.navServ.newEvent(1)
       console.log(this.curField)
 
-      const array1 = []
       console.log(localStorage.getItem('warning') !== undefined)
       if (localStorage.getItem('warning') === undefined) {
 
@@ -231,11 +243,9 @@ export class ShowComponent implements OnInit {
       else {
           array1.push(this.curField)
       }
-      localStorage.setItem('warning', JSON.stringify(array1))
 
       // ethylene value jumps to 700
 
-      // projected date (timestamp) becomes closer
       // this.showService.sendWarning(this.curField)
       //   .toPromise()
       //   .then((data: any) => {
@@ -246,6 +256,7 @@ export class ShowComponent implements OnInit {
       //   .catch()
       console.log('++++++++++++++++++==')
     })
+    localStorage.setItem('warning', JSON.stringify(array1))
   }
 
   populateFields(): void {
@@ -266,11 +277,14 @@ export class ShowComponent implements OnInit {
         this.showService.getTable()
           .toPromise()
           .then((data: any) => {
-            // if (data) {
+            if (data.data.InventoryQueryCount) {
              console.log(data.data.InventoryQueryCount)
              this.dataSource.data = data.data.InventoryQueryCount
              Food = data.data.InventoryQueryCount
-            // }
+           }
+           else {
+             alert('Timed out.')
+           }
           }
           )
           .catch()

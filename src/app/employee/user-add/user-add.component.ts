@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
 import { AuthResponse } from '../../models/auth-response'
 import { UserAddService } from './user-add.service'
+import { EmployeeService } from '../employee.service'
 
 @Component({
   selector: 'component-user-add',
@@ -40,7 +41,7 @@ constructor(
   private route: ActivatedRoute,
   private router: Router,
   private http: HttpClient,
-  private useradd: UserAddService
+  public empServ: EmployeeService
            ) { this.http = http }
 
   ngOnInit(): void {
@@ -66,26 +67,29 @@ constructor(
   onSubmit(): void {
     this.formSubmitAttempt = true
     if (this.registerForm.valid) {
-      this.useradd.registerEmployee(this.registerForm.value)
+      this.empServ.registerEmployee(this.registerForm.value)
                   .toPromise()
                   .then((data: any) => {
                     console.log(data)
-                    if (data.data.register !== null) {
-                      localStorage.setItem('access_token', data.data.register.access_token)
-                      localStorage.setItem('refresh_token', data.data.register.refresh_token)
+                    if (data.data.authRegister) {
+                      localStorage.setItem('accessToken', data.data.authRegister.accessToken)
+                      localStorage.setItem('refreshToken', data.data.authRegister.refreshToken)
                       //   this.router.navigate([this.returnUrl])
                       this.reset()
                     }
-                    console.log(data.data)
-                    if (data.errors[0].message === '2: Registeration Error') {
-                      this.showError = true
-                      this.message = 'User already exists'
-                    } else if (data.errors[0].message === '1: Registeration Error') {
-                      this.message = 'Server error'
+                    else {
+                      console.log('User not registered.')
                     }
+                    console.log(data.data)
+                    // if (data.data.errors.message === '2: Registeration Error') {
+                    //   this.showError = true
+                    //   this.message = 'User already exists'
+                    // } else if (data.data.errors.message === '1: Registeration Error') {
+                    //   this.message = 'Server error'
+                    // }
                   }
                   )
-                  .catch()
+                  .catch(console.log)
               }
     }
 
@@ -110,8 +114,8 @@ constructor(
   //           role:'${this.registerForm.controls.roleSelect.value}'
   //         )
   //         {
-  //           access_token,
-  //           refresh_token
+  //           accessToken,
+  //           refreshToken
   //         }
   //       }`
 
@@ -121,8 +125,8 @@ constructor(
   //       .then((data: any) => {
   //         console.log(data)
   //         if (data.data.register !== null) {
-  //           localStorage.setItem('access_token', data.data.register.access_token)
-  //           localStorage.setItem('refresh_token', data.data.register.refresh_token)
+  //           localStorage.setItem('accessToken', data.data.register.accessToken)
+  //           localStorage.setItem('refreshToken', data.data.register.refreshToken)
   //           //   this.router.navigate([this.returnUrl])
   //           this.reset()
   //         }

@@ -28,7 +28,7 @@ export class MonitorSearchService {
         start_date: '${searchQuery['start_date']}',
         end_date: '${searchQuery['end_date']}',
         exact_match: '${searchQuery['exact_match']}',
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

@@ -28,8 +28,8 @@ export class AuthenticationService {
         console.log(data.data.login)
         if (lStorage && data.data.login !== null) {
         // if (data.data.login !== null) {
-          localStorage.setItem('access_token', data.data.login.access_token)
-          localStorage.setItem('refresh_token', data.data.login.refresh_token)
+          localStorage.setItem('accessToken', data.data.login.accessToken)
+          localStorage.setItem('refreshToken', data.data.login.refreshToken)
           this.router.navigate([`/${returnURL || 'dashboard'}`])
             .then(log => {
               console.log(log)
@@ -46,8 +46,8 @@ export class AuthenticationService {
           return this.showError
         }
         else if (!lStorage && data.data.login !== null) {
-          localStorage.setItem('access_token', data.data.login.access_token)
-          localStorage.setItem('refresh_token', data.data.login.refresh_token)
+          localStorage.setItem('accessToken', data.data.authLogin.accessToken)
+          localStorage.setItem('refreshToken', data.data.authLogin.refreshToken)
           this.router.navigate([`/${returnURL || 'dashboard'}`])
             .then(log => {
               console.log(log)
@@ -83,13 +83,13 @@ export class AuthenticationService {
     //   .then(d => this.data)
     //   .then(data => {
     //     console.log(data.data.login)
-    //     if (this.data.data.login.access_token == null) {
+    //     if (this.data.data.login.accessToken == null) {
     //       // this.response.innerHTML = 'Invalid Credentials'
     //       console.log('invalid credentials')
     //     }
     //     else {
-    //       localStorage.setItem('access_token', data.data.login.access_token)
-    //       localStorage.setItem('refresh_token', data.data.login.refresh_token)
+    //       localStorage.setItem('accessToken', data.data.login.accessToken)
+    //       localStorage.setItem('refreshToken', data.data.login.refreshToken)
     //       return data
 
     //     }
@@ -100,18 +100,18 @@ export class AuthenticationService {
     //   .pipe(map(token => {
     //     console.log(token)
     //     // login successful if there's a jwt token in the response
-    //     // if (token.access_token) {
+    //     // if (token.accessToken) {
     //     //   // store user details and jwt token in local storage to keep user logged in between page refreshes
-    //     //   localStorage.setItem('access_token', token.access_token)
+    //     //   localStorage.setItem('accessToken', token.accessToken)
     //     //   this.global.parsedToken = this.global.getDecodedAccessToken()
 
-    //     //   console.log(token.access_token)
+    //     //   console.log(token.accessToken)
     //     // }
 
-    //     // return token.access_token
+    //     // return token.accessToken
 
     //     if (token.data) {
-    //       localStorage.setItem('access_token', token.data.login)
+    //       localStorage.setItem('accessToken', token.data.login)
     //       this.global.parsedToken = this.global.getDecodedAccessToken()
     //     }
     //     // return token
@@ -120,7 +120,7 @@ export class AuthenticationService {
   }
 
   logout(): void {
-    localStorage.removeItem('access_token')
-    localStorage.removeItem('refresh_token')
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
   }
 }

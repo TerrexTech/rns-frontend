@@ -36,11 +36,11 @@ export class TokenService {
   }
 
   getAccessTokenRaw(): string {
-    return localStorage.getItem('access_token')
+    return localStorage.getItem('accessToken')
   }
 
   getRefreshToken(): string {
-    return localStorage.getItem('refresh_token')
+    return localStorage.getItem('refreshToken')
   }
 
   isTokenExpired(accessToken: AccessToken): any {
@@ -86,7 +86,7 @@ export class TokenService {
       .toPromise()
       .then((data: any) => {
         if (data.data.login) {
-          this.accessToken = data.data.login.access_token
+          this.accessToken = data.data.login.accessToken
         }
       })
       .catch(console.log)

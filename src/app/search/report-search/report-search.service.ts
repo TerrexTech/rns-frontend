@@ -26,7 +26,7 @@ export class ReportSearchService {
       search(
         start_date: '${searchQuery['start_date']}',
         end_date: '${searchQuery['end_date']}',
-       ){access_token, refresh_token}
+       ){accessToken, refreshToken}
     }
     `
         console.log(gqlQuery)

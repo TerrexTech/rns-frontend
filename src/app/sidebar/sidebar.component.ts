@@ -3,11 +3,13 @@ import { Component, OnInit } from '@angular/core'
 import { AppRoutes } from '../../app/app.routes'
 import { TokenService } from '../../app/_Auth/token.service'
 import { User } from '../../app/_Auth/user-model'
+import { AuthenticationService } from '../_Auth/auth.service'
 
 @Component({
   selector: 'component-sidebar-cmp',
   templateUrl: 'sidebar.component.html',
-  styleUrls: ['sidebar.component.css']
+  styleUrls: ['sidebar.component.css'],
+  providers: [AuthenticationService]
 })
 export class SidebarComponent implements OnInit {
   private jwt: TokenService
@@ -125,13 +127,18 @@ export class SidebarComponent implements OnInit {
   ]
   public routerIconDef2 = this.routeIconDef
 
-  constructor(jwt: TokenService) {
+  constructor(jwt: TokenService, public auth: AuthenticationService) {
     this.jwt = jwt
   }
 
   upperFirstLetter = (word: string): string => {
     return word.charAt(0)
                .toUpperCase() + word.slice(1)
+  }
+
+  logout(): void {
+    this.jwt.decodedAccessToken = undefined
+    this.auth.logout()
   }
 
   ngOnInit(): void {

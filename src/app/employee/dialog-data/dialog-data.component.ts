@@ -99,8 +99,8 @@ export class DialogDataDialogComponent implements OnInit {
             role:'${this.registerForm.controls.roleSelect.value}'
           )
           {
-            access_token,
-            refresh_token
+            accessToken,
+            refreshToken
           }
         }`
 
@@ -111,8 +111,8 @@ export class DialogDataDialogComponent implements OnInit {
         .then((data: any) => {
           console.log(data)
           if (data.data.register !== null) {
-            localStorage.setItem('access_token', data.data.register.access_token)
-            localStorage.setItem('refresh_token', data.data.register.refresh_token)
+            localStorage.setItem('accessToken', data.data.register.accessToken)
+            localStorage.setItem('refreshToken', data.data.register.refreshToken)
             //   this.router.navigate([this.returnUrl])
             this.reset()
           }

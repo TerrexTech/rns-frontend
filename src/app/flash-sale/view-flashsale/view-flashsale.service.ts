@@ -19,7 +19,7 @@ export class ViewFlashSaleService {
     mutation{
       addInventory(
         item_id: '${d.item_id}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 
@@ -36,7 +36,7 @@ export class ViewFlashSaleService {
     mutation{
       addInventory(
         item_id: '${item_id}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

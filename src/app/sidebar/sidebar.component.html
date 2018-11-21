@@ -50,7 +50,7 @@
           <li>
             <a [routerLink]="['/' + routes.login.path]">
               <span class="sidebar-mini-icon">L</span>
-              <span class="sidebar-normal">Logout</span>
+              <span class="sidebar-normal" (click)="logout()">Logout</span>
             </a>
           </li>
         </ul>

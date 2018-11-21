@@ -38,7 +38,7 @@ export class CarbonService {
     mutation{
       addInventory(
         end_date: '${sendDate.endDate}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 
@@ -57,7 +57,7 @@ export class CarbonService {
         sku: '${data.sku}',
         name: '${data.name}',
         lot: '${data.lot}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

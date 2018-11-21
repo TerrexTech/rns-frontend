@@ -29,7 +29,7 @@ export class DashboardService {
     mutation{
       addInventory(
         endDate: '${sendDate.endDate}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 
@@ -80,7 +80,7 @@ export class DashboardService {
     mutation{
       addInventory(
         endDate: '${d.endDate}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 
@@ -105,7 +105,7 @@ export class DashboardService {
     mutation{
       addInventory(
         endDate: '${d.endDate}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 
@@ -122,7 +122,7 @@ export class DashboardService {
     mutation{
       addInventory(
         item_id: ''
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

@@ -23,6 +23,7 @@ import { UserTableComponent } from './user-table/user-table.component'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { UserAddService } from './user-add/user-add.service'
 import { UserTableService } from './user-table/user-table.service'
+import { EmployeeService } from './employee.service'
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { UserTableService } from './user-table/user-table.service'
     MatButtonModule
   ],
   providers: [
+    EmployeeService,
     UserAddService,
     UserTableService
   ],

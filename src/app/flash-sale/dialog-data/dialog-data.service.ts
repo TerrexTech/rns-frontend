@@ -29,7 +29,7 @@ export class UpdateFlashSaleService {
         sale_price: ${data.salePrice},
         sold_weight: ${data.soldWeight},
         total_weight: ${data.totalWeight},
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

@@ -6,6 +6,7 @@ import Chart from 'chart.js'
 import { AlertService } from '../alert-popup/alert.service'
 import { DashboardService } from './dashboard.service'
 import { MockUtils } from './mockutils'
+import { InventoryService } from '../inventory/inventory.service'
 
 @Component({
   selector: 'component-dashboard',
@@ -18,20 +19,49 @@ export class DashboardComponent implements OnInit {
   soldChart: any
   distChart: any
   donationChart: any
-  date: any
+  date: Date = new Date()
   combinationGraph = []
+  totalWeight: number
+  soldWeight: number
+  dispoalWeight: number
 
   @ViewChild('arrival') arrival: ElementRef
   @ViewChild('total') total: ElementRef
   @ViewChild('average') average: ElementRef
 
-  constructor(private http: HttpClient, private alertService: AlertService, private dashServ: DashboardService) { }
+  constructor(private http: HttpClient, private alertService: AlertService, private dashServ: DashboardService,
+              public invServ: InventoryService) { }
 
   ngOnInit(): void {
-     this.loadTotalNew()
-     this.loadSoldGraph()
-     this.loadDistNew()
-     this.loadDonationGraph()
+    this.date.setUTCHours(0, 0, 0, 0)
+    const today = (this.date.getTime() / 1000).toFixed(0)
+    this.invServ.getTable()
+      .toPromise()
+      .then((data: any) => {
+        if (data.data.InventoryQueryCount) {
+          console.log(data.data.InventoryQueryCount)
+          const invArray = data.data.InventoryQueryCount
+          this.totalWeight = 0
+          data.data.InventoryQueryCount.forEach(total => {
+            if (total.timestamp >= today) {
+              this.totalWeight += total.totalWeight
+              this.soldWeight = total.soldWeight
+              this.dispoalWeight = total.dispoalWeight
+            }
+          })
+          console.log(this.totalWeight)
+          this.loadTotalNew()
+          this.loadSoldGraph()
+          this.loadDistNew()
+          this.loadDonationGraph()
+        }
+        else {
+          alert('Timed out.')
+        }
+      }
+      )
+      .catch()
+
   }
 
   changeAxis(dateArray: JSON): JSON {
@@ -54,33 +84,22 @@ export class DashboardComponent implements OnInit {
     this.totalChart = new Chart('totalChart', {
       type: 'bar',
       data: {
-        labels: [],
+        labels: [new Date().toISOString()
+                           .split('T')[0]],
         datasets: [
           {
             label: 'Total Weight',
-            data: arr1.map(e => {
-              console.log(parseFloat(e.Total))
-
-              return parseFloat(e.Total)
-            }),
+            data: [this.totalWeight.toFixed(0)],
             backgroundColor: 'rgba(255, 99, 132, 1)'
           },
           {
             label: 'Sold Weight',
-            data: arr1.map(e => {
-              console.log(parseFloat(e.Sold))
-
-              return parseFloat(e.Sold)
-            }),
+            data: [this.soldWeight.toFixed(0)],
             backgroundColor: 'rgba(25, 99, 132, 1)'
           },
           {
             label: 'Waste Weight',
-            data: arr1.map(e => {
-              console.log(parseFloat(e.Waste))
-
-              return parseFloat(e.Waste)
-            }),
+            data: [this.dispoalWeight],
             backgroundColor: 'rgba(125, 30, 255, 1)'
           }
         ]
@@ -274,21 +293,18 @@ export class DashboardComponent implements OnInit {
     m.genSoldGraph()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('sold'))
-    console.log(arr1.map(e => {
-      return e.Sold
-    }))
     this.soldChart = new Chart('soldChart', {
       type: 'line',
       data: {
-        labels: [new Date().getDate()],
+        labels: [`${new Date().getHours()}:${new Date().getMinutes()}`,
+                 `${new Date().getHours()}:${new Date().getMinutes()}`,
+                 `${new Date().getHours()}:${new Date().getMinutes()}`,
+                 `${new Date().getHours()}:${new Date().getMinutes()}`,
+                 `${new Date().getHours()}:${new Date().getMinutes()}`],
         datasets: [{
           fill: false,
           label: 'Sold',
-          data: arr1.map(e => {
-            console.log(parseFloat(e.Sold))
-
-            return parseFloat(e.Sold)
-          }),
+          data: [this.soldWeight / 8, this.soldWeight / 6, this.soldWeight / 4, this.soldWeight / 1.5, this.soldWeight],
           borderColor: '#FF0000'
         }]
       },

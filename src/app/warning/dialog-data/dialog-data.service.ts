@@ -24,7 +24,7 @@ export class DialogDataService {
         sku: '${data.sku}',
         name: '${data.name}',
         lot: '${data.lot}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 
@@ -43,7 +43,7 @@ export class DialogDataService {
         sku: '${data.sku}',
         name: '${data.name}',
         lot: '${data.lot}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 
@@ -62,7 +62,7 @@ export class DialogDataService {
         sku: '${data.sku}',
         name: '${data.name}',
         lot: '${data.lot}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

@@ -32,7 +32,7 @@ export class EthyleneService {
     mutation{
       addInventory(
         end_date: '${sendDate.endDate}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

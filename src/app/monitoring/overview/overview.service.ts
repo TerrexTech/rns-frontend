@@ -21,7 +21,7 @@ export class OverviewService {
     mutation{
       getMetrics(
         end_date: '${d.end_date}'
-      ){access_token, refresh_token}
+      ){accessToken, refreshToken}
     }
     `
 

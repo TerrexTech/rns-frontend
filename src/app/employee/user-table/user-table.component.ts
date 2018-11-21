@@ -6,7 +6,7 @@ import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import { UserTableService } from './user-table.service'
 import swal from 'sweetalert'
 
-let Employees: any[] = []
+const Employees: any[] = []
 
 @Component({
   selector: 'component-user-table',
@@ -46,15 +46,15 @@ export class UserTableComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userServ.getTable()
-                 .toPromise()
-                 .then((data: any) => {
-                    console.log(data.data.InventoryQuery)
-                    this.dataSource.data = data.data.InventoryQuery
-                    Employees = data.data.InventoryQuery
-                  }
-                  )
-                 .catch()
+    // this.userServ.getTable()
+    //              .toPromise()
+    //              .then((data: any) => {
+    //                 console.log(data.data.InventoryQuery)
+    //                 this.dataSource.data = data.data.InventoryQuery
+    //                 Employees = data.data.InventoryQuery
+    //               }
+    //               )
+    //              .catch()
 
     this.dataSource.data = this.ELEMENT_DATA
     this.dataSource.sort = this.sort

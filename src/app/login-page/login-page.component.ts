@@ -53,10 +53,10 @@ export class LoginPageComponent implements OnInit {
       let resource = JSON.stringify(this.loginForm.value)
       console.log(resource)
       resource = `{
-        login(username:"${this.loginForm.controls.username.value}",password:"${this.loginForm.controls.password.value}")
+        authLogin(userName:"${this.loginForm.controls.username.value}",password:"${this.loginForm.controls.password.value}")
         {
-          access_token,
-          refresh_token
+          accessToken,
+          refreshToken
         }
       }`
 

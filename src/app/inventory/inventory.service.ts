@@ -90,7 +90,7 @@ export class InventoryService {
         `
         console.log(gqlQuery)
 
-        return this.http.post(`${environment.apiUrl}/api` + '/api', gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
         headers: {
             'Content-Type': 'application/text'
         }
@@ -213,7 +213,7 @@ export class InventoryService {
         sale_price: '${data.salePrice}',
         sold_weight: '${data.soldWeight}',
         lot: '${data}',
-    ){access_token, refresh_token}
+    ){accessToken, refreshToken}
     }
     `
 

@@ -50,11 +50,11 @@ export class AuthGuard implements CanActivate {
   // console.log('2222222222222222')
 
   // return false
-  // if (localStorage.getItem('access_token')) {
+  // if (localStorage.getItem('accessToken')) {
 
   //   return true
   // }
-  //   if(localStorage.getItem('access_token')) {
+  //   if(localStorage.getItem('accessToken')) {
 
   //   return true
   // }

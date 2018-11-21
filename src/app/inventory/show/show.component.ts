@@ -32,7 +32,7 @@ export class ShowComponent implements OnInit {
   curField: any
   returnVal: any
   alertShown = false
-  highlightedRows = []
+  status: string
 
   selection = new SelectionModel<Inventory>(true, [])
 
@@ -102,7 +102,20 @@ export class ShowComponent implements OnInit {
       .catch()
   }
 
-  onPaginateChange($event): void {
+  onPaginateLeft($event): void {
+    const date = new Date().getTime()
+    const date2 = new Date().getTime() / 1000
+    if ($event.pageIndex > $event.previousPageIndex) {
+      console.log(1)
+      console.log(date)
+      console.log(date2)
+    }
+    else if ($event.pageIndex < $event.previousPageIndex) {
+      console.log(2)
+    }
+  }
+
+  onPaginateRight($event): void {
     const date = new Date().getTime()
     const date2 = new Date().getTime() / 1000
     if ($event.pageIndex > $event.previousPageIndex) {
@@ -227,15 +240,16 @@ export class ShowComponent implements OnInit {
     }
 
   genWarning(): void {
+    this.status = 'red'
     const array1 = []
+    const ethyVal = '1300'
     this.selection.selected.forEach(item => {
       this.curField = Food.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       this.alertShown = true
-      this.navServ.newEvent(1)
+      this.navServ.newEvent(this.selection.selected.length)
       console.log(this.curField)
 
-      console.log(localStorage.getItem('warning') !== undefined)
       if (localStorage.getItem('warning') === undefined) {
 
         return JSON.parse(localStorage.getItem('warning'))
@@ -243,9 +257,6 @@ export class ShowComponent implements OnInit {
       else {
           array1.push(this.curField)
       }
-
-      // ethylene value jumps to 700
-
       // this.showService.sendWarning(this.curField)
       //   .toPromise()
       //   .then((data: any) => {
@@ -257,6 +268,7 @@ export class ShowComponent implements OnInit {
       console.log('++++++++++++++++++==')
     })
     localStorage.setItem('warning', JSON.stringify(array1))
+    localStorage.setItem('ethyVal', ethyVal)
   }
 
   populateFields(): void {

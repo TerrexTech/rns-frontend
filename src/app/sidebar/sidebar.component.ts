@@ -115,10 +115,6 @@ export class SidebarComponent implements OnInit {
           ab: 'SA'
         },
         {
-          route: AppRoutes.reports.children.temphumid,
-          ab: 'TE'
-        },
-        {
           route: AppRoutes.reports.children.waste,
           ab: 'WA'
         }
@@ -159,7 +155,7 @@ export class SidebarComponent implements OnInit {
       console.log(token.role)
     }
 
-    if (token.role === 'test') {
+    if (token.role === 'Employee' || token.role === 'employee') {
       this.routeIconDef.pop()
       console.log(this.routeIconDef)
     }

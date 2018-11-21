@@ -20,8 +20,8 @@
         </div>
         <div class="row">
         <div class="col-sm-3">
-                <div class="card report-info">
-                        <div id="info" class="card-body card-body2 mx-auto ">
+                <div class="card report-info gauge">
+                        <div id="info" class="card-body card-body2 mx-auto center">
                 <rg-gauge-chart
                     [canvasWidth]="carbonCanvasWidth"
                     [needleValue]="carbonNeedleValue"
@@ -51,8 +51,8 @@
         </div>
         <div class="row">
             <div class="col-sm-3">
-                    <div class="card report-info">
-                            <div id="info" class="card-body card-body2 mx-auto">
+                    <div class="card report-info gauge">
+                            <div id="info" class="card-body card-body2 mx-auto center">
                     <rg-gauge-chart
                         [canvasWidth]="ethyCanvasWidth"
                         [needleValue]="ethyNeedleValue"
@@ -82,8 +82,8 @@
           </div>
           <div class="row">
                 <div class="col-sm-3">
-                        <div class="card report-info">
-                                <div id="info" class="card-body card-body2 mx-auto">
+                        <div class="card report-info gauge">
+                                <div id="info" class="card-body card-body2 mx-auto center">
                         <rg-gauge-chart
                             [canvasWidth]="tempCanvasWidth"
                             [needleValue]="tempNeedleValue"
@@ -104,6 +104,7 @@
                           <i class="fa fa-search"></i>
                         </a>
                       </div>
+                      <h6 class="text-center">Temperature/Humidity</h6>
                   <canvas id="temperature" class="canvas" height="30%" width="100%"></canvas>
                 </div>
                 </div>

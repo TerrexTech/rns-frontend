@@ -81,11 +81,12 @@ export class DashboardComponent implements OnInit {
     // console.log(mock.genFloat(30, 90))
     // this.ethyData = mock.genFloat(30, 90)
     // this.dataSource.data = this.ethyData
+    const dateLabel = new Date()
     this.totalChart = new Chart('totalChart', {
       type: 'bar',
       data: {
-        labels: [new Date().toISOString()
-                           .split('T')[0]],
+        labels: [dateLabel.toLocaleString()
+                          .split(',')[0]],
         datasets: [
           {
             label: 'Total Weight',
@@ -162,7 +163,7 @@ export class DashboardComponent implements OnInit {
         // this.ethyNeedleValue = metric + 1
       })
       this.totalChart.update()
-    }, 200000)
+    }, 1200000)
     // })
   }
 
@@ -285,26 +286,28 @@ export class DashboardComponent implements OnInit {
 
         })
 
-    }, 200000)
+    }, 1200000)
   }
 
   loadSoldGraph(): void {
     const m = new MockUtils()
     m.genSoldGraph()
+    const d = new Date()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('sold'))
     this.soldChart = new Chart('soldChart', {
       type: 'line',
       data: {
-        labels: [`${new Date().getHours()}:${new Date().getMinutes()}`,
-                 `${new Date().getHours()}:${new Date().getMinutes()}`,
-                 `${new Date().getHours()}:${new Date().getMinutes()}`,
-                 `${new Date().getHours()}:${new Date().getMinutes()}`,
-                 `${new Date().getHours()}:${new Date().getMinutes()}`],
+        labels: [`${(d.getHours() - 5) - 12}:${d.getMinutes()}` ,
+                 `${(d.getHours() - 4) - 12}:${d.getMinutes()}`,
+                 `${(d.getHours() - 3) - 12}:${d.getMinutes()}`,
+                 `${(d.getHours() - 2) - 12}:${d.getMinutes()}`,
+                 `${(d.getHours() - 1) - 12}:${d.getMinutes()}`
+                ],
         datasets: [{
           fill: false,
           label: 'Sold',
-          data: [this.soldWeight / 8, this.soldWeight / 6, this.soldWeight / 4, this.soldWeight / 1.5, this.soldWeight],
+          data: [this.soldWeight / 1.4, this.soldWeight / 1.3, this.soldWeight / 1.2, this.soldWeight / 1, this.soldWeight],
           borderColor: '#FF0000'
         }]
       },
@@ -345,7 +348,7 @@ export class DashboardComponent implements OnInit {
         dataset.data.push(metric + 1)
       })
       this.soldChart.update()
-    }, 200000)
+    }, 1200000)
   }
 
   loadDistGraph(): void {
@@ -532,7 +535,7 @@ export class DashboardComponent implements OnInit {
         dataset.data.push(metric + 1)
       })
       this.donationChart.update()
-    }, 200000)
+    }, 1200000)
       }
 
   // success(message: string): void {

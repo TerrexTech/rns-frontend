@@ -111,12 +111,15 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-          (click)="highlightedRows.push(row)"
-          [style.background]="highlightedRows.indexOf(row) === 0 ? 'lightblue' : ''"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[10, 20, 30]"showFirstLastButtons></mat-paginator>
+        <mat-toolbar color="primary">
+          <mat-toolbar-row>
+            <button mat-flat-button><mat-icon class="example-icon">chevron_left</mat-icon></button>
+            <button mat-flat-button><mat-icon class="example-icon">chevron_right</mat-icon></button>
+          </mat-toolbar-row>
+        </mat-toolbar>
       </div>
     </mat-card-content>
   </mat-card>

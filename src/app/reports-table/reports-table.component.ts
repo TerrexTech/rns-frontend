@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
+import { MatDialog, MatPaginator, MatSort, MatSortable, MatTableDataSource } from '@angular/material'
 import { Http } from '@angular/http'
 // import { LoadInventoryJsonService } from '../services/load-inventory-json/load-inventory-json.service'
 import { Inventory } from '../models/inventory'
@@ -78,7 +78,6 @@ export class ReportsTableComponent implements OnInit {
       this.ethyData = mock.genEthyData()
       this.dataSource.data = this.ethyData
       this.dataSource.paginator = this.paginator
-      this.dataSource.paginator.pageSize = this.ethyData.length
     }
 
     else if (this.jsonFields === 2) {
@@ -86,6 +85,12 @@ export class ReportsTableComponent implements OnInit {
       console.log(mock.genInvData())
       this.invData = mock.genInvData()
       this.dataSource.data = this.invData
+      const sorting: MatSortable = {
+          id: 'Sold Weight',
+          start: 'desc',
+          disableClear: false
+      }
+      this.sort.sort(sorting)
     }
 
     else if (this.jsonFields === 3) {

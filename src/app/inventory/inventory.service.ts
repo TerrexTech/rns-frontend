@@ -99,12 +99,10 @@ export class InventoryService {
 
     public getTable(): Observable<Object> {
 
-        const date = new Date().getTime()
-
         const gqlQuery = `
         {
             InventoryQueryCount(
-            count: 50
+            count: 10
             ){
             _id,
             itemID,

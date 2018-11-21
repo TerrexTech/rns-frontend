@@ -12,3 +12,12 @@
     height: 80%
   }
 }
+
+.gauge{
+  height: 95%;
+}
+
+.center{
+  position: absolute;
+  top: 25%
+}

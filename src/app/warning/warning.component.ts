@@ -29,12 +29,13 @@ export class WarningComponent implements OnInit {
 
   ngOnInit(): void {
     this.navServ.newEvent(0)
+
+    if (localStorage.getItem('showTable')) {
     const arr1 = JSON.parse(localStorage.getItem('showTable'))
     console.log(arr1.map(e => {
 
     return e.expiryDate
   }))
-
     console.log(arr1[0].expiryDate)
 
     if (localStorage.getItem('warning')) {
@@ -50,6 +51,7 @@ export class WarningComponent implements OnInit {
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
     }
+  }
   }
 
   public getJSON(): any {

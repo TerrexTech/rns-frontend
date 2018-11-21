@@ -19,6 +19,7 @@ import {
     MatNativeDateModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule
 } from '@angular/material'
@@ -44,7 +45,8 @@ import {
         MatButtonModule,
         MatGridListModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatSortModule
     ],
     declarations: [
         ReportsTableComponent

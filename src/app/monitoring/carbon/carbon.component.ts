@@ -6,7 +6,6 @@ import { Chart } from 'chart.js'
 import { MockMonitor } from '../mocks-monitor'
 import { MatDialog } from '@angular/material'
 import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
-import { GaugeChartComponent } from 'angular-gauge-chart'
 
 interface Monitoring {
   sku: string
@@ -111,45 +110,6 @@ export class CarbonComponent implements OnInit {
     // this.dataSource.data = this.ethyData
     this.carbonChart = new Chart('carbon', {
       type: 'line',
-      // data: {
-      //   datasets: [
-      //     {
-      //       label: 'Ethylene level',
-      //       data: this.data,
-      //       backgroundColor: 'rgba(255, 99, 132, 1)',
-      //       fill: false
-      //     }
-      //   ]
-      // },
-      // options: {
-      //   responsive: true,
-      //   hover: {
-      //     mode: 'dataset'
-      //   },
-      //   legend: {
-      //     display: true
-      //   },
-      //   scales: {
-      //     xAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'Period'
-      //       }
-      //     }],
-      //     yAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'PPM'
-      //       },
-      //       ticks: {
-      //         beginAtZero: true
-      //       }
-      //     }]
-      //   }
-      // }
-
       data: {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
@@ -241,45 +201,6 @@ export class CarbonComponent implements OnInit {
     // this.dataSource.data = this.ethyData
     this.ethyleneChart = new Chart('ethylene', {
       type: 'line',
-      // data: {
-      //   datasets: [
-      //     {
-      //       label: 'Ethylene level',
-      //       data: this.data,
-      //       backgroundColor: 'rgba(255, 99, 132, 1)',
-      //       fill: false
-      //     }
-      //   ]
-      // },
-      // options: {
-      //   responsive: true,
-      //   hover: {
-      //     mode: 'dataset'
-      //   },
-      //   legend: {
-      //     display: true
-      //   },
-      //   scales: {
-      //     xAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'Period'
-      //       }
-      //     }],
-      //     yAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'PPM'
-      //       },
-      //       ticks: {
-      //         beginAtZero: true
-      //       }
-      //     }]
-      //   }
-      // }
-
       data: {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         datasets: [{
@@ -371,44 +292,6 @@ export class CarbonComponent implements OnInit {
     // this.dataSource.data = this.ethyData
     this.tempChart = new Chart('temperature', {
       type: 'line',
-      // data: {
-      //   datasets: [
-      //     {
-      //       label: 'Ethylene level',
-      //       data: this.data,
-      //       backgroundColor: 'rgba(255, 99, 132, 1)',
-      //       fill: false
-      //     }
-      //   ]
-      // },
-      // options: {
-      //   responsive: true,
-      //   hover: {
-      //     mode: 'dataset'
-      //   },
-      //   legend: {
-      //     display: true
-      //   },
-      //   scales: {
-      //     xAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'Period'
-      //       }
-      //     }],
-      //     yAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'PPM'
-      //       },
-      //       ticks: {
-      //         beginAtZero: true
-      //       }
-      //     }]
-      //   }
-      // }
 
       data: {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
@@ -419,7 +302,8 @@ export class CarbonComponent implements OnInit {
 
             return parseFloat(e.Temperature)
           }),
-          backgroundColor: 'rgba(153,255,51,0.4)'
+          borderColor: 'rgba(153,255,51,0.4)',
+          fill: false
         },
         {
           label: 'Humidity',
@@ -428,7 +312,8 @@ export class CarbonComponent implements OnInit {
 
             return parseFloat(e.Humidity)
           }),
-          backgroundColor: 'rgba(153,25,51,0.4)'
+          borderColor: 'rgba(153,25,51,0.4)',
+          fill: false
         }]
       },
       options: {

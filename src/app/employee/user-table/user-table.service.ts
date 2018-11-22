@@ -16,11 +16,8 @@ export class UserTableService {
         const gqlQuery = `
             {
         InventoryQuery(
-            barcode: "a",
         ){
-            _id,
             itemID,
-            barcode,
             dateArrived,
             dateSold,
             deviceID,
@@ -31,7 +28,6 @@ export class UserTableService {
             origin,
             price,
             rsCustomerID,
-            salePrice,
             sku,
             soldWeight,
             timestamp,

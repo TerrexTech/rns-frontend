@@ -38,7 +38,6 @@ export class MonitorSearchService {
                 origin,
                 price,
                 rsCustomerID,
-                salePrice,
                 sku,
                 soldWeight,
                 timestamp,

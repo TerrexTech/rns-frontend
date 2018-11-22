@@ -27,7 +27,6 @@ export class InventoryService {
             origin: "${data.origin}",
             price: ${data.price},
             rsCustomerID: "${this.jwt.getAccessToken().sub}",
-            salePrice: 0,
             sku: "${data.sku}",
             soldWeight: 0,
             timestamp: ${Math.floor(date)},
@@ -35,7 +34,6 @@ export class InventoryService {
             upc: "${54754}",
             wasteWeight: 0
         ){
-        _id,
         itemID,
         dateArrived,
         deviceID,
@@ -45,7 +43,6 @@ export class InventoryService {
         origin,
         price,
         rsCustomerID,
-        salePrice,
         sku,
         soldWeight,
         timestamp,
@@ -106,7 +103,6 @@ export class InventoryService {
             InventoryQueryCount(
             count: 10
             ){
-            _id,
             itemID,
             dateArrived,
             dateSold,
@@ -117,7 +113,6 @@ export class InventoryService {
             origin,
             price,
             rsCustomerID,
-            salePrice,
             sku,
             soldWeight,
             timestamp,
@@ -144,7 +139,6 @@ export class InventoryService {
               end: ${end},
               count: 10
             ){
-              _id,
               itemID,
               dateArrived,
               dateSold,
@@ -155,7 +149,6 @@ export class InventoryService {
               origin,
               price,
               rsCustomerID,
-              salePrice,
               sku,
               soldWeight,
               timestamp,
@@ -198,9 +191,7 @@ export class InventoryService {
         InventoryQuery(
             itemID: ${data.itemID},
         ){
-            _id,
             itemID,
-            barcode,
             dateArrived,
             dateSold,
             deviceID,
@@ -211,7 +202,6 @@ export class InventoryService {
             origin,
             price,
             rsCustomerID,
-            salePrice,
             sku,
             soldWeight,
             timestamp,

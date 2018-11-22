@@ -24,9 +24,7 @@ export class ReportTableService {
         InventoryQuery(
             timestamp: ${date},
         ){
-            _id,
             itemID,
-            barcode,
             dateArrived,
             dateSold,
             deviceID,
@@ -37,7 +35,6 @@ export class ReportTableService {
             origin,
             price,
             rsCustomerID,
-            salePrice,
             sku,
             soldWeight,
             timestamp,

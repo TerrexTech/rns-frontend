@@ -52,9 +52,7 @@ export class ShowTableService {
         InventoryQuery(
             timestamp: ${date},
         ){
-            _id,
             itemID,
-            barcode,
             dateArrived,
             dateSold,
             deviceID,
@@ -65,7 +63,6 @@ export class ShowTableService {
             origin,
             price,
             rsCustomerID,
-            salePrice,
             sku,
             soldWeight,
             timestamp,

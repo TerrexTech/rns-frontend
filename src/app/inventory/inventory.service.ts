@@ -101,7 +101,7 @@ export class InventoryService {
         const gqlQuery = `
         {
             InventoryQueryCount(
-            count: 10
+            count: 100
             ){
             itemID,
             dateArrived,

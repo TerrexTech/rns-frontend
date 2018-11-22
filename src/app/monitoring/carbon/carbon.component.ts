@@ -82,6 +82,7 @@ export class CarbonComponent implements OnInit {
     })
     .afterClosed()
     .subscribe(data => {
+      console.log(data)
       console.log(data.data.InventoryQueryItem)
       this.searchResultsData = data.data.InventoryQueryItem[0]
       this.fruitName = this.searchResultsData.name
@@ -99,6 +100,8 @@ export class CarbonComponent implements OnInit {
     let warningItem: any
     const m = new MockMonitor()
     let mockData = []
+    let mockData2 = []
+    let mockDataFinal = []
 
     if (localStorage.getItem('warning')) {
       warningItem = JSON.parse(localStorage.getItem('warning'))
@@ -113,10 +116,12 @@ export class CarbonComponent implements OnInit {
       console.log('the same values')
       this.ethyValue = localStorage.getItem('ethyVal')
       console.log(this.ethyValue)
-      mockData  = m.genCarbonData(2300, 2500)
+      mockData  = m.genCarbonData(1300, 1500, 3)
+      mockData2 = m.genCarbonData(2300, 2500, 7)
+      mockDataFinal = [...mockData, ...mockData2]
     }
     else {
-      mockData  = m.genCarbonData(1300, 1600)
+      mockData  = m.genCarbonData(1300, 1600, 10)
     }
     console.log('7&&&&&&&&&&&&&&&&&&&')
     console.log(mockData.map(e => {
@@ -138,7 +143,7 @@ export class CarbonComponent implements OnInit {
                 `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
           label: 'Carbon',
-          data: mockData.map(e => {
+          data: mockDataFinal.map(e => {
             console.log(parseFloat(e.Carbon))
 
             return parseFloat(e.Carbon)
@@ -195,6 +200,8 @@ export class CarbonComponent implements OnInit {
     let warningItem: any
     const m = new MockMonitor()
     let mockData = []
+    let mockData2 = []
+    let mockDataFinal = []
 
     if (localStorage.getItem('warning')) {
       warningItem = JSON.parse(localStorage.getItem('warning'))
@@ -209,10 +216,12 @@ export class CarbonComponent implements OnInit {
       console.log('the same values')
       this.ethyValue = localStorage.getItem('ethyVal')
       console.log(this.ethyValue)
-      mockData  = m.genEthyleneData(750, 1000)
+      mockData  = m.genEthyleneData(400, 600, 3)
+      mockData2 = m.genEthyleneData(1300, 1500, 7)
+      mockDataFinal = [...mockData, ...mockData2]
     }
     else {
-      mockData  = m.genEthyleneData(400, 550)
+      mockData  = m.genEthyleneData(400, 550, 10)
     }
 
     this.ethyleneChart = new Chart('ethylene', {
@@ -230,7 +239,7 @@ export class CarbonComponent implements OnInit {
         `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
           label: 'Ethylene',
-          data: mockData.map(e => {
+          data: mockDataFinal.map(e => {
             return parseFloat(e.Ethylene)
           }),
           borderColor: '#FF0000',

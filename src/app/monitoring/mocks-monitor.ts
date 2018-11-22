@@ -97,9 +97,9 @@ export class MockMonitor {
         return `${s1}${i1}`.toUpperCase()
     }
 
-    genCarbonData(min, max): any {
+    genCarbonData(min, max, iteration: number): any {
         const array1 = []
-        for (let index = 0; index < 10; index++) {
+        for (let index = 0; index < iteration; index++) {
             array1.push({
                 Carbon: this.genFloat(min, max)
                     .toFixed(2),
@@ -110,27 +110,18 @@ export class MockMonitor {
         return array1
     }
 
-    genEthyleneData(min, max): any {
+    genEthyleneData(min, max, iteration: number): any {
         const array2 = []
-        console.log(localStorage.getItem('ethylene') !== undefined)
-        if (localStorage.getItem('ethylene') === undefined) {
-
-            return JSON.parse(localStorage.getItem('ethylene'))
-        } else {
-
-            const ethyleneArr = []
-
-            for (let index = 0; index < 10; index++) {
-                array2.push({
-                    Ethylene: this.genFloat(min, max)
-                        .toFixed(2),
-                    Timestamp: new Date(this.genArrivalDate())
-                        .toLocaleString()
-                        .split(',')[1]
-                })
-            }
-            localStorage.setItem('ethylene', JSON.stringify(array2))
+        for (let index = 0; index < iteration; index++) {
+            array2.push({
+                Ethylene: this.genFloat(min, max)
+                    .toFixed(2),
+                Timestamp: new Date(this.genArrivalDate())
+                    .toLocaleString()
+                    .split(',')[1]
+            })
         }
+        localStorage.setItem('ethylene', JSON.stringify(array2))
 
         return array2
     }

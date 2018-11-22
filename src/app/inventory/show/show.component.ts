@@ -180,18 +180,22 @@ export class ShowComponent implements OnInit {
         console.log(data)
         paginator = data.data.InventoryQueryTimestamp
         this.dataSource.data = paginator
+        this.genExpiry()
       })
       .catch(console.log)
   }
 
   onPaginateForward(): void {
-    this.startForwardTime = 1
-    this.showService.paginateTable(this.startForwardTime, paginator[paginator.length - 1].timestamp)
+    !this.startForwardTime ?  this.startForwardTime = 1 : this.startForwardTime = paginator[paginator.length - 1].timestamp
+    console.log(this.startForwardTime)
+    console.log(paginator[paginator.length - 1].timestamp)
+    this.showService.paginateTable(this.startForwardTime, 9999999999)
       .toPromise()
       .then((data: any) => {
         console.log(data.data.InventoryQueryTimestamp)
         paginator = data.data.InventoryQueryTimestamp
         this.dataSource.data = paginator
+        this.genExpiry()
         // this.lastTimestamp = data.data.InventoryQueryTimestamp[0].timestamp
       })
       .catch(console.log)

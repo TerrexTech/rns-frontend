@@ -22,7 +22,7 @@ export class DisposeFoodComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
 
-  displayedColumns = ['select', 'sku', 'name', 'leftover waste', 'status', 'projected expiry']
+  displayedColumns = ['select', 'sku', 'name', 'qty_unsold', 'status', 'projectedExpiry']
   curField: any
 
   ngOnInit(): void {

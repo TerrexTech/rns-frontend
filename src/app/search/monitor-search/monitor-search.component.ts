@@ -36,7 +36,7 @@ export class MonitorSearchComponent implements OnInit {
     private dialogRef: MatDialogRef<MonitorSearchComponent>,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private searchService: MonitorSearchService
+    private monitorSev: MonitorSearchService
   ) { }
 
   ngOnInit(): void {
@@ -49,20 +49,28 @@ export class MonitorSearchComponent implements OnInit {
       period: [''],
       exact_match: ['']
     })
-
-    this.form.get('sku')
-             .setValue('PS7-VVF-IEP-WL')
-    this.form.get('name')
-             .setValue('Tomato')
-    this.form.get('lot')
-             .setValue('HS8400')
-    this.form.get('start_date')
-             .setValue('2013-01-08')
-    this.form.get('end_date')
-             .setValue('2013-01-08')
-    this.form.get('period')
-             .setValue('week')
   }
+
+  genFormValues(): void {
+    if (localStorage.getItem('warning')) {
+    const formValues = JSON.parse(localStorage.getItem('warning'))
+    console.log(formValues[0])
+    this.form.get('sku')
+        .setValue(formValues[0].sku)
+    this.form.get('name')
+        .setValue(formValues[0].name)
+    this.form.get('lot')
+        .setValue(formValues[0].lot)
+    }
+    else {
+    this.form.get('sku')
+        .setValue('PS7-VVF-IEP-WL')
+    this.form.get('name')
+        .setValue('Tomato')
+    this.form.get('lot')
+        .setValue('HS8400')
+  }
+}
 
   checkDates(): boolean {
     if ((this.form.value.start_date !== '' && this.form.value.end_date !== '') && this.form.value.period === '') {
@@ -143,7 +151,7 @@ export class MonitorSearchComponent implements OnInit {
       for (const property in object) {
         if (object.hasOwnProperty(property)) {
           if (object[property]) {
-            searchData[property] =  `{ $eq: ${object[property]} },`
+            searchData[property] = object[property]
           }
         }
       }
@@ -151,9 +159,14 @@ export class MonitorSearchComponent implements OnInit {
       console.log(searchData)
       localStorage.setItem('monitoring', JSON.stringify(this.form.value))
       if (!this.dateNotValid && !this.periodNotValid) {
-        // searchService
-        this.reset()
-        this.close(this.searchService.search(searchData))
+        this.monitorSev.search(searchData)
+                       .toPromise()
+                       .then(data => {
+                         console.log(data)
+                         this.reset()
+                         this.dialogRef.close(data)
+                       })
+                       .catch(() => console.log('Timed out.'))
       }
     }
   }
@@ -192,10 +205,6 @@ export class MonitorSearchComponent implements OnInit {
   reset(): void {
     this.form.reset()
     this.formSubmitAttempt = false
-  }
-
-  close(data): void {
-    this.dialogRef.close(data)
   }
 
   isFieldValid(field: string): any {

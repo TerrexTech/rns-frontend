@@ -77,7 +77,7 @@ export class MockMonitor {
 
     genArrivalDate(): number {
 
-        return Date.now()
+        return new Date().getTime()
     }
 
     genWeight(): number {
@@ -97,36 +97,20 @@ export class MockMonitor {
         return `${s1}${i1}`.toUpperCase()
     }
 
-    genCarbonData(): any {
+    genCarbonData(min, max): any {
         const array1 = []
-        console.log(localStorage.getItem('carbon') !== undefined)
-        if (localStorage.getItem('carbon') === undefined) {
-
-            return JSON.parse(localStorage.getItem('carbon'))
-        } else {
-
-            for (let index = 0; index < 100; index++) {
-                array1.push({
-                    SKU: this.genSKU(),
-
-                    Name: this.genName(),
-                    Carbon: this.genFloat(40, 60)
-                        .toFixed(2),
-                    Timestamp: new Date(this.genArrivalDate())
-                        .toISOString()
-                        .split('T')[0],
-                    Status: this.genName(),
-                    'Projected Expiry': this.genArrivalDate(),
-                    'Trend (%)': (this.genFloat(-1, 1) * 5).toFixed(0)
-                })
-            }
-            localStorage.setItem('carbon', JSON.stringify(array1))
+        for (let index = 0; index < 10; index++) {
+            array1.push({
+                Carbon: this.genFloat(min, max)
+                    .toFixed(2),
+                Timestamp: this.genArrivalDate()
+            })
         }
 
         return array1
     }
 
-    genEthyleneData(): any {
+    genEthyleneData(min, max): any {
         const array2 = []
         console.log(localStorage.getItem('ethylene') !== undefined)
         if (localStorage.getItem('ethylene') === undefined) {
@@ -138,16 +122,11 @@ export class MockMonitor {
 
             for (let index = 0; index < 10; index++) {
                 array2.push({
-                    SKU: this.genSKU(),
-                    Name: this.genName(),
-                    Ethylene: this.genFloat(40, 60)
+                    Ethylene: this.genFloat(min, max)
                         .toFixed(2),
                     Timestamp: new Date(this.genArrivalDate())
-                        .toISOString()
-                        .split('T')[0],
-                    Status: this.genName(),
-                    'Projected Expiry': this.genArrivalDate(),
-                    'Trend (%)': (this.genFloat(-1, 1) * 5).toFixed(0)
+                        .toLocaleString()
+                        .split(',')[1]
                 })
             }
             localStorage.setItem('ethylene', JSON.stringify(array2))
@@ -166,7 +145,7 @@ export class MockMonitor {
 
             const flashArr = []
 
-            for (let index = 0; index < 100; index++) {
+            for (let index = 0; index < 10; index++) {
                 array3.push({
                     SKU: this.genSKU(),
                     Name: this.genName(),
@@ -189,30 +168,20 @@ export class MockMonitor {
 
     genTempData(): any {
         const array3 = []
-        console.log(localStorage.getItem('temp') !== undefined)
-        if (localStorage.getItem('temp') === undefined) {
+        const flashArr = []
 
-            return JSON.parse(localStorage.getItem('temp'))
-        } else {
-
-            const flashArr = []
-
-            for (let index = 0; index < 100; index++) {
-                array3.push({
-                    SKU: this.genSKU(),
-                    Name: this.genName(),
-                    Temperature: this.genFloat(1, 80)
-                        .toFixed(2),
-                    Humidity: this.genFloat(1, 80)
-                        .toFixed(2),
-                    Timestamp: new Date(this.genArrivalDate())
-                        .toISOString()
-                        .split('T')[0],
-                    Status: this.genName()
-                })
-            }
-            localStorage.setItem('temp', JSON.stringify(array3))
+        for (let index = 0; index < 10; index++) {
+            array3.push({
+                Temperature: this.genFloat(1, 80)
+                    .toFixed(2),
+                Humidity: this.genFloat(1, 80)
+                    .toFixed(2),
+                Timestamp: new Date(this.genArrivalDate())
+                    .toLocaleString()
+                    .split(',')[1]
+            })
         }
+        localStorage.setItem('temp', JSON.stringify(array3))
 
         return array3
     }

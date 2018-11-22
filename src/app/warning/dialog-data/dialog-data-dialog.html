@@ -27,7 +27,7 @@
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="status">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                        <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.status }}</a> </td>
+                        <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.status === 'bad' ? 'Expiring Soon' : 'bad' }}</a> </td>
                     </ng-container>
 
                     <!-- Weight Column -->
@@ -45,7 +45,7 @@
             </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-        <button mat-flat-button color="accent" [mat-dialog-close]="true" (click)="onSubmit()">Create</button>
+        <button mat-flat-button color="accent" [mat-dialog-close]="true" (click)="onSubmit()">Yes</button>
         <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-        <button mat-flat-button color="warn" [mat-dialog-close]="true">Close</button>
+        <button mat-flat-button color="warn" [mat-dialog-close]="true">No</button>
     </mat-dialog-actions>

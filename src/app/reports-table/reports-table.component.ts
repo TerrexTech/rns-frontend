@@ -135,19 +135,12 @@ export class ReportsTableComponent implements OnInit {
       this.dataSource.data = this.wasteData
     }
 
-    else if (this.jsonFields === 8) {
-      const mock = new MockMonitor()
-      console.log(mock.genCarbonData())
-      this.carbonMon = mock.genCarbonData()
-      this.dataSource.data = this.carbonMon
-    }
-
-    else if (this.jsonFields === 9) {
-      const mock = new MockMonitor()
-      console.log(mock.genEthyleneData())
-      this.ethyData = mock.genEthyleneData()
-      this.dataSource.data = this.ethyData
-    }
+    // else if (this.jsonFields === 9) {
+    //   const mock = new MockMonitor()
+    //   console.log(mock.genEthyleneData())
+    //   this.ethyData = mock.genEthyleneData()
+    //   this.dataSource.data = this.ethyData
+    // }
 
     else if (this.jsonFields === 10) {
       const mock = new MockMonitor()

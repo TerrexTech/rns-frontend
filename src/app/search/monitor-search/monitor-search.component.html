@@ -7,6 +7,9 @@
       <button class="btn btn-icon btn-md edit generate-btn" mat-dialog-close>
         <i class="fa fa-times"></i>
       </button>
+      <button class="btn btn-icon btn-md edit generate-btn" (click)='genFormValues()'>
+          <i class="fa fa-plus"></i>
+      </button>
       </div>
   </div>
 
@@ -57,7 +60,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <div class="row">
       <div class="col-sm-2 text-md-right">
         <label class="form-label field-name">Date Range</label>
@@ -109,7 +112,7 @@
         <mat-checkbox formControlName="exact_match">Check box to apply all search fields to specific search.</mat-checkbox>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="row submit-btn-container">
     <div class="col-sm-3 offset-sm-3">

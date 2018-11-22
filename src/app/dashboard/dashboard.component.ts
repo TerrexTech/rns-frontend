@@ -74,13 +74,6 @@ export class DashboardComponent implements OnInit {
     m.genTotalGraph()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('total'))
-   // const arr1 = this.openSearch()
-    // console.log(arr1.map(e => {
-    //   return e.Total, e.Sold, e.Waste
-    // }))
-    // console.log(mock.genFloat(30, 90))
-    // this.ethyData = mock.genFloat(30, 90)
-    // this.dataSource.data = this.ethyData
     const dateLabel = new Date()
     this.totalChart = new Chart('totalChart', {
       type: 'bar',
@@ -153,17 +146,17 @@ export class DashboardComponent implements OnInit {
     //   this.ethyChart.update()
 
     //   // Moving Graph
-    setInterval(() => {
-      this.totalChart.data.datasets.forEach((dataset, index) => {
+   // setInterval(() => {
+     // this.totalChart.data.datasets.forEach((dataset, index) => {
         // console.log(dataset)
-        const g = dataset.data.length
+       // const g = dataset.data.length
         // console.log(dataset.data)
-        const metric = dataset.data.shift()
-        dataset.data.push(metric + 1)
+       // const metric = dataset.data.shift()
+       // dataset.data.push(metric + 1)
         // this.ethyNeedleValue = metric + 1
-      })
-      this.totalChart.update()
-    }, 1200000)
+     // })
+     // this.totalChart.update()
+   // }, 1200)
     // })
   }
 

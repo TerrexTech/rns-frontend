@@ -31,7 +31,7 @@ export class ReportService {
               }
     `
 
-        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -56,7 +56,7 @@ export class ReportService {
               }
     `
 
-        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -82,7 +82,7 @@ export class ReportService {
               }
     `
 
-        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -107,7 +107,7 @@ export class ReportService {
               }
     `
 
-        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -133,7 +133,7 @@ export class ReportService {
           }
     `
 
-        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -159,7 +159,7 @@ export class ReportService {
           }
     `
 
-        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -184,7 +184,7 @@ export class ReportService {
               }
     `
 
-        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }

@@ -22,10 +22,15 @@ export class DonateFoodComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
 
-  displayedColumns = ['select', 'sku', 'name', 'leftover waste', 'status', 'projected expiry']
+  displayedColumns = ['select', 'sku', 'name', 'qty_unsold', 'projectedExpiry']
   curField: any
 
   ngOnInit(): void {
+    const oneday = 86400
+    const twoday = oneday * 2
+    const threeday = oneday * 3
+    const today = new Date().getTime() / 1000
+
     this.navServ.newEvent(0)
     const arr2 = JSON.parse(localStorage.getItem('donation'))
     this.dataSource.data = arr2

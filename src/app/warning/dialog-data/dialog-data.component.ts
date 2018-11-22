@@ -37,6 +37,9 @@ export class DialogDataDialogComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data.data)
     this.dataSource.data = this.data.data[0]
+    this.dataSource.data.forEach(element => {
+      // element['status'] = 'Expiring soon'
+    })
 
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort

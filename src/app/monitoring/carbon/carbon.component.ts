@@ -7,14 +7,6 @@ import { MockMonitor } from '../mocks-monitor'
 import { MatDialog } from '@angular/material'
 import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
 
-interface Monitoring {
-  sku: string
-  name: string
-  lot: string
-}
-
-const searchData: Monitoring[] = []
-
 @Component({
   selector: 'component-carbon',
   templateUrl: './carbon.component.html',
@@ -24,9 +16,12 @@ export class CarbonComponent implements OnInit {
   ethyleneChart: any
   carbonChart: any
   tempChart: any
-  fruitName = 'Apple'
-  sku = 'Apple'
-  lot = 'Apple'
+  fruitName: string
+  sku: string
+  lot: string
+  searchResultsData: any
+  ethyValue: string
+  date: Date = new Date()
 
   public carbonCanvasWidth = 200
   public carbonNeedleValue = 20
@@ -78,12 +73,6 @@ export class CarbonComponent implements OnInit {
 
   ngOnInit(): void {
     this.openSearch()
-
-    if (localStorage.getItem('warning')) {
-      this.loadCarbonGraph()
-      this.loadEthyGraph()
-      this.loadTempGraph()
-    }
   }
 
   openSearch(): void {
@@ -91,28 +80,65 @@ export class CarbonComponent implements OnInit {
       width: '500px',
       disableClose: true
     })
+    .afterClosed()
+    .subscribe(data => {
+      console.log(data.data.InventoryQueryItem)
+      this.searchResultsData = data.data.InventoryQueryItem[0]
+      this.fruitName = this.searchResultsData.name
+      this.sku = this.searchResultsData.sku
+      this.lot = this.searchResultsData.lot
+      this.loadCarbonGraph()
+      this.loadEthyGraph()
+      this.loadTempGraph()
+    })
   }
 
   loadCarbonGraph(): void {
+    console.log(this.carbonOptions.rangeLabel[1])
     // this.openSearch()
+    let warningItem: any
     const m = new MockMonitor()
-    m.genCarbonData()
+    let mockData = []
+
+    if (localStorage.getItem('warning')) {
+      warningItem = JSON.parse(localStorage.getItem('warning'))
+      console.log(warningItem[0].itemID)
+      console.log(this.searchResultsData.itemID)
+    }
+    else {
+      console.log('Warning not found.')
+    }
+
+    if (this.searchResultsData.itemID === warningItem[0].itemID) {
+      console.log('the same values')
+      this.ethyValue = localStorage.getItem('ethyVal')
+      console.log(this.ethyValue)
+      mockData  = m.genCarbonData(2300, 2500)
+    }
+    else {
+      mockData  = m.genCarbonData(1300, 1600)
+    }
     console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('carbon'))
-   // const arr1 = this.openSearch()
-    console.log(arr1.map(e => {
+    console.log(mockData.map(e => {
       return e.Carbon
     }))
-    // console.log(mock.genFloat(30, 90))
-    // this.ethyData = mock.genFloat(30, 90)
-    // this.dataSource.data = this.ethyData
+
     this.carbonChart = new Chart('carbon', {
       type: 'line',
       data: {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        labels: [`${this.date.getHours()}:${this.date.getMinutes() + 1}` ,
+                `${this.date.getHours()}:${this.date.getMinutes() + 2}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 3}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 4}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 5}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 6}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 7}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 8}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 9}`,
+                `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
           label: 'Carbon',
-          data: arr1.map(e => {
+          data: mockData.map(e => {
             console.log(parseFloat(e.Carbon))
 
             return parseFloat(e.Carbon)
@@ -151,61 +177,60 @@ export class CarbonComponent implements OnInit {
       }
     })
 
-    // this.getJSON().subscribe(dataArr => {
-    //   console.log(dataArr)
-    //   const metrics: any = [
-    //     []
-    //   ]
-    //   // total_weight: 195, sold_weight: 58, waste_weight: 49
-    //   Object.keys(dataArr).forEach(k => {
-    //     const prods = dataArr[k]
-    //     const date = new Date(prods.dates * 1000).toDateString()
-    //     this.ethyChart.data.labels.push(date)
-    //     metrics[0].push(prods.Ethylene)
-    //   })
-
-    //   this.ethyChart.data.datasets.forEach((dataset, index) =>
-    //     dataset.data = dataset.data.concat(metrics[index])
-    //   )
-    //   this.ethyChart.update()
-
     //   // Moving Graph
-    setInterval(() => {
-      this.carbonChart.data.datasets.forEach((dataset, index) => {
-        // console.log(dataset)
-        const g = dataset.data.length
-        // console.log(dataset.data)
-        this.carbonNeedleValue = dataset.data[g - 1]
-        const metric = dataset.data.shift()
-        dataset.data.push(metric + 1)
-        // this.ethyNeedleValue = metric + 1
-        this.carbonBottomLabel = `${dataset.data[g - 1]}`
-      })
-      this.ethyleneChart.update()
-    }, 4000)
+    // setInterval(() => {
+    //   this.carbonChart.data.datasets.forEach((dataset, index) => {
+    //     const g = dataset.data.length
+    //     this.carbonNeedleValue = dataset.data[g - 1]
+    //     const metric = dataset.data.shift()
+    //     dataset.data.push(metric + 1)
+    //     this.carbonBottomLabel = `${dataset.data[g - 1]}`
+    //   })
+    //   this.carbonChart.update()
+    // }, 4000)
     // })
   }
 
   loadEthyGraph(): void {
+    let warningItem: any
     const m = new MockMonitor()
-    m.genEthyleneData()
-    console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('ethylene'))
-    console.log(arr1.map(e => {
-      return e.Ethylene
-    }))
-    // console.log(mock.genFloat(30, 90))
-    // this.ethyData = mock.genFloat(30, 90)
-    // this.dataSource.data = this.ethyData
+    let mockData = []
+
+    if (localStorage.getItem('warning')) {
+      warningItem = JSON.parse(localStorage.getItem('warning'))
+      console.log(warningItem[0].itemID)
+      console.log(this.searchResultsData.itemID)
+    }
+    else {
+      console.log('Warning not found.')
+    }
+
+    if (this.searchResultsData.itemID === warningItem[0].itemID) {
+      console.log('the same values')
+      this.ethyValue = localStorage.getItem('ethyVal')
+      console.log(this.ethyValue)
+      mockData  = m.genEthyleneData(750, 1000)
+    }
+    else {
+      mockData  = m.genEthyleneData(400, 550)
+    }
+
     this.ethyleneChart = new Chart('ethylene', {
       type: 'line',
       data: {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        labels: [`${this.date.getHours()}:${this.date.getMinutes() + 1}` ,
+        `${this.date.getHours()}:${this.date.getMinutes() + 2}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 3}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 4}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 5}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 6}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 7}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 8}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 9}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
           label: 'Ethylene',
-          data: arr1.map(e => {
-            console.log(parseFloat(e.Ethylene))
-
+          data: mockData.map(e => {
             return parseFloat(e.Ethylene)
           }),
           borderColor: '#FF0000',
@@ -242,61 +267,62 @@ export class CarbonComponent implements OnInit {
       }
     })
 
-    // this.getJSON().subscribe(dataArr => {
-    //   console.log(dataArr)
-    //   const metrics: any = [
-    //     []
-    //   ]
-    //   // total_weight: 195, sold_weight: 58, waste_weight: 49
-    //   Object.keys(dataArr).forEach(k => {
-    //     const prods = dataArr[k]
-    //     const date = new Date(prods.dates * 1000).toDateString()
-    //     this.ethyChart.data.labels.push(date)
-    //     metrics[0].push(prods.Ethylene)
-    //   })
-
-    //   this.ethyChart.data.datasets.forEach((dataset, index) =>
-    //     dataset.data = dataset.data.concat(metrics[index])
-    //   )
-    //   this.ethyChart.update()
-
  //     Moving Graph
-    setInterval(() => {
-      this.ethyleneChart.data.datasets.forEach((dataset, index) => {
-        // console.log(dataset)
-        const g = dataset.data.length
-        // console.log(dataset.data)
-        this.ethyNeedleValue = dataset.data[g - 1]
-        const metric = dataset.data.shift()
-        dataset.data.push(metric + 1)
-        // this.ethyNeedleValue = metric + 1
-        this.ethyBottomLabel = `${dataset.data[g - 1]}`
-      })
-      this.ethyleneChart.update()
-    }, 4000)
+    // setInterval(() => {
+    //   this.ethyleneChart.data.datasets.forEach((dataset, index) => {
+    //     const g = dataset.data.length
+    //     this.ethyNeedleValue = dataset.data[g - 1]
+    //     const metric = dataset.data.shift()
+    //     dataset.data.push(metric + 1)
+    //     this.ethyBottomLabel = `${dataset.data[g - 1]}`
+    //   })
+    //   this.ethyleneChart.update()
+    // }, 4000)
     // })
   }
 
   loadTempGraph(): void {
+
+    let warningItem: any
     const m = new MockMonitor()
-    m.genTempData()
-    console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('temp'))
-    console.log(arr1.map(e => {
-      return e
-    }))
-    // console.log(mock.genFloat(30, 90))
-    // this.ethyData = mock.genFloat(30, 90)
-    // this.dataSource.data = this.ethyData
+    let mockData = []
+
+    if (localStorage.getItem('warning')) {
+      warningItem = JSON.parse(localStorage.getItem('warning'))
+      console.log(warningItem[0].itemID)
+      console.log(this.searchResultsData.itemID)
+    }
+    else {
+      console.log('Warning not found.')
+    }
+
+    if (this.searchResultsData.itemID === warningItem[0].itemID) {
+      console.log('the same values')
+      this.ethyValue = localStorage.getItem('ethyVal')
+      console.log(this.ethyValue)
+      mockData  = m.genTempData()
+    }
+    else {
+      mockData  = m.genTempData()
+    }
+
     this.tempChart = new Chart('temperature', {
       type: 'line',
 
       data: {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        labels: [`${this.date.getHours()}:${this.date.getMinutes() + 1}` ,
+        `${this.date.getHours()}:${this.date.getMinutes() + 2}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 3}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 4}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 5}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 6}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 7}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 8}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 9}`,
+        `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
           label: 'Temperature',
-          data: arr1.map(e => {
-            console.log(parseFloat(e.Temperature))
+          data: mockData.map(e => {
 
             return parseFloat(e.Temperature)
           }),
@@ -305,9 +331,7 @@ export class CarbonComponent implements OnInit {
         },
         {
           label: 'Humidity',
-          data: arr1.map(e => {
-            console.log(parseFloat(e.Humidity))
-
+          data: mockData.map(e => {
             return parseFloat(e.Humidity)
           }),
           borderColor: 'rgba(153,25,51,0.4)',

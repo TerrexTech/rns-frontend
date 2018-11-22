@@ -40,7 +40,6 @@ export class EthyleneComponent implements OnInit {
 
   loadEthyGraph(): void {
     const m = new MockMonitor()
-    m.genEthyleneData()
     console.log('7&&&&&&&&&&&&&&&&&&&')
     const arr1 = JSON.parse(localStorage.getItem('ethylene'))
     console.log(arr1.map(e => {

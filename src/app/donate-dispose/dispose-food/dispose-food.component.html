@@ -50,9 +50,9 @@
             </ng-container>
 
             <!-- Symbol Column -->
-            <ng-container matColumnDef="leftover waste">
+            <ng-container matColumnDef="qty_unsold">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Leftover Waste </th>
-              <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element['Leftover Waste'] }}</a> </td>
+              <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.qty_unsold }}</a> </td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -62,9 +62,9 @@
             </ng-container>
 
             <!-- Weight Column -->
-            <ng-container matColumnDef="projected expiry">
+            <ng-container matColumnDef="projectedExpiry">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Time Created </th>
-              <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element['projected expiry'] * 1000 | date:
+              <td mat-cell *matCellDef="let element" class="{{ element.status }}"><a> {{ element.projectedExpiry * 1000 | date:
                   'dd/MM/yyyy' }}</a> </td>
             </ng-container>
 

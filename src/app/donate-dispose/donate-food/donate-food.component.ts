@@ -5,6 +5,7 @@ import swal from 'sweetalert'
 import { Http } from '@angular/http'
 import { Warning } from '../../models/warning'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
+import { NavbarService } from '../../shared/navbar/navbar.service'
 
 let donate: any[] = []
 
@@ -15,7 +16,7 @@ let donate: any[] = []
 })
 export class DonateFoodComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private http: Http) { }
+  constructor(public dialog: MatDialog, private http: Http, private navServ: NavbarService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
@@ -25,6 +26,7 @@ export class DonateFoodComponent implements OnInit {
   curField: any
 
   ngOnInit(): void {
+    this.navServ.newEvent(0)
     const arr2 = JSON.parse(localStorage.getItem('donation'))
     console.log(arr2[0])
     this.dataSource.data = arr2[0]

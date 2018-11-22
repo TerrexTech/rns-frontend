@@ -1,5 +1,5 @@
 .card-body2{
-height: 400px !important;
+height: 350px !important;
 }
 
 #info{
@@ -22,3 +22,18 @@ height: 400px !important;
 .generate-btn button {
   margin-top :0 !important;
 }
+
+table {
+  width: 100%
+}
+
+th.mat-header-cell {
+  text-align: center
+}
+
+td.mat-cell {
+  padding: 0 24px 0 24px;
+      font-size: 14px;
+      text-align: center;
+      border: 1px solid rgb(224, 224, 224);
+  }

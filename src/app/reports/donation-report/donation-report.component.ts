@@ -17,73 +17,73 @@ import {
   MatTableDataSource
 } from '@angular/material'
 
-let wasteChartData = []
+let donateChartData = []
 
 @Component({
-  selector: 'component-waste-report',
-  templateUrl: './waste-report.component.html',
-  styleUrls: ['./waste-report.component.css']
+  selector: 'component-donation-report',
+  templateUrl: './donation-report.component.html',
+  styleUrls: ['./donation-report.component.css']
 })
-export class WasteReportComponent implements OnInit {
+export class DonationReportComponent implements OnInit {
 
-  wasteChart: any
+  donateChart: any
   date: Date = new Date()
   displayedColumns: string[] =
-  ['sku', 'name', 'avgTotal', 'avgWaste', 'price']
+  ['sku', 'name', 'avgTotal', 'avgDonate', 'price']
   dataSource = new MatTableDataSource()
   @ViewChild(MatPaginator) paginator: MatPaginator
   @ViewChild(MatSort) sort: MatSort
   Math: any
   isClicked: boolean
 
-  constructor(private http: HttpClient, public dialog: MatDialog, public wasteServ: ReportService) {
+  constructor(private http: HttpClient, public dialog: MatDialog, public donateServ: ReportService) {
     this.Math = Math
   }
 
   ngOnInit(): void {
-    this.wasteServ.getWasteReport()
+    this.donateServ.getDonationReport()
     .toPromise()
     .then((data: any) => {
-      if (data.data.Waste) {
-       console.log(data.data.Waste)
-       wasteChartData = data.data.Waste
-       this.dataSource.data = data.data.Waste
-       console.log(wasteChartData)
+      if (data.data.Donate) {
+       console.log(data.data.Donate)
+       donateChartData = data.data.Donate
+       this.dataSource.data = data.data.Donate
+       console.log(donateChartData)
        this.loadWasteGraph()
        this.dataSource.data.forEach(element => {
         element['avgTotal'] = (element['avgTotal']).toFixed(2)
-        element['avgWaste'] = (element['avgWaste']).toFixed(2)
+        element['avgDonate'] = (element['avgDonate']).toFixed(2)
 
         switch (element['_id']['name']) {
           case 'Apple':
-            element['price'] = (element['avgWaste'] * 4.53).toFixed(2)
+            element['price'] = (element['avgDonate'] * 4.53).toFixed(2)
             break
           case 'Banana':
-            element['price'] = (element['avgWaste'] * 1.61).toFixed(2)
+            element['price'] = (element['avgDonate'] * 1.61).toFixed(2)
             break
           case 'Orange':
-            element['price'] = (element['avgWaste'] * 3.91).toFixed(2)
+            element['price'] = (element['avgDonate'] * 3.91).toFixed(2)
             break
           case 'Mango':
-            element['price'] = (element['avgWaste'] * 7.49).toFixed(2)
+            element['price'] = (element['avgDonate'] * 7.49).toFixed(2)
             break
           case 'Strawberry':
-            element['price'] = (element['avgWaste'] * 5).toFixed(2)
+            element['price'] = (element['avgDonate'] * 5).toFixed(2)
             break
           case 'Tomato':
-            element['price'] = (element['avgWaste'] * 2).toFixed(2)
+            element['price'] = (element['avgDonate'] * 2).toFixed(2)
             break
           case 'Pear':
-            element['price'] = (element['avgWaste'] * 4).toFixed(2)
+            element['price'] = (element['avgDonate'] * 4).toFixed(2)
             break
           case 'Grapes':
-            element['price'] = (element['avgWaste'] * 4).toFixed(2)
+            element['price'] = (element['avgDonate'] * 4).toFixed(2)
             break
           case 'Lettuce':
-            element['price'] = (element['avgWaste'] * 1.44).toFixed(2)
+            element['price'] = (element['avgDonate'] * 1.44).toFixed(2)
             break
           case 'Sweet Pepper':
-            element['price'] = (element['avgWaste'] * 9.90).toFixed(2)
+            element['price'] = (element['avgDonate'] * 9.90).toFixed(2)
             break
           default:
             console.log('No price available')
@@ -91,29 +91,29 @@ export class WasteReportComponent implements OnInit {
         })
   }
 })
-.catch(async () => swal('Error loading Waste graph data')
+.catch(async () => swal('Error loading Donate graph data')
                       .catch(() => console.log('error: popup failed')))
 }
   loadWasteGraph(): void {
-    this.wasteChart = new Chart('waste', {
+    this.donateChart = new Chart('donation', {
       type: 'bar',
       data: {
-        labels: wasteChartData.map(e => {
+        labels: donateChartData.map(e => {
           return e._id.name
         }),
         datasets: [{
           label: 'Total Product',
-          data: wasteChartData.map(e => {
+          data: donateChartData.map(e => {
             return parseFloat(e.avgTotal)
           }),
           backgroundColor: 'rgba(153,255,51,0.4)'
         },
         {
-          label: 'Product left over',
-          data: wasteChartData.map(e => {
-            return parseFloat(e.avgWaste)
+          label: 'Product Donated',
+          data: donateChartData.map(e => {
+            return parseFloat(e.avgDonate)
           }),
-          backgroundColor: 'rgba(153,55,51,0.4)'
+          backgroundColor: 'rgb(255,192,203)'
         }]
       },
       options: {
@@ -136,7 +136,7 @@ export class WasteReportComponent implements OnInit {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Waste Weight (Kg)'
+              labelString: 'Donate Weight (Kg)'
             },
             ticks: {
               beginAtZero: true

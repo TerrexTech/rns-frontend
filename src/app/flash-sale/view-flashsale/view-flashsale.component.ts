@@ -10,6 +10,7 @@ import { Http } from '@angular/http'
 import { ViewFlashSaleService } from './view-flashsale.service'
 import { AlertService } from '../../alert-popup/alert.service'
 import { TableSearchComponent } from '../../search/table-search/table-search.component'
+import { NavbarService } from '../../shared/navbar/navbar.service'
 
 let flash_data: any[] = []
 @Component({
@@ -20,7 +21,7 @@ let flash_data: any[] = []
 export class ViewFlashsaleComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private http: Http, private viewService: ViewFlashSaleService,
-              private alertService: AlertService) { }
+              private alertService: AlertService, private navServ: NavbarService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
@@ -30,6 +31,7 @@ export class ViewFlashsaleComponent implements OnInit {
   curField: any
 
   ngOnInit(): void {
+    this.navServ.newEvent(0)
     const arr2 = JSON.parse(localStorage.getItem('flashSale'))
     console.log(arr2[0])
     this.dataSource.data = arr2[0]

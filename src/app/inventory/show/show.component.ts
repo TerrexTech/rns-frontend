@@ -1,5 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
+import {
+  MatDialog,
+  MatPaginator,
+  MatRow,
+  MatSort,
+  MatSortable,
+  MatTableDataSource
+} from '@angular/material'
 import { Http } from '@angular/http'
 import { Inventory } from '../../models/inventory'
 import { SelectionModel } from '@angular/cdk/collections'
@@ -9,7 +16,7 @@ import { InventoryService } from '../inventory.service'
 import swal from 'sweetalert'
 import { NavbarService } from '../../shared/navbar/navbar.service'
 
-let Food: Inventory[] = []
+let paginator: Inventory[] = []
 const ProjectedExpiry: number[] = []
 
 @Component({
@@ -26,30 +33,40 @@ export class ShowComponent implements OnInit {
   today: number = Date.now()
   @ViewChild(MatPaginator) paginator: MatPaginator
   @ViewChild(MatSort) sort: MatSort
-  @ViewChild('query') query: ElementRef
-  @ViewChild('field') field: ElementRef
-  @ViewChild('formDate') formDate: ElementRef
   curField: any
+  Math: any
   returnVal: any
   alertShown = false
-  status: string
+  lastTimestamp: number
+  startForwardTime: number
+  backEndTime: number
+
+  @ViewChild('invTable') invTable: ElementRef
 
   selection = new SelectionModel<Inventory>(true, [])
 
   constructor(private http: Http, public dialog: MatDialog, private showService: InventoryService,
               private navServ: NavbarService) {
+                this.Math = Math
   }
 
   ngOnInit(): void {
-
     this.showService.getTable()
       .toPromise()
       .then((data: any) => {
         if (data.data.InventoryQueryCount) {
-        console.log(data.data.InventoryQueryCount)
-        this.dataSource.data = data.data.InventoryQueryCount
-        Food = data.data.InventoryQueryCount
-        this.genExpiry()
+          console.log(data.data.InventoryQueryCount)
+          this.dataSource.data = data.data.InventoryQueryCount.map(e => {
+            e.isRed = false
+
+            return e
+          })
+          paginator = data.data.InventoryQueryCount
+          this.lastTimestamp = data.data.InventoryQueryCount[0].timestamp
+          this.genExpiry()
+          console.log('==================')
+          console.log(this.invTable)
+          console.log(this.invTable.nativeElement)
         }
         else {
           alert('Timed out.')
@@ -60,35 +77,80 @@ export class ShowComponent implements OnInit {
       .catch()
 
     this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
+    const sorting: MatSortable = {
+      id: 'Sold Weight',
+      start: 'desc',
+      disableClear: false
+    }
+    this.sort.sort(sorting)
+  }
+
+  getRandomInt(min, max): number {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+
+    return Math.floor(Math.random() * (max - min)) + min
   }
 
   genExpiry(): void {
     this.dataSource.data.forEach(element => {
 
-      element['expiryDate'] = (element['dateArrived'] + (86400 * 5))
+      element['expiryDate'] = (element['dateArrived'] + (this.getRandomInt(8, 16) * 86400))
     })
   }
 
-  loadExpiry(): void {
+  changeExpirySold(min, max, soldWeight): void {
     let item: Inventory
     this.selection.selected.forEach(selItem => {
       item = selItem
     })
     console.log(item)
 
-    const row = this.dataSource.data.findIndex(rowData =>  rowData['itemID'] === item.itemID)
-    this.dataSource.data[row]['expiryDate'] = (this.dataSource.data[row]['dateArrived'] + (86400 * 13))
-    this.dataSource.data[row]['soldWeight'] = 50
+    const row = this.dataSource.data.findIndex(rowData => rowData['itemID'] === item.itemID)
+    this.dataSource.data[row]['expiryDate'] = (this.dataSource.data[row]['expiryDate'] + (this.getRandomInt(min, max) * 86400))
+    const requesetdSoldValue = this.dataSource.data[row]['soldWeight'] + soldWeight
 
+    const totalWeight = this.dataSource.data[row]['totalWeight']
+    const leftoverWeight = Number(Math.round(totalWeight - requesetdSoldValue)
+                                      .toFixed(2))
+
+    console.log(totalWeight - requesetdSoldValue)
+    if (leftoverWeight < 1) {
+      this.dataSource.data[row]['soldWeight'] = this.dataSource.data[row]['totalWeight']
+      this.dataSource.data[row]['leftover'] = this.dataSource.data[row]['totalWeight'] - this.dataSource.data[row]['soldWeight']
+    }
+
+    if (this.dataSource.data[row]['soldWeight'] < this.dataSource.data[row]['totalWeight'] &&
+        requesetdSoldValue < this.dataSource.data[row]['totalWeight']) {
+              // Don't delete please. code is important
+    // this.showService.updateItem(item)
+    //                 .toPromise()
+    //                 .then((data: any) => {
+    //                   if (data.data.InventoryUpdate) {
+    //                   console.log(data)
+     this.dataSource.data[row]['soldWeight'] = Number(Math.round(requesetdSoldValue)
+                                                  .toFixed(2))
+    //                   }
+    //                 })
+    //                 .catch(async () => swal('Error: Unable to update sold weight')
+    //                                     .catch(() => console.log('popup not loaded')))
+    }
   }
 
-  sendSale(saleData: Inventory): void {
-      this.showService.insertSale(saleData)
-                      .toPromise()
-                      .catch()
-      swal('Sale Inserted')
-          .catch(console.log)
+  changeExpiryWarning(min, max): void {
+    this.selection.selected.forEach(selItem => {
+      const row = this.dataSource.data.findIndex(rowData => rowData['itemID'] === selItem.itemID)
+      this.dataSource.data[row]['expiryDate'] = (this.dataSource.data[row]['timestamp'] + (this.getRandomInt(min, max) * 86400))
+     })
+  }
+
+  sendSale(saleData): void {
+    this.showService.insertSale(saleData)
+      .toPromise()
+      .then((data: any) => {
+        console.log(data)
+      })
+      .catch()
   }
 
   resetData(): void {
@@ -102,30 +164,32 @@ export class ShowComponent implements OnInit {
       .catch()
   }
 
-  onPaginateLeft($event): void {
-    const date = new Date().getTime()
-    const date2 = new Date().getTime() / 1000
-    if ($event.pageIndex > $event.previousPageIndex) {
-      console.log(1)
-      console.log(date)
-      console.log(date2)
-    }
-    else if ($event.pageIndex < $event.previousPageIndex) {
-      console.log(2)
-    }
+  onPaginateBack(): void {
+    this.backEndTime = 9999999999
+    console.log(paginator[0].timestamp)
+    console.log(paginator[paginator.length - 1].timestamp)
+    console.log(this.lastTimestamp)
+    this.showService.paginateTable(paginator[0].timestamp, this.backEndTime)
+      .toPromise()
+      .then((data: any) => {
+        console.log(data)
+        paginator = data.data.InventoryQueryTimestamp
+        this.dataSource.data = paginator
+      })
+      .catch(console.log)
   }
 
-  onPaginateRight($event): void {
-    const date = new Date().getTime()
-    const date2 = new Date().getTime() / 1000
-    if ($event.pageIndex > $event.previousPageIndex) {
-      console.log(1)
-      console.log(date)
-      console.log(date2)
-    }
-    else if ($event.pageIndex < $event.previousPageIndex) {
-      console.log(2)
-    }
+  onPaginateForward(): void {
+    this.startForwardTime = 1
+    this.showService.paginateTable(this.startForwardTime, paginator[paginator.length - 1].timestamp)
+      .toPromise()
+      .then((data: any) => {
+        console.log(data.data.InventoryQueryTimestamp)
+        paginator = data.data.InventoryQueryTimestamp
+        this.dataSource.data = paginator
+        // this.lastTimestamp = data.data.InventoryQueryTimestamp[0].timestamp
+      })
+      .catch(console.log)
   }
 
   openSearch(): void {
@@ -159,12 +223,12 @@ export class ShowComponent implements OnInit {
 
       for (const itemID of selectedItemIDs) {
         try {
-        const deleteResult = await this.showService.deleteRows(itemID)
-                             .toPromise()
+          const deleteResult = await this.showService.deleteRows(itemID)
+            .toPromise()
         }
         catch (e) {
           swal('Inventory not removed')
-          .catch(console.log)
+            .catch(console.log)
         }
       }
       this.resetData()
@@ -201,7 +265,7 @@ export class ShowComponent implements OnInit {
 
   genSold(): void {
     this.selection.selected.forEach(item => {
-      this.curField = Food.filter(i => i.itemID === item.itemID)[0]
+      this.curField = paginator.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
       // this.showService.getQuery(this.curField)
@@ -219,32 +283,35 @@ export class ShowComponent implements OnInit {
       //   .catch()
       // this.resetData()
     })
-    this.loadExpiry()
+    this.changeExpirySold(3, 5, this.curField.totalWeight / 5)
     this.sendSale(this.curField)
     const array2 = []
-    console.log(localStorage.getItem('showTable') !== undefined)
     if (localStorage.getItem('showTable') === undefined) {
 
-        return JSON.parse(localStorage.getItem('showTable'))
+      return JSON.parse(localStorage.getItem('showTable'))
     }
 
     else {
-        for (let index = 0; index < 10; index++) {
-            array2.push({
-              expiryDate: this.curField.expiryDate
-            })
-        }
-        localStorage.setItem('showTable', JSON.stringify(array2))
+      for (let index = 0; index < 10; index++) {
+        array2.push({
+          expiryDate: this.curField.expiryDate
+        })
+      }
+      localStorage.setItem('showTable', JSON.stringify(array2))
     }
     console.log(array2)
-    }
+  }
 
   genWarning(): void {
-    this.status = 'red'
+    // this.status = 'red'
     const array1 = []
     const ethyVal = '1300'
+    const co2Val = '3900'
     this.selection.selected.forEach(item => {
-      this.curField = Food.filter(i => i.itemID === item.itemID)[0]
+      item.isRed = true
+      // max value must be +1
+      this.changeExpiryWarning(2, 4)
+      this.curField = paginator.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       this.alertShown = true
       this.navServ.newEvent(this.selection.selected.length)
@@ -255,7 +322,7 @@ export class ShowComponent implements OnInit {
         return JSON.parse(localStorage.getItem('warning'))
       }
       else {
-          array1.push(this.curField)
+        array1.push(this.curField)
       }
       // this.showService.sendWarning(this.curField)
       //   .toPromise()
@@ -269,11 +336,12 @@ export class ShowComponent implements OnInit {
     })
     localStorage.setItem('warning', JSON.stringify(array1))
     localStorage.setItem('ethyVal', ethyVal)
+    localStorage.setItem('co2Val', co2Val)
   }
 
   populateFields(): void {
     this.selection.selected.forEach(item => {
-      this.curField = Food.filter(i => i.itemID === item.itemID)[0]
+      this.curField = paginator.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
     })
@@ -290,13 +358,13 @@ export class ShowComponent implements OnInit {
           .toPromise()
           .then((data: any) => {
             if (data.data.InventoryQueryCount) {
-             console.log(data.data.InventoryQueryCount)
-             this.dataSource.data = data.data.InventoryQueryCount
-             Food = data.data.InventoryQueryCount
-           }
-           else {
-             alert('Timed out.')
-           }
+              console.log(data.data.InventoryQueryCount)
+              this.dataSource.data = data.data.InventoryQueryCount
+              paginator = data.data.InventoryQueryCount
+            }
+            else {
+              alert('Timed out.')
+            }
           }
           )
           .catch()

@@ -95,6 +95,10 @@ export class SidebarComponent implements OnInit {
       icon: 'nc-icon nc-box-2',
       children: [
         {
+          route: AppRoutes.reports.children.donate,
+          ab: 'DO'
+        },
+        {
           route: AppRoutes.reports.children.ethylene,
           ab: 'ET'
         },

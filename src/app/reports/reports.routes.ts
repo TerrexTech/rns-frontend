@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router'
 
+import { DonationReportComponent } from './donation-report/donation-report.component'
 import { EthyleneReportComponent } from './ethylene-report/ethylene-report.component'
 import { FlashSaleReportComponent } from './flash-sale-report/flash-sale-report.component'
 import { InventoryReportComponent } from './inventory-report/inventory-report.component'
@@ -10,9 +11,14 @@ import { TemphumidReportComponent } from './temphumid-report/temphumid-report.co
 import { RevenueReportComponent } from './revenue-report/revenue-report.component'
 
 export const ReportsRoutes = {
-  ethylene: {
+    donate: {
+        path: 'donate-report',
+        title: 'Donation Report',
+        component: DonationReportComponent
+    },
+    ethylene: {
     path: 'ethylene-report',
-    title: 'Donation Report',
+    title: 'Ethylene Report',
     component: EthyleneReportComponent
   },
   flashsale: {
@@ -35,19 +41,9 @@ export const ReportsRoutes = {
         title: 'Savings Report',
         component: SavingsReportComponent
     },
-    sensor: {
-        path: 'sensor-report',
-        title: 'Sensor Report',
-        component: SensorReportComponent
-    },
     waste: {
         path: 'waste-report',
         title: 'Waste Report',
         component: WasteReportComponent
-    },
-    temphumid: {
-        path: 'temphumid-report',
-        title: 'Temperature Report',
-        component: TemphumidReportComponent
     }
 }

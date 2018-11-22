@@ -6,6 +6,7 @@ export class Inventory {
     origin: string
     deviceID: string
     totalWeight: number
+    leftover: number
     price: number
     location: string
     dateArrived: number
@@ -18,4 +19,5 @@ export class Inventory {
     salePrice: number
     soldWeight: number
     lot: string
+    isRed: boolean
 }

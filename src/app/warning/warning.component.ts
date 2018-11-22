@@ -23,40 +23,50 @@ export class WarningComponent implements OnInit {
   selection = new SelectionModel<Warning>(true, [])
   createType: string
   url: string
+  statusMessage: string
 
   displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projectedExpiry']
   curField: any
 
   ngOnInit(): void {
-    this.navServ.newEvent(0)
-
-    if (localStorage.getItem('showTable')) {
-    const arr1 = JSON.parse(localStorage.getItem('showTable'))
-    console.log(arr1.map(e => {
-
-    return e.expiryDate
-  }))
-    console.log(arr1[0].expiryDate)
+    const oneday = 86400
+    const twoday = oneday * 2
+    const threeday = oneday * 3
+    const today = new Date().getTime() / 1000
 
     if (localStorage.getItem('warning')) {
     const arr2 = JSON.parse(localStorage.getItem('warning'))
     console.log(arr2)
     this.dataSource.data = arr2
 
+    let index = 0
     this.dataSource.data.forEach(element => {
-      element['qty_unsold'] = 60
+      console.log(index)
+      console.log(arr2[index])
+      element['qty_unsold'] = arr2[index].totalWeight - arr2[index].soldWeight
+      console.log(arr2[index].expiryDate - today)
+
+      if (arr2[index].expiryDate - today <= threeday) {
       element['status'] = 'bad'
-      element['projectedExpiry'] = arr1[0].expiryDate
+      this.statusMessage = 'Expiring soon'
+      element['projectedExpiry'] = arr2[index].expiryDate
+    }
+
+      else if (arr2[index].expiryDate - today <= oneday) {
+        element['status'] = 'bad'
+        this.statusMessage = 'Act now'
+        element['projectedExpiry'] = arr2[index].expiryDate
+      }
+      index++
     })
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
     }
-  }
-  }
+    else {
+      swal('No Warnings present')
+      .catch(() => console.log('popup failed: warning page'))
+    }
 
-  public getJSON(): any {
-
-    return this.http.get('./static/mock_flash.json')
   }
 
   selected(): boolean {
@@ -74,7 +84,8 @@ export class WarningComponent implements OnInit {
     //   // this.curField = flash_data.filter(i => i.sku === e)[0]
     const itemArray = []
     if (this.selection.selected.length === 0) {
-      alert('Please select a row(s)')
+      swal('Please select a row(s)')
+      .catch(() => console.log('popup failed: warning page'))
     }
     else {
     this.selection.selected.forEach(item => {
@@ -99,7 +110,8 @@ export class WarningComponent implements OnInit {
     //   // this.curField = flash_data.filter(i => i.sku === e)[0]
     const itemArray = []
     if (this.selection.selected.length === 0) {
-      alert('Please select a row(s)')
+      swal('Please select a row(s)')
+      .catch(() => console.log('popup failed: warning page'))
     }
     else {
     this.selection.selected.forEach(item => {
@@ -124,7 +136,8 @@ export class WarningComponent implements OnInit {
     //   // this.curField = flash_data.filter(i => i.sku === e)[0]
     const itemArray = []
     if (this.selection.selected.length === 0) {
-      alert('Please select a row(s)')
+      swal('Please select a row(s)')
+      .catch(() => console.log('popup failed: warning page'))
     }
     else {
     this.selection.selected.forEach(item => {

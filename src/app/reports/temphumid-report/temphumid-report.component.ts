@@ -23,19 +23,19 @@ export class TemphumidReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tempServ.getTempReport()
-    .toPromise()
-    .then((data: any) => {
-      if (data) {
-       console.log(data)
-       // graphData = data.data
-      }
-      else {
-        alert('Timed out.')
-      }
-    })
-    .catch()
-    this.loadTempGraph()
+    // this.tempServ.getTempReport()
+    // .toPromise()
+    // .then((data: any) => {
+    //   if (data) {
+    //    console.log(data)
+    //    // graphData = data.data
+    //   }
+    //   else {
+    //     alert('Timed out.')
+    //   }
+    // })
+    // .catch()
+    // this.loadTempGraph()
   }
 
   openSearch(): void {

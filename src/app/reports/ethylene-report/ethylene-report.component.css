@@ -1,34 +1,39 @@
 .card-body2{
-height: 400px !important;
-}
-
-/* #convert{
-    margin: auto
-} */
-
-#info{
-    height: auto
-}
-
-.big-title {
-    font-size: 16px;
-}
-
-.generate-btn {
-  float: right
-}
-
-.generate-btn {
-  position: absolute;
-  right: 23px;
-}
-
-.generate-btn button {
-  margin-top :0 !important;
-}
-
-td.mat-cell {
-  padding: 0 24px 0 24px;
-      font-size: 14px;
-    border: 1px solid rgb(224, 224, 224);
+  height: 350px !important;
   }
+
+  #info{
+      height: auto
+  }
+
+  .big-title {
+      font-size: 16px;
+  }
+
+  .generate-btn {
+    float: right
+  }
+
+  .generate-btn {
+    position: absolute;
+    right: 23px;
+  }
+
+  .generate-btn button {
+    margin-top :0 !important;
+  }
+
+  table {
+    width: 100%
+  }
+
+  th.mat-header-cell {
+    text-align: center
+  }
+
+  td.mat-cell {
+    padding: 0 24px 0 24px;
+        font-size: 14px;
+        text-align: center;
+        border: 1px solid rgb(224, 224, 224);
+    }

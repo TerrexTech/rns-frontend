@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 import { environment } from '../../config'
 import { uuid } from 'uuid'
+import { Inventory } from '../models/inventory'
 
 @Injectable()
 export class InventoryService {
@@ -80,6 +81,7 @@ export class InventoryService {
             origin: "${data.origin}",
             price: ${data.price},
             sku: "${data.sku}",
+            soldWeight: ${data.soldWeight},
             totalWeight: ${data.totalWeight},
             upc: "${data.upc}"
             },
@@ -124,6 +126,45 @@ export class InventoryService {
             wasteWeight
             }
         }
+    `
+
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
+    public paginateTable(start: number, end: number): Observable<Object> {
+
+        const gqlQuery = `
+        {
+            InventoryQueryTimestamp(
+              start: ${start},
+              end: ${end},
+              count: 10
+            ){
+              _id,
+              itemID,
+              dateArrived,
+              dateSold,
+              deviceID,
+              donateWeight,
+              lot,
+              name,
+              origin,
+              price,
+              rsCustomerID,
+              salePrice,
+              sku,
+              soldWeight,
+              timestamp,
+              totalWeight,
+              upc,
+              wasteWeight
+            }
+          }
+
     `
 
         return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
@@ -222,7 +263,7 @@ export class InventoryService {
         })
     }
 
-    public insertSale(saleData): Observable<Object> {
+    public insertSale(saleData: Inventory): Observable<Object> {
 
         const gqlQuery = `
         mutation{

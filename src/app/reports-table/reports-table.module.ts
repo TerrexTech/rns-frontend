@@ -23,6 +23,7 @@ import {
     MatTableModule,
     MatTabsModule
 } from '@angular/material'
+import { ReportService } from '../reports/reports.service'
 
 @NgModule({
     imports: [
@@ -55,7 +56,8 @@ import {
         ReportsTableComponent
     ],
     providers: [
-        ReportTableService
+        ReportTableService,
+        ReportService
     ]
 
 })

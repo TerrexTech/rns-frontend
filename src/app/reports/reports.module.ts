@@ -30,16 +30,9 @@ import {
     MatTableModule,
     MatTabsModule
 } from '@angular/material'
-import { ReportSearchService } from '../search/report-search/report-search.service'
-import { EthyleneReportService } from './ethylene-report/ethylene-report.service'
-import { FlashSaleReportService } from './flash-sale-report/flash-sale-report.service'
-import { InventoryReportService } from './inventory-report/inventory-report.service'
-import { SavingsReportService } from './savings-report/savings-report.service'
-import { SensorReportService } from './sensor-report/sensor-report.service'
-import { TempHumidReportService } from './temphumid-report/temphumid-report.service'
-import { WasteReportService } from './waste-report/waste-report.service'
 import { RevenueReportComponent } from './revenue-report/revenue-report.component'
 import { ReportService } from './reports.service'
+import { DonationReportComponent } from './donation-report/donation-report.component'
 
 @NgModule({
     imports: [
@@ -74,7 +67,8 @@ import { ReportService } from './reports.service'
         SensorReportComponent,
         WasteReportComponent,
         TemphumidReportComponent,
-        RevenueReportComponent
+        RevenueReportComponent,
+        DonationReportComponent
     ],
     entryComponents: [
         ReportSearchComponent

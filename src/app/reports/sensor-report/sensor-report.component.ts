@@ -23,19 +23,19 @@ export class SensorReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sensorServ.getSensorReport()
-    .toPromise()
-    .then((data: any) => {
-      if (data) {
-       console.log(data)
-       // graphData = data.data
-      }
-      else {
-        alert('Timed out.')
-      }
-    })
-    .catch()
-    this.loadSensorGraph()
+    // this.sensorServ.getSensorReport()
+    // .toPromise()
+    // .then((data: any) => {
+    //   if (data) {
+    //    console.log(data)
+    //    // graphData = data.data
+    //   }
+    //   else {
+    //     alert('Timed out.')
+    //   }
+    // })
+    // .catch()
+    // this.loadSensorGraph()
   }
 
   openSearch(): void {

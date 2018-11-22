@@ -11,24 +11,52 @@ export class ReportService {
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
+    getEthyleneReport(): Observable<Object> {
+
+        const gqlQuery = `
+        {
+                EthyleneCO2(
+                  lt: 9999999999999
+                  gt: 0,
+                ){
+                  avgEthylene,
+                  avgCarbonDioxide,
+                  avgTempIn,
+                  avgHumidity
+                  _id {
+                    sku,
+                    name
+                  }
+                }
+              }
+    `
+
+        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
     getDonationReport(): Observable<Object> {
 
         const gqlQuery = `
         {
-            Donate(
-              lt: 1542647468
-              gt: 0,
-            ){
-              avg_total,
-              _id {
-                sku,
-                name
+                Donate(
+                  lt: 9999999999999
+                  gt: 0,
+                ){
+                  avgTotal,
+                  avgDonate,
+                  _id {
+                    sku,
+                    name
+                  }
+                }
               }
-            }
-          }
     `
 
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -39,20 +67,22 @@ export class ReportService {
 
         const gqlQuery = `
         {
-            Flashsale(
-              lt: 9999999999999
-              gt: 0,
-            ){
-              avg_total,
-              _id {
-                sku,
-                name
+                FlashSale(
+                  lt: 9999999999999
+                  gt: 0,
+                ){
+                  avgTotal,
+                  avgSold,
+                  avgFlashSold,
+                  _id {
+                    sku,
+                    name
+                  }
+                }
               }
-            }
-          }
     `
 
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -63,20 +93,21 @@ export class ReportService {
 
         const gqlQuery = `
         {
-            Inventory(
-              lt: 9999999999999
-              gt: 0,
-            ){
-              avg_total,
-              _id {
-                sku,
-                name
+                ItemSold(
+                  lt: 9999999999999
+                  gt: 0,
+                ){
+                  avgTotal,
+                  avgSold,
+                  _id {
+                    sku,
+                    name
+                  }
+                }
               }
-            }
-          }
     `
 
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -91,16 +122,18 @@ export class ReportService {
               lt: 9999999999999
               gt: 0,
             ){
-              avg_total,
-              _id {
-                sku,
-                name
-              }
+              sku,
+              name,
+              prevSoldWeight,
+              soldWeight,
+              revenuePrev,
+              revenueCurr,
+              revenuePercent
             }
           }
     `
 
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -115,64 +148,18 @@ export class ReportService {
               lt: 9999999999999
               gt: 0,
             ){
-              avg_total,
-              _id {
                 sku,
-                name
-              }
+                name,
+                wasteWeight,
+                prevWasteWeight,
+                amWastePrev,
+                amWasteCurr,
+                savingsPercent
             }
           }
     `
 
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
-            headers: {
-                'Content-Type': 'application/text'
-            }
-        })
-    }
-
-    getSensorReport(): Observable<Object> {
-
-        const gqlQuery = `
-        {
-            Sensor(
-              lt: 9999999999999
-              gt: 0,
-            ){
-              avg_total,
-              _id {
-                sku,
-                name
-              }
-            }
-          }
-    `
-
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
-            headers: {
-                'Content-Type': 'application/text'
-            }
-        })
-    }
-
-    getTempReport(): Observable<Object> {
-
-        const gqlQuery = `
-        {
-            Temperature(
-              lt: 9999999999999
-              gt: 0,
-            ){
-              avg_total,
-              _id {
-                sku,
-                name
-              }
-            }
-          }
-    `
-
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -183,20 +170,21 @@ export class ReportService {
 
         const gqlQuery = `
         {
-            Waste(
-              lt: 9999999999999
-              gt: 0,
-            ){
-              avg_total,
-              _id {
-                sku,
-                name
+                Waste(
+                  lt: 9999999999999
+                  gt: 0,
+                ){
+                  avgTotal,
+                  avgWaste,
+                  _id {
+                    sku,
+                    name
+                  }
+                }
               }
-            }
-          }
     `
 
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+        return this.http.post(`${environment.bhupeshURL}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }

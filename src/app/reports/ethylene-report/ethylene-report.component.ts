@@ -1,25 +1,23 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../config'
 import { SendDate } from '../../models'
 import { Chart } from 'chart.js'
-import { MatDialog } from '@angular/material'
 import * as jspdf from 'jspdf'
 import * as html2canvas from 'html2canvas'
 import { MockUtils } from '../mocks'
 import { ReportSearchComponent } from '../../search/report-search/report-search.component'
-import { setTimeout } from 'timers'
 import { ReportService } from '../reports.service'
+import {
+  MatDialog,
+  MatPaginator,
+  MatRow,
+  MatSort,
+  MatSortable,
+  MatTableDataSource
+} from '@angular/material'
 
-interface Reporting {
-  sku: string
-  name: string
-  lot: string
-}
-
-let searchData: Reporting[] = []
-
-const graphData = []
+let ethyChartData = []
 
 @Component({
   selector: 'component-ethylene-report',
@@ -29,112 +27,58 @@ const graphData = []
 export class EthyleneReportComponent implements OnInit {
   ethyChart: any
   date: Date = new Date()
+  displayedColumns: string[] =
+  ['sku', 'name', 'avgEthylene', 'avgCarbonDioxide', 'avgTempIn', 'avgHumidity']
+  dataSource = new MatTableDataSource()
+  @ViewChild(MatPaginator) paginator: MatPaginator
+  @ViewChild(MatSort) sort: MatSort
+  Math: any
   isClicked: boolean
-  searchData: any
-  // @Output() messageEvent = new EventEmitter<string>()
-  constructor(private http: HttpClient, public dialog: MatDialog, private donationServ: ReportService) {
+
+  constructor(private http: HttpClient, public dialog: MatDialog, public ethyServ: ReportService) {
+    this.Math = Math
   }
 
   ngOnInit(): void {
-    this.donationServ.getDonationReport()
+    this.ethyServ.getEthyleneReport()
     .toPromise()
     .then((data: any) => {
-      if (data) {
-    console.log(data)
-    // graphData = data.data
-      }
-      else {
-        alert('Timed out.')
-      }
-    }
-    )
-    .catch()
-    this.isClicked = true
-    this.loadEthyleneGraph()
+      if (data.data.EthyleneCO2) {
+       console.log(data.data.EthyleneCO2)
+       ethyChartData = data.data.EthyleneCO2
+       this.dataSource.data = data.data.EthyleneCO2
+       console.log(ethyChartData)
+       this.loadEthyleneGraph()
+       this.dataSource.data.forEach(element => {
+        element['avgEthylene'] = (element['avgEthylene']).toFixed(2)
+        element['avgCarbonDioxide'] = (element['avgCarbonDioxide']).toFixed(2)
+        element['avgTempIn'] = (element['avgTempIn']).toFixed(2)
+        element['avgHumidity'] = (element['avgHumidity']).toFixed(2)
+       })
   }
-
-  openSearch(): any {
-    this.dialog.open(ReportSearchComponent, {
-      width: '500px'
-    })
-    .afterClosed()
-    .subscribe(
-      data => searchData = data
-    )
-
-    return searchData
-
-  }
+})
+.catch(async () => swal('Error loading Ethylene graph data')
+                      .catch(() => console.log('error: popup failed')))
+}
 
   loadEthyleneGraph(): void {
-    const mock = new MockUtils()
-    mock.genEthyData()
-    console.log('7&&&&&&&&&&&&&&&&&&&')
-    // const arr1 = this.openSearch()
-    const arr1 = JSON.parse(localStorage.getItem('arr1'))
-    console.log(arr1.map(e => {
-      return e.Ethylene
-    }))
-    // console.log(mock.genFloat(30, 90))
-    // this.ethyData = mock.genFloat(30, 90)
-    // this.dataSource.data = this.ethyData
     this.ethyChart = new Chart('ethylene', {
       type: 'bar',
-      // data: {
-      //   datasets: [
-      //     {
-      //       label: 'Ethylene level',
-      //       data: this.data,
-      //       backgroundColor: 'rgba(255, 99, 132, 1)',
-      //       fill: false
-      //     }
-      //   ]
-      // },
-      // options: {
-      //   responsive: true,
-      //   hover: {
-      //     mode: 'dataset'
-      //   },
-      //   legend: {
-      //     display: true
-      //   },
-      //   scales: {
-      //     xAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'Period'
-      //       }
-      //     }],
-      //     yAxes: [{
-      //       display: true,
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: 'PPM'
-      //       },
-      //       ticks: {
-      //         beginAtZero: true
-      //       }
-      //     }]
-      //   }
-      // }
-
       data: {
-        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+        labels: ethyChartData.map(e => {
+          return e._id.name
+        }) ,
         datasets: [{
-          label: 'Avg. Total Weight',
-          data:
-            // console.log(parseFloat(e['Avg. Total Weight']))
-
-          parseFloat(graphData['avg_total']),
+          label: 'Ethylene',
+          data: ethyChartData.map(e => {
+            return parseFloat(e.avgEthylene)
+          }),
           backgroundColor: 'rgba(153,255,51,0.4)'
         },
         {
-          label: 'Donation Weight',
-          data: arr1.map(e => {
-            // console.log(parseFloat(e['Donation Weight']))
-
-            return parseFloat(e['Donation Weight'])
+          label: 'Carbon Dioxide',
+          data: ethyChartData.map(e => {
+            return e.avgCarbonDioxide
           }),
           backgroundColor: 'rgba(153,25,51,0.4)'
         }]
@@ -152,14 +96,14 @@ export class EthyleneReportComponent implements OnInit {
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Period'
+              labelString: 'Products'
             }
           }],
           yAxes: [{
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Weight (Kg)'
+              labelString: ' Average Quantity (PPM)'
             },
             ticks: {
               beginAtZero: true
@@ -168,92 +112,6 @@ export class EthyleneReportComponent implements OnInit {
         }
       }
     })
-
-    // this.getJSON().subscribe(dataArr => {
-    //   console.log(dataArr)
-    //   const metrics: any = [
-    //     []
-    //   ]
-    //   // total_weight: 195, sold_weight: 58, waste_weight: 49
-    //   Object.keys(dataArr).forEach(k => {
-    //     const prods = dataArr[k]
-    //     const date = new Date(prods.dates * 1000).toDateString()
-    //     this.ethyChart.data.labels.push(date)
-    //     metrics[0].push(prods.Ethylene)
-    //   })
-
-    //   this.ethyChart.data.datasets.forEach((dataset, index) =>
-    //     dataset.data = dataset.data.concat(metrics[index])
-    //   )
-    //   this.ethyChart.update()
-
-    //   // Moving Graph
-    //   // setInterval(() => {
-    //   //   this.ethyChart.data.datasets.forEach((dataset, index) => {
-    //   //     const metric = dataset.data.shift()
-    //   //     dataset.data.push(metric + 1)
-    //   //   })
-    //   //   this.ethyChart.update()
-    //   // }, 40000)
-    // })
-  }
-
-  getJSON(): any {
-
-    // var sendDates = []
-
-    // const sendDate = new SendDate()
-    // sendDate.end_date = this.getDays(1)[0]
-    // sendDate.start_date = this.getDays(1)[1]
-
-    // let resource = `{
-    //     login(start_date:'${sendDate.start_date}',end_date:'${sendDate.end_date}')
-    //     {
-
-    //     }
-    //   }`
-
-    // console.log(this.http)
-    // this.http.post('http://162.212.158.16:30653/api', resource)
-    //   .toPromise()
-    //   // .then(d => this.data)
-    //   .then((data: any) => {
-    //     console.log(data.data)
-    //     if (data.data !== null) {
-
-    //     }
-    //     // else {
-    //     //   this.showError = true
-    //     // }
-    //   })
-
-  }
-
-  getToday(): any {
-    let sendDates = []
-
-    const sendDate = new SendDate()
-    sendDate.endDate = this.getDays(1)[0]
-    // sendDate.start_date = this.getDays(0)[1]
-    console.log(sendDate)
-    sendDates = [sendDate]
-    const url = '/total-inv'
-
-    return this.http.post(environment.apiUrl + url, sendDates, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-  }
-
-  getDays(days?: number): any[] {
-    let dates = []
-    const end_date = Math.round((new Date().getTime() / 1000) + (days * 86400))
-    const start_date = Math.round(new Date().getTime() / 1000) - (days * 86400)
-
-    return dates = [
-      end_date, start_date
-    ]
   }
 
   captureScreen(): void {

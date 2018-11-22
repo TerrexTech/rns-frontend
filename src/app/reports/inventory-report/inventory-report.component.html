@@ -3,11 +3,11 @@
         <mat-card>
           <mat-card-header>
             <mat-card-title>
-              <h4>Inventory Report</h4>
+              <h6>Inventory Report</h6>
             </mat-card-title>
-              <div class="generate-btn">
+              <!-- <div class="generate-btn">
                 <button class="btn btn-fill" (click)="openSearch()">Search</button>
-              </div>
+              </div> -->
           </mat-card-header>
         </mat-card>
     <br>
@@ -18,17 +18,17 @@
           <div class="card">
             <div class="card-body">
               <!-- <h6></h6> -->
-              <canvas id="inventory"></canvas>
+              <canvas height="100%" id="inventory"></canvas>
             </div>
           </div>
         </div>
         <div class="col-lg-4 col-sm-4">
           <div class="card report-info">
-            <div class="card-body card-body2">
-              <h6 class="big-title">Average Inventory (Products Sold)</h6>
+            <div class="card-body card-body2 mx-auto">
+              <h6 class="big-title">Average Products Sold</h6>
               <br>
               <div>
-                <p>Report Type: Average Inventory</p>
+                <p>Report Type: Inventory</p>
                 <br>
                 <!-- <p>Product Name: </p>
               <br> -->
@@ -43,46 +43,48 @@
           </div>
         </div>
       </div>
-      <component-reports-table [jsonFields]=2
-        [displayedColumns]="['SKU', 'Name', 'Total Weight', 'Sold Weight', 'Price']"></component-reports-table>
+      <!-- <component-reports-table [jsonFields]=2
+        [displayedColumns]="['SKU', 'Name', 'Total Weight', 'Sold Weight', 'Price']"></component-reports-table> -->
+
+        <div class="table-responsive-xl">
+            <table mat-table [dataSource]="dataSource" matSort #invTable>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="sku">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> SKU </th>
+                <td mat-cell *matCellDef="let element"><a> {{ element._id.sku }}</a> </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element"><a> {{ element._id.name }}</a> </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="avgTotal">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Weight (Kg) </th>
+                <td mat-cell *matCellDef="let element"><a> {{ element.avgTotal }}</a> </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="avgSold">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sold Weight (Kg) </th>
+                <td mat-cell *matCellDef="let element"><a> {{ element.avgSold }}</a> </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="price">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Price ($)</th>
+                  <td mat-cell *matCellDef="let element"><a> {{ element.price }} </a> </td>
+                </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row #testRef *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
     </div>
     </mat-card>
   </div>
 </div>
 
-<!-- <form>
-  <mat-form-field class="col-sm-12">
-    <input matInput [matDatepicker]="picker" placeholder="Choose a start date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-  <br>
-  <mat-form-field class="col-sm-12">
-    <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
-    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-    <mat-datepicker #picker2></mat-datepicker>
-  </mat-form-field>
-  <br>
-  <mat-form-field class="col-sm-12">
-    <mat-select placeholder="Date Range">
-      <mat-option>
-        Weekly
-      </mat-option>
-      <mat-option>
-        Bi-weekly
-      </mat-option>
-      <mat-option>
-        1 Month
-      </mat-option>
-      <mat-option>
-        3 months
-      </mat-option>
-      <mat-option>
-        6 months
-      </mat-option>
-      <mat-option>
-        1 year
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</form> -->

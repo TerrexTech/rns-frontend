@@ -8,6 +8,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MockUtils } from '../reports/mocks'
 import { MockMonitor } from '../monitoring/mocks-monitor'
 import { ReportTableService } from './reports-table.service'
+import { ReportService } from '../reports/reports.service'
 const Food: Inventory[] = []
 
 @Component({
@@ -43,20 +44,15 @@ export class ReportsTableComponent implements OnInit {
   @ViewChild('table') table: any
   @Input() displayedColumns: string[]
   @Input() jsonFields: number
-  @Input() numRows: number
-  @Input() endPoint: string
   @ViewChild(MatPaginator) paginator: MatPaginator
   @ViewChild(MatSort) sort: MatSort
-  @ViewChild('query') query: ElementRef
-  @ViewChild('field') field: ElementRef
-  @ViewChild('formDate') formDate: ElementRef
   isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow')
 
   constructor(
     private http: Http,
     // private loadInventoryJsonService: LoadInventoryJsonService,
     public dialog: MatDialog,
-    private getTable: ReportTableService
+    private getTable: ReportService
              ) { }
 
   ngOnInit(): void {
@@ -81,10 +77,21 @@ export class ReportsTableComponent implements OnInit {
     }
 
     else if (this.jsonFields === 2) {
-      const mock = new MockUtils()
-      console.log(mock.genInvData())
-      this.invData = mock.genInvData()
-      this.dataSource.data = this.invData
+      // const mock = new MockUtils()
+      // console.log(mock.genInvData())
+      // this.invData = mock.genInvData()
+      this.getTable.getInventoryReport()
+    .toPromise()
+    .then((data: any) => {
+      if (data.data.ItemSold) {
+       console.log(data.data.ItemSold)
+       this.invData = data.data.ItemSold
+       console.log(this.invData)
+       this.dataSource.data = this.invData
+      }
+    })
+    .catch(async () => swal('Error loading Inventory graph data')
+                      .catch(() => console.log('error: popup failed')))
       const sorting: MatSortable = {
           id: 'Sold Weight',
           start: 'desc',

@@ -23,7 +23,7 @@
       <mat-card-content class="row">
 
         <div class="table-responsive-lg">
-          <table mat-table [dataSource]="dataSource" matSort>
+          <table mat-table [dataSource]="dataSource" matSort #invTable>
 
             <ng-container matColumnDef="select">
               <th mat-header-cell *matHeaderCellDef>

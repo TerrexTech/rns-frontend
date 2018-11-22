@@ -46,18 +46,16 @@ export class DialogDataDialogComponent implements OnInit {
 
     if (this.data.data[1] === 'Flash Sale') {
 
-      const array1 = []
-      console.log(localStorage.getItem('flashSale') !== undefined)
-      if (localStorage.getItem('flashSale') === undefined) {
-
-        return JSON.parse(localStorage.getItem('flashSale'))
-      }
-      else {
-          array1.push(this.data.data[0])
-      }
+      const array1 = JSON.parse(localStorage.getItem('flashSale')) || []
+      array1.push(this.data.data[0])
       localStorage.setItem('flashSale', JSON.stringify(array1))
 
-      // this.dialogService.newFlashSale(this.data.data[0])
+      const warningArray = JSON.parse(localStorage.getItem('warning'))
+      const flashArray = JSON.parse(localStorage.getItem('flashSale'))
+
+      const flashSaleIds = flashArray[0].map(f => f.itemID)
+      const newWarnings = warningArray.filter(w => flashSaleIds.indexOf(w.itemID) === -1)
+      localStorage.setItem('warning', JSON.stringify(newWarnings))
     }
     else if (this.data.data[1] === 'Donation') {
 
@@ -89,7 +87,6 @@ export class DialogDataDialogComponent implements OnInit {
 
       this.dialogService.newDisposal(this.data.data[0])
     }
-    localStorage.removeItem('warning')
     this.router.navigate([this.data.data[2]])
                .catch(console.log)
   }

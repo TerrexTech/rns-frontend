@@ -3,7 +3,7 @@
           <mat-card>
             <mat-card-header>
               <mat-card-title>
-                <h6>Ethylene Report</h6>
+                <h6>Donation Report</h6>
               </mat-card-title>
                 <!-- <div class="generate-btn">
                   <button class="btn btn-fill" (click)="openSearch()">Search</button>
@@ -18,17 +18,17 @@
             <div class="card">
               <div class="card-body">
                 <!-- <h6></h6> -->
-                <canvas height="100%" id="ethylene"></canvas>
+                <canvas height="100%" id="donation"></canvas>
               </div>
             </div>
           </div>
           <div class="col-lg-4 col-sm-4">
             <div class="card report-info">
               <div class="card-body card-body2 mx-auto">
-                <h6 class="big-title">Average Ethylene</h6>
+                <h6 class="big-title">Donate</h6>
                 <br>
                 <div>
-                  <p>Report Type: Ethylene</p>
+                  <p>Report Type: Donate</p>
                   <br>
                   <!-- <p>Product Name: </p>
                 <br> -->
@@ -61,28 +61,22 @@
                   <td mat-cell *matCellDef="let element"><a> {{ element._id.name }}</a> </td>
                 </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="avgEthylene">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Avg. Ethylene (PPM) </th>
-                  <td mat-cell *matCellDef="let element"><a> {{ element.avgEthylene }}</a> </td>
+                  <!-- Symbol Column -->
+              <ng-container matColumnDef="avgTotal">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Weight (Kg) </th>
+                  <td mat-cell *matCellDef="let element"><a> {{ element.avgTotal }}</a> </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="avgCarbonDioxide">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Avg. CO2 (PPM) </th>
-                  <td mat-cell *matCellDef="let element"><a> {{ element.avgCarbonDioxide }}</a> </td>
+                <ng-container matColumnDef="avgDonate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Donate Weight (Kg) </th>
+                  <td mat-cell *matCellDef="let element"><a> {{ element.avgDonate }}</a> </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="avgTempIn">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperature (°C)</th>
-                    <td mat-cell *matCellDef="let element"><a> {{ element.avgTempIn }} </a> </td>
-                  </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="avgHumidity">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Humidity (%) </th>
-                    <td mat-cell *matCellDef="let element"><a> {{ element.avgHumidity }} </a> </td>
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Price ($)</th>
+                    <td mat-cell *matCellDef="let element"><a> {{ element.price }} </a> </td>
                   </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

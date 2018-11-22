@@ -17,7 +17,7 @@
           <a id="disposeBtn" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canDelete() ? true : null" (click)="removeSelectedRows()">
             <i class="fa fa-times"></i>
           </a>
-          <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()" (click)="loadExpiry()">
+          <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()" (click)="changeExpirySold()">
             <i class="fa fa-dollar-sign"></i>
           </a>
           <a id="warningBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genWarning()">
@@ -33,7 +33,7 @@
       <!-- <component-search></component-search> -->
 
       <div class="table-responsive-xl">
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort #invTable>
 
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
@@ -41,7 +41,7 @@
             </th>
             <td mat-cell *matCellDef="let row">
               <section class="example-section"></section>
-              <mat-checkbox (change)="$event ? selection.toggle(row) : null">
+              <mat-checkbox color="primary" (change)="$event ? selection.toggle(row) : null">
               </mat-checkbox>
               </td>
           </ng-container>
@@ -107,17 +107,24 @@
           <!-- Symbol Column -->
           <ng-container matColumnDef="leftover">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Leftover Weight </th>
-            <td mat-cell *matCellDef="let element"><a> {{ element.totalWeight - element.soldWeight }}</a> </td>
+            <td mat-cell *matCellDef="let element"><a> {{ Math.round(element.totalWeight - element.soldWeight) }}</a> </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row #testRef *matRowDef="let row; columns: displayedColumns;" [ngClass]='{red: row.isRed}'></tr>
         </table>
 
-        <mat-toolbar color="primary">
+        <mat-toolbar>
           <mat-toolbar-row>
-            <button mat-flat-button><mat-icon class="example-icon">chevron_left</mat-icon></button>
-            <button mat-flat-button><mat-icon class="example-icon">chevron_right</mat-icon></button>
+              <!-- <select matNativeControl (change)="selectedNum(value)">
+                  <option value=10 >10</option>
+                  <option value=25>25</option>
+                  <option value=50>50</option>
+                  <option value=75>75</option>
+                  <option value=100>100</option>
+                </select> -->
+            <button mat-flat-button (click)='onPaginateBack()'><mat-icon class="example-icon">chevron_left</mat-icon></button>
+            <button mat-flat-button (click)='onPaginateForward()'><mat-icon class="example-icon">chevron_right</mat-icon></button>
           </mat-toolbar-row>
         </mat-toolbar>
       </div>

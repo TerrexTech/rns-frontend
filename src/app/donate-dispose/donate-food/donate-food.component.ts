@@ -28,12 +28,10 @@ export class DonateFoodComponent implements OnInit {
   ngOnInit(): void {
     this.navServ.newEvent(0)
     const arr2 = JSON.parse(localStorage.getItem('donation'))
-    console.log(arr2[0])
-    this.dataSource.data = arr2[0]
+    this.dataSource.data = arr2
     donate = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
-
   }
 
   // public getJSON(): any {

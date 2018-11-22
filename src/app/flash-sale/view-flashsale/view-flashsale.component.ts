@@ -33,12 +33,10 @@ export class ViewFlashsaleComponent implements OnInit {
   ngOnInit(): void {
     this.navServ.newEvent(0)
     const arr2 = JSON.parse(localStorage.getItem('flashSale'))
-    console.log(arr2[0])
-    this.dataSource.data = arr2[0]
+    this.dataSource.data = arr2
     flash_data = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
-
   }
 
   openSearch(): void {
@@ -77,11 +75,7 @@ export class ViewFlashsaleComponent implements OnInit {
   }
 
   selected(): boolean {
-    if (this.selection.selected.length >= 2) {
-      return true
-    }
-
-    return false
+    return this.selection.selected.length >= 2
   }
 
   canUpdate(): boolean {
@@ -117,21 +111,21 @@ export class ViewFlashsaleComponent implements OnInit {
   }
 
   removeSelectedRows(): void {
-
     swal({
       title: 'Are you sure?',
       text: 'Once deleted, you will not be able to recover this flash sale!',
       icon: 'warning',
-      buttons: ['Yes', 'No'],
+      buttons: ['No', 'Yes'],
       dangerMode: true
     })
       .then(willDelete => {
-        if (!willDelete) {
-          this.selection.selected.forEach(item => {
-            const index: number = flash_data.findIndex(d => d === item)
-            console.log('++++++++++++++++++==')
-            this.viewService.removeFlashSale(item.itemID)
-          })
+        if (willDelete) {
+          const flashSales = JSON.parse(localStorage.getItem('flashSale'))
+          const itemIDs = this.selection.selected.map(i => i.itemID)
+
+          this.dataSource.data = flashSales.filter(fs => itemIDs.indexOf(fs.itemID) === -1)
+          localStorage.setItem('flashSale', JSON.stringify(this.dataSource.data))
+
           swal('The flash sale has been removed!', {
             icon: 'success'
           })

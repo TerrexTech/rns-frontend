@@ -13,7 +13,7 @@ interface Monitoring {
   lot: string
 }
 
-let searchData: Monitoring[] = []
+const searchData: Monitoring[] = []
 
 @Component({
   selector: 'component-carbon',
@@ -77,22 +77,20 @@ export class CarbonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadCarbonGraph()
-    this.loadEthyGraph()
-    this.loadTempGraph()
+    this.openSearch()
+
+    if (localStorage.getItem('warning')) {
+      this.loadCarbonGraph()
+      this.loadEthyGraph()
+      this.loadTempGraph()
+    }
   }
 
-  openSearch(): any {
+  openSearch(): void {
     this.dialog.open(MonitorSearchComponent, {
       width: '500px',
       disableClose: true
     })
-      .afterClosed()
-      .subscribe(
-        data => searchData = data
-      )
-
-    return searchData
   }
 
   loadCarbonGraph(): void {

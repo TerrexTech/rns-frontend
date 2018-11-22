@@ -28,12 +28,10 @@ export class DisposeFoodComponent implements OnInit {
   ngOnInit(): void {
     this.navServ.newEvent(0)
     const arr2 = JSON.parse(localStorage.getItem('disposal'))
-    console.log(arr2[0])
-    this.dataSource.data = arr2[0]
+    this.dataSource.data = arr2
     dispose = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
-
   }
 
   selected(): boolean {

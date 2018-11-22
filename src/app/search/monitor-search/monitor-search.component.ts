@@ -49,17 +49,26 @@ export class MonitorSearchComponent implements OnInit {
       period: [''],
       exact_match: ['']
     })
+
+    this.form.get('sku')
+             .setValue('PS7-VVF-IEP-WL')
+    this.form.get('name')
+             .setValue('Tomato')
+    this.form.get('lot')
+             .setValue('HS8400')
+    this.form.get('start_date')
+             .setValue('2013-01-08')
+    this.form.get('end_date')
+             .setValue('2013-01-08')
+    this.form.get('period')
+             .setValue('week')
   }
 
   checkDates(): boolean {
     if ((this.form.value.start_date !== '' && this.form.value.end_date !== '') && this.form.value.period === '') {
-      console.log('heretrue')
-
       return true
     }
     if (this.form.value.period !== '' && (this.form.value.start_date === '' && this.form.value.end_date === '')) {
-      console.log('herefalse')
-
       return false
     }
   }
@@ -140,7 +149,7 @@ export class MonitorSearchComponent implements OnInit {
       }
 
       console.log(searchData)
-
+      localStorage.setItem('monitoring', JSON.stringify(this.form.value))
       if (!this.dateNotValid && !this.periodNotValid) {
         // searchService
         this.reset()

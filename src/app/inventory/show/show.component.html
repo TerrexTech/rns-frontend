@@ -17,7 +17,7 @@
           <a id="disposeBtn" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canDelete() ? true : null" (click)="removeSelectedRows()">
             <i class="fa fa-times"></i>
           </a>
-          <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()" (click)="changeExpirySold()">
+          <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()">
             <i class="fa fa-dollar-sign"></i>
           </a>
           <a id="warningBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genWarning()">

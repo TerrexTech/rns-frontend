@@ -11,8 +11,8 @@
             </div>
             <div class="col-7 col-md-8">
               <div class="numbers">
-                <p class="card-category">Product arrival (Kg)</p>
-                <p #arrival class="card-title">150
+                <p class="card-category">Wasted Product (Kg)</p>
+                <p #arrival class="card-title"> {{ wasteWeight }}
                 </p>
               </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="col-7 col-md-8">
               <div class="numbers">
                 <p class="card-category">Total Products (Kg)</p>
-                <p #total class="card-title">634
+                <p #total class="card-title"> {{ totalWeight }}
                 </p>
               </div>
             </div>
@@ -64,7 +64,7 @@
             <div class="col-7 col-md-8">
               <div class="numbers">
                 <p class="card-category">Products sold (Kg/hr)</p>
-                <p #average class="card-title">23
+                <p #average class="card-title"> {{ prodSold }}
                 </p>
               </div>
             </div>
@@ -102,7 +102,7 @@
     <div class="col-lg-6 col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h6 class="big-title">Distribution by weight (Kg/Day)</h6>
+          <h6 class="big-title">Distribution by weight</h6>
           <canvas id="distChart" width="400" height="400"></canvas>
         </div>
       </div>
@@ -110,7 +110,7 @@
     <div class="col-lg-6 col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h6 class="big-title">Donations (Kg/day)</h6>
+          <h6 class="big-title">Donations (Kg/Products)</h6>
           <canvas id="donationChart" width="400" height="400"></canvas>
         </div>
       </div>

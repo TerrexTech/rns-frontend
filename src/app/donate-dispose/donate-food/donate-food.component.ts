@@ -22,7 +22,7 @@ export class DonateFoodComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
 
-  displayedColumns = ['select', 'sku', 'name', 'qty_unsold', 'projectedExpiry']
+  displayedColumns = ['sku', 'name', 'qty_unsold', 'projectedExpiry']
   curField: any
 
   ngOnInit(): void {
@@ -37,6 +37,10 @@ export class DonateFoodComponent implements OnInit {
     donate = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
+    this.dataSource.data.forEach(element => {
+      element['qty_unsold'] = Math.round(element['qty_unsold'])
+                                  .toFixed(2)
+    })
   }
 
   // public getJSON(): any {

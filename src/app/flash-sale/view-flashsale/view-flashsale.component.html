@@ -15,10 +15,7 @@
                     <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <a id="deleteBtn" [attr.disabled]="canDelete() ? true : null" class="btn btn-danger btn-link btn-icon btn-md remove" (click)="removeSelectedRows()">
-                        <i class="fa fa-times"></i>
-                    </a>
-                    <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="newSale()">
+                    <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="removeSelectedRows()">
                         <i class="fa fa-check"></i>
                     </a>
                 </div>

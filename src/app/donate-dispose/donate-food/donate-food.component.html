@@ -5,7 +5,7 @@
         <mat-card-title>
           <h6>Donate Food</h6>
         </mat-card-title>
-        <div class="generate-btn">
+        <!-- <div class="generate-btn">
           <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
             <i class="fa fa-plus"></i>
           </a>
@@ -15,7 +15,7 @@
           <a id="deleteBtn" [attr.disabled]="canDelete() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="disposeRows()">
             <i class="fa fa-times"></i>
           </a>
-        </div>
+        </div> -->
       </mat-card-header>
     </mat-card>
     <br>
@@ -25,7 +25,7 @@
         <div class="table-responsive-lg">
           <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="select">
+            <!-- <ng-container matColumnDef="select">
               <th mat-header-cell *matHeaderCellDef>
                 Select
               </th>
@@ -34,7 +34,7 @@
                 <mat-checkbox (change)="$event ? selection.toggle(row) : null">
                 </mat-checkbox>
               </td>
-            </ng-container>
+            </ng-container> -->
 
             <!-- Name Column -->
             <ng-container matColumnDef="sku">

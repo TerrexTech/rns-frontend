@@ -7,6 +7,7 @@ import { Warning } from '../../models/warning'
 import { Http } from '@angular/http'
 import swal from 'sweetalert'
 import { DialogDataService } from './dialog-data.service'
+import { InventoryService } from '../../inventory/inventory.service'
 
 @Component({
   selector: 'component-dialog-data-dialog',
@@ -31,7 +32,8 @@ export class DialogDataDialogComponent implements OnInit {
   @Inject(MAT_DIALOG_DATA) public data: any,
   private route: ActivatedRoute,
   private router: Router,
-  private dialogService: DialogDataService
+  private dialogService: DialogDataService,
+  private invServ: InventoryService
              ) { }
 
   ngOnInit(): void {
@@ -57,6 +59,18 @@ export class DialogDataDialogComponent implements OnInit {
 
       const flashSaleIds = flashArray.map(f => f.itemID)
       const newWarnings = warningArray.filter(w => flashSaleIds.indexOf(w.itemID) === -1)
+      flashSaleIds.forEach(element => {
+        console.log(element)
+        this.invServ.deleteRows(element)
+                    .toPromise()
+                    .then((data: any) => {
+                      console.log(data.data.InventoryDelete)
+                    })
+                    .catch(async () => swal('data not deleted'))
+                                      .catch(() => console.log('popup failed'))
+
+      })
+
       localStorage.setItem('warning', JSON.stringify(newWarnings))
     }
 
@@ -69,8 +83,22 @@ export class DialogDataDialogComponent implements OnInit {
       const flashArray = JSON.parse(localStorage.getItem('donation'))
 
       const flashSaleIds = flashArray.map(f => f.itemID)
+
+      flashSaleIds.forEach(element => {
+        console.log(element)
+        this.invServ.deleteRows(element)
+                    .toPromise()
+                    .then((data: any) => {
+                      console.log(data.data.InventoryDelete)
+                    })
+                    .catch(async () => swal('data not deleted'))
+                                      .catch(() => console.log('popup failed'))
+
+      })
+
       const newWarnings = warningArray.filter(w => flashSaleIds.indexOf(w.itemID) === -1)
       localStorage.setItem('warning', JSON.stringify(newWarnings))
+      console.log(localStorage.getItem('warning'))
     }
 
     else if (this.data.data[1] === 'Disposal') {
@@ -82,7 +110,21 @@ export class DialogDataDialogComponent implements OnInit {
       const flashArray = JSON.parse(localStorage.getItem('disposal'))
 
       const flashSaleIds = flashArray.map(f => f.itemID)
+
+      flashSaleIds.forEach(element => {
+        console.log(element)
+        this.invServ.deleteRows(element)
+                    .toPromise()
+                    .then((data: any) => {
+                      console.log(data.data.InventoryDelete)
+                    })
+                    .catch(async () => swal('data not deleted'))
+                                      .catch(() => console.log('popup failed'))
+
+      })
+
       const newWarnings = warningArray.filter(w => flashSaleIds.indexOf(w.itemID) === -1)
+      console.log(newWarnings)
       localStorage.setItem('warning', JSON.stringify(newWarnings))
     }
     this.router.navigate([this.data.data[2]])

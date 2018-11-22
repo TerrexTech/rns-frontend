@@ -94,7 +94,10 @@ export class ShowComponent implements OnInit {
 
   genExpiry(): void {
     this.dataSource.data.forEach(element => {
-
+      element['soldWeight'] = Math.round(element['soldWeight'])
+      .toFixed(2)
+      element['totalWeight'] = Math.round(element['totalWeight'])
+      .toFixed(2)
       element['expiryDate'] = (element['dateArrived'] + (this.getRandomInt(8, 16) * 86400))
     })
   }
@@ -105,36 +108,38 @@ export class ShowComponent implements OnInit {
       item = selItem
     })
     console.log(item)
+    console.log(soldWeight)
 
     const row = this.dataSource.data.findIndex(rowData => rowData['itemID'] === item.itemID)
+    console.log(((this.getRandomInt(min, max) * 86400)))
     this.dataSource.data[row]['expiryDate'] = (this.dataSource.data[row]['expiryDate'] + (this.getRandomInt(min, max) * 86400))
-    const requesetdSoldValue = this.dataSource.data[row]['soldWeight'] + soldWeight
-
-    const totalWeight = this.dataSource.data[row]['totalWeight']
-    const leftoverWeight = Number(Math.round(totalWeight - requesetdSoldValue)
+    const soldVal = Number(this.dataSource.data[row]['soldWeight'])
+    const requestedSoldValue = soldVal + soldWeight
+    const totalWeight = Number(this.dataSource.data[row]['totalWeight'])
+    const leftoverWeight = Number(Math.round(totalWeight - requestedSoldValue)
                                       .toFixed(2))
 
-    console.log(totalWeight - requesetdSoldValue)
+    console.log(totalWeight - requestedSoldValue)
     if (leftoverWeight < 1) {
       this.dataSource.data[row]['soldWeight'] = this.dataSource.data[row]['totalWeight']
       this.dataSource.data[row]['leftover'] = this.dataSource.data[row]['totalWeight'] - this.dataSource.data[row]['soldWeight']
     }
 
-    if (this.dataSource.data[row]['soldWeight'] < this.dataSource.data[row]['totalWeight'] &&
-        requesetdSoldValue < this.dataSource.data[row]['totalWeight']) {
-              // Don't delete please. code is important
-    // this.showService.updateItem(item)
-    //                 .toPromise()
-    //                 .then((data: any) => {
-    //                   if (data.data.InventoryUpdate) {
-    //                   console.log(data)
-     this.dataSource.data[row]['soldWeight'] = Number(Math.round(requesetdSoldValue)
+    if (soldVal < totalWeight &&
+    requestedSoldValue < totalWeight) {
+      this.showService.updateItem(item)
+                      .toPromise()
+                      .then((data: any) => {
+                        if (data.data.InventoryUpdate) {
+                        console.log(data)
+                        this.dataSource.data[row]['soldWeight'] = Number(Math.round(requestedSoldValue)
                                                   .toFixed(2))
-    //                   }
-    //                 })
-    //                 .catch(async () => swal('Error: Unable to update sold weight')
-    //                                     .catch(() => console.log('popup not loaded')))
-    }
+                        localStorage.setItem('soldWeight', requestedSoldValue)
+                      }
+                    })
+                    .catch(async () => swal('Error: Unable to update sold weight')
+                                        .catch(() => console.log('popup not loaded')))
+        }
   }
 
   changeExpiryWarning(min, max): void {
@@ -284,21 +289,13 @@ export class ShowComponent implements OnInit {
       // this.resetData()
     })
     this.changeExpirySold(3, 5, this.curField.totalWeight / 5)
-    this.sendSale(this.curField)
     const array2 = []
-    if (localStorage.getItem('showTable') === undefined) {
-
-      return JSON.parse(localStorage.getItem('showTable'))
+    for (let index = 0; index < 10; index++) {
+      array2.push({
+        expiryDate: this.curField.expiryDate
+      })
     }
-
-    else {
-      for (let index = 0; index < 10; index++) {
-        array2.push({
-          expiryDate: this.curField.expiryDate
-        })
-      }
-      localStorage.setItem('showTable', JSON.stringify(array2))
-    }
+    localStorage.setItem('showTable', JSON.stringify(array2))
     console.log(array2)
   }
 

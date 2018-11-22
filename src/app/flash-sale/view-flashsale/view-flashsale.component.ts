@@ -11,6 +11,7 @@ import { ViewFlashSaleService } from './view-flashsale.service'
 import { AlertService } from '../../alert-popup/alert.service'
 import { TableSearchComponent } from '../../search/table-search/table-search.component'
 import { NavbarService } from '../../shared/navbar/navbar.service'
+import { InventoryService } from '../../inventory/inventory.service'
 
 let flash_data: any[] = []
 @Component({
@@ -20,7 +21,7 @@ let flash_data: any[] = []
 })
 export class ViewFlashsaleComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private http: Http, private viewService: ViewFlashSaleService,
+  constructor(public dialog: MatDialog, private http: Http, private invServ: InventoryService,
               private alertService: AlertService, private navServ: NavbarService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
@@ -37,6 +38,14 @@ export class ViewFlashsaleComponent implements OnInit {
     flash_data = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
+    this.dataSource.data.forEach(element => {
+      element['soldWeight'] = Math.round(element['soldWeight'])
+                                  .toFixed(2)
+      element['totalWeight'] = Math.round(element['totalWeight'])
+                                   .toFixed(2)
+      element['remainingWeight'] = Math.round(element['remainingWeight'])
+                                       .toFixed(2)
+    })
   }
 
   openSearch(): void {
@@ -122,10 +131,21 @@ export class ViewFlashsaleComponent implements OnInit {
         if (willDelete) {
           const flashSales = JSON.parse(localStorage.getItem('flashSale'))
           const itemIDs = this.selection.selected.map(i => i.itemID)
+          console.log(itemIDs)
+          itemIDs.forEach(element => {
+            console.log(element)
+            this.invServ.deleteRows(element)
+                        .toPromise()
+                        .then((data: any) => {
+                          console.log(data.data.InventoryDelete)
+                        })
+                        .catch(async () => swal('data not deleted'))
+                                          .catch(() => console.log('popup failed'))
+
+          })
 
           this.dataSource.data = flashSales.filter(fs => itemIDs.indexOf(fs.itemID) === -1)
           localStorage.setItem('flashSale', JSON.stringify(this.dataSource.data))
-
           swal('The flash sale has been removed!', {
             icon: 'success'
           })
@@ -175,20 +195,6 @@ export class ViewFlashsaleComponent implements OnInit {
       this.selection.clear() :
       this.dataSource.data.forEach((row: any) => this.selection.select(row))
   }
-
-  endFlashSale(): void {
-    const dataArray = []
-    // call to back-end with item_id
-    this.selection.selected.forEach(item => {
-      this.viewService.getEndFlashSale(item.itemID)
-                      .subscribe(data => dataArray
-                      )
-    })
     // if total_weight - sale_weight > 0
     // call alert (in notepad)
-  }
-  warn(message: string): void {
-    this.alertService.warn(message)
-  }
-
 }

@@ -78,6 +78,6 @@ th.mat-sort-header-sorted {
 td.mat-cell {
   padding: 0 24px 0 24px;
       font-size: 14px;
-      /* text-align: center; */
+      text-align: center;
 
   }

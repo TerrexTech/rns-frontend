@@ -22,7 +22,7 @@ export class DisposeFoodComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<Warning>(true, [])
 
-  displayedColumns = ['select', 'sku', 'name', 'qty_unsold', 'status', 'projectedExpiry']
+  displayedColumns = ['sku', 'name', 'qty_unsold', 'status', 'projectedExpiry']
   curField: any
 
   ngOnInit(): void {
@@ -32,6 +32,10 @@ export class DisposeFoodComponent implements OnInit {
     dispose = arr2
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
+    this.dataSource.data.forEach(element => {
+      element['qty_unsold'] = Math.round(element['qty_unsold'])
+                                  .toFixed(2)
+    })
   }
 
   selected(): boolean {

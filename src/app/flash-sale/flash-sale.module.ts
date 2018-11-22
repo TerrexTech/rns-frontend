@@ -31,6 +31,7 @@ import { TableSearchComponent } from '../search/table-search/table-search.compon
 import { AddFlashSaleService } from './add-dialog-data/add-dialog-data.service'
 import { UpdateFlashSaleService } from './dialog-data/dialog-data.service'
 import { NavbarService } from '../shared/navbar/navbar.service'
+import { InventoryService } from '../inventory/inventory.service'
 @NgModule({
     declarations: [
         ViewFlashsaleComponent,
@@ -62,7 +63,8 @@ import { NavbarService } from '../shared/navbar/navbar.service'
         ViewFlashSaleService,
         AddFlashSaleService,
         UpdateFlashSaleService ,
-        NavbarService
+        NavbarService,
+        InventoryService
     ],
     exports: [
     ],

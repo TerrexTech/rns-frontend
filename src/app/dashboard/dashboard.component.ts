@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   totalWeight: number
   soldWeight: number
   wasteWeight: number
+  prodSold: any
 
   @ViewChild('arrival') arrival: ElementRef
   @ViewChild('total') total: ElementRef
@@ -34,6 +35,9 @@ export class DashboardComponent implements OnInit {
               public invServ: InventoryService, public repServ: ReportService) { }
 
   ngOnInit(): void {
+
+    this.prodSold = localStorage.getItem('soldWeight')
+
     this.date.setUTCHours(0, 0, 0, 0)
     const today = (this.date.getTime() / 1000).toFixed(0)
     this.invServ.getTable()
@@ -47,9 +51,9 @@ export class DashboardComponent implements OnInit {
           this.wasteWeight = 0
           data.data.InventoryQueryCount.forEach(total => {
             if (total.timestamp >= today) {
-              this.totalWeight += total.totalWeight
-              this.soldWeight += total.soldWeight
-              this.wasteWeight += total.wasteWeight
+              this.totalWeight += Math.round(total.totalWeight)
+              this.soldWeight += Math.round(total.soldWeight)
+              this.wasteWeight += Math.round(total.wasteWeight)
             }
           })
           console.log(this.totalWeight)
@@ -303,7 +307,7 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           fill: false,
           label: 'Sold',
-          data: [this.soldWeight / 1.4, this.soldWeight / 1.3, this.soldWeight / 1.2, this.soldWeight / 1, this.soldWeight],
+          data: [this.soldWeight / 56, this.soldWeight / 54, this.soldWeight / 52, this.soldWeight / 50, this.prodSold],
           borderColor: '#FF0000'
         }]
       },
@@ -408,8 +412,6 @@ export class DashboardComponent implements OnInit {
         distArray = data.data.ItemSold
         console.log(distArray)
 
-        console.log('7&&&&&&&&&&&&&&&&&&&')
-        const arr1 = JSON.parse(localStorage.getItem('dist'))
         this.distChart = new Chart('distChart', {
           type: 'pie',
           data: {
@@ -462,80 +464,69 @@ export class DashboardComponent implements OnInit {
   }
 
   loadDonationGraph(): void {
-    const m = new MockUtils()
-    m.genDonateGraph()
-    console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('donate'))
-    this.donationChart = new Chart('donationChart', {
-      type: 'bar',
-      data: {
-        labels: arr1.map(e => {
-          return e.Name
-        }),
-        datasets: [
-          {
-            label: 'Average Products',
-            data: arr1.map(e => {
-              return e.Donated
-            }),
-            backgroundColor: 'rgba(255, 99, 132, 1)'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        hover: {
-          mode: 'dataset'
-        },
-        scales: {
-          xAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Fruit'
-            }
-          }],
-          yAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Weight (Kg)'
-            },
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
+    let donateArray = []
+
+    this.repServ.getDonationReport()
+                .toPromise()
+                .then((data: any) => {
+                    donateArray = data.data.Donate
+                    console.log(donateArray)
+
+                    console.log('7&&&&&&&&&&&&&&&&&&&')
+                    const arr1 = JSON.parse(localStorage.getItem('donate'))
+                    this.donationChart = new Chart('donationChart', {
+                      type: 'bar',
+                      data: {
+                        labels: donateArray.map(e => {
+                          return e._id.name
+                        }),
+                        datasets: [
+                          {
+                            label: 'Donated',
+                            data: donateArray.map(e => {
+                              return e.avgDonate
+                            }),
+                            backgroundColor: 'rgba(255, 99, 132, 1)'
+                          }
+                        ]
+                      },
+                      options: {
+                        responsive: true,
+                        hover: {
+                          mode: 'dataset'
+                        },
+                        scales: {
+                          xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                              display: true,
+                              labelString: 'Fruit'
+                            }
+                          }],
+                          yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                              display: true,
+                              labelString: 'Weight (Kg)'
+                            },
+                            ticks: {
+                              beginAtZero: true
+                            }
+                          }]
+                        }
+                      }
+                    })
+
+                    // Moving Graph
+                    setInterval(() => {
+                      this.donationChart.data.datasets.forEach((dataset, index) => {
+                        const metric = dataset.data.shift()
+                        dataset.data.push(metric + 1)
+                      })
+                      this.donationChart.update()
+                    }, 1200000)
+                  }
+        )
+        .catch(console.log)
       }
-    })
-
-    // Moving Graph
-    setInterval(() => {
-      this.donationChart.data.datasets.forEach((dataset, index) => {
-        const metric = dataset.data.shift()
-        dataset.data.push(metric + 1)
-      })
-      this.donationChart.update()
-    }, 1200000)
-  }
-
-  // success(message: string): void {
-  //   this.alertService.success(message)
-  // }
-
-  // error(message: string): void {
-  //     this.alertService.error(message)
-  // }
-
-  // info(message: string): void {
-  //     this.alertService.info(message)
-  // }
-
-  // warn(message: string): void {
-  //     this.alertService.warn(message)
-  // }
-
-  // clear(): void {
-  //     this.alertService.clear()
-  // }
 }

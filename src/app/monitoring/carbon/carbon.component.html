@@ -22,6 +22,9 @@
         <div class="col-sm-3">
                 <div class="card report-info gauge">
                         <div id="info" class="card-body card-body2 mx-auto center">
+                            <h6>Carbon Levels (PPM)</h6>
+                            <br>
+                            <h1 class="text-center">{{ gaugeValue }}</h1>
                 <!-- <rg-gauge-chart
                     [canvasWidth]="carbonCanvasWidth"
                     [needleValue]="carbonNeedleValue"
@@ -30,12 +33,12 @@
                     [name]="carbonName"
                     [bottomLabel]="carbonBottomLabel">
                 </rg-gauge-chart> -->
-                <ngx-gauge [type]="gaugeType"
+                <!-- <ngx-gauge [type]="gaugeType"
                            [value]="gaugeValue"
                            [label]="gaugeLabel"
                            [append]="gaugeAppendText"
                            background-color="#A1A">
-                </ngx-gauge>
+                </ngx-gauge> -->
                 </div>
                 </div>
             <br>
@@ -58,14 +61,17 @@
             <div class="col-sm-3">
                     <div class="card report-info gauge">
                             <div id="info" class="card-body card-body2 mx-auto center">
-                    <rg-gauge-chart
+                                    <h6>Ethylene Levels (PPM)</h6>
+                                    <br>
+                                    <h1 class="text-center">{{ gaugeValue }}</h1>
+                    <!-- <rg-gauge-chart
                         [canvasWidth]="ethyCanvasWidth"
                         [needleValue]="ethyNeedleValue"
                         [centralLabel]="ethyCentralLabel"
                         [options]="ethyOptions"
                         [name]="ethyName"
                         [bottomLabel]="ethyBottomLabel">
-                    </rg-gauge-chart>
+                    </rg-gauge-chart> -->
                     </div>
                     </div>
               <br>
@@ -88,14 +94,17 @@
                 <div class="col-sm-3">
                         <div class="card report-info gauge">
                                 <div id="info" class="card-body card-body2 mx-auto center">
-                        <rg-gauge-chart
+                                        <h6>Temperature (°C)</h6>
+                                        <br>
+                                        <h1 class="text-center">{{ gaugeValue }}</h1>
+                        <!-- <rg-gauge-chart
                             [canvasWidth]="tempCanvasWidth"
                             [needleValue]="tempNeedleValue"
                             [centralLabel]="tempCentralLabel"
                             [options]="tempOptions"
                             [name]="tempName"
                             [bottomLabel]="tempBottomLabel">
-                        </rg-gauge-chart>
+                        </rg-gauge-chart> -->
                         </div>
                         </div>
                   <br>
@@ -114,12 +123,4 @@
                 </div>
                 </div>
               </div>
-        <br>
-        <div row="row">
-            <component-sensor></component-sensor>
-            <!-- <div class="col-sm-8">
-                <component-reports-table [jsonFields]=8 [displayedColumns]="['SKU', 'Name', 'Carbon', 'Timestamp', 'Status', 'Projected Expiry', 'Trend (%)']"></component-reports-table>
-            </div> -->
-        </div>
-        <!--Make one column for table, one column for graph in this row -->
         </div>

@@ -74,7 +74,10 @@ export class ShowComponent implements OnInit {
 
       }
       )
-      .catch()
+      .catch(() => {
+        swal('Table data not loaded')
+            .catch(err => console.log(err))
+      })
 
     this.dataSource.paginator = this.paginator
     const sorting: MatSortable = {
@@ -182,7 +185,10 @@ export class ShowComponent implements OnInit {
         this.dataSource.data = paginator
         this.genExpiry()
       })
-      .catch(console.log)
+      .catch(() => {
+        swal('Table data not loaded')
+            .catch(err => console.log(err))
+      })
   }
 
   onPaginateForward(): void {
@@ -198,7 +204,10 @@ export class ShowComponent implements OnInit {
         this.genExpiry()
         // this.lastTimestamp = data.data.InventoryQueryTimestamp[0].timestamp
       })
-      .catch(console.log)
+      .catch(() => {
+        swal('Table data not loaded')
+            .catch(err => console.log(err))
+      })
   }
 
   openSearch(): void {
@@ -304,27 +313,18 @@ export class ShowComponent implements OnInit {
   }
 
   genWarning(): void {
-    // this.status = 'red'
     const array1 = []
     const ethyVal = '1300'
     const co2Val = '3900'
     this.selection.selected.forEach(item => {
       item.isRed = true
-      // max value must be +1
+      // max value must be +1 of intended value
       this.changeExpiryWarning(2, 4)
       this.curField = paginator.filter(i => i.itemID === item.itemID)[0]
-      console.log(this.curField)
       this.alertShown = true
       this.navServ.newEvent(this.selection.selected.length)
       console.log(this.curField)
-
-      if (localStorage.getItem('warning') === undefined) {
-
-        return JSON.parse(localStorage.getItem('warning'))
-      }
-      else {
-        array1.push(this.curField)
-      }
+      array1.push(this.curField)
       // this.showService.sendWarning(this.curField)
       //   .toPromise()
       //   .then((data: any) => {
@@ -363,12 +363,9 @@ export class ShowComponent implements OnInit {
               this.dataSource.data = data.data.InventoryQueryCount
               paginator = data.data.InventoryQueryCount
             }
-            else {
-              alert('Timed out.')
-            }
           }
           )
-          .catch()
+          .catch(() => alert('Timed out.'))
       })
   }
 }

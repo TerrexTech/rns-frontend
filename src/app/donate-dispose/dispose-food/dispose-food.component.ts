@@ -28,6 +28,7 @@ export class DisposeFoodComponent implements OnInit {
 
   ngOnInit(): void {
     this.navServ.newEvent(0)
+    if (JSON.parse(localStorage.getItem('disposal'))) {
     const localDisposal = JSON.parse(localStorage.getItem('disposal'))
     this.dataSource.data = localDisposal
     disposedItems = localDisposal
@@ -37,6 +38,11 @@ export class DisposeFoodComponent implements OnInit {
       element['qty_unsold'] = Math.round(element['qty_unsold'])
                                   .toFixed(2)
     })
+  }
+  else {
+    swal('No disposals.')
+      .catch(err => console.log(err))
+  }
   }
 
   populateFields(): void {

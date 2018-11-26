@@ -18,7 +18,8 @@ import {
     MatPaginatorModule,
     MatSelectModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule
 } from '@angular/material'
 
 import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
@@ -56,6 +57,7 @@ import { InventoryService } from '../inventory/inventory.service'
         MatTabsModule,
         MatButtonModule,
         AlertPopupModule,
+        MatTooltipModule,
         SearchModule
     ],
     providers: [

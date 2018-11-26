@@ -32,7 +32,8 @@ import {
   MatSortModule,
   MatTableModule,
   MatTabsModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material'
 import { SaleComponent } from './sale/sale.component'
 import { HistoryComponent } from './history/history.component'
@@ -58,6 +59,7 @@ import { HistoryComponent } from './history/history.component'
         MatTableModule,
         MatTabsModule,
         MatToolbarModule,
+        MatTooltipModule,
         MatDatepickerModule,
         MatNativeDateModule,
         SearchModule,

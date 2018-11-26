@@ -15,7 +15,8 @@ import {
     MatPaginatorModule,
     MatSelectModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule
 } from '@angular/material'
 
 import { WarningComponent } from './warning.component'
@@ -44,7 +45,8 @@ import { NavbarService } from '../shared/navbar/navbar.service'
         MatInputModule,
         MatSelectModule,
         MatTableModule,
-        MatTabsModule
+        MatTabsModule,
+        MatTooltipModule
     ],
     providers: [
         DialogDataService,

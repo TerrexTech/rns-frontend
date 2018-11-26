@@ -30,13 +30,12 @@ ngOnInit(): void {
       console.log(data.data.InventoryQueryCount)
       this.dataSource.data = data.data.InventoryQueryCount
       }
-      else {
-        alert('Timed out.')
-      }
-
     }
     )
-    .catch()
+    .catch(() => {
+      swal('No Sales.')
+        .catch(err => console.log(err))
+    })
 
   this.dataSource.paginator = this.paginator
   this.dataSource.sort = this.sort

@@ -6,16 +6,16 @@
                     <h6>Flash Sales</h6>
                 </mat-card-title>
                 <div class="generate-btn">
-                    <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+                    <a id="addBtn" matTooltip="Search" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
                         <i class="fa fa-search"></i>
                     </a>
-                    <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewFlashSale()">
+                    <a id="addBtn" matTooltip="Add new flash sale" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewFlashSale()">
                         <i class="fa fa-plus"></i>
                     </a>
-                    <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
+                    <a id="editBtn" matTooltip="Edit Flash sale" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="removeSelectedRows()">
+                    <a id="sellBtn" matTooltip="End Flash Sale(s)" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="removeSelectedRows()">
                         <i class="fa fa-check"></i>
                     </a>
                 </div>

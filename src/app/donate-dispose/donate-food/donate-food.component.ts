@@ -28,6 +28,7 @@ export class DonateFoodComponent implements OnInit {
 
   ngOnInit(): void {
     this.navServ.newEvent(0)
+    if (JSON.parse(localStorage.getItem('donation'))) {
     const localDoantion = JSON.parse(localStorage.getItem('donation'))
     this.dataSource.data = localDoantion
     donatedItems = localDoantion
@@ -37,6 +38,11 @@ export class DonateFoodComponent implements OnInit {
       element['qty_unsold'] = Math.round(element['qty_unsold'])
                                   .toFixed(2)
     })
+    }
+    else {
+      swal('No donations.')
+        .catch(err => console.log(err))
+    }
   }
 
   populateFields(): void {

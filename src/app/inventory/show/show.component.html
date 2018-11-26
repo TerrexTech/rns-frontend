@@ -8,19 +8,19 @@
         <h6>View Inventory</h6>
       </mat-card-title>
         <div class="generate-btn">
-          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit">
+          <a id="searchBtn" matTooltip="Search" class="btn btn-warning btn-link btn-icon btn-md edit">
             <i class="fa fa-search"></i>
           </a>
-          <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
+          <a id="editBtn" matTooltip="Edit Item" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
             <i class="fa fa-edit"></i>
           </a>
-          <a id="disposeBtn" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canDelete() ? true : null" (click)="removeSelectedRows()">
+          <a id="disposeBtn" matTooltip="Delete Item(s)" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canDelete() ? true : null" (click)="removeSelectedRows()">
             <i class="fa fa-times"></i>
           </a>
-          <a id="sellBtn" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()">
+          <a id="sellBtn" matTooltip="Sell Item" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genSold()">
             <i class="fa fa-dollar-sign"></i>
           </a>
-          <a id="warningBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genWarning()">
+          <a id="warningBtn" matTooltip="Create Warning" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="genWarning()">
             <i class="fa fa-exclamation-triangle"></i>
           </a>
         </div>

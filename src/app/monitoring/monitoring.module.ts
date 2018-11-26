@@ -7,13 +7,13 @@ import { OverviewComponent } from './overview/overview.component'
 import { EthyleneComponent } from './ethylene/ethylene.component'
 import { SensorComponent } from './sensor/sensor.component'
 import { TemperatureComponent } from './temperature/temperature.component'
-// import { DataTableComponent } from "../data-table/data-table.component"
 import { CdkTableModule } from '@angular/cdk/table'
 import { GaugeChartComponent } from 'angular-gauge-chart'
 import { ReportsTableModule } from '../reports-table/reports-table.module'
 import { SearchModule } from '../search/search.module'
 import { MonitorSearchComponent } from '../search/monitor-search/monitor-search.component'
 import { OverviewService } from './overview/overview.service'
+import { NgxGaugeModule } from 'ngx-gauge'
 
 import {
     MatButtonModule,
@@ -51,6 +51,7 @@ import { MonitorSearchService } from '../search/monitor-search/monitor-search.se
         MatPaginatorModule,
         MatButtonModule,
         MatGridListModule,
+        NgxGaugeModule,
         ReportsTableModule,
         SearchModule
     ],

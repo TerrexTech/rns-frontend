@@ -23,12 +23,17 @@ export class CarbonComponent implements OnInit {
   ethyValue: string
   date: Date = new Date()
 
-  public carbonCanvasWidth = 200
-  public carbonNeedleValue = 20
-  public carbonCentralLabel = ''
-  public carbonName = 'Carbon Levels (PPM)'
-  public carbonBottomLabel = this.carbonNeedleValue.toString()
-  public carbonOptions = {
+  gaugeType = 'semi'
+  gaugeValue = 28.3
+  gaugeLabel = 'Carbon Levels'
+  gaugeAppendText = 'PPM'
+
+  carbonCanvasWidth = 200
+  carbonNeedleValue = 20
+  carbonCentralLabel = ''
+  carbonName = 'Carbon Levels (PPM)'
+  carbonBottomLabel = this.carbonNeedleValue.toString()
+  carbonOptions = {
     hasNeedle: true,
     needleColor: 'gray',
     needleUpdateSpeed: 1000,
@@ -38,12 +43,12 @@ export class CarbonComponent implements OnInit {
     needleStartValue: 50
   }
 
-  public ethyCanvasWidth = 200
-  public ethyNeedleValue = 20
-  public ethyCentralLabel = ''
-  public ethyName = 'Ethylene Levels (PPM)'
-  public ethyBottomLabel = this.ethyNeedleValue.toString()
-  public ethyOptions = {
+  ethyCanvasWidth = 200
+  ethyNeedleValue = 20
+  ethyCentralLabel = ''
+  ethyName = 'Ethylene Levels (PPM)'
+  ethyBottomLabel = this.ethyNeedleValue.toString()
+  ethyOptions = {
     hasNeedle: true,
     needleColor: 'gray',
     needleUpdateSpeed: 1000,
@@ -53,12 +58,12 @@ export class CarbonComponent implements OnInit {
     needleStartValue: 50
   }
 
-  public tempCanvasWidth = 200
-  public tempNeedleValue = 20
-  public tempCentralLabel = ''
-  public tempName = 'Temperature Levels (PPM)'
-  public tempBottomLabel = this.tempNeedleValue.toString()
-  public tempOptions = {
+  tempCanvasWidth = 200
+  tempNeedleValue = 20
+  tempCentralLabel = ''
+  tempName = 'Temperature Levels (PPM)'
+  tempBottomLabel = this.tempNeedleValue.toString()
+  tempOptions = {
     hasNeedle: true,
     needleColor: 'gray',
     needleUpdateSpeed: 1000,
@@ -68,7 +73,7 @@ export class CarbonComponent implements OnInit {
     needleStartValue: 50
   }
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient,  private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -82,6 +87,7 @@ export class CarbonComponent implements OnInit {
     })
     .afterClosed()
     .subscribe(data => {
+      if (data) {
       console.log(data)
       console.log(data.data.InventoryQueryItem)
       this.searchResultsData = data.data.InventoryQueryItem[0]
@@ -91,6 +97,11 @@ export class CarbonComponent implements OnInit {
       this.loadCarbonGraph()
       this.loadEthyGraph()
       this.loadTempGraph()
+      }
+      else {
+        swal('Search data not provided')
+            .catch(err => console.log(err))
+      }
     })
   }
 

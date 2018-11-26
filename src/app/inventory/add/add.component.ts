@@ -91,15 +91,19 @@ export class AddComponent implements OnInit {
                      .toPromise()
                      .then((data: any) => {
                        if (data.data.InventoryInsert) {
+                        swal({
+                          title: 'Record inserted into Inventory!.',
+                          icon: 'success'
+                        })
+                        .catch(err => console.log(err))
                         console.log(data.data.InventoryInsert)
                        }
-                       else {
-                        swal('Record not inserted into Inventory.')
-                        .catch(console.log)
-                       }
-                        }
+                      }
                       )
-                     .catch(console.log)
+                     .catch(() => {
+                      swal('Record not inserted into Inventory.')
+                      .catch(err => console.log(err))
+                     })
       this.reset()
     }
   }

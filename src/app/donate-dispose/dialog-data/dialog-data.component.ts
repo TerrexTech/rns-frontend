@@ -1,7 +1,7 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
+import { Component, Inject, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA } from '@angular/material'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import swal from 'sweetalert'
 
 @Component({
@@ -9,7 +9,6 @@ import swal from 'sweetalert'
   templateUrl: 'dialog-data-dialog.html'
 })
 export class DialogDataDialogComponent implements OnInit {
-  @ViewChild('date') dateSel: ElementRef
   form: FormGroup
   formSubmitAttempt: boolean
   curField: any
@@ -17,10 +16,9 @@ export class DialogDataDialogComponent implements OnInit {
   returnUrl: string
 
   constructor(
-  private formBuilder: FormBuilder,
-  @Inject(MAT_DIALOG_DATA) public data: any,
-  private route: ActivatedRoute,
-  private router: Router
+              private formBuilder: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public dataRecieved: any,
+              private route: ActivatedRoute
              ) { }
 
   ngOnInit(): void {
@@ -32,8 +30,8 @@ export class DialogDataDialogComponent implements OnInit {
       status: ['', [Validators.required, Validators.minLength(1)]]
     })
     this.returnUrl = this.route.snapshot.queryParams[''] || '/'
-    this.curField = this.data.data[0]
-    this.pageType = this.data.data[1]
+    this.curField = this.dataRecieved.data[0]
+    this.pageType = this.dataRecieved.data[1]
 
     this.form.get('sku')
              .setValue(this.curField.sku)
@@ -74,15 +72,14 @@ export class DialogDataDialogComponent implements OnInit {
     this.form.value.timestamp = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
     console.log('submitted')
     swal('Record successfully inserted!')
-      .then(log => {
-        console.log(log)
-
-        return true
-      })
       .catch(err => {
         console.log(err)
-
-        return false
+      })
+  }
+  else {
+    swal('Record not inserted!')
+      .catch(err => {
+        console.log(err)
       })
   }
 }

@@ -10,14 +10,8 @@ import { MAT_DIALOG_DATA } from '@angular/material'
 })
 export class DialogDataDialogComponent implements OnInit {
 
-  // focus
-  // focus1
-  // focus2
-
   private toggleButton
   private sidebarVisible: boolean
-  // private nativeElement: Node
-  // public typeValidation: User
 
   test: Date = new Date()
   registerForm: FormGroup
@@ -68,22 +62,17 @@ export class DialogDataDialogComponent implements OnInit {
                      .setValue(this.curField.data.role)
 
     this.returnUrl = this.route.snapshot.queryParams[''] || '/'
-
   }
 
   f(): any {
     console.log(this.registerForm.controls.email.errors)
 
     return this.registerForm.controls
-
   }
 
   onSubmit(): void {
     this.formSubmitAttempt = true
-    console.log('+++++++++++++++++++++++++')
     console.log(this.registerForm.controls.roleSelect.value)
-    // this.registerForm.valid
-    // if (this.registerForm.valid) {
 
     if (this.registerForm.valid) {
       console.log(this.registerForm.controls.lastname.value)
@@ -107,52 +96,33 @@ export class DialogDataDialogComponent implements OnInit {
       console.log(resource)
       this.http.post('http://142.55.32.86:50281/api1', resource)
         .toPromise()
-        // .then(d => this.data)
-        .then((data: any) => {
-          console.log(data)
-          if (data.data.register !== null) {
-            localStorage.setItem('accessToken', data.data.register.accessToken)
-            localStorage.setItem('refreshToken', data.data.register.refreshToken)
-            //   this.router.navigate([this.returnUrl])
+        .then((updateConfirmationData: any) => {
+          console.log(updateConfirmationData)
+          if (updateConfirmationData.data.register !== null) {
+            localStorage.setItem('accessToken', updateConfirmationData.data.register.accessToken)
+            localStorage.setItem('refreshToken', updateConfirmationData.data.register.refreshToken)
             this.reset()
           }
-          console.log(data.data)
-          if (data.errors[0].message === '2: Registeration Error') {
+          console.log(updateConfirmationData.data)
+          if (updateConfirmationData.errors[0].message === '2: Registeration Error') {
             this.showError = true
             this.message = 'User already exists'
-          } else if (data.errors[0].message === '1: Registeration Error') {
+          } else if (updateConfirmationData.errors[0].message === '1: Registeration Error') {
             this.message = 'Server error'
           }
         }
         )
-        .catch()
+        .catch(updateErr => {
+          swal(updateErr)
+              .catch((err: any) => {
+                console.log(err)
+              })
+        })
     }
   }
 
   reset(): void {
     this.registerForm.reset()
     this.formSubmitAttempt = false
-    // this.model.roleStatus = ''
-  }
-
-  // ngOnDestroy() {
-  //     const body = document.getElementsByTagName('body')[0]
-  //     body.classList.remove('register-page')
-  // }
-  sidebarToggle(): void {
-    const toggleButton = this.toggleButton
-    const body = document.getElementsByTagName('body')[0]
-    const sidebar = document.getElementsByClassName('navbar-collapse')[0]
-    if (this.sidebarVisible === false) {
-      setTimeout((): void => {
-        toggleButton.classList.add('toggled')
-      }, 500)
-      body.classList.add('nav-open')
-      this.sidebarVisible = true
-    } else {
-      this.toggleButton.classList.remove('toggled')
-      this.sidebarVisible = false
-      body.classList.remove('nav-open')
-    }
   }
 }

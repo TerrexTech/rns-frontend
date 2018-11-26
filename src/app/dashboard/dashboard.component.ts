@@ -1,11 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { environment } from '../../config'
-import { SendDate } from '../models'
 import Chart from 'chart.js'
-import { AlertService } from '../alert-popup/alert.service'
-import { DashboardService } from './dashboard.service'
-import { MockUtils } from './mockutils'
 import { InventoryService } from '../inventory/inventory.service'
 import { ReportService } from '../reports/reports.service'
 
@@ -21,7 +15,6 @@ export class DashboardComponent implements OnInit {
   distChart: any
   donationChart: any
   date: Date = new Date()
-  combinationGraph = []
   totalWeight: number
   soldWeight: number
   wasteWeight: number
@@ -31,8 +24,9 @@ export class DashboardComponent implements OnInit {
   @ViewChild('total') total: ElementRef
   @ViewChild('average') average: ElementRef
 
-  constructor(private http: HttpClient, private alertService: AlertService, private dashServ: DashboardService,
-              public invServ: InventoryService, public repServ: ReportService) { }
+  constructor(public invServ: InventoryService,
+              public repServ: ReportService
+             ) { }
 
   ngOnInit(): void {
 
@@ -56,7 +50,6 @@ export class DashboardComponent implements OnInit {
               this.wasteWeight += Math.round(total.wasteWeight)
             }
           })
-          console.log(this.totalWeight)
           this.loadTotalNew()
           this.loadSoldGraph()
           this.loadDistNew()
@@ -76,11 +69,6 @@ export class DashboardComponent implements OnInit {
   }
 
   loadTotalNew(): void {
-    // this.openSearch()
-    const m = new MockUtils()
-    m.genTotalGraph()
-    console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('total'))
     const dateLabel = new Date()
     this.totalChart = new Chart('totalChart', {
       type: 'bar',
@@ -134,167 +122,10 @@ export class DashboardComponent implements OnInit {
         }
       }
     })
-    // this.getJSON().subscribe(dataArr => {
-    //   console.log(dataArr)
-    //   const metrics: any = [
-    //     []
-    //   ]
-    //   // total_weight: 195, sold_weight: 58, waste_weight: 49
-    //   Object.keys(dataArr).forEach(k => {
-    //     const prods = dataArr[k]
-    //     const date = new Date(prods.dates * 1000).toDateString()
-    //     this.ethyChart.data.labels.push(date)
-    //     metrics[0].push(prods.Ethylene)
-    //   })
-
-    //   this.ethyChart.data.datasets.forEach((dataset, index) =>
-    //     dataset.data = dataset.data.concat(metrics[index])
-    //   )
-    //   this.ethyChart.update()
-
-    //   // Moving Graph
-    // setInterval(() => {
-    // this.totalChart.data.datasets.forEach((dataset, index) => {
-    // console.log(dataset)
-    // const g = dataset.data.length
-    // console.log(dataset.data)
-    // const metric = dataset.data.shift()
-    // dataset.data.push(metric + 1)
-    // this.ethyNeedleValue = metric + 1
-    // })
-    // this.totalChart.update()
-    // }, 1200)
-    // })
-  }
-
-  loadTotalGraph(): void {
-    this.totalChart = new Chart('totalChart', {
-      type: 'bar',
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: 'Total Weight',
-            data: [],
-            backgroundColor: 'rgba(255, 99, 132, 1)'
-          },
-          {
-            label: 'Sold Weight',
-            data: [],
-            backgroundColor: 'rgba(25, 99, 132, 1)'
-          },
-          {
-            label: 'Waste Weight',
-            data: [],
-            backgroundColor: 'rgba(125, 30, 255, 1)'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        hover: {
-          mode: 'dataset'
-        },
-        legend: {
-          display: true
-        },
-        scales: {
-          xAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Date'
-            }
-          }],
-          yAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Weight(Kg)'
-            },
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    })
-
-    this.dashServ.getTotal()
-      .toPromise()
-      .then(dataArr => {
-        console.log(dataArr)
-        const metrics: any = [
-          [],
-          [],
-          []
-        ]
-        // total_weight: 195, sold_weight: 58, waste_weight: 49
-        Object.keys(dataArr)
-          .forEach(k => {
-            const weights = dataArr[k]
-            const date = new Date(weights.dates * 1000).toDateString()
-            this.totalChart.data.labels.push(date)
-            this.total.nativeElement.innerHTML = weights.total_weight
-            metrics[0].push(weights.total_weight)
-            metrics[1].push(weights.sold_weight)
-            metrics[2].push(weights.waste_weight)
-          })
-
-        this.totalChart.data.datasets.forEach((dataset, index) =>
-          dataset.data = dataset.data.concat(metrics[index])
-        )
-
-        this.totalChart.update()
-        // metrics[0].shift()
-        // metrics[1].shift()
-
-        // Moving Graph
-      })
-      .catch(console.log)
-
-    setInterval(() => {
-      this.dashServ.getToday()
-        .toPromise()
-        .then(newDate => {
-          const newMetrics: any = [
-            [],
-            [],
-            []
-          ]
-          console.log(newDate)
-          Object.keys(newDate)
-            .forEach(k => {
-              console.log(k)
-              const weights = newDate[k]
-              const date = new Date(weights.dates * 1000).toDateString()
-              this.totalChart.data.labels.push(date)
-              this.total.nativeElement.innerHTML = weights.total_weight
-
-              this.totalChart.data.datasets.forEach((dataset, index) => {
-                console.log(index)
-                const metric = dataset.data.shift()
-                dataset.data.push(newMetrics[index])
-                console.log(dataset)
-
-                newMetrics[0].push(weights.total_weight)
-                newMetrics[1].push(weights.sold_weight)
-                newMetrics[2].push(weights.waste_weight)
-              })
-              this.totalChart.update()
-            })
-
-        })
-
-    }, 1200000)
   }
 
   loadSoldGraph(): void {
-    const m = new MockUtils()
-    m.genSoldGraph()
     const d = new Date()
-    console.log('7&&&&&&&&&&&&&&&&&&&')
-    const arr1 = JSON.parse(localStorage.getItem('sold'))
     this.soldChart = new Chart('soldChart', {
       type: 'line',
       data: {
@@ -307,7 +138,12 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           fill: false,
           label: 'Sold',
-          data: [this.soldWeight / 56, this.soldWeight / 54, this.soldWeight / 52, this.soldWeight / 50, this.prodSold],
+          data: [this.soldWeight / 56,
+                 this.soldWeight / 54,
+                 this.soldWeight / 52,
+                 this.soldWeight / 50,
+                 this.prodSold
+                ],
           borderColor: '#FF0000'
         }]
       },
@@ -340,72 +176,10 @@ export class DashboardComponent implements OnInit {
         }
       }
     })
-
-    // Moving Graph
-    setInterval(() => {
-      this.soldChart.data.datasets.forEach((dataset, index) => {
-        const metric = dataset.data.shift()
-        dataset.data.push(metric + 1)
-      })
-      this.soldChart.update()
-    }, 1200000)
-  }
-
-  loadDistGraph(): void {
-
-    this.distChart = new Chart('distChart', {
-      type: 'pie',
-      data: {
-        labels: [],
-        datasets: [
-          {
-            label: [''],
-            data: [],
-            backgroundColor: ['#001f3f', '#0074D9', '#7FDBFF', '#39CCCC', '#FFCC00', '##FFAC00', '#FF0000', '#FF4136', '#FF851B'],
-            fill: 'true'
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        hover: {
-          mode: 'dataset'
-        },
-        legend: {
-          display: true
-        }
-      }
-    })
-    // total_weight: 195, sold_weight: 58, waste_weight: 49
-    // Object.keys(dataArr)
-    //   .forEach(k => {
-    //     const prods = dataArr[k]
-    //     // const date = new Date(prods.dates).toDateString()
-    //     this.distChart.data.labels.push(prods.prod_name)
-    //     metrics[0].push(prods.prod_weight)
-    //   })
-
-    // this.distChart.data.datasets.forEach((dataset, index) =>
-    //   dataset.data = dataset.data.concat(metrics[index])
-    // )
-    // this.distChart.update()
-
-    // Moving Graph
-    // setInterval(() => {
-    //   this.distChart.data.datasets.forEach((dataset, index) => {
-    //     const metric = dataset.data.shift()
-    //     dataset.data.push(metric + 1)
-    //   })
-    //   this.distChart.update()
-    // }, 5000)
   }
 
   loadDistNew(): void {
-    // const m = new MockUtils()
-    // m.genDistGraph()
-
     let distArray = []
-
     this.repServ.getInventoryReport()
       .toPromise()
       .then((data: any) => {
@@ -438,25 +212,6 @@ export class DashboardComponent implements OnInit {
             legend: {
               display: true
             }
-            // scales: {
-            //   xAxes: [{
-            //     display: true,
-            //     scaleLabel: {
-            //       display: true,
-            //       labelString: 'Date'
-            //     }
-            //   }],
-            //   yAxes: [{
-            //     display: true,
-            //     scaleLabel: {
-            //       display: true,
-            //       labelString: 'Weight'
-            //     },
-            //     ticks: {
-            //       beginAtZero: true
-            //     }
-            //   }]
-            // }
           }
         })
       })

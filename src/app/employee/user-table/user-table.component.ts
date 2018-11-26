@@ -45,17 +45,6 @@ export class UserTableComponent implements OnInit {
   curField: any
 
   ngOnInit(): void {
-
-    // this.userServ.getTable()
-    //              .toPromise()
-    //              .then((data: any) => {
-    //                 console.log(data.data.InventoryQuery)
-    //                 this.dataSource.data = data.data.InventoryQuery
-    //                 Employees = data.data.InventoryQuery
-    //               }
-    //               )
-    //              .catch()
-
     this.dataSource.data = this.ELEMENT_DATA
     this.dataSource.sort = this.sort
     this.dataSource.paginator = this.paginator
@@ -107,7 +96,8 @@ export class UserTableComponent implements OnInit {
       text: 'Once deleted, this employee will be deleted.',
       icon: 'warning',
       buttons: ['Yes', 'No'],
-      dangerMode: true
+      dangerMode: true,
+      closeOnClickOutside: false
     })
       .then(willDelete => {
         if (!willDelete) {
@@ -115,55 +105,20 @@ export class UserTableComponent implements OnInit {
             const index: number = Employees.findIndex(d => d === item)
             console.log('++++++++++++++++++==')
             this.userServ.deleteRows(item.email)
-            // this.loadInventoryJsonService.deleteRow(item.item_id)
           })
           swal('The following employee has been deleted!', {
             icon: 'success'
           })
-          .then(log => {
-            console.log(log)
-
-            return true
-          })
           .catch(err => {
             console.log(err)
-
-            return false
           })
-        } else {
-          swal('Employee not removed')
-            .then(log => {
-              console.log(log)
-
-              return true
-            })
-            .catch(err => {
-              console.log(err)
-
-              return false
-            })
         }
-
-        return true
       })
-      .catch(err => {
+      .catch(() => {
+        swal('Employee not deleted.')
+          .catch(err => {
         console.log(err)
-
-        return false
+          })
       })
-  }
-
-  isAllSelected(): boolean {
-    const numSelected = this.selection.selected.length
-    const numRows = this.dataSource.data.length
-
-    return numSelected === numRows
-  }
-
-  /** Selects all rows if they are not all selected otherwise clear selection. */
-  masterToggle(): void {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row))
   }
 }

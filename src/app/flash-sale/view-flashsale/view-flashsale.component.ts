@@ -33,19 +33,26 @@ export class ViewFlashsaleComponent implements OnInit {
 
   ngOnInit(): void {
     this.navServ.newEvent(0)
-    const arr2 = JSON.parse(localStorage.getItem('flashSale'))
-    this.dataSource.data = arr2
-    flash_data = arr2
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
-    this.dataSource.data.forEach(element => {
-      element['soldWeight'] = Math.round(element['soldWeight'])
-                                  .toFixed(2)
-      element['totalWeight'] = Math.round(element['totalWeight'])
-                                   .toFixed(2)
-      element['remainingWeight'] = Math.round(element['remainingWeight'])
-                                       .toFixed(2)
-    })
+
+    if (JSON.parse(localStorage.getItem('flashSale'))) {
+      const arr2 = JSON.parse(localStorage.getItem('flashSale'))
+      this.dataSource.data = arr2
+      flash_data = arr2
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
+      this.dataSource.data.forEach(element => {
+        element['soldWeight'] = Math.round(element['soldWeight'])
+                                    .toFixed(2)
+        element['totalWeight'] = Math.round(element['totalWeight'])
+                                    .toFixed(2)
+        element['remainingWeight'] = Math.round(element['remainingWeight'])
+                                        .toFixed(2)
+      })
+    }
+    else {
+      swal('No Flash Sales present')
+          .catch(err => console.log(err))
+    }
   }
 
   openSearch(): void {
@@ -53,9 +60,15 @@ export class ViewFlashsaleComponent implements OnInit {
       width: '500px'
     })
       .afterClosed()
-      .subscribe(
-        data => flash_data = data
-      )
+      .subscribe(data => {
+        if (data) {
+        flash_data = data
+        }
+        else {
+          swal('No Flash Sales.')
+              .catch(err => console.log(err))
+        }
+      })
     this.dataSource.data = flash_data
   }
 

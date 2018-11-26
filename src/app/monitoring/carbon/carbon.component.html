@@ -19,23 +19,28 @@
                     </div>
         </div>
         <div class="row">
-        <!-- <div class="col-sm-3">
+        <div class="col-sm-3">
                 <div class="card report-info gauge">
                         <div id="info" class="card-body card-body2 mx-auto center">
-                <rg-gauge-chart
+                <!-- <rg-gauge-chart
                     [canvasWidth]="carbonCanvasWidth"
                     [needleValue]="carbonNeedleValue"
                     [centralLabel]="carbonCentralLabel"
                     [options]="carbonOptions"
                     [name]="carbonName"
                     [bottomLabel]="carbonBottomLabel">
-                </rg-gauge-chart>
+                </rg-gauge-chart> -->
+                <ngx-gauge [type]="gaugeType"
+                           [value]="gaugeValue"
+                           [label]="gaugeLabel"
+                           [append]="gaugeAppendText"
+                           background-color="#A1A">
+                </ngx-gauge>
                 </div>
                 </div>
             <br>
-        </div> -->
-
-        <div class="col-sm-12">
+        </div>
+        <div class="col-sm-9">
             <div class="card report-info">
                 <div class="card-body">
                     <div class="generate-btn">
@@ -50,7 +55,7 @@
         </div>
         </div>
         <div class="row">
-            <!-- <div class="col-sm-3">
+            <div class="col-sm-3">
                     <div class="card report-info gauge">
                             <div id="info" class="card-body card-body2 mx-auto center">
                     <rg-gauge-chart
@@ -64,8 +69,8 @@
                     </div>
                     </div>
               <br>
-            </div> -->
-            <div class="col-sm-12">
+            </div>
+            <div class="col-sm-9">
               <div class="card report-info">
                 <div id="info" class="card-body card-body2">
                   <div class="generate-btn">
@@ -80,7 +85,7 @@
             </div>
           </div>
           <div class="row">
-                <!-- <div class="col-sm-3">
+                <div class="col-sm-3">
                         <div class="card report-info gauge">
                                 <div id="info" class="card-body card-body2 mx-auto center">
                         <rg-gauge-chart
@@ -94,8 +99,8 @@
                         </div>
                         </div>
                   <br>
-                </div> -->
-                <div class="col-sm-12">
+                </div>
+                <div class="col-sm-9">
                   <div class="card report-info">
                     <div id="info" class="card-body card-body2">
                       <div class="generate-btn">

@@ -1,9 +1,6 @@
-import { Component, ElementRef, OnInit } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Component, OnInit } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { HttpClient } from '@angular/common/http'
-import { AuthResponse } from '../../models/auth-response'
-import { UserAddService } from './user-add.service'
 import { EmployeeService } from '../employee.service'
 
 @Component({
@@ -13,20 +10,8 @@ import { EmployeeService } from '../employee.service'
 })
 export class UserAddComponent implements OnInit {
 
-  // focus
-  // focus1
-  // focus2
-
-  private toggleButton
-  private sidebarVisible: boolean
-  // private nativeElement: Node
-  // public typeValidation: User
-
-  test: Date = new Date()
   registerForm: FormGroup
   formSubmitAttempt: boolean
-  error: string
-  data: AuthResponse
   returnUrl: string
 
   selectedOption: number
@@ -35,14 +20,11 @@ export class UserAddComponent implements OnInit {
   message: string
   showError = false
 
-constructor(
-  private element: ElementRef,
-  private formBuilder: FormBuilder,
-  private route: ActivatedRoute,
-  private router: Router,
-  private http: HttpClient,
-  public empServ: EmployeeService
-           ) { this.http = http }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    public empServ: EmployeeService
+            ) { }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
@@ -74,100 +56,25 @@ constructor(
                     if (data.data.authRegister) {
                       localStorage.setItem('accessToken', data.data.authRegister.accessToken)
                       localStorage.setItem('refreshToken', data.data.authRegister.refreshToken)
-                      //   this.router.navigate([this.returnUrl])
                       this.reset()
                     }
                     else {
                       console.log('User not registered.')
                     }
                     console.log(data.data)
-                    // if (data.data.errors.message === '2: Registeration Error') {
-                    //   this.showError = true
-                    //   this.message = 'User already exists'
-                    // } else if (data.data.errors.message === '1: Registeration Error') {
-                    //   this.message = 'Server error'
-                    // }
                   }
                   )
-                  .catch(console.log)
+                  .catch(() => {
+                    swal('User not registered.')
+                        .catch(err => {
+                          console.log(err)
+                        })
+                  })
               }
     }
-
-  // onSubmit(): void {
-  //   this.formSubmitAttempt = true
-  //   console.log('+++++++++++++++++++++++++')
-  //   console.log(this.registerForm.controls.roleSelect.value)
-  //   // this.registerForm.valid
-  //   // if (this.registerForm.valid) {
-
-  //   if (this.registerForm.valid) {
-  //     console.log(this.registerForm.controls.lastname.value)
-  //     console.log(this.registerForm.controls.roleSelect.value)
-
-  //     const resource = `mutation{
-  //         register(
-  //           username:'${this.registerForm.controls.username.value}',
-  //           password:'${this.registerForm.controls.password.value}',
-  //           firstName:'${this.registerForm.controls.firstname.value}',
-  //           lastName:'${this.registerForm.controls.lastname.value}',
-  //           email:'${this.registerForm.controls.email.value}',
-  //           role:'${this.registerForm.controls.roleSelect.value}'
-  //         )
-  //         {
-  //           accessToken,
-  //           refreshToken
-  //         }
-  //       }`
-
-  //     console.log(resource)
-  //     this.http.post('http://162.212.158.16:30653/api', resource)
-  //       .toPromise()
-  //       .then((data: any) => {
-  //         console.log(data)
-  //         if (data.data.register !== null) {
-  //           localStorage.setItem('accessToken', data.data.register.accessToken)
-  //           localStorage.setItem('refreshToken', data.data.register.refreshToken)
-  //           //   this.router.navigate([this.returnUrl])
-  //           this.reset()
-  //         }
-  //         console.log(data.data)
-  //         if (data.errors[0].message === '2: Registeration Error') {
-  //           this.showError = true
-  //           this.message = 'User already exists'
-  //         } else if (data.errors[0].message === '1: Registeration Error') {
-  //           this.message = 'Server error'
-  //         }
-  //       }
-  //       )
-  //       .catch()
-  //   }
-  // }
 
   reset(): void {
     this.registerForm.reset()
     this.formSubmitAttempt = false
-    // this.model.roleStatus = ''
   }
-
-  // ngOnDestroy() {
-  //     const body = document.getElementsByTagName('body')[0]
-  //     body.classList.remove('register-page')
-  // }
-  sidebarToggle(): void {
-    const toggleButton = this.toggleButton
-    const body = document.getElementsByTagName('body')[0]
-    const sidebar = document.getElementsByClassName('navbar-collapse')[0]
-    if (this.sidebarVisible === false) {
-      setTimeout((): void => {
-        toggleButton.classList.add('toggled')
-      }, 500)
-      body.classList.add('nav-open')
-      this.sidebarVisible = true
-    } else {
-      this.toggleButton.classList.remove('toggled')
-      this.sidebarVisible = false
-      body.classList.remove('nav-open')
-    }
-  }
-
 }

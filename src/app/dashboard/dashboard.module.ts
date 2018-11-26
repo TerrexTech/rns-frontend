@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router'
 import { DashboardComponent } from './dashboard.component'
 
 import { NgModule } from '@angular/core'
-import { DashboardService } from './dashboard.service'
 
 @NgModule({
     imports: [
@@ -12,7 +11,6 @@ import { DashboardService } from './dashboard.service'
     ],
     declarations: [DashboardComponent],
     providers: [
-        DashboardService
     ]
 })
 

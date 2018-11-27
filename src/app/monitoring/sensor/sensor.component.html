@@ -1,8 +1,20 @@
+<div class="main-content">
 <div class="container-fluid">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h6>Sensors</h6>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+    <br>
+    <mat-card>
     <div class="generate-btn">
       <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
         <i class="fa fa-search"></i>
       </a>
     </div>
       <component-reports-table [jsonFields]=12 [displayedColumns]="['Sensor #', 'Name', 'status', 'Last Maintenance', 'Timestamp']"></component-reports-table>
+    </mat-card>
+</div>
 </div>

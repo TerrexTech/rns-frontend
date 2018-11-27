@@ -22,9 +22,11 @@
         <div class="col-sm-3">
                 <div class="card report-info gauge">
                         <div id="info" class="card-body card-body2 mx-auto center">
-                            <h6>Carbon Levels (PPM)</h6>
-                            <br>
-                            <h1 class="text-center">{{ gaugeValue }}</h1>
+                                <h6>Carbon Levels (PPM)</h6>
+                                <br>
+                                <div style="margin-top:50%">
+                                <h1 class="text-center align-middle {{ carbonColorChange(carbonValue) }}">{{ carbonValue }}</h1>
+                            </div>
                 <!-- <rg-gauge-chart
                     [canvasWidth]="carbonCanvasWidth"
                     [needleValue]="carbonNeedleValue"
@@ -63,7 +65,7 @@
                             <div id="info" class="card-body card-body2 mx-auto center">
                                     <h6>Ethylene Levels (PPM)</h6>
                                     <br>
-                                    <h1 class="text-center">{{ gaugeValue }}</h1>
+                                    <h1 class="text-center {{ ethyleneColorChange(ethyValue) }}">{{ ethyValue }}</h1>
                     <!-- <rg-gauge-chart
                         [canvasWidth]="ethyCanvasWidth"
                         [needleValue]="ethyNeedleValue"
@@ -96,7 +98,7 @@
                                 <div id="info" class="card-body card-body2 mx-auto center">
                                         <h6>Temperature (°C)</h6>
                                         <br>
-                                        <h1 class="text-center">{{ gaugeValue }}</h1>
+                                        <h1 class="text-center">{{ tempValue }}</h1>
                         <!-- <rg-gauge-chart
                             [canvasWidth]="tempCanvasWidth"
                             [needleValue]="tempNeedleValue"

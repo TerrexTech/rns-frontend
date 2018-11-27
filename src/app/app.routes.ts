@@ -44,7 +44,7 @@ export const AppRoutes = {
   monitoring: {
     path: 'monitoring',
     title: 'Monitoring',
-    component: CarbonComponent
+    children: MonitoringRoutes
   },
 
   login: {

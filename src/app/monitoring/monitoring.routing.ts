@@ -5,8 +5,8 @@ import { TemperatureComponent } from './temperature/temperature.component'
 
 export const MonitoringRoutes = {
     carbon: {
-        path: 'monitoring',
-        title: 'Monitoring',
+        path: 'metrics',
+        title: 'Metrics',
         component: CarbonComponent
     },
     ethylene: {
@@ -15,8 +15,8 @@ export const MonitoringRoutes = {
         component: EthyleneComponent
     },
     sensor: {
-        path: 'monitor-sensor',
-        title: 'Monitor Sensor',
+        path: 'sensors',
+        title: 'Sensors',
         component: SensorComponent
     },
     temperature: {

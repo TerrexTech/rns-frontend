@@ -163,9 +163,9 @@ export class MockMonitor {
 
         for (let index = 0; index < 10; index++) {
             array3.push({
-                Temperature: this.genFloat(1, 80)
+                Temperature: this.genFloat(23, 28)
                     .toFixed(2),
-                Humidity: this.genFloat(1, 80)
+                Humidity: this.genFloat(70, 90)
                     .toFixed(2),
                 Timestamp: new Date(this.genArrivalDate())
                     .toLocaleString()

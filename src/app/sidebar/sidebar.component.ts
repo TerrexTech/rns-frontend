@@ -78,7 +78,17 @@ export class SidebarComponent implements OnInit {
     },
     {
       route: AppRoutes.monitoring,
-      icon: 'nc-icon nc-box-2'
+      icon: 'nc-icon nc-box-2',
+      children: [
+        {
+          route: AppRoutes.monitoring.children.carbon,
+          ab: 'ME'
+        },
+        {
+          route: AppRoutes.monitoring.children.sensor,
+          ab: 'SE'
+        }
+      ]
     },
     {
       route: AppRoutes.warning,

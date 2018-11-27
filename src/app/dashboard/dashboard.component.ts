@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit {
     this.invServ.getTable()
       .toPromise()
       .then((data: any) => {
+        console.log(data)
         if (data.data.InventoryQueryCount) {
           console.log(data.data.InventoryQueryCount)
           const invArray = data.data.InventoryQueryCount
@@ -44,7 +45,7 @@ export class DashboardComponent implements OnInit {
           this.soldWeight = 0
           this.wasteWeight = 0
           data.data.InventoryQueryCount.forEach(total => {
-            if (total.timestamp >= today) {
+            if (total.timestamp <= today) {
               this.totalWeight += Math.round(total.totalWeight)
               this.soldWeight += Math.round(total.soldWeight)
               this.wasteWeight += Math.round(total.wasteWeight)
@@ -228,7 +229,6 @@ export class DashboardComponent implements OnInit {
                     console.log(donateArray)
 
                     console.log('7&&&&&&&&&&&&&&&&&&&')
-                    const arr1 = JSON.parse(localStorage.getItem('donate'))
                     this.donationChart = new Chart('donationChart', {
                       type: 'bar',
                       data: {

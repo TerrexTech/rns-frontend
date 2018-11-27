@@ -302,14 +302,14 @@ export class ShowComponent implements OnInit {
       // this.resetData()
     })
     this.changeExpirySold(3, 5, this.curField.totalWeight / 5)
-    const array2 = []
-    for (let index = 0; index < 10; index++) {
-      array2.push({
-        expiryDate: this.curField.expiryDate
-      })
-    }
-    localStorage.setItem('showTable', JSON.stringify(array2))
-    console.log(array2)
+    // const array2 = []
+    // for (let index = 0; index < 10; index++) {
+    //   array2.push({
+    //     expiryDate: this.curField.expiryDate
+    //   })
+    // }
+    // localStorage.setItem('showTable', JSON.stringify(array2))
+    // console.log(array2)
   }
 
   genWarning(): void {

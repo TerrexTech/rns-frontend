@@ -185,6 +185,7 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then((data: any) => {
         distArray = data.data.ItemSold
+        console.log('distArray')
         console.log(distArray)
 
         this.distChart = new Chart('distChart', {
@@ -230,7 +231,7 @@ export class DashboardComponent implements OnInit {
 
                     console.log('7&&&&&&&&&&&&&&&&&&&')
                     this.donationChart = new Chart('donationChart', {
-                      type: 'bar',
+                      type: 'polarArea',
                       data: {
                         labels: donateArray.map(e => {
                           return e._id.name

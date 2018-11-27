@@ -37,14 +37,16 @@ export class AddComponent implements OnInit {
   generate(): void {
     const m = new MockUtils()
 
+    const fruitName = m.genName()
+
     this.form.get('sku')
-      .setValue(m.genSKU())
+      .setValue(m.genSKU(fruitName))
     this.form.get('upc')
       .setValue(m.genBarcode())
     this.form.get('item_id')
       .setValue(m.genUUID())
     this.form.get('name')
-      .setValue(m.genName())
+      .setValue(fruitName)
     this.form.get('origin')
       .setValue(m.genOrigin())
     this.form.get('date_arrived')

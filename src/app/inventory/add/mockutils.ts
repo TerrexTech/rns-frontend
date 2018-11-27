@@ -11,13 +11,21 @@ export class MockUtils {
     return parseInt(s, 16)
   }
 
-  genSKU(): string {
-    const s1 = randomstring({ length: 3 })
-    const s2 = randomstring({ length: 3 })
-    const s3 = randomstring({ length: 3 })
-    const s4 = randomstring({ length: 2 })
+  genSKU(name: string): string {
+    const dictionary = {
+      Apple:        'WLRPYUD',
+      Banana:       'KTYRZQD',
+      Grapes:       'UZTFEHB',
+      Lettuce:      'SQVZDMI',
+      Mango:        'ADNEBZE',
+      Orange:       'AWRFVYS',
+      Pear:         'COIQCIE',
+      Strawberry:   'HPFUXBX',
+      'Sweet Pepper': 'BBYITCE',
+      Tomato:       'PFJQUIN'
+    }
 
-    return `${s1}-${s2}-${s3}-${s4}`.toUpperCase()
+    return dictionary[name]
   }
 
   genUUID(): string {

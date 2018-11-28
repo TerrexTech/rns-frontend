@@ -7,7 +7,6 @@ import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import { AddDialogDataComponent } from '../add-dialog-data/add-dialog-data.component'
 import { FlashSale } from '../../models/flash-sale'
 import { Http } from '@angular/http'
-import { ViewFlashSaleService } from './view-flashsale.service'
 import { AlertService } from '../../alert-popup/alert.service'
 import { TableSearchComponent } from '../../search/table-search/table-search.component'
 import { NavbarService } from '../../shared/navbar/navbar.service'
@@ -76,11 +75,16 @@ export class ViewFlashsaleComponent implements OnInit {
     this.selection.selected.forEach(item => {
     const index: number = flash_data.findIndex(d => d === item)
     this.curField = item
+    console.log(this.curField)
     })
-
+    if (this.curField) {
     this.dialog.open(AddDialogDataComponent, {
       data: this.curField
     })
+  }
+  else {
+    alert('Please select a row(s)')
+  }
   }
 
   newSale(): void {

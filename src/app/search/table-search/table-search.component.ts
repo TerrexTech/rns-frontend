@@ -18,8 +18,6 @@ interface Query {
   exact_match: boolean
 }
 
-const searchData: Query[] = []
-
 @Component({
   selector: 'component-table-search',
   templateUrl: './table-search.component.html',
@@ -44,15 +42,12 @@ export class TableSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      sku: ['', [Validators.required]],
-      name: ['', [Validators.required]],
-      origin: [''],
-      price: [''],
-      lot: ['', [Validators.required]],
+      sku: [''],
+      name: [''],
+      lot: [''],
       start_date: [''],
       end_date: [''],
-      period: [''],
-      exact_match: ['']
+      period: ['']
     })
   }
 
@@ -70,6 +65,7 @@ export class TableSearchComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const searchData: Query[] = []
     this.formSubmitAttempt = true
     if (this.form.valid) {
     const month = new Array()
@@ -86,6 +82,61 @@ export class TableSearchComponent implements OnInit {
     month[10] = 'November'
     month[11] = 'December'
 
+    this.checkDate()
+
+    const searchForm = this.form.value
+    console.log(searchForm)
+
+    for (const property in searchForm) {
+      if (searchForm.hasOwnProperty(property)) {
+        if (searchForm[property]) {
+          searchData[property] = searchForm[property]
+        }
+      }
+    }
+
+    console.log(searchData)
+    if (searchForm.sku === '' && searchForm.name === '' && searchForm.lot === '' &&
+    searchForm.start_date === '' && searchForm.end_date === '' && searchForm.period === '') {
+      alert ('At least one field required')
+    }
+    else if (searchForm.sku !== '' || searchForm.name !== '' || searchForm.lot !== '') {
+      this.searchService.search(searchData)
+                                       .toPromise()
+                                       .then(data => {
+                                         console.log(data)
+                                         data['queryNum'] = 1
+                                         this.reset()
+                                         this.dialogRef.close(data)
+                                       })
+                                       .catch(() => console.log('Timed out.'))
+    }
+    else if (searchForm.start_date !== '' || searchForm.end_date !== '' || searchForm.period !== '') {
+      this.searchService.searchTime(searchData)
+      .toPromise()
+      .then(data => {
+        console.log(data)
+        data['queryNum'] = 2
+        this.reset()
+        this.dialogRef.close(data)
+      })
+      .catch(() => console.log('Timed out.'))
+    }
+    else {
+      this.searchService.search(searchData)
+      .toPromise()
+      .then(data => {
+        console.log(data)
+        data['queryNum'] = 2
+        this.reset()
+        this.dialogRef.close(data)
+      })
+      .catch(() => console.log('Timed out.'))
+    }
+  }
+  }
+
+  checkDate(): void {
     const today = new Date().getTime() / 1000
     let startDate = this.form.value.start_date
     let endDate = this.form.value.end_date
@@ -133,28 +184,6 @@ export class TableSearchComponent implements OnInit {
     if (endDate && this.form.value.period && !startDate) {
       this.form.value.start_date = endDate - this.switchTime(this.form.value.period)
     }
-
-    const object = this.form.value
-
-    for (const property in object) {
-      if (object.hasOwnProperty(property)) {
-        if (!object[property]) {
-          console.log(object[property])
-        }
-        else {
-        searchData[property] =  `{ $eq: ${object[property]} },`
-        }
-      }
-    }
-
-    console.log(searchData)
-
-    if (!this.dateNotValid && !this.periodNotValid) {
-      // searchService
-      this.reset()
-      this.close(this.searchService.search(searchData))
-    }
-  }
   }
 
   switchTime(period: string): number {

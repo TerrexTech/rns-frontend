@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort, MatSortable, MatTableDataSource } from '@angular/material'
+import { MAT_DIALOG_DATA, MatPaginator, MatSort, MatTableDataSource } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import { SelectionModel } from '@angular/cdk/collections'
 import { Warning } from '../../models/warning'
@@ -8,6 +8,7 @@ import { Http } from '@angular/http'
 import swal from 'sweetalert'
 import { DialogDataService } from './dialog-data.service'
 import { InventoryService } from '../../inventory/inventory.service'
+import { WarningService } from '../warning.service'
 
 @Component({
   selector: 'component-dialog-data-dialog',
@@ -33,7 +34,8 @@ export class DialogDataDialogComponent implements OnInit {
   private route: ActivatedRoute,
   private router: Router,
   private dialogService: DialogDataService,
-  private invServ: InventoryService
+  private invServ: InventoryService,
+  private warnServ: WarningService
              ) { }
 
   ngOnInit(): void {
@@ -57,21 +59,34 @@ export class DialogDataDialogComponent implements OnInit {
       const warningArray = JSON.parse(localStorage.getItem('warning'))
       const flashArray = JSON.parse(localStorage.getItem('flashSale'))
 
-      const flashSaleIds = flashArray.map(f => f.itemID)
-      const newWarnings = warningArray.filter(w => flashSaleIds.indexOf(w.itemID) === -1)
-      flashSaleIds.forEach(element => {
-        console.log(element)
-        this.invServ.deleteRows(element)
+      const flashSales = this.data.data[0].map(f => f)
+      const newWarnings = warningArray.filter(w => flashSales.indexOf(w.itemID) === -1)
+      flashSales.forEach(element => {
+        element.onFlashsale = true
+        console.log(element.itemID)
+
+        this.warnServ.newFlashSale(element)
                     .toPromise()
                     .then((data: any) => {
-                      console.log(data.data.InventoryDelete)
+                      if (data) {
+                        console.log(data)
+                        console.log(data.data.FlashsaleInsert)
+                      }
+                    })
+                    .catch(async () => swal('warning not inserted'))
+                                      .catch(() => console.log('popup failed'))
+
+        this.warnServ.deleteWarning(element.itemID)
+                    .toPromise()
+                    .then((data: any) => {
+                      console.log(data.data.WarningDelete)
                     })
                     .catch(async () => swal('data not deleted'))
                                       .catch(() => console.log('popup failed'))
 
       })
 
-      localStorage.setItem('warning', JSON.stringify(newWarnings))
+      // localStorage.setItem('warning', JSON.stringify(newWarnings))
     }
 
     else if (this.data.data[1] === 'Donation') {

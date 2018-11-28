@@ -8,4 +8,6 @@ export class Warning {
     projectedExpiry: number
     lot: string
     soldWeight: number
+    warningActive: boolean
+    onFlashsale: boolean
 }

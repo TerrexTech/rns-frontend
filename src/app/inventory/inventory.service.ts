@@ -222,31 +222,36 @@ export class InventoryService {
     public sendWarning(data): Observable<Object> {
         const gqlQuery = `
     mutation{
-    addInventory(
-        item_id: '${data.itemID}',
-        upc: '${data.upc}',
-        sku: '${data.sku}',
-        name: '${data.name}',
-        origin: '${data.origin}',
-        device_id: '${data.deviceID}',
-        total_weight: '${data.totalWeight}',
-        price: '${data.price}',
-        location: '${data.location}',
-        date_arrived: '${data.dateArrived}',
-        expiry_date: '${data.expiryDate}',
-        timestamp: '${data.timestamp}',
-        rs_customer_id: '${data.rsCustomerId}',
-        waste_weight: '${data.wasteWeight}',
-        donate_weight: '${data.donateWeight}',
-        date_sold: '${data.dateSold}',
-        sale_price: '${data.salePrice}',
-        sold_weight: '${data.soldWeight}',
-        lot: '${data}',
-    ){accessToken, refreshToken}
+    WarningInsert(
+        itemID: "${data.itemID}",
+        sku: "${data.sku}",
+        name: "${data.name}",
+        totalWeight: ${data.totalWeight},
+        timestamp: ${data.timestamp},
+        soldWeight: ${data.soldWeight},
+        lot: "${data.lot}",
+        warningActive: ${data.warningActive}
+        ethylene: ${data.ethylene},
+        carbonDioxide: ${data.carbonDioxide},
+        projectedDate: ${data.projectedDate}
+    ){
+        itemID,
+        lot,
+        name,
+        sku,
+        soldWeight,
+        timestamp,
+        totalWeight,
+        warningActive,
+        ethylene,
+        carbonDioxide,
+        projectedDate
+    }
     }
     `
+        console.log(gqlQuery)
 
-        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+        return this.http.post(`${environment.bhupeshIP}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }

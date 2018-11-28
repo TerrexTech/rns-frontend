@@ -10,7 +10,7 @@ export class Inventory {
     price: number
     location: string
     dateArrived: number
-    expiryDate: number
+    projectedDate: number
     timestamp: number
     rsCustomerId: string
     wasteWeight: number
@@ -20,4 +20,8 @@ export class Inventory {
     soldWeight: number
     lot: string
     isRed: boolean
+    leftoverWeight: number
+    warningActive: boolean
+    ethylene: number
+    carbonDioxide: number
 }

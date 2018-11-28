@@ -23,6 +23,7 @@ import { WarningComponent } from './warning.component'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { DialogDataService } from './dialog-data/dialog-data.service'
 import { NavbarService } from '../shared/navbar/navbar.service'
+import { WarningService } from './warning.service'
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { NavbarService } from '../shared/navbar/navbar.service'
     ],
     providers: [
         DialogDataService,
-        NavbarService
+        NavbarService,
+        WarningService
     ],
     exports: [
     ],

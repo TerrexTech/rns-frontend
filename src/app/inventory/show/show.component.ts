@@ -1,9 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import {
   MatDialog,
-  MatPaginator,
-  MatRow,
-  MatSort,
   MatSortable,
   MatTableDataSource
 } from '@angular/material'
@@ -17,7 +14,6 @@ import swal from 'sweetalert'
 import { NavbarService } from '../../shared/navbar/navbar.service'
 
 let paginator: Inventory[] = []
-const ProjectedExpiry: number[] = []
 
 @Component({
   selector: 'component-show',
@@ -26,23 +22,17 @@ const ProjectedExpiry: number[] = []
 })
 
 export class ShowComponent implements OnInit {
-  food: Inventory
   displayedColumns: string[] =
-    ['select', 'upc', 'sku', 'name', 'origin', 'lot', 'dateArrived', 'expiryDate', 'soldWeight', 'totalWeight', 'leftover']
+    ['select', 'upc', 'sku', 'name', 'origin', 'lot', 'dateArrived', 'projectedDate', 'soldWeight', 'totalWeight', 'leftover']
   dataSource = new MatTableDataSource()
   today: number = Date.now()
-  @ViewChild(MatPaginator) paginator: MatPaginator
-  @ViewChild(MatSort) sort: MatSort
   curField: any
   Math: any
-  returnVal: any
   alertShown = false
   lastTimestamp: number
   startForwardTime: number
   backEndTime: number
-
-  @ViewChild('invTable') invTable: ElementRef
-
+  projectedDate: number
   selection = new SelectionModel<Inventory>(true, [])
 
   constructor(private http: Http, public dialog: MatDialog, private showService: InventoryService,
@@ -64,9 +54,6 @@ export class ShowComponent implements OnInit {
           paginator = data.data.InventoryQueryCount
           this.lastTimestamp = data.data.InventoryQueryCount[0].timestamp
           this.genExpiry()
-          console.log('==================')
-          console.log(this.invTable)
-          console.log(this.invTable.nativeElement)
         }
         else {
           alert('Timed out.')
@@ -79,13 +66,11 @@ export class ShowComponent implements OnInit {
             .catch(err => console.log(err))
       })
 
-    this.dataSource.paginator = this.paginator
     const sorting: MatSortable = {
       id: 'Sold Weight',
       start: 'desc',
       disableClear: false
     }
-    this.sort.sort(sorting)
   }
 
   getRandomInt(min, max): number {
@@ -101,7 +86,7 @@ export class ShowComponent implements OnInit {
       .toFixed(2)
       element['totalWeight'] = Math.round(element['totalWeight'])
       .toFixed(2)
-      element['expiryDate'] = (element['dateArrived'] + (this.getRandomInt(8, 16) * 86400))
+      element['projectedDate'] = (element['dateArrived'] + (this.getRandomInt(8, 16) * 86400))
     })
   }
 
@@ -115,7 +100,7 @@ export class ShowComponent implements OnInit {
 
     const row = this.dataSource.data.findIndex(rowData => rowData['itemID'] === item.itemID)
     console.log(((this.getRandomInt(min, max) * 86400)))
-    this.dataSource.data[row]['expiryDate'] = (this.dataSource.data[row]['expiryDate'] + (this.getRandomInt(min, max) * 86400))
+    this.dataSource.data[row]['projectedDate'] = (this.dataSource.data[row]['projectedDate'] + (this.getRandomInt(min, max) * 86400))
     const soldVal = Number(this.dataSource.data[row]['soldWeight'])
     const requestedSoldValue = soldVal + soldWeight
     const totalWeight = Number(this.dataSource.data[row]['totalWeight'])
@@ -148,7 +133,8 @@ export class ShowComponent implements OnInit {
   changeExpiryWarning(min, max): void {
     this.selection.selected.forEach(selItem => {
       const row = this.dataSource.data.findIndex(rowData => rowData['itemID'] === selItem.itemID)
-      this.dataSource.data[row]['expiryDate'] = (this.dataSource.data[row]['timestamp'] + (this.getRandomInt(min, max) * 86400))
+      this.dataSource.data[row]['projectedDate'] = (this.dataSource.data[row]['timestamp'] + (this.getRandomInt(min, max) * 86400))
+      this.projectedDate = Number(this.dataSource.data[row]['projectedDate'])
      })
   }
 
@@ -167,6 +153,7 @@ export class ShowComponent implements OnInit {
       .then((data: any) => {
         console.log(data.data.InventoryQueryCount)
         this.dataSource.data = data.data.InventoryQueryCount
+        this.genExpiry()
       }
       )
       .catch()
@@ -217,9 +204,23 @@ export class ShowComponent implements OnInit {
       .afterClosed()
       .subscribe(
         data => {
+          if (data) {
           console.log(data)
-          this.dataSource.data = data[0]
+          if (!data) {
+            this.resetData()
+          }
+          if (data.queryNum === 1) {
+            this.dataSource.data = data.data.InventoryQueryItem
+          }
+          else if (data.queryNum === 2) {
+            this.dataSource.data = data.data.InventoryQueryTimestamp
+          }
+          else if (!data.queryNum) {
+            console.log('Search closed')
+          }
+          this.genExpiry()
         }
+      }
         // refreshDataMethod()
       )
   }
@@ -302,42 +303,47 @@ export class ShowComponent implements OnInit {
       // this.resetData()
     })
     this.changeExpirySold(3, 5, this.curField.totalWeight / 5)
-    // const array2 = []
-    // for (let index = 0; index < 10; index++) {
-    //   array2.push({
-    //     expiryDate: this.curField.expiryDate
-    //   })
-    // }
-    // localStorage.setItem('showTable', JSON.stringify(array2))
-    // console.log(array2)
   }
 
-  genWarning(): void {
-    const array1 = []
-    const ethyVal = '1300'
-    const co2Val = '3900'
+  async genWarning(): Promise<any> {
+    const selectedItems = this.selection.selected.map(item => item)
+    console.log(selectedItems)
+
     this.selection.selected.forEach(item => {
       item.isRed = true
-      // max value must be +1 of intended value
       this.changeExpiryWarning(2, 4)
+      item.projectedDate = this.projectedDate
       this.curField = paginator.filter(i => i.itemID === item.itemID)[0]
       this.alertShown = true
       this.navServ.newEvent(this.selection.selected.length)
-      console.log(this.curField)
-      array1.push(this.curField)
-      // this.showService.sendWarning(this.curField)
-      //   .toPromise()
-      //   .then((data: any) => {
-      //     console.log(data.data)
-      //     this.dataSource.data = data.data
-      //   }
-      //   )
-      //   .catch()
       console.log('++++++++++++++++++==')
     })
-    localStorage.setItem('warning', JSON.stringify(array1))
-    localStorage.setItem('ethyVal', ethyVal)
-    localStorage.setItem('co2Val', co2Val)
+
+    for (const item of selectedItems) {
+      try {
+        item.warningActive = true
+        item.ethylene = this.getRandomInt(1300, 1700)
+        item.carbonDioxide = this.getRandomInt(2800, 3000)
+        const genWarnings = await this.showService.sendWarning(item)
+                                                  .toPromise()
+                                                  .then((data: any) => {
+                                                  if (data.data.WarningInsert) {
+                                                  console.log(data)
+                                                  }
+                                                  else {
+                                                    swal('Warning has already been generated for selected item(s)')
+                                                                .catch(err => console.log(err))
+                                                  }
+                                                })
+                                                .catch(async () => swal('one item may not have two warnings.')
+                                                                .catch(err => console.log(err))
+                                                )
+      }
+      catch (e) {
+        swal('Inventory not removed')
+          .catch(console.log)
+      }
+    }
   }
 
   populateFields(): void {

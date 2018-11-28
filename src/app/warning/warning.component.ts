@@ -6,6 +6,7 @@ import swal from 'sweetalert'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { Http } from '@angular/http'
 import { NavbarService } from '../shared/navbar/navbar.service'
+import { WarningService } from './warning.service'
 
 const flash_data: any[] = []
 
@@ -16,7 +17,9 @@ const flash_data: any[] = []
 })
 export class WarningComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private http: Http, private navServ: NavbarService) { }
+  constructor(public dialog: MatDialog, private http: Http,
+              private navServ: NavbarService,
+              public warnServ: WarningService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
@@ -34,39 +37,42 @@ export class WarningComponent implements OnInit {
     const threeday = oneday * 3
     const today = new Date().getTime() / 1000
 
-    if (localStorage.getItem('warning')) {
-    const arr2 = JSON.parse(localStorage.getItem('warning'))
-    console.log(arr2)
-    this.dataSource.data = arr2
+    this.warnServ.getWarnings()
+                 .toPromise()
+                 .then((data: any) => {
+                   console.log(data)
+                   if (data.data.WarningQueryCount) {
+                     console.log(data.data.WarningQueryCount)
+                     const warnings = data.data.WarningQueryCount
+                     this.dataSource.data = warnings
+                     let index = 0
+                     this.dataSource.data.forEach(element => {
+                       console.log(index)
+                       console.log(warnings[index])
+                       element['qty_unsold'] = warnings[index].totalWeight - warnings[index].soldWeight
+                       console.log(warnings[index].projectedDate - today)
 
-    let index = 0
-    this.dataSource.data.forEach(element => {
-      console.log(index)
-      console.log(arr2[index])
-      element['qty_unsold'] = arr2[index].totalWeight - arr2[index].soldWeight
-      console.log(arr2[index].expiryDate - today)
+                       if (warnings[index].projectedDate - today <= threeday) {
+                       element['status'] = 'bad'
+                       this.statusMessage = 'Expiring soon'
+                       element['projectedExpiry'] = warnings[index].projectedDate
+                     }
 
-      if (arr2[index].expiryDate - today <= threeday) {
-      element['status'] = 'bad'
-      this.statusMessage = 'Expiring soon'
-      element['projectedExpiry'] = arr2[index].expiryDate
-    }
-
-      else if (arr2[index].expiryDate - today <= oneday) {
-        element['status'] = 'bad'
-        this.statusMessage = 'Act now'
-        element['projectedExpiry'] = arr2[index].expiryDate
-      }
-      index++
-    })
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
-    }
-    else {
-      swal('No Warnings present')
-      .catch(() => console.log('popup failed: warning page'))
-    }
-
+                       else if (warnings[index].projectedDate - today <= oneday) {
+                         element['status'] = 'bad'
+                         this.statusMessage = 'Act now'
+                         element['projectedExpiry'] = warnings[index].projectedDate
+                       }
+                       index++
+                     })
+                     this.dataSource.paginator = this.paginator
+                     this.dataSource.sort = this.sort
+                   }
+                 })
+                 .catch(async () =>
+                    swal('No Warnings present')
+                    .catch(() => console.log('popup failed: warning page'))
+                 )
   }
 
   selected(): boolean {

@@ -4,7 +4,11 @@
 
 .generate-btn {
   position: absolute;
-  right: 23px;
+  right: 5%
+}
+
+.generate-btn button {
+  margin-top :0 !important;
 }
 
 /* .generate-btn button {

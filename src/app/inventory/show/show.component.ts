@@ -284,23 +284,22 @@ export class ShowComponent implements OnInit {
 
   genSold(): void {
     this.selection.selected.forEach(item => {
-      this.curField = paginator.filter(i => i.itemID === item.itemID)[0]
       console.log(this.curField)
       console.log('++++++++++++++++++==')
-      // this.showService.getQuery(this.curField)
-      //   .toPromise()
-      //   .then((data: any) => {
-      //     if (data.data) {
-      //     console.log(data.data)
-      //     this.dataSource.data = data.data
-      //     }
-      //     else {
-      //       alert("Sale Not Created")
-      //     }
-      //   }
-      //   )
-      //   .catch()
-      // this.resetData()
+      this.showService.updateItem(item)
+        .toPromise()
+        .then((data: any) => {
+          if (data.data) {
+          console.log(data.data)
+          this.dataSource.data = data.data
+          }
+          else {
+            alert('Sale Not Created')
+          }
+        }
+        )
+        .catch()
+      this.resetData()
     })
     this.changeExpirySold(3, 5, this.curField.totalWeight / 5)
   }

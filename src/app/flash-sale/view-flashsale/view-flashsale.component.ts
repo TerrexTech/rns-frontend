@@ -111,22 +111,6 @@ export class ViewFlashsaleComponent implements OnInit {
             minWidth: 800,
             minHeight: 600
           })
-          // this.flashServ.getFlashSales()
-          //         .toPromise()
-          //         .then((data: any) => {
-          //           console.log(data)
-          //           console.log(data.data.FlashsaleQueryCount)
-          //           this.dataSource.data = data.data.FlashsaleQueryCount
-          //           const sorting: MatSortable = {
-          //             id: 'timestamp',
-          //             start: 'asc',
-          //             disableClear: false
-          //         }
-          //           this.sort.sort(sorting)
-          //           this.dataSource.sort = this.sort
-          //         })
-          //         .catch(async () => swal('No Flash sales')
-          //                         .catch(err => console.log(err)))
         }
       })
   }
@@ -208,8 +192,8 @@ export class ViewFlashsaleComponent implements OnInit {
         .then((data: any) => {
           console.log(data)
           console.log(data.data.FlashsaleQueryCount)
-          // this.dataSource.data = data.data.FlashsaleQueryCount.filter(item => item.onFlashsale)
-          // console.log(this.dataSource.data)
+          this.dataSource.data = data.data.FlashsaleQueryCount.filter(item => item.onFlashsale)
+          console.log(this.dataSource.data)
           const sorting: MatSortable = {
             id: 'timestamp',
             start: 'asc',

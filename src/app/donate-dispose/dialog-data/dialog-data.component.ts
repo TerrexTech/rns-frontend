@@ -1,48 +1,50 @@
-import { Component, Inject, OnInit } from '@angular/core'
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { MAT_DIALOG_DATA } from '@angular/material'
-import { ActivatedRoute } from '@angular/router'
+import { MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort, MatSortable, MatTableDataSource } from '@angular/material'
+import { ActivatedRoute, Router } from '@angular/router'
+import { SelectionModel } from '@angular/cdk/collections'
+import { Warning } from '../../models/warning'
+import { HttpClient } from '@angular/common/http'
 import swal from 'sweetalert'
+import { DonateDisposeService } from '../donate-dispose.service'
 
 @Component({
   selector: 'component-dialog-data-dialog',
-  templateUrl: 'dialog-data-dialog.html'
+  templateUrl: 'dialog-data-dialog.html',
+  styleUrls: ['dialog-data-dialog.css']
 })
 export class DialogDataDialogComponent implements OnInit {
+  @ViewChild('date') dateSel: ElementRef
   form: FormGroup
   formSubmitAttempt: boolean
   curField: any
-  pageType: string
   returnUrl: string
+  @ViewChild(MatSort) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
+  pageType: string
+
+  dataSource = new MatTableDataSource()
+  selection = new SelectionModel<Warning>(true, [])
+  displayedColumns = ['select', 'sku', 'name']
 
   constructor(
-              private formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) public dataRecieved: any,
-              private route: ActivatedRoute
-             ) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private addServ: DonateDisposeService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      sku: ['', [Validators.required, Validators.minLength(1)]],
-      name: ['', [Validators.required, Validators.minLength(1)]],
-      leftover_amount: ['', [Validators.required, Validators.minLength(1)]],
-      timestamp: ['', [Validators.required, Validators.minLength(1)]],
-      status: ['', [Validators.required, Validators.minLength(1)]]
+    ngOnInit(): void {
+    console.log(this.data)
+    this.dataSource.data = this.data[0].data.InventoryQueryItem
+    this.pageType = this.data[1]
+    this.dataSource.paginator = this.paginator
+    this.dataSource.sort = this.sort
+    this.dataSource.data.forEach(element => {
+      element['status'] = 'Expiring soon'
     })
-    this.returnUrl = this.route.snapshot.queryParams[''] || '/'
-    this.curField = this.dataRecieved.data[0]
-    this.pageType = this.dataRecieved.data[1]
-
-    this.form.get('sku')
-             .setValue(this.curField.sku)
-    this.form.get('name')
-             .setValue(this.curField.name)
-    this.form.get('leftover_amount')
-             .setValue(this.curField.leftover_amount)
-    this.form.get('timestamp')
-             .setValue(this.curField.timestamp)
-    this.form.get('status')
-             .setValue(this.curField.status)
   }
 
   isFieldValid(field: string): any {
@@ -52,35 +54,46 @@ export class DialogDataDialogComponent implements OnInit {
   f(): any { return this.form.controls }
 
   onSubmit(): void {
-    this.formSubmitAttempt = true
-    if (this.form.valid) {
-    const month = new Array()
-    month[0] = 'January'
-    month[1] = 'February'
-    month[2] = 'March'
-    month[3] = 'April'
-    month[4] = 'May'
-    month[5] = 'June'
-    month[6] = 'July'
-    month[7] = 'August'
-    month[8] = 'September'
-    month[9] = 'October'
-    month[10] = 'November'
-    month[11] = 'December'
-    this.formSubmitAttempt = true
-    const origDate = this.form.value.timestamp
-    this.form.value.timestamp = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
-    console.log('submitted')
-    swal('Record successfully inserted!')
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  else {
-    swal('Record not inserted!')
-      .catch(err => {
-        console.log(err)
-      })
-  }
+    this.selection.selected.forEach(item => {
+      console.log(item)
+      if (this.pageType === 'donation') {
+        this.insertDonation(item)
+      }
+      else {
+        this.insertDisposal(item)
+      }
+      console.log('++++++++++++++++++==')
+    })
 }
+
+insertDonation(item): void {
+  this.addServ.newDonation(item)
+                  .toPromise()
+                  .then((data: any) => {
+                    if (data.data.DonationInsert) {
+                      console.log(data.data.DonationInsert)
+                      swal('New Donation added!')
+                        .catch(err => console.log(err))
+                    }
+                  })
+                  .catch(async () => swal('Donation not added!')
+                                    .catch(err => console.log(err))
+                  )
+}
+
+insertDisposal(item): void {
+  this.addServ.newDisposal(item)
+                  .toPromise()
+                  .then((data: any) => {
+                    if (data.data.DisposalInsert) {
+                      console.log(data.data.DisposalInsert)
+                      swal('New Disposal added!')
+                        .catch(err => console.log(err))
+                    }
+                  })
+                  .catch(async () => swal('Disposal not added!')
+                                    .catch(err => console.log(err))
+                  )
+}
+
 }

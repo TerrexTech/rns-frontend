@@ -7,7 +7,7 @@ import { environment } from '../../config'
 
 @Injectable()
 export class DonateDisposeService {
-    count = 10
+    count = 50
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
@@ -43,7 +43,7 @@ export class DonateDisposeService {
 
         const gqlQuery = `
             mutation{
-            FlashsaleInsert(
+            DonationInsert(
                 itemID: "${data.itemID}",
                 lot: "${data.lot}",
                 name: "${data.name}",
@@ -51,9 +51,9 @@ export class DonateDisposeService {
                 soldWeight: ${data.soldWeight},
                 timestamp: ${data.timestamp},
                 totalWeight: ${data.totalWeight},
-                onFlashsale: ${data.onFlashsale},
+                donateWeight: ${data.donateWeight}
             ){
-                flashsaleID,
+                donationID,
                 itemID,
                 lot,
                 name,
@@ -61,7 +61,9 @@ export class DonateDisposeService {
                 soldWeight,
                 timestamp,
                 totalWeight,
-                onFlashsale
+                unsoldWeight,
+                status,
+                donateWeight
             }
         }
     `
@@ -89,6 +91,43 @@ export class DonateDisposeService {
                 soldWeight,
                 timestamp,
                 totalWeight,
+                disposalWeight
+            }
+        }
+    `
+        console.log(gqlQuery)
+
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+            headers: {
+                'Content-Type': 'application/text'
+            }
+        })
+    }
+
+    public newDisposal(data): Observable<Object> {
+
+        const gqlQuery = `
+            mutation{
+            DisposalInsert(
+                itemID: "${data.itemID}",
+                lot: "${data.lot}",
+                name: "${data.name}",
+                sku: "${data.sku}",
+                soldWeight: ${data.soldWeight},
+                timestamp: ${data.timestamp},
+                totalWeight: ${data.totalWeight},
+                disposalWeight: ${data.donateWeight}
+            ){
+                disposalID,
+                itemID,
+                lot,
+                name,
+                sku,
+                soldWeight,
+                timestamp,
+                totalWeight,
+                unsoldWeight,
+                status,
                 disposalWeight
             }
         }

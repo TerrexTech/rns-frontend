@@ -7,9 +7,9 @@
         </mat-card-title>
         <div class="generate-btn">
           <a id="searchBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
-            <i class="fa fa-edit"></i>
+            <i class="fa fa-search"></i>
           </a>
-          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canUpdate() ? true : null" (click)="populateFields()">
+          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewDisposal()">
             <i class="fa fa-plus"></i>
           </a>
         </div>

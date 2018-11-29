@@ -52,7 +52,7 @@ export class FlashSaleService {
         mutation{
         FlashsaleUpdate(
             filter: {
-                itemID: "${data.itemID}"
+                flashsaleID: "${data.flashsaleID}"
             },
             update: {
                 itemID: "${data.itemID}",

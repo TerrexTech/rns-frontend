@@ -53,7 +53,11 @@ export class DisposeFoodComponent implements OnInit {
       .afterClosed()
       .subscribe(data => {
         if (data) {
+        console.log(data)
         disposedItems = data
+        this.dataSource.data = data
+        this.dataSource.paginator = this.paginator
+        this.dataSource.sort = this.sort
         }
         // else {
         //   swal('No Results.')
@@ -62,17 +66,34 @@ export class DisposeFoodComponent implements OnInit {
       })
   }
 
-  populateFields(): void {
-    this.selectedItems.selected.forEach(item => {
-      console.log(item)
-      this.curField = item
-      console.log(this.curField)
-    })
-    this.dialog.open(DialogDataDialogComponent, {
-      data: {
-        data: [this.curField, 'Dispose']
-      }
-    })
-  }
+  addNewDisposal(): void {
+    this.dialog.open(TableSearchComponent)
+    .afterClosed()
+      .subscribe(searchData => {
+        if (searchData) {
+          this.dialog.open(DialogDataDialogComponent, {
+            data: [searchData, 'disposal'],
+            minWidth: 800,
+            minHeight: 600
+          })
+          .afterClosed()
+          .subscribe(recieved => {
 
+            this.disposeServ.getDisposals()
+                   .toPromise()
+                   .then((data: any) => {
+                     console.log(data)
+                     if (data.data.DisposalQueryCount) {
+                       this.dataSource.data = data.data.DisposalQueryCount
+                       this.dataSource.paginator = this.paginator
+                       this.dataSource.sort = this.sort
+                     }
+                   })
+                   .catch(async () => swal('No disposals.')
+                        .catch(err => console.log(err)))
+
+          })
+        }
+      })
+  }
 }

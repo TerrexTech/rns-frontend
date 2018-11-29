@@ -26,7 +26,7 @@ export class DonateFoodComponent implements OnInit {
   dataSource = new MatTableDataSource()
   selectedItems = new SelectionModel<Warning>(true, [])
 
-  displayedColumns = ['sku', 'name', 'qty_unsold']
+  displayedColumns = ['sku', 'name', 'qty_unsold', 'timestamp']
   curField: any
 
   ngOnInit(): void {
@@ -59,6 +59,37 @@ export class DonateFoodComponent implements OnInit {
         //   swal('No Results.')
         //       .catch(err => console.log(err))
         // }
+      })
+  }
+
+  addNewDonation(): void {
+    this.dialog.open(TableSearchComponent)
+    .afterClosed()
+      .subscribe(searchData => {
+        if (searchData) {
+          this.dialog.open(DialogDataDialogComponent, {
+            data: [searchData, 'donation'],
+            minWidth: 800,
+            minHeight: 600
+          })
+          .afterClosed()
+          .subscribe(recieved => {
+
+            this.donateServ.getDonations()
+                   .toPromise()
+                   .then((data: any) => {
+                     console.log(data)
+                     if (data.data.DonationQueryCount) {
+                       this.dataSource.data = data.data.DonationQueryCount
+                       this.dataSource.paginator = this.paginator
+                       this.dataSource.sort = this.sort
+                     }
+                   })
+                   .catch(async () => swal('No donations.')
+                        .catch(err => console.log(err)))
+
+          })
+        }
       })
   }
 

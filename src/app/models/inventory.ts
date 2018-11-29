@@ -24,4 +24,5 @@ export class Inventory {
     warningActive: boolean
     ethylene: number
     carbonDioxide: number
+    status: string
 }

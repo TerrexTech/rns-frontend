@@ -33,11 +33,13 @@ import { FlashSaleService } from './flashsale.service'
 import { UpdateFlashSaleService } from './dialog-data/dialog-data.service'
 import { NavbarService } from '../shared/navbar/navbar.service'
 import { InventoryService } from '../inventory/inventory.service'
+import { FlashsaleHistoryComponent } from './flashsale-history/flashsale-history.component'
 @NgModule({
     declarations: [
         ViewFlashsaleComponent,
         DialogDataDialogComponent,
-        AddDialogDataComponent
+        AddDialogDataComponent,
+        FlashsaleHistoryComponent
     ],
     imports: [
         CommonModule,

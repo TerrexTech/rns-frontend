@@ -65,7 +65,9 @@
                             <div id="info" class="card-body card-body2 mx-auto center">
                                     <h6>Ethylene Levels (PPM)</h6>
                                     <br>
-                                    <h1 class="text-center {{ ethyleneColorChange(ethyValue) }}">{{ ethyValue }}</h1>
+                                    <div style="margin-top:50%">
+                                    <h1 class="text-center {{ ethyleneColorChange(ethyleneValue) }}">{{ ethyleneValue }}</h1>
+                                    </div>
                     <!-- <rg-gauge-chart
                         [canvasWidth]="ethyCanvasWidth"
                         [needleValue]="ethyNeedleValue"
@@ -98,7 +100,9 @@
                                 <div id="info" class="card-body card-body2 mx-auto center">
                                         <h6>Temperature (°C)</h6>
                                         <br>
+                                        <div style="margin-top:50%">
                                         <h1 class="text-center">{{ tempValue }}</h1>
+                                    </div>
                         <!-- <rg-gauge-chart
                             [canvasWidth]="tempCanvasWidth"
                             [needleValue]="tempNeedleValue"
@@ -119,10 +123,45 @@
                           <i class="fa fa-search"></i>
                         </a>
                       </div>
-                      <h6 class="text-center">Temperature/Humidity</h6>
+                      <h6 class="text-center">Temperature</h6>
                   <canvas id="temperature" class="canvas" height="30%" width="100%"></canvas>
                 </div>
                 </div>
                 </div>
               </div>
+              <div class="row">
+                    <div class="col-sm-3">
+                            <div class="card report-info gauge">
+                                    <div id="info" class="card-body card-body2 mx-auto center">
+                                            <h6>Hiumidity (%) (°C)</h6>
+                                            <br>
+                                        <div style="margin-top:50%">
+                                            <h1 class="text-center">{{ humidityValue }}</h1>
+                                            </div>
+                            <!-- <rg-gauge-chart
+                                [canvasWidth]="tempCanvasWidth"
+                                [needleValue]="tempNeedleValue"
+                                [centralLabel]="tempCentralLabel"
+                                [options]="tempOptions"
+                                [name]="tempName"
+                                [bottomLabel]="tempBottomLabel">
+                            </rg-gauge-chart> -->
+                            </div>
+                            </div>
+                      <br>
+                    </div>
+                    <div class="col-sm-9">
+                      <div class="card report-info">
+                        <div id="info" class="card-body card-body2">
+                          <div class="generate-btn">
+                            <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+                              <i class="fa fa-search"></i>
+                            </a>
+                          </div>
+                          <h6 class="text-center">Humidity</h6>
+                      <canvas id="humidity" class="canvas" height="30%" width="100%"></canvas>
+                    </div>
+                    </div>
+                    </div>
+                  </div>
         </div>

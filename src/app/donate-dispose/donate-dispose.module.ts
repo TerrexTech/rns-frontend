@@ -16,8 +16,10 @@ import {
     MatInputModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatSortModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule
 } from '@angular/material'
 
 import { AlertPopupComponent } from '../alert-popup/alert-popup.component'
@@ -49,11 +51,13 @@ import { DonateDisposeService } from './donate-dispose.service'
         MatIconModule,
         MatInputModule,
         MatSelectModule,
+        MatSortModule,
         MatTableModule,
         MatTabsModule,
         MatButtonModule,
         AlertPopupModule,
-        SearchModule
+        SearchModule,
+        MatTooltipModule
     ],
     providers: [
         AlertService,

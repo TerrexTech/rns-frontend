@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 import { environment } from '../../config'
-import { uuid } from 'uuid'
+import uuid from 'uuid/v4'
 
 @Injectable()
 export class WarningService {
@@ -29,7 +29,8 @@ export class WarningService {
                 warningActive,
                 ethylene,
                 carbonDioxide,
-                projectedDate
+                projectedDate,
+                status
             }
         }
     `
@@ -46,6 +47,7 @@ export class WarningService {
         const gqlQuery = `
             mutation{
             FlashsaleInsert(
+                flashsaleID: "${uuid()}"
                 itemID: "${data.itemID}",
                 lot: "${data.lot}",
                 name: "${data.name}",
@@ -55,6 +57,7 @@ export class WarningService {
                 totalWeight: ${data.totalWeight},
                 onFlashsale: ${data.onFlashsale},
                 projectedDate: ${data.projectedDate},
+                status: "${data.status}"
             ){
                 flashsaleID,
                 itemID,
@@ -66,6 +69,7 @@ export class WarningService {
                 totalWeight,
                 projectedDate,
                 onFlashsale
+                status
             }
         }
     `

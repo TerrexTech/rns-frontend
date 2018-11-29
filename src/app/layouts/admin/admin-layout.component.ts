@@ -9,7 +9,8 @@ import { AlertService } from '../../alert-popup/alert.service'
 
 @Component({
     selector: 'component-layout',
-    templateUrl: './admin-layout.component.html'
+    templateUrl: './admin-layout.component.html',
+    styleUrls: ['./admin-layout.component.css']
 })
 
 export class AdminLayoutComponent implements OnInit {

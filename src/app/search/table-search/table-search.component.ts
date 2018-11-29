@@ -32,12 +32,14 @@ export class TableSearchComponent implements OnInit {
   dateNotValid = false
   periodNotValid = false
   message: string
+  pageName: string
 
   constructor(
     private dialogRef: MatDialogRef<TableSearchComponent>,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private searchService: TableSearchService
+    private searchService: TableSearchService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +51,8 @@ export class TableSearchComponent implements OnInit {
       end_date: [''],
       period: ['']
     })
+    console.log(this.data)
+    this.pageName = this.data
   }
 
   checkDates(): boolean {
@@ -101,7 +105,7 @@ export class TableSearchComponent implements OnInit {
       alert ('At least one field required')
     }
     else if (searchForm.sku !== '' || searchForm.name !== '' || searchForm.lot !== '') {
-      this.searchService.search(searchData)
+      this.searchService.search(searchData, this.pageName)
                                        .toPromise()
                                        .then(data => {
                                          console.log(data)
@@ -112,7 +116,7 @@ export class TableSearchComponent implements OnInit {
                                        .catch(() => console.log('Timed out.'))
     }
     else if (searchForm.start_date !== '' || searchForm.end_date !== '' || searchForm.period !== '') {
-      this.searchService.searchTime(searchData)
+      this.searchService.searchTime(searchData, this.pageName)
       .toPromise()
       .then(data => {
         console.log(data)
@@ -123,7 +127,7 @@ export class TableSearchComponent implements OnInit {
       .catch(() => console.log('Timed out.'))
     }
     else {
-      this.searchService.search(searchData)
+      this.searchService.search(searchData, this.pageName)
       .toPromise()
       .then(data => {
         console.log(data)

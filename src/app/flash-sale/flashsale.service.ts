@@ -62,7 +62,8 @@ export class FlashSaleService {
                 soldWeight: ${data.soldWeight},
                 timestamp: ${Number(date.toFixed(0))},
                 totalWeight: ${data.totalWeight}
-                onFlashsale: ${data.onFlashsale}
+                onFlashsale: ${data.onFlashsale},
+                status: "${data.status}"
             }
         ){
             matchedCount, modifiedCount
@@ -93,7 +94,8 @@ export class FlashSaleService {
                 soldWeight,
                 timestamp,
                 totalWeight,
-                onFlashsale
+                onFlashsale,
+                status
             }
         }
     `

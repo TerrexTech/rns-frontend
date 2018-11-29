@@ -45,7 +45,12 @@
             </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-        <button mat-flat-button color="accent" [mat-dialog-close]="true" (click)="onSubmit()">Yes</button>
-        <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-        <button mat-flat-button color="warn" [mat-dialog-close]="true">No</button>
+        <div class="row">
+                <div class="col-6">
+                    <button mat-flat-button color="accent" [mat-dialog-close]="true" (click)="onSubmit()">Create</button>
+                </div>
+                <div class="col-6">
+                    <button mat-flat-button color="warn" [mat-dialog-close]="true">Close</button>
+                </div>
+            </div>
     </mat-dialog-actions>

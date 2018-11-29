@@ -116,7 +116,7 @@ export class DonateDisposeService {
                 soldWeight: ${data.soldWeight},
                 timestamp: ${data.timestamp},
                 totalWeight: ${data.totalWeight},
-                disposalWeight: ${data.donateWeight}
+                disposalWeight: ${data.wasteWeight}
             ){
                 disposalID,
                 itemID,

@@ -60,7 +60,17 @@ export class SidebarComponent implements OnInit {
     },
     {
       route: AppRoutes.flashsale,
-      icon: 'nc-icon nc-box-2'
+      icon: 'nc-icon nc-box-2',
+      children: [
+        {
+          route: AppRoutes.flashsale.children.viewsales,
+          ab: 'VS'
+        },
+        {
+          route: AppRoutes.flashsale.children.flashhistory,
+          ab: 'FH'
+        }
+      ]
     },
     {
       route: AppRoutes.donatedispose,

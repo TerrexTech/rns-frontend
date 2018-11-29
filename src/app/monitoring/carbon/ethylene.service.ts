@@ -21,7 +21,7 @@ interface Metric {
 }
 
 @Injectable()
-export class CarbonService {
+export class EthyleneService {
 
   private dataSubject = new BehaviorSubject<Metric>(undefined)
   private deviceObjSource = this.dataSubject.asObservable()

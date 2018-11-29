@@ -1,11 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { environment } from '../../../config'
-import { SendDate } from '../../models'
-import { Chart } from 'chart.js'
-import { MockMonitor } from '../mocks-monitor'
+import 'chartjs-plugin-streaming'
+
+import { Component, OnInit } from '@angular/core'
 import { MatDialog } from '@angular/material'
+import { Chart } from 'chart.js'
+import { setInterval } from 'timers'
+
 import { MonitorSearchComponent } from '../../search/monitor-search/monitor-search.component'
+import { MockMonitor } from '../mocks-monitor'
+import { CarbonService } from './carbon.service'
+import { EthyleneService } from './ethylene.service'
+import { TempService } from './temp.service'
+import { HumidityService } from './humidity.service'
 
 @Component({
   selector: 'component-carbon',
@@ -13,20 +18,27 @@ import { MonitorSearchComponent } from '../../search/monitor-search/monitor-sear
   styleUrls: ['./carbon.component.css']
 })
 export class CarbonComponent implements OnInit {
+
   ethyleneChart: any
   carbonChart: any
   tempChart: any
+  humidChart: any
   fruitName: string
   sku: string
   lot: string
   searchResultsData: any
   date: Date = new Date()
 
-  carbonValue = 2200
-  ethyValue = 28.2
-  tempValue = 28.3
+  carbonValue: string
+  ethyleneValue: string
+  tempValue: string
+  humidityValue: string
 
-  constructor(private http: HttpClient,  private dialog: MatDialog) {
+  constructor(private carbonSvc: CarbonService,
+              private ethyleneSvc: EthyleneService,
+              private tempSvc: TempService,
+              private humidSvc: HumidityService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -38,24 +50,28 @@ export class CarbonComponent implements OnInit {
       width: '500px',
       disableClose: true
     })
-    .afterClosed()
-    .subscribe(data => {
-      if (data) {
-      console.log(data)
-      console.log(data.data.InventoryQueryItem)
-      this.searchResultsData = data.data.InventoryQueryItem[0]
-      this.fruitName = this.searchResultsData.name
-      this.sku = this.searchResultsData.sku
-      this.lot = this.searchResultsData.lot
-      this.loadCarbonGraph()
-      this.loadEthyGraph()
-      this.loadTempGraph()
-      }
-      else {
-        swal('Search data not provided')
-            .catch(err => console.log(err))
-      }
-    })
+      .afterClosed()
+      .subscribe(data => {
+        // if (data) {
+        // console.log(data)
+        // console.log(data.data.InventoryQueryItem)
+        // this.searchResultsData = data.data.InventoryQueryItem[0]
+        // this.fruitName = this.searchResultsData.name
+        // this.sku = this.searchResultsData.sku
+        // this.lot = this.searchResultsData.lot
+        this.loadCarbonGraph()
+        this.loadEthyGraph()
+        this.loadTempGraph()
+        this.loadHumidGraph()
+
+        this.carbonSvc.setOffset(1000)
+        this.ethyleneSvc.setOffset(1000)
+        // }
+        // else {
+        //   swal('Search data not provided')
+        //       .catch(err => console.log(err))
+        // }
+      })
   }
 
   carbonColorChange(metricValue: number): string {
@@ -83,66 +99,18 @@ export class CarbonComponent implements OnInit {
   }
 
   loadCarbonGraph(): void {
-    // this.openSearch()
-    let warningItem: any
-    const m = new MockMonitor()
-    let mockData = []
-    let mockData2 = []
-    let mockDataFinal = []
-
-    if (localStorage.getItem('warning')) {
-      warningItem = JSON.parse(localStorage.getItem('warning'))
-      console.log(warningItem[0].itemID)
-      console.log(this.searchResultsData.itemID)
-    }
-    else {
-      console.log('Warning not found.')
-    }
-
-    if (this.searchResultsData.itemID === warningItem[0].itemID) {
-      console.log('the same values')
-      console.log(this.ethyValue)
-      mockData  = m.genCarbonData(1300, 1500, 3)
-      mockData2 = m.genCarbonData(2300, 2500, 7)
-      mockDataFinal = [...mockData, ...mockData2]
-    }
-    else {
-      mockData = m.genCarbonData(1300, 1600, 10)
-    }
-    console.log('7&&&&&&&&&&&&&&&&&&&')
-    console.log(mockData.map(e => {
-      return e.Carbon
-    }))
-
     this.carbonChart = new Chart('carbon', {
       type: 'line',
       data: {
-        labels: [`${this.date.getHours()}:${this.date.getMinutes() + 1}` ,
-                `${this.date.getHours()}:${this.date.getMinutes() + 2}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 3}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 4}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 5}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 6}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 7}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 8}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 9}`,
-                `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
-          label: 'Carbon',
-          data: mockDataFinal.map(e => {
-            console.log(parseFloat(e.Carbon))
-
-            return parseFloat(e.Carbon)
-          }),
+          label: 'Carbon Dioxide',
           borderColor: 'rgba(153,15,231,0.4)',
-          fill: false
+          fill: false,
+          lineTension: 0
         }]
       },
       options: {
         responsive: true,
-        hover: {
-          mode: 'dataset'
-        },
         legend: {
           display: true
         },
@@ -152,91 +120,82 @@ export class CarbonComponent implements OnInit {
             scaleLabel: {
               display: true,
               labelString: 'Period'
+            },
+            type: 'realtime',
+            time: {
+              displayFormats: {
+                millisecond: 'HH:MMa',
+                second: 'HH:MMa',
+                minute: 'HH:MMa',
+                hour: 'HH:MMa',
+                day: 'HH:MMa',
+                week: 'HH:MMa',
+                month: 'HH:MMa',
+                quarter: 'HH:MMa',
+                year: 'HH:MMa'
+              }
+            },
+            realtime: {
+              duration: 20000,
+              delay: 2000,
+              pause: false,
+              ttl: undefined
+            },
+            ticks: {
+              source: 'data'
             }
           }],
+
           yAxes: [{
             display: true,
             scaleLabel: {
               display: true,
               labelString: 'PPM'
-            },
-            ticks: {
-              beginAtZero: true
             }
           }]
+        },
+        tooltips: {
+          mode: 'nearest',
+          intersect: false
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: false
         }
       }
     })
 
-  //   // Moving Graph
-    setInterval(() => {
-      this.carbonValue = Number(m.genFloat(2300, 2500)
-                                  .toFixed(0))
-    //   this.carbonChart.data.datasets.forEach((dataset, index) => {
-    //     const g = dataset.data.length
-    //     this.carbonNeedleValue = dataset.data[g - 1]
-    //     const metric = dataset.data.shift()
-    //     dataset.data.push(metric + 1)
-    //     this.carbonBottomLabel = `${dataset.data[g - 1]}`
-    //   })
-    //   this.carbonChart.update()
-    }, 1000)
-  // })
+    this.carbonSvc.getDataSource()
+                  .subscribe(v => {
+      if (!v) {
+        return
+      }
+      this.carbonChart.data.datasets[0].data.push({
+        x: v.time,
+        y: v.value.toFixed(2)
+      })
+      this.carbonChart.update({
+        preservation: true
+      })
+      this.carbonValue = v.value.toFixed(2)
+    })
+    this.carbonSvc.startMocking(1300, 1600)
   }
 
   loadEthyGraph(): void {
-    let warningItem: any
-    const m = new MockMonitor()
-    let mockData = []
-    let mockData2 = []
-    let mockDataFinal = []
-
-    if (localStorage.getItem('warning')) {
-      warningItem = JSON.parse(localStorage.getItem('warning'))
-      console.log(warningItem[0].itemID)
-      console.log(this.searchResultsData.itemID)
-    }
-    else {
-      console.log('Warning not found.')
-    }
-
-    if (this.searchResultsData.itemID === warningItem[0].itemID) {
-      console.log('the same values')
-      mockData  = m.genEthyleneData(400, 600, 3)
-      mockData2 = m.genEthyleneData(1300, 1500, 7)
-      mockDataFinal = [...mockData, ...mockData2]
-    }
-    else {
-      mockData  = m.genEthyleneData(400, 550, 10)
-    }
 
     this.ethyleneChart = new Chart('ethylene', {
       type: 'line',
       data: {
-        labels: [`${this.date.getHours()}:${this.date.getMinutes() + 1}` ,
-        `${this.date.getHours()}:${this.date.getMinutes() + 2}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 3}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 4}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 5}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 6}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 7}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 8}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 9}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
           label: 'Ethylene',
-          data: mockDataFinal.map(e => {
-            return parseFloat(e.Ethylene)
-          }),
-          borderColor: '#FF0000',
-          fill: false
+          borderColor: 'rgba(153,55,55,0.4)',
+          fill: false,
+          lineTension: 0
         }]
       },
       options: {
         responsive: true,
-        hover: {
-          mode: 'dataset'
-        },
         legend: {
           display: true
         },
@@ -246,97 +205,82 @@ export class CarbonComponent implements OnInit {
             scaleLabel: {
               display: true,
               labelString: 'Period'
+            },
+            type: 'realtime',
+            time: {
+              displayFormats: {
+                millisecond: 'HH:MMa',
+                second: 'HH:MMa',
+                minute: 'HH:MMa',
+                hour: 'HH:MMa',
+                day: 'HH:MMa',
+                week: 'HH:MMa',
+                month: 'HH:MMa',
+                quarter: 'HH:MMa',
+                year: 'HH:MMa'
+              }
+            },
+            realtime: {
+              duration: 20000,
+              delay: 2000,
+              pause: false,
+              ttl: undefined
+            },
+            ticks: {
+              source: 'data'
             }
           }],
+
           yAxes: [{
             display: true,
             scaleLabel: {
               display: true,
               labelString: 'PPM'
-            },
-            ticks: {
-              beginAtZero: true
             }
           }]
+        },
+        tooltips: {
+          mode: 'nearest',
+          intersect: false
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: false
         }
       }
     })
-    console.log(this.ethyleneChart.data.datasets[0].data.push(10))
 
- //     Moving Graph
-    setInterval(() => {
-    this.ethyValue = Number(m.genFloat(1300, 1600)
-                              .toFixed(0))
-  // //   // this.ethyleneChart.data.datasets.forEach((dataset, index) => {
-  //  this.ethyleneChart.data.datasets[0].data.shift()
-  //  //  console.log(metric)
-  //  this.ethyleneChart.data.datasets[0].data.push(m.genEthyleneData(1300, 1600, 10)
-  //                                                 .map(e => parseFloat(e.Ethylene)))
-  // //   // })
-  //  this.ethyleneChart.update()
-    }, 1000)
+    this.ethyleneSvc.getDataSource()
+                  .subscribe(v => {
+      if (!v) {
+        return
+      }
+      this.ethyleneChart.data.datasets[0].data.push({
+        x: v.time,
+        y: v.value.toFixed(2)
+      })
+      this.ethyleneChart.update({
+        preservation: true
+      })
+      this.ethyleneValue = v.value.toFixed(2)
+    })
+    this.ethyleneSvc.startMocking(400, 700)
   }
 
   loadTempGraph(): void {
 
-    let warningItem: any
-    const m = new MockMonitor()
-    let mockData = []
-
-    if (localStorage.getItem('warning')) {
-      warningItem = JSON.parse(localStorage.getItem('warning'))
-      console.log(warningItem[0].itemID)
-      console.log(this.searchResultsData.itemID)
-    }
-    else {
-      console.log('Warning not found.')
-    }
-
-    if (this.searchResultsData.itemID === warningItem[0].itemID) {
-      console.log('the same values')
-      mockData  = m.genTempData()
-    }
-    else {
-      mockData  = m.genTempData()
-    }
-
     this.tempChart = new Chart('temperature', {
       type: 'line',
-
       data: {
-        labels: [`${this.date.getHours()}:${this.date.getMinutes() + 1}` ,
-        `${this.date.getHours()}:${this.date.getMinutes() + 2}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 3}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 4}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 5}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 6}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 7}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 8}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 9}`,
-        `${this.date.getHours()}:${this.date.getMinutes() + 10 }`],
         datasets: [{
           label: 'Temperature',
-          data: mockData.map(e => {
-
-            return parseFloat(e.Temperature)
-          }),
-          borderColor: 'rgba(153,255,51,0.4)',
-          fill: false
-        },
-        {
-          label: 'Humidity',
-          data: mockData.map(e => {
-            return parseFloat(e.Humidity)
-          }),
-          borderColor: 'rgba(153,25,51,0.4)',
-          fill: false
+          borderColor: 'rgba(153,555,55,0.4)',
+          fill: false,
+          lineTension: 0
         }]
       },
       options: {
         responsive: true,
-        hover: {
-          mode: 'dataset'
-        },
         legend: {
           display: true
         },
@@ -346,20 +290,150 @@ export class CarbonComponent implements OnInit {
             scaleLabel: {
               display: true,
               labelString: 'Period'
+            },
+            type: 'realtime',
+            time: {
+              displayFormats: {
+                millisecond: 'HH:MMa',
+                second: 'HH:MMa',
+                minute: 'HH:MMa',
+                hour: 'HH:MMa',
+                day: 'HH:MMa',
+                week: 'HH:MMa',
+                month: 'HH:MMa',
+                quarter: 'HH:MMa',
+                year: 'HH:MMa'
+              }
+            },
+            realtime: {
+              duration: 20000,
+              delay: 2000,
+              pause: false,
+              ttl: undefined
+            },
+            ticks: {
+              source: 'data'
             }
           }],
+
           yAxes: [{
             display: true,
             scaleLabel: {
               display: true,
-              labelString: '°C'
-            },
-            ticks: {
-              beginAtZero: true
+              labelString: 'Degrees (C)'
             }
           }]
+        },
+        tooltips: {
+          mode: 'nearest',
+          intersect: false
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: false
         }
       }
     })
+
+    this.tempSvc.getDataSource()
+                  .subscribe(v => {
+      if (!v) {
+        return
+      }
+      this.tempChart.data.datasets[0].data.push({
+        x: v.time,
+        y: v.value.toFixed(2)
+      })
+      this.tempChart.update({
+        preservation: true
+      })
+      this.tempValue = v.value.toFixed(2)
+    })
+    this.tempSvc.startMocking(23, 27)
+  }
+
+  loadHumidGraph(): void {
+
+    this.humidChart = new Chart('humidity', {
+      type: 'line',
+      data: {
+        datasets: [{
+          label: 'Humidity %',
+          borderColor: 'rgba(153,55,45,0.4)',
+          fill: false,
+          lineTension: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Period'
+            },
+            type: 'realtime',
+            time: {
+              displayFormats: {
+                millisecond: 'HH:MMa',
+                second: 'HH:MMa',
+                minute: 'HH:MMa',
+                hour: 'HH:MMa',
+                day: 'HH:MMa',
+                week: 'HH:MMa',
+                month: 'HH:MMa',
+                quarter: 'HH:MMa',
+                year: 'HH:MMa'
+              }
+            },
+            realtime: {
+              duration: 20000,
+              delay: 2000,
+              pause: false,
+              ttl: undefined
+            },
+            ticks: {
+              source: 'data'
+            }
+          }],
+
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'PPM'
+            }
+          }]
+        },
+        tooltips: {
+          mode: 'nearest',
+          intersect: false
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: false
+        }
+      }
+    })
+
+    this.humidSvc.getDataSource()
+                  .subscribe(v => {
+      if (!v) {
+        return
+      }
+      this.humidChart.data.datasets[0].data.push({
+        x: v.time,
+        y: v.value.toFixed(2)
+      })
+      this.humidChart.update({
+        preservation: true
+      })
+      this.humidityValue = v.value.toFixed(2)
+    })
+    this.humidSvc.startMocking(60,  76)
   }
 }

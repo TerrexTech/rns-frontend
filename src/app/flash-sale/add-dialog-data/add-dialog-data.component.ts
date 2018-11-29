@@ -20,6 +20,7 @@ export class AddDialogDataComponent implements OnInit {
   form: FormGroup
   formSubmitAttempt: boolean
   curField: any
+  Math: any
   returnUrl: string
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
@@ -35,7 +36,9 @@ export class AddDialogDataComponent implements OnInit {
     private http: HttpClient,
     private addServ: FlashSaleService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {
+    this.Math = Math
+   }
 
   ngOnInit(): void {
     console.log(this.data.data.InventoryQueryItem)

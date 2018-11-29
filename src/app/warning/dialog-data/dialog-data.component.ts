@@ -79,7 +79,7 @@ export class DialogDataDialogComponent implements OnInit {
       })
     }
 
-    if (this.data.data[1] === 'Donation') {
+    else if (this.data.data[1] === 'Donation') {
       const donations = this.data.data[0].map(f => f)
       donations.forEach(element => {
         console.log(element.itemID)
@@ -108,7 +108,7 @@ export class DialogDataDialogComponent implements OnInit {
       })
     }
 
-    if (this.data.data[1] === 'Disposal') {
+    else if (this.data.data[1] === 'Disposal') {
       const disposals = this.data.data[0].map(f => f)
       disposals.forEach(element => {
         console.log(element.itemID)

@@ -23,27 +23,54 @@ export class MonitorSearchService {
             console.log(searchQuery)
             const gqlQuery = `
         {
-            InventoryQueryItem(
+            WarningQueryItem(
                 sku: "${searchQuery.sku}",
                 name: "${searchQuery.name}",
                 lot: "${searchQuery.lot}"
             ){
+                warningID,
                 itemID,
-                dateArrived,
-                dateSold,
-                deviceID,
-                donateWeight,
                 lot,
                 name,
-                origin,
-                price,
-                rsCustomerID,
                 sku,
                 soldWeight,
                 timestamp,
                 totalWeight,
-                upc,
-                wasteWeight
+                warningActive,
+                ethylene,
+                carbonDioxide,
+                projectedDate,
+                status
+            }
+            }
+        `
+            console.log(gqlQuery)
+
+            return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
+                headers: {
+                    'Content-Type': 'application/text'
+                }
+            })
+        }
+        public populateFields(): Observable<Object> {
+            const gqlQuery = `
+        {
+            WarningQueryCount(
+                count: 1
+            ){
+                warningID,
+                itemID,
+                lot,
+                name,
+                sku,
+                soldWeight,
+                timestamp,
+                totalWeight,
+                warningActive,
+                ethylene,
+                carbonDioxide,
+                projectedDate,
+                status
             }
             }
         `

@@ -34,6 +34,8 @@ export class DialogDataDialogComponent implements OnInit {
       origin: ['', [Validators.required, Validators.minLength(1)]],
       dateArrived: ['', [Validators.required, Validators.minLength(1)]],
       totalWeight: ['', [Validators.required, Validators.minLength(1)]],
+      timestamp: [],
+      soldWeight: [],
       price: ['', [Validators.required, Validators.minLength(1)]],
       deviceID: ['', [Validators.required, Validators.minLength(1)]],
       lot: ['', [Validators.required, Validators.minLength(1)]]
@@ -71,6 +73,7 @@ export class DialogDataDialogComponent implements OnInit {
   f(): any { return this.form.controls }
 
   onSubmit(): void {
+    const now = new Date().getTime() / 1000
     console.log(this.data)
     console.log(this.form.value)
 
@@ -98,6 +101,8 @@ export class DialogDataDialogComponent implements OnInit {
     month[10] = 'November'
     month[11] = 'December'
     this.formSubmitAttempt = true
+    this.form.value.soldWeight = this.curField.data.soldWeight
+    this.form.value.timestamp = now
     const origDate = this.form.value.dateArrived
     this.form.value.dateArrived = Math.floor(Date.parse(origDate))
     console.log('submitted')

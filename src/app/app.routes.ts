@@ -9,6 +9,7 @@ import { WarningComponent } from './warning/warning.component'
 import { ViewFlashsaleComponent } from './flash-sale/view-flashsale/view-flashsale.component'
 import { DonateDisposeRoutes } from './donate-dispose/donate-dispose.routes'
 import { CarbonComponent } from './monitoring/carbon/carbon.component'
+import { FlashSaleRoutes } from './flash-sale/flash-sale.routes'
 
 export const AppRoutes = {
   root: {
@@ -57,7 +58,7 @@ export const AppRoutes = {
   flashsale: {
     path: 'flash-sales',
     title: 'Flash-Sales',
-    component: ViewFlashsaleComponent
+    children: FlashSaleRoutes
   },
 
   donatedispose: {

@@ -15,7 +15,7 @@
                     <a id="editBtn" matTooltip="Edit Flash sale" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
                         <i class="fa fa-edit"></i>
                     </a>
-                    <a id="sellBtn" matTooltip="End Flash Sale(s)" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="removeSelectedRows()">
+                    <a id="sellBtn" matTooltip="End Flash Sale(s)" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="removeSelectedRows()">
                         <i class="fa fa-check"></i>
                     </a>
                 </div>

@@ -21,8 +21,54 @@ export class TableSearchService {
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
-    public search(searchQuery): Observable<Object> {
+    public search(searchQuery, pageName): Observable<Object> {
         console.log(searchQuery)
+        console.log(pageName)
+        let returnItems = []
+        let query = ''
+        switch (pageName) {
+            case 'inventoryPage':
+                query = 'InventoryQueryItem'
+                returnItems = [`itemID,dateArrived,dateSold,deviceID,
+                              donateWeight,lot,name,origin,price,rsCustomerID,sku,soldWeight,
+                              timestamp,totalWeight,upc,wasteWeight`]
+                break
+            case 'disposePage':
+                query = 'InventoryQueryItem'
+                returnItems = [`itemID,
+                              lot,name,sku, wasteWeight, soldWeight, totalWeight
+                              timestamp`]
+                break
+            case 'donatePage':
+                query = 'InventoryQueryItem'
+                returnItems = [`itemID,
+                              lot,name,sku,donateWeight, soldWeight, totalWeight
+                              timestamp`]
+                break
+            case 'sale':
+                query = 'InventoryQueryItem'
+                break
+            case 'flashHistory':
+                query = 'FlashsaleQueryItem'
+                returnItems = [`itemID,
+                              lot,name,sku,soldWeight,
+                              timestamp,totalWeight, onFlashsale`]
+                break
+            case 'device':
+                query = 'DeviceQueryItem'
+                returnItems = [`itemID,
+                              deviceID,dateInstalled,lot,lastMaintenance,
+                              name,status, sku`]
+                break
+            case 'flashsale':
+                query = 'InventoryQueryItem'
+                returnItems = [`itemID, lot, soldWeight, totalWeight,
+                              name,sku, projectedDate, timestamp`]
+                break
+            default:
+                query = 'InventoryQueryItem'
+                break
+        }
 
         let sku = ''
         let name = ''
@@ -38,27 +84,12 @@ export class TableSearchService {
         }
         const gqlQuery = `
     {
-        InventoryQueryItem(
+        ${query}(
             ${sku}
             ${name}
             ${lot}
         ){
-            itemID,
-            dateArrived,
-            dateSold,
-            deviceID,
-            donateWeight,
-            lot,
-            name,
-            origin,
-            price,
-            rsCustomerID,
-            sku,
-            soldWeight,
-            timestamp,
-            totalWeight,
-            upc,
-            wasteWeight
+            ${returnItems}
         }
         }
     `
@@ -71,8 +102,33 @@ export class TableSearchService {
         })
     }
 
-    public searchTime(searchQuery): Observable<Object> {
+    public searchTime(searchQuery, pageName): Observable<Object> {
         console.log(searchQuery)
+
+        let query = ''
+        switch (pageName) {
+            case 'inventoryPage':
+                query = 'InventoryQueryTimestamp'
+                break
+            case 'disposePage':
+                query = 'DisposalQueryTimestamp'
+                break
+            case 'donatePage':
+                query = 'DonationQueryTimestamp'
+                break
+            case 'sale':
+                query = 'InventoryQueryTimestamp'
+                break
+            case 'flashHistory':
+                query = 'FlashsaleQueryTimestamp'
+                break
+            case 'device':
+                query = 'DeviceQueryTimestamp'
+                break
+            default:
+                query = 'InventoryQueryItem'
+                break
+        }
 
         let start = ''
         let end = ''
@@ -89,7 +145,7 @@ export class TableSearchService {
 
         const gqlQuery = `
     {
-        InventoryQueryTimestamp(
+        ${query}(
             ${start}
             ${end}
             ${period}

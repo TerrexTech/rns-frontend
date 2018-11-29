@@ -6,12 +6,12 @@
           <h6>Dispose Food</h6>
         </mat-card-title>
         <div class="generate-btn">
-          <a id="searchBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+          <a id="searchBtn" matTooltip="Search" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
             <i class="fa fa-search"></i>
           </a>
-          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewDisposal()">
-            <i class="fa fa-plus"></i>
-          </a>
+          <a id="addBtn" matTooltip="Add new disposal" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewDisposal()">
+              <i class="fa fa-plus"></i>
+            </a>
         </div>
       </mat-card-header>
     </mat-card>

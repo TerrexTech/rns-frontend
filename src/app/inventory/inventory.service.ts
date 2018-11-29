@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 import { environment } from '../../config'
-import { uuid } from 'uuid'
+import uuid from 'uuid/v4'
 import { Inventory } from '../models/inventory'
 
 @Injectable()
@@ -118,7 +118,8 @@ export class InventoryService {
             timestamp,
             totalWeight,
             upc,
-            wasteWeight
+            wasteWeight,
+            projectedDate
             }
         }
     `
@@ -233,7 +234,9 @@ export class InventoryService {
         warningActive: ${data.warningActive}
         ethylene: ${data.ethylene},
         carbonDioxide: ${data.carbonDioxide},
-        projectedDate: ${data.projectedDate}
+        projectedDate: ${data.projectedDate},
+        status: "${data.status}",
+        warningID: "${uuid()}"
     ){
         itemID,
         lot,
@@ -245,7 +248,8 @@ export class InventoryService {
         warningActive,
         ethylene,
         carbonDioxide,
-        projectedDate
+        projectedDate,
+        status
     }
     }
     `

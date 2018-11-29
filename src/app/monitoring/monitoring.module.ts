@@ -30,6 +30,11 @@ import {
     MatTabsModule
 } from '@angular/material'
 import { MonitorSearchService } from '../search/monitor-search/monitor-search.service'
+import { SensorService } from './sensor/sensor.service'
+import { CarbonService } from './carbon/carbon.service'
+import { EthyleneService } from './carbon/ethylene.service'
+import { TempService } from './carbon/temp.service'
+import { HumidityService } from './carbon/humidity.service'
 
 @NgModule({
     imports: [
@@ -68,7 +73,12 @@ import { MonitorSearchService } from '../search/monitor-search/monitor-search.se
     ],
     providers: [
         MonitorSearchService,
-        OverviewService
+        OverviewService,
+        SensorService,
+        CarbonService,
+        EthyleneService,
+        TempService,
+        HumidityService
     ]
 })
 

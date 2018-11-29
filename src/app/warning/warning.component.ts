@@ -28,10 +28,11 @@ export class WarningComponent implements OnInit {
   url: string
   statusMessage: string
 
-  displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projectedExpiry']
+  displayedColumns = ['select', 'sku', 'name', 'qty. unsold', 'status', 'projectedDate']
   curField: any
 
   ngOnInit(): void {
+    this.navServ.newEvent(0)
     const oneday = 86400
     const twoday = oneday * 2
     const threeday = oneday * 3
@@ -98,7 +99,7 @@ export class WarningComponent implements OnInit {
         console.log(item)
         itemArray.push(item)
         this.createType = 'Flash Sale'
-        this.url = 'flash-sales'
+        this.url = 'flash-sales/view-sales'
         // this.curField = flash_data.findIndex(d => d === item.sku)
       })
     console.log(itemArray)

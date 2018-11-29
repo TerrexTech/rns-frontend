@@ -2,28 +2,28 @@
     padding-right: 10px
   }
 
+  .generate-btn {
+    position: absolute;
+    right: 23px;
+  }
+
+  /* .generate-btn button {
+    margin-top :0 !important;
+  } */
+
+  @media only screen and (max-width: 414px) {
+          .generate-btn{
+            left: 20%;
+            top: 50px;
+          }
+          .mat-card{
+            padding-bottom: 30px;
+          }
+  }
+
   img{
       height: 400px;
       width: 400px
-  }
-
-  .generate-btn-add {
-    position: absolute;
-    right: 395px;
-  }
-
-  .generate-btn-donate {
-    position: absolute;
-    right: 225px;
-  }
-
-  .generate-btn-dispose {
-    position: absolute;
-    right: 25px;
-  }
-
-  .generate-btn button {
-    margin-top :0 !important;
   }
 
   .example-form {
@@ -55,11 +55,11 @@
   }
 
   .green{
-   background-color: green
+   background-color: rgb(85, 97, 85)
   }
 
   .bad{
-   background-color: red;
+   background-color: #ffae42;
    border-right: 1px solid rgb(224, 224, 224);
      padding: 0 24px 0 24px;
         font-size: 14px;
@@ -86,7 +86,3 @@
         /* text-align: center; */
         border-right: 1px solid rgb(224, 224, 224);
     }
-
-  .mat-dialog-actions {
-    justify-content: center !important
-  }

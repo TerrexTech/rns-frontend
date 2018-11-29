@@ -5,12 +5,14 @@
         <mat-card-title>
           <h6>Donate Food</h6>
         </mat-card-title>
-        <a id="searchBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
-          <i class="fa fa-search"></i>
-        </a>
-        <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewDonation()">
-          <i class="fa fa-plus"></i>
-        </a>
+        <div class="generate-btn">
+            <a id="searchBtn" matTooltip="Search" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+                <i class="fa fa-search"></i>
+              </a>
+          <a id="addBtn" matTooltip="Add new donation" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="addNewDonation()">
+            <i class="fa fa-plus"></i>
+          </a>
+        </div>
       </mat-card-header>
     </mat-card>
     <br>
@@ -45,7 +47,7 @@
             </ng-container>
 
             <!-- Symbol Column -->
-            <ng-container matColumnDef="qty_unsold">
+            <ng-container matColumnDef="donateWeight">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Donated Weight </th>
               <td mat-cell *matCellDef="let element"><a> {{ element.donateWeight }}</a> </td>
             </ng-container>

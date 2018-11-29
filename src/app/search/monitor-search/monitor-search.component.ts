@@ -52,25 +52,24 @@ export class MonitorSearchComponent implements OnInit {
   }
 
   genFormValues(): void {
-    if (localStorage.getItem('warning')) {
-    const formValues = JSON.parse(localStorage.getItem('warning'))
-    console.log(formValues[0])
-    this.form.get('sku')
-        .setValue(formValues[0].sku)
-    this.form.get('name')
-        .setValue(formValues[0].name)
-    this.form.get('lot')
-        .setValue(formValues[0].lot)
-    }
-    else {
-    this.form.get('sku')
-        .setValue('PS7-VVF-IEP-WL')
-    this.form.get('name')
-        .setValue('Tomato')
-    this.form.get('lot')
-        .setValue('HS8400')
-  }
-}
+    this.monitorSev.populateFields()
+                   .toPromise()
+                   .then((data: any) => {
+                     console.log(data)
+                     if (data.data.WarningQueryCount) {
+                      const formVal = data.data.WarningQueryCount
+                      this.form.get('sku')
+                      .setValue(formVal[0].sku)
+                      this.form.get('name')
+                      .setValue(formVal[0].name)
+                      this.form.get('lot')
+                      .setValue(formVal[0].lot)
+                     }
+                   })
+                   .catch(async () => (swal('No warnings found')
+                                            .catch(err => console.log(err))
+                   ))
+                  }
 
   checkDates(): boolean {
     if ((this.form.value.start_date !== '' && this.form.value.end_date !== '') && this.form.value.period === '') {

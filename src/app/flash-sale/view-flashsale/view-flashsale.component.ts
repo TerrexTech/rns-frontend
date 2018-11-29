@@ -48,7 +48,7 @@ export class ViewFlashsaleComponent implements OnInit {
                     const twoday = oneday * 2
                     const threeday = oneday * 3
                     const today = new Date().getTime() / 1000
-                    this.dataSource.data = data.data.FlashsaleQueryCount
+                    this.dataSource.data = data.data.FlashsaleQueryCount.filter(item => item.onFlashsale)
                     flash_data = data.data.FlashsaleQueryCount
                     this.dataSource.paginator = this.paginator
                     this.dataSource.data.forEach(element => {
@@ -102,7 +102,9 @@ export class ViewFlashsaleComponent implements OnInit {
   }
 
   addNewFlashSale(): void {
-    this.dialog.open(TableSearchComponent)
+    this.dialog.open(TableSearchComponent, {
+      data: 'flashsale'
+    })
     .afterClosed()
       .subscribe(searchData => {
         if (searchData) {
@@ -110,6 +112,23 @@ export class ViewFlashsaleComponent implements OnInit {
             data: searchData,
             minWidth: 800,
             minHeight: 600
+          })
+          .afterClosed()
+          .subscribe(addedFlashsaleData => {
+            console.log(addedFlashsaleData)
+            this.flashServ.getFlashSales()
+                          .toPromise()
+                          .then((data: any) => {
+                            console.log(data)
+                            if (data.data.FlashsaleQueryCount) {
+                              this.dataSource.data = data.data.FlashsaleQueryCount
+                              this.dataSource.paginator = this.paginator
+                              this.dataSource.sort = this.sort
+                            }
+                          })
+                          .catch(async () => swal('Timed out.')
+                                          .catch(err => console.log(err))
+                          )
           })
         }
       })
@@ -155,7 +174,7 @@ export class ViewFlashsaleComponent implements OnInit {
     const willDelete = await swal({
       title: 'Are you sure?',
       text: 'Selling Item(s)?',
-      icon: 'success',
+      icon: 'info',
       buttons: ['Yes', 'No'],
       closeOnClickOutside: false,
       closeOnEsc: false,
@@ -178,7 +197,7 @@ export class ViewFlashsaleComponent implements OnInit {
             .catch(console.log)
         }
       }
-      this.showUnsold()
+      await this.showUnsold()
       swal('the selected item(s) have been sold!', {
         icon: 'success'
       })

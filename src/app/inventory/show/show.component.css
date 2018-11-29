@@ -12,6 +12,14 @@ img{
   right: 5%
 }
 
+.table-responsive-xl {
+  overflow: auto;
+}
+
+.table-container {
+  padding-bottom: 0;
+}
+
 @media only screen and (max-width: 414px) {
         .generate-btn{
           left: 20%;

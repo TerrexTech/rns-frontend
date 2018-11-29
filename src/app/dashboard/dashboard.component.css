@@ -7,6 +7,13 @@
     margin-top: 93px;
 }
 
+.main-panel {
+    height: initial;
+    max-height: initial;
+    min-height: 100vh;
+    position: relative !important;
+}
+
 .card-body{
     padding: 15px 15px 10px 15px;
 }

@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import Chart from 'chart.js'
 import { InventoryService } from '../inventory/inventory.service'
 import { ReportService } from '../reports/reports.service'
+import addHours from 'date-fns/add_hours'
 
 @Component({
   selector: 'component-dashboard',
@@ -127,14 +128,19 @@ export class DashboardComponent implements OnInit {
 
   loadSoldGraph(): void {
     const d = new Date()
+    const d5 = addHours(d, -5)
+    const d4 = addHours(d, -4)
+    const d3 = addHours(d, -3)
+    const d2 = addHours(d, -2)
+    const d1 = addHours(d, -1)
     this.soldChart = new Chart('soldChart', {
       type: 'line',
       data: {
-        labels: [`${(d.getHours() - 5) - 12}:${d.getMinutes()}`,
-        `${(d.getHours() - 4) - 12}:${d.getMinutes()}`,
-        `${(d.getHours() - 3) - 12}:${d.getMinutes()}`,
-        `${(d.getHours() - 2) - 12}:${d.getMinutes()}`,
-        `${(d.getHours() - 1) - 12}:${d.getMinutes()}`
+        labels: [`${d5.getHours()}:${d.getMinutes()}`,
+        `${d4.getHours()}:${d.getMinutes()}`,
+        `${d3.getHours()}:${d.getMinutes()}`,
+        `${d2.getHours()}:${d.getMinutes()}`,
+        `${d1.getHours()}:${d.getMinutes()}`
         ],
         datasets: [{
           fill: false,
@@ -242,7 +248,8 @@ export class DashboardComponent implements OnInit {
                             data: donateArray.map(e => {
                               return e.avgDonate
                             }),
-                            backgroundColor: 'rgba(255, 99, 132, 1)'
+                            backgroundColor: ['#001f3f', '#0074D9', '#7FDBFF', '#39CCCC', '#FFCC00',
+                            '##FFAC00', '#FF0000', '#FF4136', '#FF851B', '#5F523B', '#3D56', '#000']
                           }
                         ]
                       },

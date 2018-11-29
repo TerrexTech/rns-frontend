@@ -13,6 +13,7 @@ import { ReportsTableModule } from '../reports-table/reports-table.module'
 import { SearchModule } from '../search/search.module'
 import { MonitorSearchComponent } from '../search/monitor-search/monitor-search.component'
 import { OverviewService } from './overview/overview.service'
+import { CarbonService } from './carbon/carbon.service'
 import { NgxGaugeModule } from 'ngx-gauge'
 
 import {
@@ -68,7 +69,8 @@ import { MonitorSearchService } from '../search/monitor-search/monitor-search.se
     ],
     providers: [
         MonitorSearchService,
-        OverviewService
+        OverviewService,
+        CarbonService
     ]
 })
 

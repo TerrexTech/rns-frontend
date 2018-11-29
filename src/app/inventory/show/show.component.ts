@@ -175,7 +175,7 @@ export class ShowComponent implements OnInit {
       this.inventoryPageBrowse.pop()
     }
 
-    let invArr = this.inventoryPageBrowse
+    let invArr = this.inventoryPageBrowse[0]
     if (this.inventoryPageBrowse.length > 1) {
      invArr = this.inventoryPageBrowse.pop()
     }
@@ -183,7 +183,8 @@ export class ShowComponent implements OnInit {
     console.log(paginator, '88888888888888888')
 
     if (paginator && paginator.length > 0) {
-      this.dataSource.data = paginator
+      paginator = invArr
+      this.dataSource.data = invArr
     }
     this.genExpiry()
 

@@ -27,7 +27,7 @@
     </mat-card-header>
   </mat-card>
   <br>
-  <mat-card>
+  <mat-card class="table-container">
     <mat-card-content class="row table-wrapper-scroll-y">
 
       <!-- <component-search></component-search> -->
@@ -114,6 +114,7 @@
           <tr mat-row #testRef *matRowDef="let row; columns: displayedColumns;" [ngClass]='{red: row.isRed}'></tr>
         </table>
 
+      </div>
         <mat-toolbar>
           <mat-toolbar-row>
               <!-- <select matNativeControl (change)="selectedNum(value)">
@@ -127,7 +128,6 @@
             <button mat-flat-button (click)='onPaginateForward()'><mat-icon class="example-icon">chevron_right</mat-icon></button>
           </mat-toolbar-row>
         </mat-toolbar>
-      </div>
     </mat-card-content>
   </mat-card>
 </div>

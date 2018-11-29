@@ -12,6 +12,10 @@ img{
   right: 5%
 }
 
+.table-container {
+  padding-bottom: 0;
+}
+
 @media only screen and (max-width: 414px) {
         .generate-btn{
           left: 20%;

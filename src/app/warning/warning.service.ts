@@ -34,7 +34,7 @@ export class WarningService {
         }
     `
 
-        return this.http.post(`${environment.bhupeshIP}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -71,7 +71,7 @@ export class WarningService {
     `
         console.log(gqlQuery)
 
-        return this.http.post(`${environment.bhupeshIP}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }
@@ -91,7 +91,7 @@ export class WarningService {
     `
         console.log(gqlQuery)
 
-        return this.http.post(`${environment.bhupeshIP}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }

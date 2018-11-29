@@ -34,10 +34,12 @@ export class ShowComponent implements OnInit {
   backEndTime: number
   projectedDate: number
   selection = new SelectionModel<Inventory>(true, [])
+  inventoryPageBrowse = []
+  checkPopInv: Boolean
 
   constructor(private http: Http, public dialog: MatDialog, private showService: InventoryService,
               private navServ: NavbarService) {
-                this.Math = Math
+    this.Math = Math
   }
 
   ngOnInit(): void {
@@ -52,6 +54,8 @@ export class ShowComponent implements OnInit {
             return e
           })
           paginator = data.data.InventoryQueryCount
+          this.inventoryPageBrowse.push(paginator)
+          console.log(paginator.length, '8787878788787')
           this.lastTimestamp = data.data.InventoryQueryCount[0].timestamp
           this.genExpiry()
         }
@@ -63,11 +67,11 @@ export class ShowComponent implements OnInit {
       )
       .catch(() => {
         swal('Table data not loaded')
-            .catch(err => console.log(err))
+          .catch(err => console.log(err))
       })
 
     const sorting: MatSortable = {
-      id: 'Sold Weight',
+      id: 'timestamp',
       start: 'desc',
       disableClear: false
     }
@@ -83,9 +87,9 @@ export class ShowComponent implements OnInit {
   genExpiry(): void {
     this.dataSource.data.forEach(element => {
       element['soldWeight'] = Math.round(element['soldWeight'])
-      .toFixed(2)
+        .toFixed(2)
       element['totalWeight'] = Math.round(element['totalWeight'])
-      .toFixed(2)
+        .toFixed(2)
       element['projectedDate'] = (element['dateArrived'] + (this.getRandomInt(8, 16) * 86400))
     })
   }
@@ -105,7 +109,7 @@ export class ShowComponent implements OnInit {
     const requestedSoldValue = soldVal + soldWeight
     const totalWeight = Number(this.dataSource.data[row]['totalWeight'])
     const leftoverWeight = Number(Math.round(totalWeight - requestedSoldValue)
-                                      .toFixed(2))
+      .toFixed(2))
 
     console.log(totalWeight - requestedSoldValue)
     if (leftoverWeight < 1) {
@@ -114,20 +118,20 @@ export class ShowComponent implements OnInit {
     }
 
     if (soldVal < totalWeight &&
-    requestedSoldValue < totalWeight) {
+      requestedSoldValue < totalWeight) {
       this.showService.updateItem(item)
-                      .toPromise()
-                      .then((data: any) => {
-                        if (data.data.InventoryUpdate) {
-                        console.log(data)
-                        this.dataSource.data[row]['soldWeight'] = Number(Math.round(requestedSoldValue)
-                                                  .toFixed(2))
-                        localStorage.setItem('soldWeight', requestedSoldValue)
-                      }
-                    })
-                    .catch(async () => swal('Error: Unable to update sold weight')
-                                        .catch(() => console.log('popup not loaded')))
-        }
+        .toPromise()
+        .then((data: any) => {
+          if (data.data.InventoryUpdate) {
+            console.log(data)
+            this.dataSource.data[row]['soldWeight'] = Number(Math.round(requestedSoldValue)
+              .toFixed(2))
+            localStorage.setItem('soldWeight', requestedSoldValue)
+          }
+        })
+        .catch(async () => swal('Error: Unable to update sold weight')
+          .catch(() => console.log('popup not loaded')))
+    }
   }
 
   changeExpiryWarning(min, max): void {
@@ -135,7 +139,7 @@ export class ShowComponent implements OnInit {
       const row = this.dataSource.data.findIndex(rowData => rowData['itemID'] === selItem.itemID)
       this.dataSource.data[row]['projectedDate'] = (this.dataSource.data[row]['timestamp'] + (this.getRandomInt(min, max) * 86400))
       this.projectedDate = Number(this.dataSource.data[row]['projectedDate'])
-     })
+    })
   }
 
   sendSale(saleData): void {
@@ -160,41 +164,82 @@ export class ShowComponent implements OnInit {
   }
 
   onPaginateBack(): void {
-    this.backEndTime = 9999999999
-    console.log(paginator[0].timestamp)
-    console.log(paginator[paginator.length - 1].timestamp)
-    console.log(this.lastTimestamp)
-    this.showService.paginateTable(paginator[0].timestamp, this.backEndTime)
-      .toPromise()
-      .then((data: any) => {
-        console.log(data)
-        paginator = data.data.InventoryQueryTimestamp
-        this.dataSource.data = paginator
-        this.genExpiry()
-      })
-      .catch(() => {
-        swal('Table data not loaded')
-            .catch(err => console.log(err))
-      })
+    // const lengthOfInvArray = this.inventoryPageBrowse.length
+    // const lengthOfDataSource = this.dataSource.data
+    // for (let i = lengthOfInvArray - 1; i > 0; i --) {
+    //   paginatorArray.push(this.inventoryPageBrowse[i])
+    // }
+
+    if (this.checkPopInv) {
+      this.checkPopInv = false
+      this.inventoryPageBrowse.pop()
+    }
+
+    let invArr = this.inventoryPageBrowse
+    if (this.inventoryPageBrowse.length > 1) {
+     invArr = this.inventoryPageBrowse.pop()
+    }
+
+    console.log(paginator, '88888888888888888')
+
+    if (paginator && paginator.length > 0) {
+      this.dataSource.data = paginator
+    }
+    this.genExpiry()
+
+    // this.backEndTime = paginator[paginator.length - 1].timestamp
+    // console.log(paginator[0], '###############')
+    // // console.log(paginator[paginator.length - 1].timestamp)
+    // console.log(this.lastTimestamp)
+    // this.showService.paginateTable(paginator[0].timestamp, this.backEndTime)
+    // .toPromise()
+    // .then((data: any) => {
+    //   console.log(data)
+    //   if (data.data.InventoryQueryTimestamp.length > 0) {
+    //     paginator = data.data.InventoryQueryTimestamp
+    //     console.log(paginator.length, '@@@@@@@@@@@@@@')
+    //     this.dataSource.data = paginator
+    //     this.genExpiry()
+    //   }
+    // })
+    // .catch(() => {
+    //   swal('Table data not loaded')
+    //       .catch(err => console.log(err))
+    // })
   }
 
   onPaginateForward(): void {
-    !this.startForwardTime ?  this.startForwardTime = 1 : this.startForwardTime = paginator[paginator.length - 1].timestamp
-    console.log(this.startForwardTime)
-    console.log(paginator[paginator.length - 1].timestamp)
-    this.showService.paginateTable(this.startForwardTime, 9999999999)
-      .toPromise()
-      .then((data: any) => {
-        console.log(data.data.InventoryQueryTimestamp)
-        paginator = data.data.InventoryQueryTimestamp
-        this.dataSource.data = paginator
-        this.genExpiry()
-        // this.lastTimestamp = data.data.InventoryQueryTimestamp[0].timestamp
-      })
-      .catch(() => {
-        swal('Table data not loaded')
+    if (paginator && paginator.length > 0) {
+      // !this.startForwardTime ?  this.startForwardTime = 1 : this.startForwardTime = paginator[paginator.length - 1].timestamp
+      this.startForwardTime = paginator[paginator.length - 1].timestamp
+      // console.log(this.startForwardTime)
+      // console.log(paginator[paginator.length - 1].timestamp)
+      this.showService.paginateTable(1, this.startForwardTime)
+        .toPromise()
+        .then((data: any) => {
+          console.log(data.data.InventoryQueryTimestamp)
+          // paginator = data.data.InventoryQueryTimestamp
+          console.log(paginator.length, '###################')
+          if (data.data.InventoryQueryTimestamp.length > 0) {
+            paginator = data.data.InventoryQueryTimestamp
+            console.log(paginator.length, '@@@@@@@@@@@@@@')
+            this.inventoryPageBrowse.push(paginator)
+            console.log(this.inventoryPageBrowse, '^^^^^^^^^^^^^^^')
+            this.dataSource.data = paginator
+            this.genExpiry()
+            this.checkPopInv = true
+          }
+          // this.lastTimestamp = data.data.InventoryQueryTimestamp[0].timestamp
+        })
+        .catch(() => {
+          swal('Table data not loaded')
             .catch(err => console.log(err))
-      })
+        })
+    }
+    else {
+
+    }
+
   }
 
   openSearch(): void {
@@ -205,22 +250,22 @@ export class ShowComponent implements OnInit {
       .subscribe(
         data => {
           if (data) {
-          console.log(data)
-          if (!data) {
-            this.resetData()
+            console.log(data)
+            if (!data) {
+              this.resetData()
+            }
+            if (data.queryNum === 1) {
+              this.dataSource.data = data.data.InventoryQueryItem
+            }
+            else if (data.queryNum === 2) {
+              this.dataSource.data = data.data.InventoryQueryTimestamp
+            }
+            else if (!data.queryNum) {
+              console.log('Search closed')
+            }
+            this.genExpiry()
           }
-          if (data.queryNum === 1) {
-            this.dataSource.data = data.data.InventoryQueryItem
-          }
-          else if (data.queryNum === 2) {
-            this.dataSource.data = data.data.InventoryQueryTimestamp
-          }
-          else if (!data.queryNum) {
-            console.log('Search closed')
-          }
-          this.genExpiry()
         }
-      }
         // refreshDataMethod()
       )
   }
@@ -325,19 +370,19 @@ export class ShowComponent implements OnInit {
         item.ethylene = this.getRandomInt(1300, 1700)
         item.carbonDioxide = this.getRandomInt(2800, 3000)
         const genWarnings = await this.showService.sendWarning(item)
-                                                  .toPromise()
-                                                  .then((data: any) => {
-                                                  if (data.data.WarningInsert) {
-                                                  console.log(data)
-                                                  }
-                                                  else {
-                                                    swal('Warning has already been generated for selected item(s)')
-                                                                .catch(err => console.log(err))
-                                                  }
-                                                })
-                                                .catch(async () => swal('one item may not have two warnings.')
-                                                                .catch(err => console.log(err))
-                                                )
+          .toPromise()
+          .then((data: any) => {
+            if (data.data.WarningInsert) {
+              console.log(data)
+            }
+            else {
+              swal('Warning has already been generated for selected item(s)')
+                .catch(err => console.log(err))
+            }
+          })
+          .catch(async () => swal('one item may not have two warnings.')
+            .catch(err => console.log(err))
+          )
       }
       catch (e) {
         swal('Inventory not removed')

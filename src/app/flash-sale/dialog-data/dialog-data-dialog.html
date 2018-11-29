@@ -3,25 +3,11 @@
 </h4>
     <form [formGroup]="form" #updateInventory="ngForm">
         <br>
-
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> UPC </label>
-                <div class="col-sm-8 mx-auto">
-                    <input type="number" class="form-control" formControlName="upc" required
-                        [ngClass]="{ 'is-invalid': isFieldValid('upc') }"
-                        readonly>
-                    <span *ngIf="isFieldValid('upc')" class="invalid-feedback">
-                        UPC is required
-                    </span>
-                </div>
-            </div>
-        </div>
         <div class="form-group">
             <div class="row">
                 <label class="col-sm-2 col-md-3 control-label mx-auto"> SKU </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="number" class="form-control" formControlName="sku" required
+                    <input type="text" class="form-control" formControlName="sku" required
                         [ngClass]="{ 'is-invalid': isFieldValid('sku') }"
                         readonly>
                         <span *ngIf="isFieldValid('sku')" class="invalid-feedback">
@@ -44,80 +30,36 @@
         </div>
         <div class="form-group">
             <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Origin of Product </label>
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Lot </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" formControlName="origin" placeholder="State, Country (E.g. ON, Canada)"
-                        [ngClass]="{ 'is-invalid': isFieldValid('origin') }">
-                        <span *ngIf="isFieldValid('origin')" class="invalid-feedback">
-                            Origin is required
+                    <input type="text" class="form-control" formControlName="lot" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('lot') }">
+                        <span *ngIf="isFieldValid('lot')" class="invalid-feedback">
+                            Lot is required
                         </span>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Device ID </label>
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Sold Weight </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" formControlName="device_id" required readonly [ngClass]="{ 'is-invalid': isFieldValid('device_id') }">
-                    <span *ngIf="isFieldValid('device_id')" class="invalid-feedback">
-                        Device ID is required
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Timestamp </label>
-                <div class="col-sm-8 mx-auto">
-                    <input #date type="date" class="form-control" [ngClass]="{ 'is-invalid': isFieldValid('timestamp') }"
-                        formControlName="timestamp" required name="dp">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Ethylene </label>
-                <div class="col-sm-8 mx-auto">
-                    <input type="number" class="form-control" formControlName="ethylene" required
-                        [ngClass]="{ 'is-invalid': isFieldValid('ethylene') }">
-                        <span *ngIf="isFieldValid('ethylene')" class="invalid-feedback">
-                            Ethylene is required
+                    <input type="text" class="form-control" formControlName="soldWeight" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('soldWeight') }">
+                        <span *ngIf="isFieldValid('soldWeight')" class="invalid-feedback">
+                            Sold Weight is required
                         </span>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Price </label>
+                <label class="col-sm-2 col-md-3 control-label mx-auto"> Total Weight </label>
                 <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" formControlName="price" required
-                        [ngClass]="{ 'is-invalid': isFieldValid('price') }">
-                        <span *ngIf="isFieldValid('price')" class="invalid-feedback">
-                            Price is required
-                        </span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Sale Price </label>
-                <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" formControlName="sale_price" required readonly
-                        [ngClass]="{ 'is-invalid': isFieldValid('sale_price') }">
-                        <span *ngIf="isFieldValid('sale_price')" class="invalid-feedback">
-                            Sale Price is required
-                        </span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="col-sm-2 col-md-3 control-label mx-auto"> Status </label>
-                <div class="col-sm-8 mx-auto">
-                    <input type="text" class="form-control" id="status" formControlName="status"
-                        required [ngClass]="{ 'is-invalid': isFieldValid('status') }">
-                        <span *ngIf="isFieldValid('status')" class="invalid-feedback">
-                            Status is required
+                    <input type="text" class="form-control" formControlName="totalWeight" required
+                        [ngClass]="{ 'is-invalid': isFieldValid('totalWeight') }">
+                        <span *ngIf="isFieldValid('totalWeight')" class="invalid-feedback">
+                            Total Weight is required
                         </span>
                 </div>
             </div>

@@ -4,7 +4,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { NgModule } from '@angular/core'
 import { WarningModule } from '../warning/warning.module'
 import { AlertService } from '../alert-popup/alert.service'
-import { ViewFlashSaleService } from './view-flashsale/view-flashsale.service'
 
 // Material Components
 import {
@@ -17,6 +16,7 @@ import {
     MatInputModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule,
     MatTooltipModule
@@ -29,7 +29,7 @@ import { AddDialogDataComponent } from './add-dialog-data/add-dialog-data.compon
 import { AlertPopupModule } from '../alert-popup/alert-popup.module'
 import { SearchModule } from '../search/search.module'
 import { TableSearchComponent } from '../search/table-search/table-search.component'
-import { AddFlashSaleService } from './add-dialog-data/add-dialog-data.service'
+import { FlashSaleService } from './flashsale.service'
 import { UpdateFlashSaleService } from './dialog-data/dialog-data.service'
 import { NavbarService } from '../shared/navbar/navbar.service'
 import { InventoryService } from '../inventory/inventory.service'
@@ -58,12 +58,12 @@ import { InventoryService } from '../inventory/inventory.service'
         MatButtonModule,
         AlertPopupModule,
         MatTooltipModule,
-        SearchModule
+        SearchModule,
+        MatSortModule
     ],
     providers: [
         AlertService,
-        ViewFlashSaleService,
-        AddFlashSaleService,
+        FlashSaleService,
         UpdateFlashSaleService ,
         NavbarService,
         InventoryService

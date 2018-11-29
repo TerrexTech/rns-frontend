@@ -11,6 +11,7 @@ import { AlertService } from '../../alert-popup/alert.service'
 import { TableSearchComponent } from '../../search/table-search/table-search.component'
 import { NavbarService } from '../../shared/navbar/navbar.service'
 import { InventoryService } from '../../inventory/inventory.service'
+import { FlashSaleService } from '../flashsale.service'
 
 let flash_data: any[] = []
 @Component({
@@ -20,38 +21,68 @@ let flash_data: any[] = []
 })
 export class ViewFlashsaleComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private http: Http, private invServ: InventoryService,
-              private alertService: AlertService, private navServ: NavbarService) { }
+  constructor(public dialog: MatDialog,
+              private http: Http,
+              private invServ: InventoryService,
+              private flashServ: FlashSaleService,
+              private navServ: NavbarService) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
   selection = new SelectionModel<FlashSale>(true, [])
 
-  displayedColumns = ['select', 'sku', 'name', 'lot', 'soldWeight', 'totalWeight', 'remainingWeight', 'status']
+  displayedColumns = ['select', 'sku', 'name', 'lot', 'soldWeight', 'totalWeight', 'remainingWeight', 'status', 'timestamp']
   curField: any
+  statusMessage: string
 
   ngOnInit(): void {
     this.navServ.newEvent(0)
 
-    if (JSON.parse(localStorage.getItem('flashSale'))) {
-      const arr2 = JSON.parse(localStorage.getItem('flashSale'))
-      this.dataSource.data = arr2
-      flash_data = arr2
-      this.dataSource.paginator = this.paginator
-      this.dataSource.sort = this.sort
-      this.dataSource.data.forEach(element => {
-        element['soldWeight'] = Math.round(element['soldWeight'])
-                                    .toFixed(2)
-        element['totalWeight'] = Math.round(element['totalWeight'])
-                                    .toFixed(2)
-        element['remainingWeight'] = Math.round(element['remainingWeight'])
-                                        .toFixed(2)
-      })
-    }
-    else {
-      swal('No Flash Sales present')
-          .catch(err => console.log(err))
-    }
+    this.flashServ.getFlashSales()
+                  .toPromise()
+                  .then((data: any) => {
+                    console.log(data)
+                    console.log(data.data.FlashsaleQueryCount)
+
+                    const oneday = 86400
+                    const twoday = oneday * 2
+                    const threeday = oneday * 3
+                    const today = new Date().getTime() / 1000
+                    this.dataSource.data = data.data.FlashsaleQueryCount
+                    flash_data = data.data.FlashsaleQueryCount
+                    this.dataSource.paginator = this.paginator
+                    this.dataSource.data.forEach(element => {
+                      element['soldWeight'] = Math.round(element['soldWeight'])
+                                                  .toFixed(2)
+                      element['totalWeight'] = Math.round(element['totalWeight'])
+                                                  .toFixed(2)
+                      element['remainingWeight'] = Math.round(element['remainingWeight'])
+                                                      .toFixed(2)
+
+                      if (element['timestamp'] - today <= threeday) {
+                        element['status'] = 'bad'
+                        this.statusMessage = 'Expiring soon'
+                        element['projectedExpiry'] = element['projectedDate']
+                      }
+
+                      else if (element['timestamp'] - today <= oneday) {
+                          element['status'] = 'bad'
+                          this.statusMessage = 'Act now'
+                          element['projectedExpiry'] = element['projectedDate']
+                        }
+
+                      const sorting: MatSortable = {
+                          id: 'timestamp',
+                          start: 'asc',
+                          disableClear: false
+                      }
+                      this.sort.sort(sorting)
+                      this.dataSource.sort = this.sort
+                    })
+                  })
+                  .catch(async () => swal('No Flash sales')
+                                  .catch(err => console.log(err))
+                  )
   }
 
   openSearch(): void {
@@ -63,41 +94,41 @@ export class ViewFlashsaleComponent implements OnInit {
         if (data) {
         flash_data = data
         }
-        else {
-          swal('No Flash Sales.')
-              .catch(err => console.log(err))
-        }
+        // else {
+        //   swal('No Results.')
+        //       .catch(err => console.log(err))
+        // }
       })
-    this.dataSource.data = flash_data
   }
 
   addNewFlashSale(): void {
-    this.selection.selected.forEach(item => {
-    const index: number = flash_data.findIndex(d => d === item)
-    this.curField = item
-    console.log(this.curField)
-    })
-    if (this.curField) {
-    this.dialog.open(AddDialogDataComponent, {
-      data: this.curField
-    })
-  }
-  else {
-    alert('Please select a row(s)')
-  }
-  }
-
-  newSale(): void {
-    this.selection.selected.forEach(item => {
-      this.curField = flash_data.filter(i => i.itemID === item.itemID)[0]
-      console.log(this.curField)
-      console.log('++++++++++++++++++==')
-    })
-    this.dataSource.data.forEach(element => {
-      element['soldWeight'] *= 2
-    })
-
-    // this.viewService.newFlashSale(this.curField)
+    this.dialog.open(TableSearchComponent)
+    .afterClosed()
+      .subscribe(searchData => {
+        if (searchData) {
+          this.dialog.open(AddDialogDataComponent, {
+            data: searchData,
+            minWidth: 800,
+            minHeight: 600
+          })
+          // this.flashServ.getFlashSales()
+          //         .toPromise()
+          //         .then((data: any) => {
+          //           console.log(data)
+          //           console.log(data.data.FlashsaleQueryCount)
+          //           this.dataSource.data = data.data.FlashsaleQueryCount
+          //           const sorting: MatSortable = {
+          //             id: 'timestamp',
+          //             start: 'asc',
+          //             disableClear: false
+          //         }
+          //           this.sort.sort(sorting)
+          //           this.dataSource.sort = this.sort
+          //         })
+          //         .catch(async () => swal('No Flash sales')
+          //                         .catch(err => console.log(err)))
+        }
+      })
   }
 
   selected(): boolean {
@@ -122,7 +153,7 @@ export class ViewFlashsaleComponent implements OnInit {
 
   populateFields(): void {
      this.selection.selected.forEach(item => {
-        this.curField = flash_data.filter(i => i.upc === item.upc)[0]
+        this.curField = item
         console.log(this.curField)
         console.log('++++++++++++++++++==')
       })
@@ -133,70 +164,62 @@ export class ViewFlashsaleComponent implements OnInit {
           data: this.curField
         }
       })
-     console.log()
   }
 
-  removeSelectedRows(): void {
-    swal({
+ async removeSelectedRows(): Promise<any> {
+
+    const willDelete = await swal({
       title: 'Are you sure?',
-      text: 'Once deleted, you will not be able to recover this flash sale!',
-      icon: 'warning',
-      buttons: ['No', 'Yes'],
+      text: 'Selling Item(s)?',
+      icon: 'success',
+      buttons: ['Yes', 'No'],
+      closeOnClickOutside: false,
+      closeOnEsc: false,
       dangerMode: true
     })
-      .then(willDelete => {
-        if (willDelete) {
-          const flashSales = JSON.parse(localStorage.getItem('flashSale'))
-          const itemIDs = this.selection.selected.map(i => i.itemID)
-          console.log(itemIDs)
-          itemIDs.forEach(element => {
-            console.log(element)
-            this.invServ.deleteRows(element)
-                        .toPromise()
-                        .then((data: any) => {
-                          console.log(data.data.InventoryDelete)
-                        })
-                        .catch(async () => swal('data not deleted'))
-                                          .catch(() => console.log('popup failed'))
+    if (!willDelete) {
+      const selectedItems = this.selection.selected.map(item => item)
+      console.log(selectedItems)
 
-          })
-
-          this.dataSource.data = flashSales.filter(fs => itemIDs.indexOf(fs.itemID) === -1)
-          localStorage.setItem('flashSale', JSON.stringify(this.dataSource.data))
-          swal('The flash sale has been removed!', {
-            icon: 'success'
-          })
-            .then(log => {
-              console.log(log)
-
-              return true
-            })
-            .catch(err => {
-              console.log(err)
-
-              return false
-            })
-        } else {
-          swal('Flash sale not removed')
-            .then(log => {
-              console.log(log)
-
-              return true
-            })
-            .catch(err => {
-              console.log(err)
-
-              return false
-            })
+      for (const item of selectedItems) {
+        try {
+          console.log(item)
+          item.onFlashsale = false
+          console.log(item)
+          const endResult = await this.flashServ.editFlashSale(item)
+            .toPromise()
         }
-
-        return true
+        catch (e) {
+          swal('Item not sold')
+            .catch(console.log)
+        }
+      }
+      this.showUnsold()
+      swal('the selected item(s) have been sold!', {
+        icon: 'success'
       })
-      .catch(err => {
-        console.log(err)
+        .catch(console.log)
+    }
+  }
 
-        return false
-      })
+  showUnsold(): void {
+    this.flashServ.getFlashSales()
+        .toPromise()
+        .then((data: any) => {
+          console.log(data)
+          console.log(data.data.FlashsaleQueryCount)
+          // this.dataSource.data = data.data.FlashsaleQueryCount.filter(item => item.onFlashsale)
+          // console.log(this.dataSource.data)
+          const sorting: MatSortable = {
+            id: 'timestamp',
+            start: 'asc',
+            disableClear: false
+        }
+          this.sort.sort(sorting)
+          this.dataSource.sort = this.sort
+        })
+        .catch(async () => swal('No Flash sales')
+                        .catch(err => console.log(err)))
   }
 
   isAllSelected(): boolean {

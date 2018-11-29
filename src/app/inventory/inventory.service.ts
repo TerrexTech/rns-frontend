@@ -8,7 +8,7 @@ import { Inventory } from '../models/inventory'
 
 @Injectable()
 export class InventoryService {
-
+    count = 10
     constructor(private http: HttpClient, private jwt: TokenService) {
     }
 
@@ -101,7 +101,7 @@ export class InventoryService {
         const gqlQuery = `
         {
             InventoryQueryCount(
-            count: 100
+            count: ${this.count}
             ){
             itemID,
             dateArrived,
@@ -137,7 +137,7 @@ export class InventoryService {
             InventoryQueryTimestamp(
               start: ${start},
               end: ${end},
-              count: 10
+              count: ${this.count}
             ){
               itemID,
               dateArrived,
@@ -251,7 +251,7 @@ export class InventoryService {
     `
         console.log(gqlQuery)
 
-        return this.http.post(`${environment.bhupeshIP}/api`, gqlQuery, {
+        return this.http.post(`${environment.apiUrl}/api`, gqlQuery, {
             headers: {
                 'Content-Type': 'application/text'
             }

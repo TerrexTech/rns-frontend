@@ -28,6 +28,7 @@ import { SearchModule } from '../search/search.module'
 import { TableSearchComponent } from '../search/table-search/table-search.component'
 import { DialogDataDialogComponent } from './dialog-data/dialog-data.component'
 import { NavbarService } from '../shared/navbar/navbar.service'
+import { DonateDisposeService } from './donate-dispose.service'
 @NgModule({
     declarations: [
         DonateFoodComponent,
@@ -56,7 +57,8 @@ import { NavbarService } from '../shared/navbar/navbar.service'
     ],
     providers: [
         AlertService,
-        NavbarService
+        NavbarService,
+        DonateDisposeService
     ],
     exports: [
     ],

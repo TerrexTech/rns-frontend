@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material'
 import { ActivatedRoute, Router } from '@angular/router'
 import swal from 'sweetalert'
 import { UpdateFlashSaleService } from './dialog-data.service'
+import { FlashSaleService } from '../flashsale.service'
 
 @Component({
   selector: 'component-dialog-data-dialog',
@@ -21,44 +22,33 @@ export class DialogDataDialogComponent implements OnInit {
   @Inject(MAT_DIALOG_DATA) public data: any,
   private route: ActivatedRoute,
   private router: Router,
-  private updateServ: UpdateFlashSaleService
+  private updateServ: FlashSaleService
              ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      upc: ['', [Validators.required, Validators.minLength(1)]],
+      itemID: [],
       sku: ['', [Validators.required, Validators.minLength(1)]],
       name: ['', [Validators.required, Validators.minLength(1)]],
-      origin: ['', [Validators.required, Validators.minLength(1)]],
-      device_id: ['', [Validators.required, Validators.minLength(1)]],
-      timestamp: ['', [Validators.required, Validators.minLength(1)]],
-      ethylene: ['', [Validators.required, Validators.minLength(1)]],
-      price: ['', [Validators.required, Validators.minLength(1)]],
-      sale_price: ['', [Validators.required, Validators.minLength(1)]],
-      status: ['', [Validators.required, Validators.minLength(1)]]
+      lot: ['', [Validators.required, Validators.minLength(1)]],
+      soldWeight: ['', [Validators.required, Validators.minLength(1)]],
+      totalWeight: ['', [Validators.required, Validators.minLength(1)]],
+      timestamp: ['', [Validators.required, Validators.minLength(1)]]
     })
     this.returnUrl = this.route.snapshot.queryParams[''] || '/'
     this.curField = this.data
-    this.form.get('upc')
-             .setValue(this.curField.data.upc)
     this.form.get('sku')
              .setValue(this.curField.data.sku)
     this.form.get('name')
              .setValue(this.curField.data.name)
-    this.form.get('origin')
-             .setValue(this.curField.data.origin)
-    this.form.get('device_id')
-             .setValue(this.curField.data.device_id)
+    this.form.get('lot')
+             .setValue(this.curField.data.lot)
+    this.form.get('soldWeight')
+             .setValue(this.curField.data.soldWeight)
+    this.form.get('totalWeight')
+             .setValue(this.curField.data.totalWeight)
     this.form.get('timestamp')
              .setValue(this.curField.data.timestamp)
-    this.form.get('ethylene')
-             .setValue(this.curField.data.ethylene)
-    this.form.get('price')
-             .setValue(this.curField.data.price)
-    this.form.get('sale_price')
-             .setValue(this.curField.data.sale_price)
-    this.form.get('status')
-             .setValue(this.curField.data.status)
   }
 
   isFieldValid(field: string): any {
@@ -84,21 +74,23 @@ export class DialogDataDialogComponent implements OnInit {
     month[10] = 'November'
     month[11] = 'December'
     this.formSubmitAttempt = true
+    this.form.value.itemID = this.curField.data.itemID
+    console.log(this.form.value.itemID)
     const origDate = this.form.value.timestamp
     this.form.value.timestamp = Math.floor(Date.parse(`${origDate.year}/${month[origDate.month]}/${origDate.day}`) / 1000)
-    this.updateServ.updateFlashSale(this.form.value)
-    console.log('submitted')
-    swal('Record successfully inserted!')
-      .then(log => {
-        console.log(log)
-
-        return true
-      })
-      .catch(err => {
-        console.log(err)
-
-        return false
-      })
+    this.updateServ.editFlashSale(this.form.value)
+                   .toPromise()
+                   .then((data: any) => {
+                     console.log(data)
+                     if (data.data.FlashsaleUpdate) {
+                       console.log(data.data.FlashsaleUpdate)
+                       swal('Record successfully inserted!')
+                            .catch(err => console.log(err))
+                     }
+                   })
+                   .catch(async () => swal('Record not updated!')
+                                          .catch(err => console.log(err))
+                   )
   }
 }
 }

@@ -52,97 +52,87 @@ export class DialogDataDialogComponent implements OnInit {
   onSubmit(): void {
 
     if (this.data.data[1] === 'Flash Sale') {
-      let array1 = JSON.parse(localStorage.getItem('flashSale')) || []
-      array1 = array1.concat(...this.data.data[0])
-      localStorage.setItem('flashSale', JSON.stringify(array1))
-
-      const warningArray = JSON.parse(localStorage.getItem('warning'))
-      const flashArray = JSON.parse(localStorage.getItem('flashSale'))
-
       const flashSales = this.data.data[0].map(f => f)
-      const newWarnings = warningArray.filter(w => flashSales.indexOf(w.itemID) === -1)
       flashSales.forEach(element => {
         element.onFlashsale = true
         console.log(element.itemID)
 
         this.warnServ.newFlashSale(element)
                     .toPromise()
-                    .then((data: any) => {
-                      if (data) {
-                        console.log(data)
-                        console.log(data.data.FlashsaleInsert)
+                    .then((flashData: any) => {
+                      if (flashData) {
+                        console.log(flashData)
+                        console.log(flashData.data.FlashsaleInsert)
+                        this.warnServ.deleteWarning(element.itemID)
+                                      .toPromise()
+                                      .then((data: any) => {
+                                        console.log(data.data.WarningDelete)
+                                        this.router.navigate([this.data.data[2]])
+                                                   .catch(console.log)
+                                      })
+                                      .catch(async () => swal('data not deleted'))
+                                                        .catch(() => console.log('popup failed'))
                       }
                     })
-                    .catch(async () => swal('warning not inserted'))
+                    .catch(async () => swal('Flash sale not inserted'))
                                       .catch(() => console.log('popup failed'))
+      })
+    }
 
-        this.warnServ.deleteWarning(element.itemID)
+    if (this.data.data[1] === 'Donation') {
+      const donations = this.data.data[0].map(f => f)
+      donations.forEach(element => {
+        console.log(element.itemID)
+
+        this.warnServ.newDonation(element)
                     .toPromise()
-                    .then((data: any) => {
-                      console.log(data.data.WarningDelete)
+                    .then((donationData: any) => {
+                      if (donationData) {
+                        console.log(donationData)
+                        console.log(donationData.data.DonationInsert)
+
+                        this.warnServ.deleteWarning(element.itemID)
+                                     .toPromise()
+                                     .then((data: any) => {
+                                        console.log(data.data.WarningDelete)
+                                        this.router.navigate([this.data.data[2]])
+                                                   .catch(console.log)
+                                      })
+                                     .catch(async () => swal('data not deleted'))
+                                                        .catch(() => console.log('popup failed'))
+                      }
                     })
-                    .catch(async () => swal('data not deleted'))
+                    .catch(async () => swal('Donation not inserted'))
                                       .catch(() => console.log('popup failed'))
 
       })
-
-      // localStorage.setItem('warning', JSON.stringify(newWarnings))
     }
 
-    else if (this.data.data[1] === 'Donation') {
-      let array1 = JSON.parse(localStorage.getItem('donation')) || []
-      array1 = array1.concat(...this.data.data[0])
-      localStorage.setItem('donation', JSON.stringify(array1))
+    if (this.data.data[1] === 'Disposal') {
+      const disposals = this.data.data[0].map(f => f)
+      disposals.forEach(element => {
+        console.log(element.itemID)
 
-      const warningArray = JSON.parse(localStorage.getItem('warning'))
-      const flashArray = JSON.parse(localStorage.getItem('donation'))
-
-      const flashSaleIds = flashArray.map(f => f.itemID)
-
-      flashSaleIds.forEach(element => {
-        console.log(element)
-        this.invServ.deleteRows(element)
-                    .toPromise()
-                    .then((data: any) => {
-                      console.log(data.data.InventoryDelete)
-                    })
-                    .catch(async () => swal('data not deleted'))
+        this.warnServ.newDiposal(element)
+                     .toPromise()
+                     .then((disposeData: any) => {
+                      if (disposeData) {
+                        console.log(disposeData)
+                        console.log(disposeData.data.DisposalInsert)
+                        this.warnServ.deleteWarning(element.itemID)
+                                      .toPromise()
+                                      .then((data: any) => {
+                                        console.log(data.data.WarningDelete)
+                                        this.router.navigate([this.data.data[2]])
+                                                                    .catch(console.log)
+                                      })
+                                      .catch(async () => swal('data not deleted'))
+                                                        .catch(() => console.log('popup failed'))
+                      }
+                     })
+                     .catch(async () => swal('Disposal not inserted'))
                                       .catch(() => console.log('popup failed'))
-
       })
-
-      const newWarnings = warningArray.filter(w => flashSaleIds.indexOf(w.itemID) === -1)
-      localStorage.setItem('warning', JSON.stringify(newWarnings))
-      console.log(localStorage.getItem('warning'))
     }
-
-    else if (this.data.data[1] === 'Disposal') {
-      let array1 = JSON.parse(localStorage.getItem('disposal')) || []
-      array1 = array1.concat(...this.data.data[0])
-      localStorage.setItem('disposal', JSON.stringify(array1))
-
-      const warningArray = JSON.parse(localStorage.getItem('warning'))
-      const flashArray = JSON.parse(localStorage.getItem('disposal'))
-
-      const flashSaleIds = flashArray.map(f => f.itemID)
-
-      flashSaleIds.forEach(element => {
-        console.log(element)
-        this.invServ.deleteRows(element)
-                    .toPromise()
-                    .then((data: any) => {
-                      console.log(data.data.InventoryDelete)
-                    })
-                    .catch(async () => swal('data not deleted'))
-                                      .catch(() => console.log('popup failed'))
-
-      })
-
-      const newWarnings = warningArray.filter(w => flashSaleIds.indexOf(w.itemID) === -1)
-      console.log(newWarnings)
-      localStorage.setItem('warning', JSON.stringify(newWarnings))
-    }
-    this.router.navigate([this.data.data[2]])
-               .catch(console.log)
   }
 }

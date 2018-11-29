@@ -14,5 +14,5 @@ export class FlashSale {
     soldWeight: number
     totalWeight: number
     lot: string
-    onFlashSale: boolean
+    onFlashsale: boolean
 }

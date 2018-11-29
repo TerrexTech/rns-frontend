@@ -10,7 +10,6 @@
 /* .generate-btn button {
   margin-top :0 !important;
 } */
-
 @media only screen and (max-width: 414px) {
         .generate-btn{
           left: 20%;
@@ -58,9 +57,8 @@ th.mat-sort-header-sorted {
  background-color: green
 }
 
-.bad{
- background-color: rgb(255, 180, 180);
- border-right: 1px solid rgb(224, 224, 224);
+.red{
+ background-color: red
 }
 
 .control-label.required:after {
@@ -78,6 +76,6 @@ th.mat-sort-header-sorted {
 td.mat-cell {
   padding: 0 24px 0 24px;
       font-size: 14px;
-      text-align: center;
-
+      /* text-align: center; */
+      border-right: 1px solid rgb(224, 224, 224);
   }

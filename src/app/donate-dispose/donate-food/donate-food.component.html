@@ -5,17 +5,12 @@
         <mat-card-title>
           <h6>Donate Food</h6>
         </mat-card-title>
-        <!-- <div class="generate-btn">
-          <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
-            <i class="fa fa-plus"></i>
-          </a>
-          <a id="editBtn" [attr.disabled]="selected() ? true : null" [attr.disabled]="canUpdate() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="populateFields()">
-            <i class="fa fa-edit"></i>
-          </a>
-          <a id="deleteBtn" [attr.disabled]="canDelete() ? true : null" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="disposeRows()">
-            <i class="fa fa-times"></i>
-          </a>
-        </div> -->
+        <a id="searchBtn" class="btn btn-warning btn-link btn-icon btn-md edit" (click)="openSearch()">
+          <i class="fa fa-edit"></i>
+        </a>
+        <a id="addBtn" class="btn btn-warning btn-link btn-icon btn-md edit" [attr.disabled]="canUpdate() ? true : null" (click)="populateFields()">
+          <i class="fa fa-plus"></i>
+        </a>
       </mat-card-header>
     </mat-card>
     <br>
@@ -52,7 +47,7 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="qty_unsold">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Donated Weight </th>
-              <td mat-cell *matCellDef="let element"><a> {{ element['qty_unsold'] }}</a> </td>
+              <td mat-cell *matCellDef="let element"><a> {{ element.donateWeight }}</a> </td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -62,11 +57,11 @@
             </ng-container> -->
 
             <!-- Weight Column -->
-            <ng-container matColumnDef="projectedExpiry">
+            <!-- <ng-container matColumnDef="projectedExpiry">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Projected Expiry </th>
               <td mat-cell *matCellDef="let element"><a> {{ element['projectedExpiry'] * 1000 | date:
                   'dd/MM/yyyy' }}</a> </td>
-            </ng-container>
+            </ng-container> -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row columns: displayedColumns"></tr>

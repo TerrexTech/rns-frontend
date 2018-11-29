@@ -4,6 +4,8 @@ import { SelectionModel } from '@angular/cdk/collections'
 import { Warning } from '../../models/warning'
 import { DialogDataDialogComponent } from '../dialog-data/dialog-data.component'
 import { NavbarService } from '../../shared/navbar/navbar.service'
+import { TableSearchComponent } from '../../search/table-search/table-search.component'
+import { DonateDisposeService } from '../donate-dispose.service'
 
 let disposedItems: any[] = []
 
@@ -16,33 +18,48 @@ export class DisposeFoodComponent implements OnInit {
 
   constructor(
               public dialog: MatDialog,
-              private navServ: NavbarService
+              private navServ: NavbarService,
+              public disposeServ: DonateDisposeService
              ) { }
   @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
   dataSource = new MatTableDataSource()
   selectedItems = new SelectionModel<Warning>(true, [])
 
-  displayedColumns = ['sku', 'name', 'qty_unsold', 'status', 'projectedExpiry']
+  displayedColumns = ['sku', 'name', 'disposalWeight', 'timestamp']
   curField: any
 
   ngOnInit(): void {
     this.navServ.newEvent(0)
-    if (JSON.parse(localStorage.getItem('disposal'))) {
-    const localDisposal = JSON.parse(localStorage.getItem('disposal'))
-    this.dataSource.data = localDisposal
-    disposedItems = localDisposal
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
-    this.dataSource.data.forEach(element => {
-      element['qty_unsold'] = Math.round(element['qty_unsold'])
-                                  .toFixed(2)
+
+    this.disposeServ.getDisposals()
+                   .toPromise()
+                   .then((data: any) => {
+                     console.log(data)
+                     if (data.data.DisposalQueryCount) {
+                       this.dataSource.data = data.data.DisposalQueryCount
+                       this.dataSource.paginator = this.paginator
+                       this.dataSource.sort = this.sort
+                     }
+                   })
+                   .catch(async () => swal('No disposals.')
+                        .catch(err => console.log(err)))
+  }
+
+  openSearch(): void {
+    this.dialog.open(TableSearchComponent, {
+      width: '500px'
     })
-  }
-  else {
-    swal('No disposals.')
-      .catch(err => console.log(err))
-  }
+      .afterClosed()
+      .subscribe(data => {
+        if (data) {
+        disposedItems = data
+        }
+        // else {
+        //   swal('No Results.')
+        //       .catch(err => console.log(err))
+        // }
+      })
   }
 
   populateFields(): void {

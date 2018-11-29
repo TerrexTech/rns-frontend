@@ -54,8 +54,8 @@ export class DisposeFoodComponent implements OnInit {
       .subscribe(data => {
         if (data) {
         console.log(data)
-        disposedItems = data
-        this.dataSource.data = data
+        disposedItems = data.data.DisposalQueryCount
+        this.dataSource.data = data.data.DisposalQueryCount
         this.dataSource.paginator = this.paginator
         this.dataSource.sort = this.sort
         }
